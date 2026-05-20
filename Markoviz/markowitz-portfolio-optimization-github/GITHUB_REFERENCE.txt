@@ -1,0 +1,20 @@
+# Reference entry for the article
+
+After uploading the repository to GitHub, insert a reference similar to the following in the References section of the article.
+
+Replace `<GITHUB_URL>` with the final repository link.
+
+## Suggested plain-text reference
+
+A. Guarini, Portfolio Optimization: From Markowitz Theory to Practical Implementation: supporting code, Starting Finance Club PoliTo, GitHub repository, <GITHUB_URL>, accessed 18/05/2026.
+
+## Suggested BibTeX entry
+
+@misc{guarini2026markowitzcode,
+  author       = {Guarini, Antonio},
+  title        = {Portfolio Optimization: From Markowitz Theory to Practical Implementation: Supporting Code},
+  year         = {2026},
+  howpublished = {Starting Finance Club PoliTo, GitHub repository},
+  url          = {<GITHUB_URL>},
+  note         = {Accessed 18/05/2026}
+}

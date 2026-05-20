@@ -1,0 +1,14 @@
+# Dynare/MATLAB generated files kept out of version control.
+# The curated reproducibility outputs are stored in Outputs/.
+*.asv
+*.log
+*_dynamic.m
+*_static.m
+*_set_auxiliary_variables.m
+*_steadystate2.m
+*_results.mat
+nk_costpush_three_regimes.m
+nk_costpush_three_regimes/
++nk_costpush_three_regimes/
+!Outputs/
+!Outputs/**

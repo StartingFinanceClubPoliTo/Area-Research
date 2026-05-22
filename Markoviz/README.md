@@ -1,5 +1,8 @@
 # Markoviz
 
+**Author:** [Antonio Guarini](https://github.com/Anthony27-x)
+**Published:** May 22, 2026
+
 This folder contains portfolio optimization research material for Starting Finance Club PoliTo.
 
 ## Articles

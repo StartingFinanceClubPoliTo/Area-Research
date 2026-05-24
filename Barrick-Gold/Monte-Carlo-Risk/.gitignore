@@ -1,0 +1,30 @@
+# Local revision and source material
+Revisione/
+workflow.md
+
+# Article PDFs and local exports
+*.pdf
+*.zip
+
+# Jupyter scratch files
+*.ipynb
+.ipynb_checkpoints/
+.jupyter/
+.jupyter_runtime/
+
+# Python runtime
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Generated temporary files
+*.log
+*.tmp
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

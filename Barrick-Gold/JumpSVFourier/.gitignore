@@ -1,0 +1,9 @@
+workflow.md
+Revisione/
+*.ipynb
+.ipynb_checkpoints/
+.jupyter/
+.jupyter_runtime/
+__pycache__/
+*.pyc
+.venv/

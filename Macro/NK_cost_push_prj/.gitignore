@@ -1,5 +1,13 @@
 # Dynare/MATLAB generated files kept out of version control.
 # The curated reproducibility outputs are stored in Outputs/.
+workflow.md
+Revisione/
+*.ipynb
+.ipynb_checkpoints/
+.jupyter/
+.jupyter_runtime/
+__pycache__/
+*.pyc
 *.asv
 *.log
 *_dynamic.m

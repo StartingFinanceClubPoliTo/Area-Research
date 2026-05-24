@@ -10,7 +10,7 @@ of the Starting Finance Club at Politecnico di Torino.
 
 | Project | Status | Contents |
 |---------|--------|----------|
-| [Barrick Gold](./Barrick-Gold/) | Active | Barrick Gold valuation and operating model research. |
+| [Barrick Gold](./Barrick-Gold/) | Active | Barrick Gold research articles, including valuation models, dynamic correlation notes, Monte Carlo risk examples, and synthetic option-pricing simulations. |
 | [Stoikov-Avellonada](./Stoikov-Avellonada/) | Active | Market making research. The uploaded notebook is Article 1. |
 | [Markoviz](./Markoviz/) | Active | Markowitz portfolio optimization code, reproducibility notes, and data-source documentation. |
 | [Macro](./Macro/) | Active | New Keynesian cost-push shock simulations with Dynare/MATLAB and exported IRF results. |
@@ -20,6 +20,7 @@ of the Starting Finance Club at Politecnico di Torino.
 ### Barrick Gold
 
 - Articles and code are indexed in [Barrick Gold](./Barrick-Gold/).
+- [Monte Carlo Methods and Portfolio Simulation](./Barrick-Gold/Monte-Carlo-Risk/) contains the Article 4 Python package for Monte Carlo convergence, stochastic process simulation, variance reduction, option pricing, and portfolio risk examples.
 
 ### Stoikov-Avellonada
 

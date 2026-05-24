@@ -1,58 +1,56 @@
-# Area-Research
+# Area Research
 
-Research projects, articles, and supporting code by **Starting Finance Club PoliTo**.
+Research code, reproducibility material, and article companions by **Starting Finance Club PoliTo**.
 
-This repository hosts codebases, datasets, and reproducibility
-materials for research projects developed by the Research division
-of the Starting Finance Club at Politecnico di Torino.
+This repository collects the GitHub-facing material produced by the Research division at Politecnico di Torino. Each folder is organized around an article series or research project, with README files, scripts, notebooks, requirements, curated outputs, and reproducibility notes when code is available.
 
-## Projects
+## Barrick Gold Article Code Index
 
-| Project | Status | Contents |
-|---------|--------|----------|
-| [Barrick Gold](./Barrick-Gold/) | Active | Barrick Gold research articles, including valuation models, dynamic correlation notes, Monte Carlo risk examples, and synthetic option-pricing simulations. |
-| [Stoikov-Avellonada](./Stoikov-Avellonada/) | Active | Market making research. The uploaded notebook is Article 1. |
-| [Markoviz](./Markoviz/) | Active | Markowitz portfolio optimization code, reproducibility notes, and data-source documentation. |
-| [Macro](./Macro/) | Active | New Keynesian cost-push shock simulations with Dynare/MATLAB and exported IRF results. |
+Only articles with a supplied code folder are listed here. Articles without executable code are intentionally omitted from the table.
 
-## Project Index
+| Article | Code Folder | Authors | Material |
+| --- | --- | --- | --- |
+| Article 1 | [Component-Driven EBITDA Forecast for Barrick Gold](./Barrick-Gold/Component-Driven-EBITDA-Barrick/) | [Giacomo Scali](https://www.linkedin.com/in/giacomo-scali-abp01/), [Jacopo Foralosso](https://www.linkedin.com/in/jacopo-foralosso-6753a2256) | EBITDA forecasting workflow with cost-of-sales, production, and gold-price Monte Carlo components. |
+| Article 4 | [Monte Carlo Methods and Portfolio Simulation](./Barrick-Gold/Monte-Carlo-Risk/) | Andrea Rostagno, Francesco Florio | Python package for Monte Carlo convergence, stochastic processes, option pricing, variance reduction, and portfolio risk examples. |
+| Article 7 | [Beyond Black-Scholes Synthetic Examples](./Barrick-Gold/JumpSVFourier/) | Davide Sisto, Matteo Armando | Synthetic simulations and figures for jump processes, stochastic volatility, Fourier methods, and Hawkes dynamics. |
 
-### Barrick Gold
+## Other Research Projects
 
-- Articles and code are indexed in [Barrick Gold](./Barrick-Gold/).
-- [Monte Carlo Methods and Portfolio Simulation](./Barrick-Gold/Monte-Carlo-Risk/) contains the Article 4 Python package for Monte Carlo convergence, stochastic process simulation, variance reduction, option pricing, and portfolio risk examples.
+| Project | Folder | Material |
+| --- | --- | --- |
+| Stoikov-Avellonada | [Stoikov-Avellonada](./Stoikov-Avellonada/) | Market-making notebook for Article 1, with an Avellaneda-Stoikov simulation pipeline. |
+| Markoviz | [Markoviz](./Markoviz/) | Markowitz portfolio optimization code, data-source documentation, and GitHub reference material. |
+| Macro | [Macro](./Macro/) | New Keynesian cost-push shock simulations with Dynare/MATLAB and exported IRF outputs. |
 
-### Stoikov-Avellonada
+## Repository Map
 
-- Article 1 is indexed in [Stoikov-Avellonada](./Stoikov-Avellonada/).
+```text
+Research/
+|-- README.md
+|-- Barrick-Gold/
+|   |-- Component-Driven-EBITDA-Barrick/
+|   |-- Monte-Carlo-Risk/
+|   |-- JumpSVFourier/
+|   `-- OLS-Dynamic-Corr/
+|-- Markoviz/
+|   `-- markowitz-portfolio-optimization-github/
+|-- Stoikov-Avellonada/
+|   `-- Article-1/
+`-- Macro/
+    `-- NK_cost_push_prj/
+```
 
-### Markoviz
+## How To Use This Repository
 
-- [Markowitz Portfolio Optimization](./Markoviz/markowitz-portfolio-optimization-github/) contains the Python code supporting a mean-variance portfolio optimization article.
-- The script downloads market data with `yfinance`, builds long-only Markowitz portfolios, compares a classical ETF universe with a Bitcoin-augmented universe, and runs fixed and rolling out-of-sample tests.
+1. Open the project folder that matches the article or research topic.
+2. Read the local `README.md` for setup, run commands, required packages, outputs, and data notes.
+3. Use committed scripts and curated outputs as the publication-facing reproducibility material.
 
-### Macro
+## Version-Control Notes
 
-- [New Keynesian Cost-Push Shock Project](./Macro/NK_cost_push_prj/) contains a Dynare model and MATLAB runner for impulse-response simulations under accommodative, benchmark, and aggressive Taylor-rule regimes.
-- The project includes curated output files in `Outputs/`: IRF chart exports, a MATLAB results file, and a CSV summary table.
-
-## Repository Structure
-
-Each top-level folder is a research project. A project folder can contain one
-or more article folders, notebooks, scripts, datasets, and a local `README.md`
-describing the available materials.
-
-Article folders can include:
-
-- A `README.md` describing the article, authors, and the role of each script.
-- One subfolder per analytical component, when needed.
-- A `data/` folder when public datasets are committed.
-
-## GitHub Notes
-
-- Local `.zip` archives are treated as staging files and ignored through the root `.gitignore`.
-- Commit the extracted project folders, README files, source code, and curated reproducibility outputs instead of the uploaded archives.
-- Generated folders such as Python virtual environments, cache folders, IDE settings, and local logs are excluded from version control.
+- Local `.zip` archives, virtual environments, cache folders, IDE settings, and local logs are excluded from version control.
+- Publication-facing folders should contain extracted source files, README files, requirements, scripts, notebooks when needed, and curated outputs.
+- Raw external data are included only when redistribution is allowed. Otherwise, the README explains where the data come from and how to regenerate the workflow.
 
 ## Contacts
 

@@ -6,8 +6,8 @@ Code companion for the Starting Finance Club PoliTo Research article *Monte Carl
 
 ## 👥 Authors
 
-- Andrea Rostagno
-- Francesco Florio
+- [Andrea Rostagno](https://github.com/Andrea-Rostagno)
+- [Francesco Florio](https://github.com/Francesco-Florio)
 
 ## 🎯 Purpose
 

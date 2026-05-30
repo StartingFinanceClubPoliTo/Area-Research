@@ -1,0 +1,170 @@
+{
+  "underlying_symbol": "GLD",
+  "underlying_exchange": "SMART",
+  "underlying_currency": "USD",
+  "market_data_mode": "delayed_only",
+  "option_exchange": "SMART",
+  "option_tradingClass": "GLD",
+  "option_multiplier": "100",
+  "S0": 437.82,
+  "spot_ts": "2026-04-03 06:51:29.584327+00:00",
+  "as_of_ny": "2026-04-03",
+  "source": "mktdata",
+  "y_close": 429.41,
+  "y_close_ts": "2026-04-02 00:00:00+00:00",
+  "n_expiries_selected": 28,
+  "n_strikes_selected": 140,
+  "strike_min": 5.0,
+  "strike_max": 900.0,
+  "n_rows_total": 3378,
+  "n_rows_with_any_quote": 3312,
+  "n_rows_with_price_used": 3312,
+  "expiry_mode": "dense_short_long",
+  "short_expiry_days_full": 75,
+  "long_expiry_sampled": 18,
+  "near_strikes_each_side": 45,
+  "far_strikes_each_side": 25,
+  "include_extreme_strikes": true,
+  "fetch_report": [
+    [
+      "20260406",
+      164,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260408",
+      164,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260410",
+      210,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260413",
+      164,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260415",
+      200,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260417",
+      226,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260424",
+      220,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260501",
+      186,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260508",
+      142,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260515",
+      82,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260522",
+      58,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260618",
+      106,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260630",
+      80,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260717",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260821",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260918",
+      96,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20260930",
+      72,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20261016",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20261120",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20261218",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20261231",
+      136,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20270115",
+      106,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20270319",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20270331",
+      166,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20270617",
+      88,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20280121",
+      88,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20280616",
+      78,
+      "qualified_from_requested=280"
+    ],
+    [
+      "20281215",
+      78,
+      "qualified_from_requested=280"
+    ]
+  ]
+}

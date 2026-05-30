@@ -1,12 +1,12 @@
-# Simulations
+# Simulations 🧪
 
 Simulation stage for the Article 7 synthetic examples.
 
-## Role
+## 🎯 Role
 
-This folder generates synthetic price-path and variance-path examples for the article figures. Run the script from the `JumpSVFourier/` root folder so output paths remain stable.
+This folder generates synthetic price-path and variance-path examples for article figures. Run the script from the `JumpSVFourier/` root folder so output paths remain stable.
 
-## Files
+## 📄 Files
 
 | Path | Role |
 | --- | --- |
@@ -14,7 +14,7 @@ This folder generates synthetic price-path and variance-path examples for the ar
 | `img/` | Stores article-ready raster figures. |
 | `output/` | Stores the CSV data used to draw the figures. |
 
-## Run
+## ▶️ Run
 
 From the `JumpSVFourier/` root folder:
 

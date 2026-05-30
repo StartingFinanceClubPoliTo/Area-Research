@@ -1,58 +1,65 @@
-# Area Research
+# Area Research 🔬
 
-Research code, reproducibility material, and article companions by **Starting Finance Club PoliTo**.
+Publication-facing code, reproducibility material, and article companions by **Starting Finance Club PoliTo**.
 
-This repository collects the GitHub-facing material produced by the Research division at Politecnico di Torino. Each folder is organized around an article series or research project, with README files, scripts, notebooks, requirements, curated outputs, and reproducibility notes when code is available.
+This repository collects scripts, notebooks, curated outputs, and documentation for Research articles. Each article folder is meant to be readable on its own: it explains the purpose of the code, how to run it, what it produces, who authored the work, and how to cite it.
 
-## Barrick Gold Article Code Index
+## 🧭 Repository Index
 
-Only articles with a supplied code folder are listed here. Articles without executable code are intentionally omitted from the table.
-
-| Article | Code Folder | Authors | Material |
+| Project | Folder | Authors | Material |
 | --- | --- | --- | --- |
-| Article 1 | [Component-Driven EBITDA Forecast for Barrick Gold](./Barrick-Gold/Component-Driven-EBITDA-Barrick/) | [Giacomo Scali](https://www.linkedin.com/in/giacomo-scali-abp01/), [Jacopo Foralosso](https://www.linkedin.com/in/jacopo-foralosso-6753a2256) | EBITDA forecasting workflow with cost-of-sales, production, and gold-price Monte Carlo components. |
-| Article 4 | [Monte Carlo Methods and Portfolio Simulation](./Barrick-Gold/Monte-Carlo-Risk/) | Andrea Rostagno, Francesco Florio | Python package for Monte Carlo convergence, stochastic processes, option pricing, variance reduction, and portfolio risk examples. |
-| Article 7 | [Beyond Black-Scholes Synthetic Examples](./Barrick-Gold/JumpSVFourier/) | Davide Sisto, Matteo Armando | Synthetic simulations and figures for jump processes, stochastic volatility, Fourier methods, and Hawkes dynamics. |
+| Barrick Gold | [Barrick-Gold](./Barrick-Gold/) | Multiple article teams | Gold-mining valuation, option modelling, Monte Carlo, volatility, and macro-financial code companions. |
+| Markoviz | [Markoviz](./Markoviz/) | [Antonio Guarini](https://github.com/Anthony27-x) | Markowitz portfolio optimization script, data notice, requirements, and citation text. |
+| Macro | [Macro](./Macro/) | Emanuele Ravello, Valentina Romeo | New Keynesian cost-push shock model with Dynare/MATLAB outputs. |
+| Stoikov-Avellonada | [Stoikov-Avellonada](./Stoikov-Avellonada/) | Starting Finance Club PoliTo Research; individual authors to confirm | Avellaneda-Stoikov market-making notebook and video-rendering pipeline. |
 
-## Other Research Projects
+## 🪙 Barrick Gold Article Index
 
-| Project | Folder | Material |
-| --- | --- | --- |
-| Stoikov-Avellonada | [Stoikov-Avellonada](./Stoikov-Avellonada/) | Market-making notebook for Article 1, with an Avellaneda-Stoikov simulation pipeline. |
-| Markoviz | [Markoviz](./Markoviz/) | Markowitz portfolio optimization code, data-source documentation, and GitHub reference material. |
-| Macro | [Macro](./Macro/) | New Keynesian cost-push shock simulations with Dynare/MATLAB and exported IRF outputs. |
+| Article | Folder | Authors | Publication | Material |
+| --- | --- | --- | --- | --- |
+| Article 1 | [Component-Driven EBITDA Forecast](./Barrick-Gold/Component-Driven-EBITDA-Barrick/) | [Giacomo Scali](https://www.linkedin.com/in/giacomo-scali-abp01/), [Jacopo Foralosso](https://www.linkedin.com/in/jacopo-foralosso-6753a2256) | May 8, 2026 | Cost-of-sales, production, GLD volatility, and EBITDA Monte Carlo workflows. |
+| Article 2 | [OLS To Dynamic Correlations](./Barrick-Gold/OLS-Dynamic-Corr/) | Filippo Triassi, Giorgio Zoccatelli | 2026 | Placeholder for a future reproducible code package. |
+| Article 3 | [Three-Stage DCF](./Barrick-Gold/Three-Stage-DCF/) | Federico Vesco, Lorenzo Pietra, Bader Moussaif | May 30, 2026 | Synthetic three-stage DCF and Monte Carlo simulation. |
+| Article 4 | [Monte Carlo Risk](./Barrick-Gold/Monte-Carlo-Risk/) | Andrea Rostagno, Francesco Florio | 2026 | Python package for Monte Carlo methods, option pricing, variance reduction, and portfolio risk. |
+| Article 6 | [Gold Options Stochastic Modeling](./Barrick-Gold/Gold-Options-Stochastic-Modeling/) | [0c0c](https://github.com/0c0c), [SalvatoreMessina11](https://github.com/SalvatoreMessina11) | Postponed | Black-Scholes, Heston, and Bates calibration notebooks for GLD options. |
+| Article 7 | [Beyond Black-Scholes Synthetic Examples](./Barrick-Gold/JumpSVFourier/) | Davide Sisto, Matteo Armando | 2026 | Synthetic jump, stochastic-volatility, Fourier, and Hawkes examples. |
+| Article 8 | [Gold Volatility Research](./Barrick-Gold/Gold-Volatility-Research/) | Davide D'Amico, Pietro Weisz | 2026 | Gold, silver, dollar, equity, and Treasury-yield data pipeline with tables and figures. |
 
-## Repository Map
+## 🗂️ Repository Map
 
 ```text
 Research/
 |-- README.md
 |-- Barrick-Gold/
 |   |-- Component-Driven-EBITDA-Barrick/
+|   |-- OLS-Dynamic-Corr/
+|   |-- Three-Stage-DCF/
 |   |-- Monte-Carlo-Risk/
+|   |-- Gold-Options-Stochastic-Modeling/
 |   |-- JumpSVFourier/
-|   `-- OLS-Dynamic-Corr/
+|   `-- Gold-Volatility-Research/
 |-- Markoviz/
-|   `-- markowitz-portfolio-optimization-github/
-|-- Stoikov-Avellonada/
-|   `-- Article-1/
-`-- Macro/
-    `-- NK_cost_push_prj/
+|-- Macro/
+`-- Stoikov-Avellonada/
 ```
 
-## How To Use This Repository
+## 🚀 How To Use
 
-1. Open the project folder that matches the article or research topic.
-2. Read the local `README.md` for setup, run commands, required packages, outputs, and data notes.
-3. Use committed scripts and curated outputs as the publication-facing reproducibility material.
+1. Open the folder matching the article or project.
+2. Read its local `README.md` for setup, run commands, outputs, and data notes.
+3. Use committed scripts, notebooks, and curated outputs as the reproducibility material for the article.
 
-## Version-Control Notes
+## 🧪 Reproducibility Notes
 
-- Local `.zip` archives, virtual environments, cache folders, IDE settings, and local logs are excluded from version control.
-- Publication-facing folders should contain extracted source files, README files, requirements, scripts, notebooks when needed, and curated outputs.
-- Raw external data are included only when redistribution is allowed. Otherwise, the README explains where the data come from and how to regenerate the workflow.
+- Raw external data are included only when redistribution is appropriate.
+- Local zips, caches, virtual environments, logs, and review artifacts are excluded from version control.
+- The material is for educational and research purposes and does not provide investment advice.
 
-## Contacts
+## 📚 Citation
+
+When citing a folder, cite the article title, the listed authors, **Starting Finance Club PoliTo Research**, the specific GitHub folder URL, and the access date.
+
+## 📬 Contacts
 
 - LinkedIn: [Starting Finance Club PoliTo](https://www.linkedin.com/company/startingfinance-club-polito)
 - Instagram: [@sfclubpolito](https://www.instagram.com/sfclubpolito)

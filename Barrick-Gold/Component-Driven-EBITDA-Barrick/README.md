@@ -1,25 +1,17 @@
-# Component-Driven EBITDA Forecast for Barrick Gold
+# Component-Driven EBITDA Forecast for Barrick Gold 🧱
 
-| Field | Value |
-| --- | --- |
-| Project | [Barrick Gold](../) |
-| Article | 1 |
-| Authors | [Giacomo Scali](https://www.linkedin.com/in/giacomo-scali-abp01/), [Jacopo Foralosso](https://www.linkedin.com/in/jacopo-foralosso-6753a2256) |
-| Reviewer | [Salvatore Messina](https://www.linkedin.com/in/salvatore-messinaa) |
-| Published | May 8, 2026 |
+This folder contains the code supporting the Starting Finance Club PoliTo Research article *A Component-Driven Methodology for EBITDA Forecasting in Gold Mining*.
 
-This folder contains the code supporting the article *"A Component-Driven Methodology for EBITDA Forecasting in Gold Mining"*. The workflow decomposes Barrick Gold's five-year EBITDA forecast into cost of sales, physical production, and gold-price scenarios.
+## 👥 Authors
 
-## Purpose
+- [Giacomo Scali](https://www.linkedin.com/in/giacomo-scali-abp01/)
+- [Jacopo Foralosso](https://www.linkedin.com/in/jacopo-foralosso-6753a2256)
 
-The project separates the valuation workflow into reproducible analytical components:
+## 🎯 Purpose
 
-- cost-of-sales forecasting;
-- production forecasting from operating drivers;
-- option-implied gold-price volatility calibration;
-- Monte Carlo EBITDA distribution construction.
+The workflow decomposes Barrick Gold's five-year EBITDA forecast into cost of sales, mine-level production drivers, option-implied gold-price volatility, and Monte Carlo EBITDA scenarios.
 
-## Structure
+## 🗂️ Structure
 
 | Folder | Role |
 | --- | --- |
@@ -27,7 +19,7 @@ The project separates the valuation workflow into reproducible analytical compon
 | `production/` | Bottom-up production forecast using ore processed, average grade, recovery rate, and aggregation logic. |
 | `ebitda_montecarlo/` | Black-Scholes inversion of GLD option prices, maturity-level volatility calibration, GBM gold-price simulation, and final EBITDA distribution. |
 
-## Setup
+## ⚙️ Setup
 
 Python 3.10 or newer is recommended.
 
@@ -35,18 +27,24 @@ Python 3.10 or newer is recommended.
 pip install numpy pandas scipy matplotlib seaborn plotly pmdarima nelson_siegel_svensson ib_insync
 ```
 
-## Data
+## ▶️ Usage
 
-Operational inputs such as ore processed, average grade, recovery rate, gold production, and cost of sales were extracted from Barrick Gold Corporation quarterly reports:
+Open the notebook in the component you need and run the cells in order. The notebooks are publication-facing references for the article methodology.
+
+## 📊 Data
+
+Operational inputs were extracted from Barrick Gold Corporation quarterly reports:
 
 https://www.barrick.com/English/investors/
 
-The development workbook `Quarterly Data.xlsx` is not included in this repository because it contains private working notes. To reproduce the production workflow, rebuild the workbook from the public quarterly reports with one sheet per mine and a `Dati_P` aggregate sheet.
+The development workbook `Quarterly Data.xlsx` is not committed because it contains private working notes. GLD option-chain data were retrieved through the IB API on April 2, 2026 and are not redistributed here.
 
-Option-chain data for GLD were retrieved through the Interactive Brokers API on April 2, 2026 and are not redistributed here. The notebook contains the regeneration pipeline, which requires an active IB Gateway or TWS connection on `127.0.0.1:7497`.
-
-## Reproducibility Notes
+## 🧪 Reproducibility Notes
 
 - Public source documents must be downloaded again from the original providers.
 - Local working files and private spreadsheets are intentionally excluded from Git.
-- The notebooks are publication-facing references for the article methodology, not investment advice.
+- The material is for research and education only and does not provide investment advice.
+
+## 📚 Citation
+
+Scali, G. and Foralosso, J., *A Component-Driven Methodology for EBITDA Forecasting in Gold Mining: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.

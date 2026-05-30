@@ -1,24 +1,23 @@
-# Macro
+# Macro 🌍
 
-This folder contains macroeconomic research material for Starting Finance Club PoliTo.
+Macroeconomic research material for Starting Finance Club PoliTo.
 
-## Articles
+## 👥 Authors
+
+- Emanuele Ravello
+- Valentina Romeo
+
+## 📌 Article
 
 | Project | Topic | Materials |
 | --- | --- | --- |
-| [New Keynesian Cost-Push Shock Project](./NK_cost_push_prj/) | Monetary policy responses to a cost-push shock under alternative Taylor-rule regimes | Dynare model, MATLAB runner, exported IRF figures, results file, and CSV summary table |
+| [New Keynesian Cost-Push Shock Project](./NK_cost_push_prj/) | Monetary policy responses to a cost-push shock under alternative Taylor-rule regimes | Dynare model, MATLAB runner, exported IRF figures, results file, and CSV summary table. |
 
-## Current Project
+## 🎯 Purpose
 
-`NK_cost_push_prj` implements a linear New Keynesian model with a persistent cost-push shock. The same shock is simulated under three policy regimes:
+`NK_cost_push_prj` implements a linear New Keynesian model with a persistent cost-push shock. The same shock is simulated under accommodative, benchmark, and aggressive Taylor-rule regimes.
 
-- accommodative Taylor rule: `phi_pi = 1.10`;
-- benchmark Taylor rule: `phi_pi = 1.50`;
-- aggressive Taylor rule: `phi_pi = 2.00`.
-
-The model compares the responses of inflation, the output gap, and the nominal interest rate. The MATLAB runner calls Dynare, extracts the impulse responses, builds a summary table, and exports the chart and data files.
-
-## Repository Structure
+## 🗂️ Structure
 
 ```text
 Macro/
@@ -27,15 +26,10 @@ Macro/
     |-- README.md
     |-- run_nk_irfs.m
     |-- nk_costpush_three_regimes.mod
-    |-- .gitignore
     `-- Outputs/
-        |-- nk_irf_summary_table.csv
-        |-- nk_irfs_three_regimes.png
-        |-- nk_irfs_three_regimes.pdf
-        `-- nk_irfs_results.mat
 ```
 
-## How To Reproduce
+## ▶️ Reproduce
 
 Requirements:
 
@@ -49,10 +43,8 @@ cd Macro/NK_cost_push_prj
 run_nk_irfs
 ```
 
-The runner writes all reproducibility outputs to `Outputs/`.
+## 🧪 Notes
 
-## Notes
-
-- The included `Outputs/` folder contains the curated results extracted with the project.
+- The included `Outputs/` folder contains curated results extracted with the project.
 - Dynare-generated temporary files and local logs are ignored through the project `.gitignore`.
-- Local zip archives are ignored at repository level; version control should contain the extracted project folder.
+- The material is for research and education only and does not provide investment advice.

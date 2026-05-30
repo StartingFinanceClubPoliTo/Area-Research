@@ -1,5 +1,9 @@
-# Local archives used for staging uploads
+﻿# Local archives used for staging uploads
 *.zip
+
+# Local workflow and review artifacts
+workflow.md
+Revisione/
 
 # Python
 __pycache__/
@@ -10,6 +14,8 @@ env/
 
 # Jupyter / IDE
 .ipynb_checkpoints/
+.jupyter/
+.jupyter_runtime/
 .vscode/
 .idea/
 

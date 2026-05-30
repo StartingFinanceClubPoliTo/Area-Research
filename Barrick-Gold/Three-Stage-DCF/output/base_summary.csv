@@ -1,0 +1,11 @@
+metric,value
+mean,1978.853218
+median,1837.246676
+std,742.953980
+p5,1069.748232
+p25,1460.922028
+p75,2329.925983
+p95,3382.660523
+mc_se,5.253478
+terminal_value_share,0.728292
+explicit_cash_flow_share,0.271708

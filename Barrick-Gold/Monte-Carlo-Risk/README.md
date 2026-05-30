@@ -1,5 +1,7 @@
 # Monte Carlo Methods and Portfolio Simulation 🎲
 
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FMonte%20Carlo%20Methods%20and%20Portfolio%20Simulation.pdf&lang=it
+
 Code companion for the Starting Finance Club PoliTo Research article *Monte Carlo Methods and Portfolio Simulation: Theory, Convergence, and Applications to Risk Analysis*.
 
 ## 👥 Authors
@@ -70,4 +72,4 @@ python examples/run_reproducibility.py
 
 ## 📚 Citation
 
-Rostagno, A. and Florio, F., *Monte Carlo Methods and Portfolio Simulation: Theory, Convergence, and Applications to Risk Analysis*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+Rostagno, A. and Florio, F., *Monte Carlo Methods and Portfolio Simulation*, Starting Finance Club PoliTo Research, GitHub repository, published 01/05/2026, accessed 30/05/2026.

@@ -1,5 +1,7 @@
 # Markowitz Portfolio Optimization 📊
 
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FPortfolio%20Optimization%20-%20From%20Markowitz%20Theory%20to%20Practical%20Implementation.pdf&lang=it
+
 This folder contains the Python code supporting the Research article *Portfolio Optimization: From Markowitz Theory to Practical Implementation*.
 
 ## 👥 Author

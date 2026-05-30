@@ -1,6 +1,8 @@
-# OLS To Dynamic Correlations 📈
+# A Statistical Exploration of Financial Time Series 📈
 
-This folder reserves the Research GitHub location for the Barrick Gold Team 2 article.
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FFrom%20OLS%20to%20Dynamic%20Correlations.pdf&lang=it
+
+This folder reserves the Research GitHub location for Article 2 in the Barrick Gold track.
 
 ## 👥 Authors
 
@@ -9,7 +11,7 @@ This folder reserves the Research GitHub location for the Barrick Gold Team 2 ar
 
 ## 🎯 Purpose
 
-No executable code folder was supplied with the article materials currently available in the team workspace. The publication package is therefore organized around the Overleaf and Drive deliverables.
+The article builds a statistical and econometric pathway from OLS and robust inference through Quantile Regression, ARMA/ARIMA, and DCC-GARCH dynamic correlation modelling.
 
 ## 🗂️ Structure
 
@@ -18,18 +20,14 @@ OLS-Dynamic-Corr/
 `-- README.md
 ```
 
-## 🚧 Next Step
+## 🚧 Code Status
 
-If empirical code or reproducible chart scripts are added, place them here with:
-
-- a root `README.md` explaining setup, run commands, outputs, authors, and citation;
-- executable scripts rather than local notebook scratch;
-- README files in non-obvious `img` or `output` folders.
+No executable code folder was supplied with the article materials currently available in the team workspace. The publication package is therefore organized around the article PDF and Drive deliverables.
 
 ## 🧪 Reproducibility Notes
 
-This folder is a placeholder and should not be cited as a runnable replication package until code is added.
+If empirical code or reproducible chart scripts are added, place them here with executable scripts, setup instructions, outputs, authors, and citation notes.
 
 ## 📚 Citation
 
-Triassi, F. and Zoccatelli, G., *OLS To Dynamic Correlations: supporting repository placeholder*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+Triassi, F. and Zoccatelli, G., *A Statistical Exploration of Financial Time Series*, Starting Finance Club PoliTo Research, publication PDF at https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FFrom%20OLS%20to%20Dynamic%20Correlations.pdf&lang=it, published 24/04/2026.

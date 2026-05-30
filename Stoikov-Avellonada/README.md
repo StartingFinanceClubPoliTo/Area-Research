@@ -1,5 +1,7 @@
 # Stoikov-Avellonada 📉
 
+📄 Article PDFs are published on the Starting Finance Club PoliTo website: https://sfclubpolito.it/pubblicazioni. This GitHub repository contains code, data notes, and reproducibility assets.
+
 Research materials on market making, with a focus on simulation-based explanations of the Avellaneda-Stoikov framework for optimal bid and ask quoting.
 
 ## 👥 Authors

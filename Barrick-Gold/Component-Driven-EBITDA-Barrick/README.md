@@ -1,6 +1,8 @@
 # Component-Driven EBITDA Forecast for Barrick Gold 🧱
 
-This folder contains the code supporting the Starting Finance Club PoliTo Research article *A Component-Driven Methodology for EBITDA Forecasting in Gold Mining*.
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FEBITDA%20forecasting%20in%20gold%20mining.pdf&lang=it
+
+This folder contains the code supporting Article 5 in the Barrick Gold Research track and the Starting Finance Club PoliTo Research article *A Component-Driven Methodology for EBITDA Forecasting in Gold Mining*.
 
 ## 👥 Authors
 
@@ -47,4 +49,4 @@ The development workbook `Quarterly Data.xlsx` is not committed because it conta
 
 ## 📚 Citation
 
-Scali, G. and Foralosso, J., *A Component-Driven Methodology for EBITDA Forecasting in Gold Mining: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+Scali, G. and Foralosso, J., *Component-Driven EBITDA Forecast for Barrick Gold: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, published 08/05/2026, accessed 30/05/2026.

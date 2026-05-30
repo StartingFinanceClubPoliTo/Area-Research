@@ -1,5 +1,7 @@
 # Market Making Simulation: Naive vs Avellaneda-Stoikov 🎥
 
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FHigh-Frequency%20Market%20Making%20under%20Avellaneda-Stoikov.pdf&lang=it
+
 This folder contains reproducibility material for the first article in the Stoikov-Avellonada project. The notebook builds a cinematic simulation of the Avellaneda-Stoikov optimal market-making model, combining a 3D surface of the optimal bid spread with a four-panel trading simulation.
 
 ## 👥 Authors

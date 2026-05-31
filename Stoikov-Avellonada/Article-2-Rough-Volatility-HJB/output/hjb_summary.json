@@ -1,0 +1,371 @@
+{
+  "shared_params": {
+    "T": 1.0,
+    "trading_minutes": 390,
+    "n_steps": 390,
+    "s0": 100.0,
+    "gamma": 0.2,
+    "A": 14.0,
+    "k": 1.15,
+    "q_max": 6,
+    "lift_dim": 6,
+    "lambda_min": 3.0,
+    "lambda_max": 180.0,
+    "sigma0": 1.1,
+    "beta_vol": 0.75,
+    "reduced_kappa_ref": 1.35,
+    "y_grid_scale": 5.0,
+    "y_points": 121,
+    "liq_linear": 0.6,
+    "liq_vol": 0.28,
+    "liq_quad": 0.18,
+    "mc_paths": 2000,
+    "representative_seed": 211,
+    "mc_seed": 321
+  },
+  "hurst_values": [
+    0.2,
+    0.5,
+    0.8
+  ],
+  "cases": {
+    "0.20": {
+      "params": {
+        "T": 1.0,
+        "trading_minutes": 390,
+        "n_steps": 390,
+        "s0": 100.0,
+        "gamma": 0.2,
+        "A": 14.0,
+        "k": 1.15,
+        "q_max": 6,
+        "hurst": 0.2,
+        "hurst_values": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "lift_dim": 6,
+        "lambda_min": 3.0,
+        "lambda_max": 180.0,
+        "sigma0": 1.1,
+        "beta_vol": 0.75,
+        "reduced_kappa_ref": 1.35,
+        "y_grid_scale": 5.0,
+        "y_points": 121,
+        "liq_linear": 0.6,
+        "liq_vol": 0.28,
+        "liq_quad": 0.18,
+        "mc_paths": 2000,
+        "representative_seed": 211,
+        "mc_seed": 321
+      },
+      "regime_label": "anti-persistent / mean-reverting-like",
+      "markovian_lifting": {
+        "hurst": 0.2,
+        "lift_dim": 6,
+        "lambda_min": 3.0,
+        "lambda_max": 180.0,
+        "weights": [
+          0.4507500037740584,
+          0.25409409006331074,
+          0.14323639725905563,
+          0.08074436321853068,
+          0.045516728403707636,
+          0.025658417281336828
+        ],
+        "rates": [
+          3.0,
+          6.803799465798163,
+          15.430562390265125,
+          34.99548404928368,
+          79.36741855995483,
+          179.99999999999997
+        ],
+        "reduced_kappa_y": 1.35,
+        "reduced_eta_y": 0.45776831155216624,
+        "stationary_var_y": 0.0776117878004893,
+        "lag1_autocorr": 0.9839715794355415
+      },
+      "base_half_spread": 0.8017132503758974,
+      "hamiltonian_constant": 4.124655492101676,
+      "environment": {
+        "mean_realized_daily_vol": 1.0962926407256142,
+        "std_realized_daily_vol": 0.08051085779413814,
+        "mean_integrated_variance": 1.2090830022545205,
+        "std_integrated_variance": 0.15538703037517065
+      },
+      "naive": {
+        "mean_pnl": 4.954884599964169,
+        "std_pnl": 4.873401994092324,
+        "daily_sharpe": 1.0167198613965365,
+        "annualized_sharpe": 16.13992743765177,
+        "certainty_equivalent": 2.0520394053195954,
+        "mean_abs_preclose_inventory": 2.5035,
+        "mean_abs_inventory_path": 1.6979115384615384,
+        "mean_liquidation_cost": 3.9895675435462383,
+        "mean_trade_count": 11.0555,
+        "pnl_var_5pct": -4.114628909997726,
+        "pnl_expected_shortfall_5pct": -6.870310251094375
+      },
+      "hjb": {
+        "mean_pnl": 3.3086359547321376,
+        "std_pnl": 2.9808684174858633,
+        "daily_sharpe": 1.1099570632915126,
+        "annualized_sharpe": 17.620022132573535,
+        "certainty_equivalent": 2.351737507646616,
+        "mean_abs_preclose_inventory": 0.5465,
+        "mean_abs_inventory_path": 1.2900794871794872,
+        "mean_liquidation_cost": 0.6542874638677868,
+        "mean_trade_count": 12.2215,
+        "pnl_var_5pct": -1.818379398118657,
+        "pnl_expected_shortfall_5pct": -3.607213224812364
+      },
+      "representative_path": {
+        "seed": 218,
+        "naive_terminal_pnl": -1.348618060484303,
+        "hjb_terminal_pnl": 2.53323108601737,
+        "naive_preclose_inventory": 4.0,
+        "hjb_preclose_inventory": -1.0,
+        "naive_liquidation_cost": 6.289818410040103,
+        "hjb_liquidation_cost": 1.0324546025100256
+      },
+      "improvement_hjb_minus_naive": {
+        "mean_pnl": -1.6462486452320313,
+        "daily_sharpe": 0.09323720189497609,
+        "annualized_sharpe": 1.480094694921764,
+        "certainty_equivalent": 0.29969810232702043,
+        "mean_abs_preclose_inventory": -1.9569999999999999,
+        "mean_liquidation_cost": -3.3352800796784514,
+        "pnl_expected_shortfall_5pct": 3.2630970262820114
+      }
+    },
+    "0.50": {
+      "params": {
+        "T": 1.0,
+        "trading_minutes": 390,
+        "n_steps": 390,
+        "s0": 100.0,
+        "gamma": 0.2,
+        "A": 14.0,
+        "k": 1.15,
+        "q_max": 6,
+        "hurst": 0.5,
+        "hurst_values": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "lift_dim": 6,
+        "lambda_min": 3.0,
+        "lambda_max": 180.0,
+        "sigma0": 1.1,
+        "beta_vol": 0.75,
+        "reduced_kappa_ref": 1.35,
+        "y_grid_scale": 5.0,
+        "y_points": 121,
+        "liq_linear": 0.6,
+        "liq_vol": 0.28,
+        "liq_quad": 0.18,
+        "mc_paths": 2000,
+        "representative_seed": 211,
+        "mc_seed": 321
+      },
+      "regime_label": "Brownian benchmark",
+      "markovian_lifting": {
+        "hurst": 0.5,
+        "lift_dim": 6,
+        "lambda_min": 3.0,
+        "lambda_max": 180.0,
+        "weights": [
+          0.5632088256485759,
+          0.24833572556617312,
+          0.109498697080003,
+          0.04828127179399059,
+          0.021288666150447735,
+          0.0093868137608096
+        ],
+        "rates": [
+          3.0,
+          6.803799465798163,
+          15.430562390265125,
+          34.99548404928368,
+          79.36741855995483,
+          179.99999999999997
+        ],
+        "reduced_kappa_y": 1.35,
+        "reduced_eta_y": 0.5151535630899681,
+        "stationary_var_y": 0.09829007169047765,
+        "lag1_autocorr": 0.9871896749683682
+      },
+      "base_half_spread": 0.8017132503758974,
+      "hamiltonian_constant": 4.124655492101676,
+      "environment": {
+        "mean_realized_daily_vol": 1.0953530308122261,
+        "std_realized_daily_vol": 0.09037907260050106,
+        "mean_integrated_variance": 1.208732126245858,
+        "std_integrated_variance": 0.18040755587552665
+      },
+      "naive": {
+        "mean_pnl": 4.9567701780281785,
+        "std_pnl": 4.872168001219141,
+        "daily_sharpe": 1.0173643800433094,
+        "annualized_sharpe": 16.150158853980003,
+        "certainty_equivalent": 2.0562198067539508,
+        "mean_abs_preclose_inventory": 2.5035,
+        "mean_abs_inventory_path": 1.6979115384615384,
+        "mean_liquidation_cost": 3.9889956271563176,
+        "mean_trade_count": 11.0555,
+        "pnl_var_5pct": -4.098092568048253,
+        "pnl_expected_shortfall_5pct": -6.864911390488356
+      },
+      "hjb": {
+        "mean_pnl": 3.2439618028931685,
+        "std_pnl": 2.9978624944256174,
+        "daily_sharpe": 1.082091593234873,
+        "annualized_sharpe": 17.17767150895882,
+        "certainty_equivalent": 2.2078112004705512,
+        "mean_abs_preclose_inventory": 0.5715,
+        "mean_abs_inventory_path": 1.3082205128205129,
+        "mean_liquidation_cost": 0.6925244208635937,
+        "mean_trade_count": 12.2895,
+        "pnl_var_5pct": -1.4408171137642634,
+        "pnl_expected_shortfall_5pct": -3.7335299106237865
+      },
+      "representative_path": {
+        "seed": 250,
+        "naive_terminal_pnl": 5.543804238512323,
+        "hjb_terminal_pnl": 8.833362256852743,
+        "naive_preclose_inventory": 4.0,
+        "hjb_preclose_inventory": 1.0,
+        "naive_liquidation_cost": 6.719416846447202,
+        "hjb_liquidation_cost": 1.1398542116118004
+      },
+      "improvement_hjb_minus_naive": {
+        "mean_pnl": -1.71280837513501,
+        "daily_sharpe": 0.06472721319156349,
+        "annualized_sharpe": 1.0275126549788176,
+        "certainty_equivalent": 0.15159139371660046,
+        "mean_abs_preclose_inventory": -1.932,
+        "mean_liquidation_cost": -3.2964712062927237,
+        "pnl_expected_shortfall_5pct": 3.131381479864569
+      }
+    },
+    "0.80": {
+      "params": {
+        "T": 1.0,
+        "trading_minutes": 390,
+        "n_steps": 390,
+        "s0": 100.0,
+        "gamma": 0.2,
+        "A": 14.0,
+        "k": 1.15,
+        "q_max": 6,
+        "hurst": 0.8,
+        "hurst_values": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "lift_dim": 6,
+        "lambda_min": 3.0,
+        "lambda_max": 180.0,
+        "sigma0": 1.1,
+        "beta_vol": 0.75,
+        "reduced_kappa_ref": 1.35,
+        "y_grid_scale": 5.0,
+        "y_points": 121,
+        "liq_linear": 0.6,
+        "liq_vol": 0.28,
+        "liq_quad": 0.18,
+        "mc_paths": 2000,
+        "representative_seed": 211,
+        "mc_seed": 321
+      },
+      "regime_label": "persistent / trend-following-like",
+      "markovian_lifting": {
+        "hurst": 0.8,
+        "lift_dim": 6,
+        "lambda_min": 3.0,
+        "lambda_max": 180.0,
+        "weights": [
+          0.6562143509200306,
+          0.22632180532827437,
+          0.07805614049012381,
+          0.026920786794611084,
+          0.009284711709934002,
+          0.0032022047570259716
+        ],
+        "rates": [
+          3.0,
+          6.803799465798163,
+          15.430562390265125,
+          34.99548404928368,
+          79.36741855995483,
+          179.99999999999997
+        ],
+        "reduced_kappa_y": 1.35,
+        "reduced_eta_y": 0.556601010155659,
+        "stationary_var_y": 0.11474247574307408,
+        "lag1_autocorr": 0.9889566553032167
+      },
+      "base_half_spread": 0.8017132503758974,
+      "hamiltonian_constant": 4.124655492101676,
+      "environment": {
+        "mean_realized_daily_vol": 1.0945653791870262,
+        "std_realized_daily_vol": 0.0979024343861666,
+        "mean_integrated_variance": 1.208444415886281,
+        "std_integrated_variance": 0.19913780987970117
+      },
+      "naive": {
+        "mean_pnl": 4.958288183999698,
+        "std_pnl": 4.871166419275017,
+        "daily_sharpe": 1.0178851957056785,
+        "annualized_sharpe": 16.15842654630922,
+        "certainty_equivalent": 2.059458780436479,
+        "mean_abs_preclose_inventory": 2.5035,
+        "mean_abs_inventory_path": 1.6979115384615384,
+        "mean_liquidation_cost": 3.9884697775593247,
+        "mean_trade_count": 11.0555,
+        "pnl_var_5pct": -4.1243953902039285,
+        "pnl_expected_shortfall_5pct": -6.862086115249465
+      },
+      "hjb": {
+        "mean_pnl": 3.1726782408517353,
+        "std_pnl": 3.0692519471200694,
+        "daily_sharpe": 1.0336975574219898,
+        "annualized_sharpe": 16.409440006760967,
+        "certainty_equivalent": 2.1557832026143933,
+        "mean_abs_preclose_inventory": 0.5485,
+        "mean_abs_inventory_path": 1.3208064102564103,
+        "mean_liquidation_cost": 0.6668283250901582,
+        "mean_trade_count": 12.4895,
+        "pnl_var_5pct": -1.6573112150237235,
+        "pnl_expected_shortfall_5pct": -3.680693618306522
+      },
+      "representative_path": {
+        "seed": 235,
+        "naive_terminal_pnl": 1.087446921527878,
+        "hjb_terminal_pnl": 2.8861345717765046,
+        "naive_preclose_inventory": 6.0,
+        "hjb_preclose_inventory": 2.0,
+        "naive_liquidation_cost": 11.81571075283069,
+        "hjb_liquidation_cost": 2.4985702509435628
+      },
+      "improvement_hjb_minus_naive": {
+        "mean_pnl": -1.7856099431479624,
+        "daily_sharpe": 0.015812361716311285,
+        "annualized_sharpe": 0.2510134604517482,
+        "certainty_equivalent": 0.09632442217791448,
+        "mean_abs_preclose_inventory": -1.9549999999999998,
+        "mean_liquidation_cost": -3.3216414524691666,
+        "pnl_expected_shortfall_5pct": 3.1813924969429426
+      }
+    }
+  },
+  "figure_paths": {
+    "surfaces": "img/2/hjb_surfaces.png",
+    "simulation": "img/2/hjb_simulation.png"
+  },
+  "note": "The HJB uses a reduced scalar surrogate calibrated to the Markovian lifting, while the forward simulation uses the full lifted OU state. Stationary variance is matched exactly, and the traded mid-price remains conditionally diffusive."
+}

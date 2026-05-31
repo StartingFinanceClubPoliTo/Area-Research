@@ -1,6 +1,6 @@
 # Simulations 🧪
 
-Simulation stage for the Article 7 synthetic examples.
+Simulation stage for the Article 6 synthetic examples.
 
 ## 🎯 Role
 

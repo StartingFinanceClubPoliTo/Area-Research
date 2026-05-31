@@ -9,22 +9,29 @@ Research materials on market making, with a focus on simulation-based explanatio
 - Niccolò Soriano
 - Salvatore Messina
 
-## 📌 Article
+## 📌 Articles
 
-| Article | Topic | Materials |
-| --- | --- | --- |
-| [Market Making Simulation: Naive vs Avellaneda-Stoikov](./Article-1/) | Optimal quoting, inventory risk, cash dynamics, and PnL simulation | Companion notebook and reproducibility notes. |
+| Article | Topic | Publication | Materials |
+| --- | --- | --- | --- |
+| [Article 1: Market Making Simulation](./Article-1/) | Optimal quoting, inventory risk, cash dynamics, and PnL simulation | Published | Companion notebook and reproducibility notes. |
+| [Article 2: Rough Volatility and HJB](./Article-2-Rough-Volatility-HJB/) | Rough volatility, Volterra memory, Markovian lifting, reduced HJB, and flat-close inventory control | June 26, 2026 | Python scripts, article figures, generated outputs, and reproducibility notes. |
 
 ## 🗂️ Structure
 
 ```text
 Stoikov-Avellonada/
 |-- README.md
-`-- Article-1/
+|-- Article-1/
+|   |-- README.md
+|   `-- codice_articoloSF.ipynb
+`-- Article-2-Rough-Volatility-HJB/
     |-- README.md
-    `-- codice_articoloSF.ipynb
+    |-- requirements.txt
+    |-- src/
+    |-- img/
+    `-- output/
 ```
 
 ## 🧪 Notes
 
-The project is organized article by article. Each article folder contains its own README with requirements, execution notes, and the relevant code files. The available package is attributed to Niccolò Soriano and Salvatore Messina.
+The project is organized article by article. Each article folder contains its own README with requirements, execution notes, and the relevant code files. The available packages are attributed to Niccolò Soriano and Salvatore Messina.

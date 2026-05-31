@@ -47,8 +47,9 @@ python "1 Simulations/simulate_examples.py"
 
 - The script fixes the random seed and documents parameters near the top of the file.
 - Paths are synthetic and meant to visualize mechanisms discussed in the article.
+- The article is scheduled for publication on June 12, 2026.
 - The examples are educational research material and do not provide investment advice.
 
 ## 📚 Citation
 
-Sisto, D. and Armando, M., *Beyond Black-Scholes: Mathematical Foundations for Jump Processes, Stochastic Volatility, and Fourier Methods*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+Sisto, D. and Armando, M., *Beyond Black-Scholes: Mathematical Foundations for Jump Processes, Stochastic Volatility, and Fourier Methods*, Starting Finance Club PoliTo Research, GitHub repository, expected publication 12/06/2026, accessed 31/05/2026.

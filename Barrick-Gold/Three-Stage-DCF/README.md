@@ -56,4 +56,4 @@ All model inputs are synthetic and defined in the `ModelParams` dataclass. The r
 
 ## 📚 Citation
 
-Vesco, F., Pietra, L. and Moussaif, B., *Three-Stage DCF with Simulated Data: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+Vesco, F., Pietra, L. and Moussaif, B., *Three-Stage DCF with Simulated Data: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, published 30/05/2026, accessed 31/05/2026.

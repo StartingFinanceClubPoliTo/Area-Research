@@ -63,8 +63,9 @@ The pipeline generates processed datasets, descriptive tables, a correlation mat
 
 - Running the pipeline overwrites files with matching names in `data/` and `output/`.
 - Results may vary slightly if Yahoo Finance revises or extends upstream data.
+- The article is scheduled for publication on June 19, 2026.
 - The material is for research and education only and does not provide investment advice.
 
 ## 📚 Citation
 
-D'Amico, D. and Weisz, P., *Gold, Monetary Regimes, and Volatility Dynamics: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+D'Amico, D. and Weisz, P., *Gold, Monetary Regimes, and Volatility Dynamics: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, expected publication 19/06/2026, accessed 31/05/2026.

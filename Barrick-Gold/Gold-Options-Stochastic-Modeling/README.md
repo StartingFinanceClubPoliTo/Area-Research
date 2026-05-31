@@ -59,11 +59,11 @@ The `Data/` folder contains GLD option-chain inputs and generated diagnostics su
 
 ## 🧪 Reproducibility Notes
 
-- The publication date for this article has been postponed.
+- The article is scheduled for publication on July 3, 2026.
 - Notebook outputs can change if the option-chain data or calibration settings are modified.
 - Python bytecode caches and nested Git metadata from the source repository are excluded from the publication folder.
 - The material is for research and education only and does not provide investment advice.
 
 ## 📚 Citation
 
-0c0c and SalvatoreMessina11, *Advanced Stochastic Modeling for Gold Options: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, publication postponed, accessed 30/05/2026.
+0c0c and SalvatoreMessina11, *Advanced Stochastic Modeling for Gold Options: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, expected publication 03/07/2026, accessed 31/05/2026.

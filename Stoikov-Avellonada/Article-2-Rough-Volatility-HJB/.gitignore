@@ -1,0 +1,13 @@
+workflow.md
+Revisione/
+
+# Python runtime
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter / local scratch
+*.ipynb
+.ipynb_checkpoints/
+.jupyter/
+.jupyter_runtime/

@@ -1,6 +1,9 @@
 workflow.md
 Revisione/
 *.ipynb
+.venv/
+venv/
+env/
 .ipynb_checkpoints/
 .jupyter/
 .jupyter_runtime/

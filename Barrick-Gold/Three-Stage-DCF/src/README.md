@@ -1,6 +1,6 @@
 # Source Code 🧩
 
-This folder contains the executable Python script for the Three-Stage DCF article companion.
+This folder contains the executable Python script for the Three-Stage DCF with Simulated Data article companion.
 
 ## 📄 Files
 
@@ -16,4 +16,4 @@ Run the script from the project root so relative output paths remain stable:
 .\.venv\Scripts\python.exe src\generate_three_stage_dcf.py
 ```
 
-Use the root README for environment setup and interpretation notes.
+Use the project root README for environment setup, publication context, output interpretation, and citation.

@@ -1,6 +1,8 @@
 # Three-Stage DCF with Simulated Data 🧮
 
-This repository supports the Starting Finance Club PoliTo Research article on three-stage discounted cash flow valuation.
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThree-Stage%20DCF%20with%20Simulated%20Data.pdf&lang=it
+
+This code companion supports the Starting Finance Club PoliTo Research article on three-stage discounted cash flow valuation.
 
 ## 👥 Authors
 
@@ -11,10 +13,6 @@ This repository supports the Starting Finance Club PoliTo Research article on th
 ## 🎯 Purpose
 
 The code demonstrates how a three-stage DCF model works using fully simulated data. It is not a valuation of Barrick Gold and does not produce a share price, target price, or investment recommendation.
-
-## Published Article
-
-The related Starting Finance Club PoliTo publication is available here: [Three-Stage DCF with Simulated Data](https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThree-Stage%20DCF%20with%20Simulated%20Data.pdf&lang=it).
 
 ## 🗂️ Structure
 
@@ -60,4 +58,4 @@ All model inputs are synthetic and defined in the `ModelParams` dataclass. The r
 
 ## 📚 Citation
 
-Vesco, F., Pietra, L. and Moussaif, B., *Three-Stage DCF with Simulated Data*, Starting Finance Club PoliTo Research, published 30/05/2026. Available at: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThree-Stage%20DCF%20with%20Simulated%20Data.pdf&lang=it. Supporting code: GitHub repository, accessed 01/06/2026.
+Vesco, F., Pietra, L. and Moussaif, B., *Three-Stage DCF with Simulated Data: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, publication PDF at https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThree-Stage%20DCF%20with%20Simulated%20Data.pdf&lang=it, published 30/05/2026, accessed 01/06/2026.

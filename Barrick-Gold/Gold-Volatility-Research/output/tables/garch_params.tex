@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\caption{GARCH(1,1) estimates for gold and silver daily returns}
+\label{tab:garch-params}
+\begin{tabular}{lcccccc}
+\toprule
+Asset & $\hat{\mu}$ & $\hat{\omega}$ & $\hat{\alpha}$ & $\hat{\beta}$ & $\hat{\alpha}+\hat{\beta}$ & $\hat{\sigma}^2_{\infty}$ \\
+\midrule
+Gold & 0.0195 & 0.0128 & 0.0514 & 0.9380 & 0.9895 & 1.2110 \\
+Silver & -0.0091 & 0.0331 & 0.0550 & 0.9372 & 0.9922 & 4.2353 \\
+\bottomrule
+\end{tabular}
+\vspace{0.2cm}
+\begin{minipage}{0.9\textwidth}
+\footnotesize
+\textit{Notes}: Returns are expressed in percentage points. $\hat{\sigma}^2_{\infty} = \hat{\omega}/(1-\hat{\alpha}-\hat{\beta})$ when $\hat{\alpha}+\hat{\beta}<1$.
+\end{minipage}
+\end{table}

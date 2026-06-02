@@ -1,8 +1,7 @@
 import pandas as pd
 
 from config import DATA_PROCESSED_DIR, OUTPUT_DIR
-from utils import run_ols_formula
-
+from utils import run_ols_formula, save_csv, write_text_file
 
 DISPLAY_NAMES = {
     "Intercept": "Constant",
@@ -86,8 +85,7 @@ def export_table_latex(table, filename, caption, label):
         "\\end{table}\n"
     )
 
-    with open(OUTPUT_DIR / filename, "w", encoding="utf-8") as f:
-        f.write(wrapped)
+    write_text_file(wrapped, filename, subdir="tables")
 
 
 def main():
@@ -130,13 +128,13 @@ def main():
     silver_equity_table = build_regression_table(silver_equity_models, ["(1)", "(2)"])
     silver_dollar_table = build_regression_table(silver_dollar_models, ["(1)", "(2)"])
 
-    gold_bond_table.to_csv(OUTPUT_DIR / "gold_bond_regressions.csv", index=False)
-    gold_equity_table.to_csv(OUTPUT_DIR / "gold_equity_regressions.csv", index=False)
-    gold_dollar_table.to_csv(OUTPUT_DIR / "gold_dollar_regressions.csv", index=False)
+    save_csv(gold_bond_table, "gold_bond_regressions.csv", index=False)
+    save_csv(gold_equity_table, "gold_equity_regressions.csv", index=False)
+    save_csv(gold_dollar_table, "gold_dollar_regressions.csv", index=False)
 
-    silver_bond_table.to_csv(OUTPUT_DIR / "silver_bond_regressions.csv", index=False)
-    silver_equity_table.to_csv(OUTPUT_DIR / "silver_equity_regressions.csv", index=False)
-    silver_dollar_table.to_csv(OUTPUT_DIR / "silver_dollar_regressions.csv", index=False)
+    save_csv(silver_bond_table, "silver_bond_regressions.csv", index=False)
+    save_csv(silver_equity_table, "silver_equity_regressions.csv", index=False)
+    save_csv(silver_dollar_table, "silver_dollar_regressions.csv", index=False)
 
     export_table_latex(
         gold_bond_table,

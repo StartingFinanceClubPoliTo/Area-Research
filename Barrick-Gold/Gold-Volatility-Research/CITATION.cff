@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it using the metadata below."
+title: "Gold, Monetary Regimes, and Volatility Dynamics: From the Gold Standard to Econometric Evidence and Foundations for Heston-Type Models"
+type: software
+authors:
+  - family-names: "D'Amico"
+    given-names: "Davide"
+    affiliation: "Starting Finance Club PoliTo - Research member"
+  - family-names: "Weisz"
+    given-names: "Pietro"
+    affiliation: "Starting Finance Club PoliTo - Research member"
+abstract: "Supplementary code and reproducibility package for an empirical research project on gold, silver, the U.S. dollar, equity markets, and long-term U.S. Treasury yields."
+repository-code: "https://github.com/StartingFinanceClubPoliTo/Research"
+license: "MIT"
+version: "1.0.0"
+date-released: 2026-06-19
+keywords:
+  - gold
+  - silver
+  - macro-finance
+  - asset pricing
+  - volatility
+  - GARCH
+  - ARFIMA
+  - reproducibility

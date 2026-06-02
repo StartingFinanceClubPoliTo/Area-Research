@@ -9,6 +9,9 @@ SCRIPTS = [
     "04_gold_regressions.py",
     "05_silver_regressions.py",
     "06_stylized_facts.py",
+    "07_garch_estimation.py",
+    "08_arfima_analysis.py",
+    "09_regression_tables.py"
 ]
 
 

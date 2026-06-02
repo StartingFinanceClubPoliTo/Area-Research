@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from config import DATA_PROCESSED_DIR, FORMAL_NAMES
-from utils import export_latex_table, save_figure
-
+from utils import export_latex_table, save_csv, save_figure
 
 def main():
     df_def = pd.read_csv(DATA_PROCESSED_DIR / "asset_levels.csv", index_col=0, parse_dates=True)

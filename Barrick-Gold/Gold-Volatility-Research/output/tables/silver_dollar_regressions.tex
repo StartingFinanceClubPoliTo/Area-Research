@@ -1,0 +1,29 @@
+\begin{table}[H]
+\centering
+\caption{OLS regressions of daily silver returns on dollar, bond, and equity variables}
+\label{tab:ols_silver_dollar}
+\begin{tabular}{lcc}
+\toprule
+ & (1) & (2) \\
+\midrule
+$r^{usd}_t$ & -1.7854*** & -1.6229*** \\
+ & (0.0789) & (0.0860) \\
+$\Delta y^{10Y}_t$ &  & -0.0201*** \\
+ &  & (0.0062) \\
+$r^{equity}_t$ &  & 0.2625*** \\
+ &  & (0.0424) \\
+Constant &  &  \\
+ &  &  \\
+Observations & 4694 & 4694 \\
+$R^2$ & 0.182 & 0.205 \\
+Adjusted $R^2$ & 0.182 & 0.205 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.2cm}
+\begin{minipage}{0.9\textwidth}
+\footnotesize
+\textit{Notes}: Daily data. Heteroskedasticity--robust (HC1) standard errors in parentheses.\\
+$^*$ $p<0.10$, $^{**}$ $p<0.05$, $^{***}$ $p<0.01$.
+\end{minipage}
+\end{table}

@@ -1,9 +1,16 @@
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).resolve().parents[1]
+
 DATA_RAW_DIR = BASE_DIR / "data" / "raw"
 DATA_PROCESSED_DIR = BASE_DIR / "data" / "processed"
+
 OUTPUT_DIR = BASE_DIR / "output"
+OUTPUT_FIGURES_DIR = OUTPUT_DIR / "figures"
+OUTPUT_CSV_DIR = OUTPUT_DIR / "csv"
+OUTPUT_TABLES_DIR = OUTPUT_DIR / "tables"
+
 
 TICKERS = {
     "gold": "GLD",
@@ -13,11 +20,13 @@ TICKERS = {
     "dxy": "DX-Y.NYB",
 }
 
+
 START_DATE = "2000-01-01"
 END_DATE = "2024-12-31"
 FINAL_SAMPLE_START = "2006-05-01"
 FINAL_SAMPLE_END = "2024-12-31"
 ROLLING_WINDOW = 252
+
 
 FORMAL_NAMES = {
     "gold": "Gold (GLD)",

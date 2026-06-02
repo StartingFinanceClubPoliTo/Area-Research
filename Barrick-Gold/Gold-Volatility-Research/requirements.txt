@@ -1,8 +1,9 @@
-pandas
-numpy
+arch
+jinja2
 matplotlib
+numpy
+pandas
+scipy
 seaborn
 statsmodels
-scipy
 yfinance
-arch

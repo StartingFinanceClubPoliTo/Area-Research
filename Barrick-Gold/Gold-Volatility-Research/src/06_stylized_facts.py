@@ -13,7 +13,7 @@ def ar1_results(series: pd.Series):
     y = y.loc[y_lag.index]
 
     X = sm.add_constant(y_lag)
-    model = sm.OLS(y, X).fit()
+    model = sm.OLS(y, X).fit(cov_type="HC1")
 
     phi = model.params.iloc[1]
     se_phi = model.bse.iloc[1]

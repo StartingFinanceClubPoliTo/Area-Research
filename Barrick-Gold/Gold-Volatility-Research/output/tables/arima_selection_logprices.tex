@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{Selected ARIMA($p,1,q$) models for daily log prices of gold and silver, 2006--2024}
+\label{tab:arima-selection}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Asset & p_AIC & d_AIC & q_AIC & AIC_min & p_BIC & d_BIC & q_BIC & BIC_min \\
+\midrule
+Gold & 2 & 1 & 0 & -28909.4140 & 0 & 1 & 1 & -28889.9939 \\
+Silver & 1 & 1 & 0 & -23448.9424 & 1 & 1 & 0 & -23429.5802 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.2cm}
+\begin{minipage}{0.9\textwidth}
+\footnotesize
+\textit{Notes}: The table reports selected ARIMA($p,1,q$) specifications for daily log prices of GLD and SLV. A single unit difference is imposed to reflect the near-unit-root behaviour of log-price levels documented by the AR(1) benchmark. Selection is performed over a grid with $p,q \in \{0,1,2,3\}$ using AIC and BIC.
+\end{minipage}
+\end{table}

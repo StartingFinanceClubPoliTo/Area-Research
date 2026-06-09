@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{Selected ARMA($p,q$) models for daily gold and silver returns, 2006--2024}
+\label{tab:arma-selection}
+\begin{tabular}{lrrrrrr}
+\toprule
+Asset & p_AIC & q_AIC & AIC_min & p_BIC & q_BIC & BIC_min \\
+\midrule
+Gold & 2 & 0 & -28909.4140 & 0 & 1 & -28889.9939 \\
+Silver & 1 & 0 & -23448.9424 & 1 & 0 & -23429.5802 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.2cm}
+\begin{minipage}{0.9\textwidth}
+\footnotesize
+\textit{Notes}: Daily log returns on GLD and SLV. For each asset, the table reports the ARMA($p,q$) specification minimizing AIC and BIC over a grid with $p,q \in \{0,1,2,3\}$, excluding the degenerate ARMA(0,0) case. Models are estimated by maximum likelihood using the statsmodels ARIMA implementation with $d=0$.
+\end{minipage}
+\end{table}

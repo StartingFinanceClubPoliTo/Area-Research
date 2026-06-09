@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{AR($p$) order selection and joint significance tests for daily gold and silver returns, 2006--2024}
+\label{tab:arp-selection}
+\begin{tabular}{lrrrrrr}
+\toprule
+Asset & p_AIC & p_BIC & R2_AIC & R2_BIC & F_AIC & F_pvalue_AIC & F_BIC & F_pvalue_BIC \\
+\midrule
+Gold & 1 & 1 & 0.0000 & 0.0000 & 0.0144 & 0.9046 & 0.0144 & 0.9046 \\
+Silver & 1 & 1 & 0.0000 & 0.0000 & 0.0779 & 0.7801 & 0.0779 & 0.7801 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.2cm}
+\begin{minipage}{0.9\textwidth}
+\footnotesize
+\textit{Notes}: Daily log returns on GLD and SLV. For each asset, $p_{AIC}$ and $p_{BIC}$ denote the lag order minimizing Akaike and Bayesian information criteria in AR($p$) models estimated by OLS with heteroskedasticity--robust (HC1) standard errors. $F$ denotes the joint F-test of the null hypothesis that all lag coefficients are zero in the selected AR($p$) specification.
+\end{minipage}
+\end{table}

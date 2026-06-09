@@ -131,7 +131,6 @@ def main():
     save_csv(gold_bond_table, "gold_bond_regressions.csv", index=False)
     save_csv(gold_equity_table, "gold_equity_regressions.csv", index=False)
     save_csv(gold_dollar_table, "gold_dollar_regressions.csv", index=False)
-
     save_csv(silver_bond_table, "silver_bond_regressions.csv", index=False)
     save_csv(silver_equity_table, "silver_equity_regressions.csv", index=False)
     save_csv(silver_dollar_table, "silver_dollar_regressions.csv", index=False)

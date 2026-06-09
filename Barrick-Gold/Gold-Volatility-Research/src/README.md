@@ -14,6 +14,9 @@ Python scripts for the gold, silver, and macro-financial driver analysis.
 | `04_gold_regressions.py` | Estimates gold-return regressions. |
 | `05_silver_regressions.py` | Estimates silver-return regressions. |
 | `06_stylized_facts.py` | Produces stylized-fact diagnostics. |
+| `06b_ar_mean_models.py` | Selects AR(p) specifications for gold and silver returns. |
+| `06c_arma_mean_models.py` | Selects ARMA(p,q) specifications for gold and silver returns. |
+| `06d_arima_mean_models.py` | Selects ARIMA(p,1,q) specifications for gold and silver log prices. |
 | `07_garch_estimation.py` | Estimates GARCH(1,1) volatility models and exports conditional-volatility outputs. |
 | `08_arfima_analysis.py` | Computes ARFIMA-style/GPH long-memory diagnostics for absolute returns. |
 | `09_regression_tables.py` | Builds publication-facing regression tables in CSV and LaTeX formats. |

@@ -11,7 +11,7 @@ This folder supports the Starting Finance Club PoliTo Research article on gold, 
 
 The project provides a reproducible empirical pipeline for studying daily relationships among gold, silver, U.S. equities, the U.S. dollar, and long-term U.S. Treasury yields.
 
-The workflow covers data download, cleaning, descriptive statistics, OLS regressions, rolling correlations, stylized-fact diagnostics, GARCH volatility estimation, ARFIMA-style long-memory checks, and LaTeX-ready output generation.
+The workflow covers data download, cleaning, descriptive statistics, OLS regressions, rolling correlations, stylized-fact diagnostics, AR(p), ARMA, and ARIMA mean-model checks, GARCH volatility estimation, ARFIMA-style long-memory checks, and LaTeX-ready output generation.
 
 ## 🗂️ Structure
 
@@ -19,7 +19,7 @@ The workflow covers data download, cleaning, descriptive statistics, OLS regress
 | --- | --- |
 | `data/raw/` | Raw Yahoo Finance downloads and intermediate level datasets. |
 | `data/processed/` | Clean asset levels and return datasets used by the analysis scripts. |
-| `output/csv/` | Machine-readable regression, volatility, long-memory, and summary outputs. |
+| `output/csv/` | Machine-readable regression, AR/ARMA/ARIMA, volatility, long-memory, and summary outputs. |
 | `output/figures/` | Generated charts for correlations, quality checks, volatility, and long-memory diagnostics. |
 | `output/tables/` | LaTeX-ready tables for article integration. |
 | `src/` | Python scripts for the full empirical pipeline. |
@@ -64,6 +64,9 @@ The full pipeline runs the scripts in order:
 04_gold_regressions.py
 05_silver_regressions.py
 06_stylized_facts.py
+06b_ar_mean_models.py
+06c_arma_mean_models.py
+06d_arima_mean_models.py
 07_garch_estimation.py
 08_arfima_analysis.py
 09_regression_tables.py
@@ -73,13 +76,14 @@ Each numbered script can also be run independently from the project root.
 
 ## 📊 Outputs
 
-The pipeline writes processed datasets, descriptive statistics, correlation tables, rolling-correlation figures, OLS regression outputs, stylized-fact diagnostics, GARCH conditional-volatility estimates, ARFIMA/GPH long-memory outputs, and LaTeX-ready tables.
+The pipeline writes processed datasets, descriptive statistics, correlation tables, rolling-correlation figures, OLS regression outputs, stylized-fact diagnostics, AR(p), ARMA, and ARIMA selection outputs, GARCH conditional-volatility estimates, ARFIMA/GPH long-memory outputs, and LaTeX-ready tables.
 
 ## 🧪 Reproducibility Notes
 
 - Running the pipeline overwrites files with matching names in `data/` and `output/`.
 - The first step relies on Yahoo Finance, so results may vary if upstream data are revised.
 - Preserved raw data are included to make the pre-publication outputs inspectable without repeating the download step.
+- The AR(p), ARMA, and ARIMA modules document conditional-mean diagnostics only; they are not forecasting or investment recommendation tools.
 - The article is scheduled for publication on June 19, 2026.
 - The material is for research and education only and does not provide investment advice.
 

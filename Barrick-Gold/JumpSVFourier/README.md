@@ -4,7 +4,7 @@ This folder provides reproducible synthetic examples for the Starting Finance Cl
 
 ## 👥 Authors
 
-- Davide Sisto
+- [Davide Sisto](https://github.com/sistox5)
 - Matteo Armando
 
 ## 🎯 Purpose

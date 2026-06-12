@@ -1,6 +1,6 @@
 # Hawkes Calibration Notes
 
-These notes reserve the Hawkes-process discussion for the calibration-focused option-modelling article that already treats Heston and Bates.
+These notes reserve the Hawkes-process discussion for the calibration-focused option-modelling article that already treats Black-Scholes, Heston, and Bates.
 
 ## Role
 
@@ -19,4 +19,4 @@ A practical calibration workflow would need:
 
 ## Current Status
 
-This repository currently publishes Heston and Bates calibration assets. It does not yet include a fitted Hawkes model, a Hawkes pricing engine, or Hawkes residual diagnostics. Any future implementation should be added only when the article includes reproducible calibration code or clearly labelled conceptual material.
+This repository currently publishes Heston and Bates calibration assets plus a Bates-Hawkes stationary-intensity proxy. It does not yet include a full event-dependent Hawkes option-pricing engine. Any future implementation should keep this distinction explicit and add residual diagnostics only when the exact pricing or simulation-based calibration method is reproducible.

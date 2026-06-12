@@ -17,6 +17,7 @@ The project implements Black-Scholes, Heston, and Bates option-pricing models, w
 - Uniform versus Chebyshev sampling for volatility-surface reconstruction.
 - Vega-weighted calibration for stochastic-volatility and jump-diffusion models.
 - Bates jump-diffusion extension built on the Heston implementation.
+- Hawkes-process material is reserved as a calibration-oriented extension note rather than as part of the Article 6 synthetic examples.
 
 ## 🗂️ Structure
 
@@ -29,6 +30,7 @@ The project implements Black-Scholes, Heston, and Bates option-pricing models, w
 | `Heston.py` | Heston characteristic functions, pricing, and calibration logic. |
 | `Bates.py` | Bates characteristic function, pricing, and jump calibration logic. |
 | `Sampling.py` | Sampling, filtering, and interpolation utilities. |
+| `Hawkes-Calibration-Notes.md` | Conceptual bridge from Bates jump intensity to possible self-exciting jump-intensity calibration extensions. |
 | `Data/` | GLD option datasets and generated visual diagnostics. |
 | `requirements.txt` | Python dependencies inferred from the code and original README. |
 

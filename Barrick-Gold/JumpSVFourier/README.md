@@ -1,6 +1,6 @@
 # Beyond Black-Scholes Synthetic Examples 🚀
 
-This folder provides reproducible synthetic examples for the Starting Finance Club PoliTo Research article on jump processes, stochastic volatility, Fourier methods, and Hawkes dynamics.
+This folder provides reproducible synthetic examples for the Starting Finance Club PoliTo Research article on jump processes, stochastic volatility, and Fourier methods.
 
 ## 👥 Authors
 

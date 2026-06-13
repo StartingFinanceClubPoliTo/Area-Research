@@ -14,6 +14,18 @@ if str(ROOT) not in sys.path:
 from Hawkes import Hawkes  # noqa: E402
 
 
+def _cumulative_step(events, horizon):
+    events = np.asarray(events, dtype=float)
+    x = np.concatenate(([0.0], events, [horizon]))
+    y = np.concatenate(([0], np.arange(1, len(events) + 1), [len(events)]))
+    return x, y
+
+
+def _cumulative_on_grid(events, grid):
+    events = np.asarray(events, dtype=float)
+    return np.searchsorted(events, grid, side="right")
+
+
 def build_diagnostics():
     horizon = 10.0
     lambda0 = 0.55
@@ -32,6 +44,8 @@ def build_diagnostics():
             "time": grid,
             "poisson_intensity": poisson_intensity,
             "hawkes_intensity": hawkes_intensity,
+            "poisson_cumulative_jumps": _cumulative_on_grid(poisson_events, grid),
+            "hawkes_cumulative_jumps": _cumulative_on_grid(hawkes_events, grid),
         }
     )
 
@@ -50,17 +64,19 @@ def build_diagnostics():
     axes[0].legend(loc="upper right")
     axes[0].grid(alpha=0.25)
 
+    poisson_step_x, poisson_step_y = _cumulative_step(poisson_events, horizon)
+    hawkes_step_x, hawkes_step_y = _cumulative_step(hawkes_events, horizon)
     axes[1].step(
-        poisson_events,
-        np.arange(1, len(poisson_events) + 1),
+        poisson_step_x,
+        poisson_step_y,
         where="post",
         color="#365f91",
         linewidth=2.0,
         label="Poisson jump count",
     )
     axes[1].step(
-        hawkes_events,
-        np.arange(1, len(hawkes_events) + 1),
+        hawkes_step_x,
+        hawkes_step_y,
         where="post",
         color="#b73f32",
         linewidth=2.0,
@@ -68,6 +84,7 @@ def build_diagnostics():
     )
     axes[1].set_xlabel("Time")
     axes[1].set_ylabel("Cumulative jumps")
+    axes[1].set_xlim(0.0, horizon)
     axes[1].legend(loc="upper left")
     axes[1].grid(alpha=0.25)
 

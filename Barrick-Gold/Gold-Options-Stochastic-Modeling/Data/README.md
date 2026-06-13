@@ -16,8 +16,10 @@ This folder contains GLD option-chain inputs and generated visual diagnostics fo
 | `bates_residual_heatmap.png` | Bates calibration residual heatmap. |
 | `bates_volatility_smile.png` | Bates model volatility-smile diagnostic. |
 | `error_heatmaps_comparison.png` | Interpolation or calibration error comparison. |
-| `hawkes_intensity_comparison.png` | Constant Bates intensity versus self-exciting Hawkes intensity and jump-count comparison. |
-| `hawkes_intensity_comparison.csv` | Time-grid data behind the Hawkes intensity comparison figure. |
+| `bates_hawkes_residual_heatmap.png` | Bates-Hawkes stationary-intensity proxy residual heatmap. |
+| `bates_hawkes_volatility_smile.png` | Bates-Hawkes stationary-intensity proxy volatility-smile diagnostic. |
+| `hawkes_intensity_comparison.png` | Constant Bates intensity versus self-exciting Hawkes intensity and full-horizon jump-count comparison. |
+| `hawkes_intensity_comparison.csv` | Time-grid intensity and cumulative-jump data behind the Hawkes comparison figure. |
 | `hawkes_exact_vs_proxy.png` | Exact event-dependent Bates-Hawkes smile versus the stationary-intensity proxy, plus branching-ratio sensitivity. |
 | `hawkes_exact_smile.csv` | Data behind the exact-vs-proxy Hawkes smile diagnostic. |
 | `hawkes_exact_constvol_params.json` | Calibrated exact constant-volatility Bates-Hawkes parameters for the Chebyshev GLD surface. |

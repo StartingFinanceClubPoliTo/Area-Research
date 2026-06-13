@@ -10,5 +10,8 @@ This folder contains script entrypoints that mirror the article structure:
 | `03_calibrate_bates.py` | Runs the Bates calibration wrapper. |
 | `04_calibrate_bates_hawkes_proxy.py` | Runs the stationary-intensity Bates-Hawkes proxy calibration. |
 | `05_generate_hawkes_diagnostics.py` | Generates the Hawkes intensity comparison figure used by the article. |
+| `06_calibrate_hawkes_exact.py` | Runs the exact constant-volatility Bates-Hawkes calibration. |
+| `07_generate_hawkes_exact_diagnostics.py` | Generates exact-vs-proxy Hawkes smile diagnostics and the Monte-Carlo cross-check. |
+| `08_generate_path_simulations.py` | Generates GBM, Heston, Bates, and exact Bates-Hawkes five-year path diagnostics. |
 
 Run scripts from the `Gold-Options-Stochastic-Modeling/` root folder so relative data and output paths stay stable.

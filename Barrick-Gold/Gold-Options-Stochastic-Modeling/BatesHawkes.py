@@ -17,8 +17,8 @@ class BatesHawkes(Bates):
 
     This is a calibration-oriented proxy. It lets the same dataset, vega-weighted
     objective, and SLSQP workflow compare a constant-intensity Bates jump layer
-    with a stationary self-exciting jump-intensity candidate, while clearly
-    leaving exact Hawkes pricing to future work.
+    with a stationary self-exciting jump-intensity candidate. The exact
+    event-dependent counterpart is implemented separately in BatesHawkesExact.py.
     """
 
     @staticmethod

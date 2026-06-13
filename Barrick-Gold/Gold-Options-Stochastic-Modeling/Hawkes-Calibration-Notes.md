@@ -19,4 +19,40 @@ A practical calibration workflow would need:
 
 ## Current Status
 
-This repository currently publishes Heston and Bates calibration assets plus a Bates-Hawkes stationary-intensity proxy. It does not yet include a full event-dependent Hawkes option-pricing engine. Any future implementation should keep this distinction explicit and add residual diagnostics only when the exact pricing or simulation-based calibration method is reproducible.
+This repository publishes Heston and Bates calibration assets, a Bates-Hawkes
+stationary-intensity proxy, **and** a full event-dependent Hawkes
+option-pricing engine in `BatesHawkesExact.py`.
+
+The exact engine (`BatesHawkesExact`) prices European options under a
+self-exciting jump intensity
+
+```text
+dlambda_t = beta (lambda_bar - lambda_t) dt + alpha dN_t
+```
+
+through the affine characteristic function of the compensated jump term (a
+Riccati-type ODE for `A` and `B`), composed with a Black-Scholes or Heston
+diffusion characteristic function and inverted with the same Carr-Madan routine
+used elsewhere. It reduces to Bates (constant intensity, `alpha = 0` with
+`lambda0 = lambda_bar`) and to Black-Scholes (no jumps), and a Monte-Carlo
+simulation (Ogata thinning) reproduces the Fourier price within confidence
+intervals.
+
+### Calibrating the exact engine
+
+`BatesHawkesExact.calibrate_hawkes_exact_constvol` fits the constant-volatility
+model `[sigma, lambda_bar, alpha, beta, mu_J, sigma_J]` with vega weighting,
+mirroring the other calibration wrappers. Practical guidance:
+
+- tie the initial intensity to the baseline (`lambda0 = lambda_bar`) in the
+  first pass to avoid the `lambda0` / `lambda_bar` identifiability issue;
+- bound the branching ratio `alpha / beta` below one (stationarity); the
+  objective rejects `alpha >= beta` outright;
+- seed `lambda_bar`, `mu_J`, `sigma_J` from the calibrated Bates parameters and
+  start `alpha` small (a few tens of percent of `beta`);
+- exact pricing is semi-analytic (one ODE solve per Fourier node), so the exact
+  calibration is materially heavier than the proxy and should be multi-started
+  only once the pricer is confirmed stable on the target surface.
+
+The proxy remains a valid, fast baseline and must continue to be labelled as a
+proxy, not a true Hawkes model.

@@ -26,6 +26,7 @@ The project implements Black-Scholes, Heston, Bates, and Bates-Hawkes calibratio
 | `Black and Scholes Calibration.ipynb` | Black-Scholes calibration, option-chain cleaning, implied-volatility analysis, and sampling comparison. |
 | `Heston Calibration.ipynb` | Heston calibration with global and local optimizers. |
 | `Bates Calibration.ipynb` | Bates jump-diffusion calibration and diagnostics. |
+| `Bates-Hawkes Proxy Calibration.ipynb` | Stationary-intensity proxy calibration and diagnostics for clustered jump risk. |
 | `BnS.py` | Black-Scholes pricing and implied-volatility utilities. |
 | `Heston.py` | Heston characteristic functions, pricing, and calibration logic. |
 | `Bates.py` | Bates characteristic function, pricing, and jump calibration logic. |
@@ -54,6 +55,7 @@ Open the calibration notebook matching the model you want to inspect and run the
 Black and Scholes Calibration.ipynb
 Heston Calibration.ipynb
 Bates Calibration.ipynb
+Bates-Hawkes Proxy Calibration.ipynb
 ```
 
 The notebooks rely on the Python modules in the root folder and the data files in `Data/`. Script entrypoints are also available:

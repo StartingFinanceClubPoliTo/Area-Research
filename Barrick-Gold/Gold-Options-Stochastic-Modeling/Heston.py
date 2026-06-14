@@ -99,8 +99,10 @@ class Heston:
         """
         v0, kappa, theta, sigma, rho = params
         
-        # Hard bounds to prevent negative physical parameters
+        # Hard bounds to prevent negative physical parameters.
         if v0 <= 0 or kappa <= 0 or theta <= 0 or sigma <= 0 or not (-0.999 <= rho <= 0.999):
+            return 1e6
+        if 2.0 * kappa * theta - sigma ** 2 < 0.0:
             return 1e6
 
         error = 0.0

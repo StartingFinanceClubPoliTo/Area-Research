@@ -36,6 +36,7 @@ for _p in (HERE, ROOT):
 from BatesHawkesExact import BatesHawkesExact  # noqa: E402
 from Bates import Bates  # noqa: E402
 from BnS import BnS  # noqa: E402
+from Heston import Heston  # noqa: E402
 from Hawkes import ExactHawkesCalibration  # noqa: E402
 
 
@@ -369,6 +370,37 @@ def test_full_calibration_objective_rejects_nonstationary_branching():
     params = [V0, KAPPA, THETA, SIGMA_V, RHO, 0.9, 0.6, 1.0, BETA, MU_J, SIGMA_J]
     value = ExactHawkesCalibration.objective_heston(params, df, S0, Q, cos_N=128)
     assert value >= 1e8
+
+
+def test_full_calibration_objective_rejects_feller_violation():
+    """The full objective rejects Heston variance parameters violating Feller."""
+    import pandas as pd
+
+    df = pd.DataFrame({"K": [100.0], "T": [T], "rate": [R],
+                       "price": [6.4], "vega": [10.0]})
+    # 2 * kappa * theta - xi^2 = 2 * 0.2 * 0.02 - 1.0 < 0
+    params = [0.04, 0.2, 0.02, 1.0, RHO, 0.9, 0.6, 0.5, BETA, MU_J, SIGMA_J]
+    value = ExactHawkesCalibration.objective_heston(params, df, S0, Q, cos_N=128)
+    assert value >= 1e8
+
+
+def test_heston_and_bates_objectives_reject_feller_violation():
+    """Standalone Heston/Bates objectives also reject Feller violations."""
+    import pandas as pd
+
+    df = pd.DataFrame({"K": [100.0], "T": [T], "rate": [R],
+                       "price": [6.4], "vega": [10.0]})
+    bad_heston = [0.04, 0.2, 0.02, 1.0, RHO]
+    bad_bates = [0.04, 0.2, 0.02, 1.0, RHO, LAMBDA_CONST, MU_J, SIGMA_J]
+    assert Heston.heston_objective(bad_heston, df, S0, Q) >= 1e6
+    assert Bates.bates_objective(bad_bates, df, S0, Q) >= 1e6
+
+
+def test_hawkes_calibrator_projects_default_seed_inside_feller_region():
+    """Invalid Bates diffusion seeds are adjusted before Hawkes calibration."""
+    seed = [0.07997, 1.71643, 0.04410, 0.71955, 0.22059]
+    adjusted = ExactHawkesCalibration._feller_admissible_diffusion_seed(seed)
+    assert 2.0 * adjusted[1] * adjusted[2] - adjusted[3] ** 2 >= 0.0
 
 
 # --- Standalone runner -------------------------------------------------------

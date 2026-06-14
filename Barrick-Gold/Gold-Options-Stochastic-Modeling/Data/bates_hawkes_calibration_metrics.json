@@ -19,5 +19,7 @@
   "bates_limit_objective": 4.386046862813575e-06,
   "branching_ratio": 0.020002235012268527,
   "minimum_branching_ratio": 0.02,
-  "observations": 64
+  "observations": 64,
+  "status": "legacy_pre_feller_guard",
+  "interpretation": "Metrics correspond to the stored legacy parameter snapshot. Regenerate with the current Feller-constrained objective before using as final publication numbers."
 }

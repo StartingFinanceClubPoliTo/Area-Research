@@ -1,5 +1,5 @@
 {
-  "model": "Full affine Bates-Hawkes (Heston variance + Hawkes price jumps)",
+  "model": "Legacy full affine Bates-Hawkes snapshot (pre-Feller-guard output)",
   "parameterization": "lambda0 and lambda_bar are calibrated separately; alpha=branching_ratio*beta enforces stationarity",
   "parameters": {
     "v0": 0.08009997931036386,
@@ -34,5 +34,6 @@
     "final_cos_N": 256,
     "minimum_branching_ratio": 0.02
   },
-  "interpretation": "The unconstrained call-price optimum collapses to the Bates limit. The reported full self-exciting calibration therefore enforces the stated minimum branching ratio and reports the Bates-limit objective for comparison."
+  "status": "legacy_pre_feller_guard",
+  "interpretation": "This snapshot predates the current code guard that rejects Heston variance parameters with negative Feller gap. Regenerate the calibration with the current code before treating these numbers as the final Feller-constrained output."
 }

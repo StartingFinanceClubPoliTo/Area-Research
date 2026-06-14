@@ -66,7 +66,7 @@ python tests/test_hawkes_exact.py
 
 ## Interpretation
 
-The GLD call surface used here prefers the Bates boundary when self-excitation is left unconstrained. The reported full calibration therefore enforces and discloses a minimum branching ratio of `0.02`, while also reporting the unconstrained Bates-limit objective. This is an identification result, not evidence that Hawkes clustering always improves option-surface fit.
+The calibration code enforces positivity, the Heston Feller condition, correlation bounds, and Hawkes stationarity. The GLD call surface used here remains close to the Bates boundary when self-excitation is left unconstrained, so the Hawkes layer should be read as a coherent clustered-jump scenario extension rather than automatic evidence of a better cross-sectional fit.
 
 The generated five-year Bates-Hawkes paths use the calibrated Heston variance state and event-driven Hawkes jump arrivals. Separate figures show stochastic volatility, Hawkes jump intensity/counts, and Bates Poisson intensity/counts on readable scales.
 

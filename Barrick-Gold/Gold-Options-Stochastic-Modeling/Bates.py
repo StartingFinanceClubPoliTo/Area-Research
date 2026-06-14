@@ -80,8 +80,10 @@ class Bates(Heston):
         """
         v0, kappa, theta, sigma, rho, lambd, mu_J, sigma_J = params
         
-        # Hard bounds to prevent negative physical parameters and invalid correlations
+        # Hard bounds to prevent negative physical parameters and invalid correlations.
         if v0 <= 0 or kappa <= 0 or theta <= 0 or sigma <= 0 or not (-0.999 <= rho <= 0.999):
+            return 1e6
+        if 2.0 * kappa * theta - sigma ** 2 < 0.0:
             return 1e6
         if lambd < 0 or sigma_J <= 0: # Jump intensity and volatility must be strictly positive
             return 1e6

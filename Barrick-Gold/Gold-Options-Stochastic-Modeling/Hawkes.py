@@ -698,6 +698,20 @@ class ExactHawkesCalibration:
             "sigma_J": sigma_j,
         }
 
+    @staticmethod
+    def _feller_gap(kappa, theta, xi):
+        return 2.0 * float(kappa) * float(theta) - float(xi) ** 2
+
+    @classmethod
+    def _feller_admissible_diffusion_seed(cls, diffusion_seed, safety=0.98):
+        """Return a nearby diffusion seed satisfying the Heston Feller condition."""
+        seed = np.asarray(diffusion_seed, dtype=float).copy()
+        if seed.shape != (5,):
+            raise ValueError("diffusion_seed must contain 5 Heston parameters.")
+        if cls._feller_gap(seed[1], seed[2], seed[3]) < 0.0:
+            seed[3] = safety * np.sqrt(max(2.0 * seed[1] * seed[2], 1e-12))
+        return seed
+
     @classmethod
     def objective_heston(
         cls, params, df_market, S0, q=0.0, n_steps=None, cos_N=192
@@ -709,6 +723,8 @@ class ExactHawkesCalibration:
             return 1e8
 
         if p["v0"] <= 0 or p["kappa"] <= 0 or p["theta"] <= 0 or p["xi"] <= 0:
+            return 1e8
+        if 2.0 * p["kappa"] * p["theta"] - p["xi"] ** 2 < 0.0:
             return 1e8
         if not -0.999 < p["rho"] < 0.999:
             return 1e8
@@ -791,7 +807,7 @@ class ExactHawkesCalibration:
         if not 0.0 <= min_branching < 0.95:
             raise ValueError("min_branching must lie in [0, 0.95).")
 
-        diffusion_seed = bates_seed[:5]
+        diffusion_seed = cls._feller_admissible_diffusion_seed(bates_seed[:5])
         jump_seed = bates_seed[5:]
         hawkes_bounds = [
             (1e-3, 5.0),

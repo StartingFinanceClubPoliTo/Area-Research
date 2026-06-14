@@ -243,6 +243,8 @@ Once rates are assigned, each option record contains the quantities needed by th
 \]
 The last component, \(\vega_i\), becomes important in the calibration objective. It converts price errors into a first-order approximation of implied-volatility errors.
 
+\clearpage
+
 \section{Sampling the Surface}
 
 Full option surfaces are often irregular. Maturities are listed on discrete expiration dates, strikes are not evenly spaced, and market data can be sparse in some regions. Using the entire filtered surface at every calibration step is possible in principle, but it makes Fourier pricing expensive and can make local refinement more sensitive to noisy or redundant contracts. The article therefore compares two sampling strategies:
@@ -257,7 +259,7 @@ The role of Chebyshev sampling is not only graphical. It gives a criterion for c
 \IfFileExists{img/diagnostics/sampling_comparison.png}{%
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.64\textwidth]{img/diagnostics/sampling_comparison.png}
+    \includegraphics[width=1.0\textwidth]{img/diagnostics/sampling_comparison.png}
     \caption{Uniform and Chebyshev samples on the filtered GLD option surface.}
     \label{fig:sampling}
 \end{figure}
@@ -270,13 +272,11 @@ The filtered dataset is visualized as an implied-volatility surface. This is the
 \IfFileExists{img/diagnostics/volatility_surface_3d.png}{%
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.74\textwidth]{img/diagnostics/volatility_surface_3d.png}
+    \includegraphics[width=1.0\textwidth]{img/diagnostics/volatility_surface_3d.png}
     \caption{Filtered GLD implied-volatility surface used for calibration.}
     \label{fig:iv-surface}
 \end{figure}
 }{}
-
-\clearpage
 
 The surface is not interpreted as a deterministic forecast of future gold prices. It is a market-implied object: it summarizes option prices through the Black--Scholes volatility parameter. The calibration problem is therefore to choose model parameters that reproduce this surface as closely as possible under the chosen stochastic dynamics. Once calibrated, those parameters can become inputs for a Monte Carlo gold-price path generator, replacing a single-volatility GBM block with a stochastic-volatility or jump--stochastic-volatility path model. This is the bridge to the next chapter: fitting the surface is not just a finance problem, but a constrained optimization problem.
 
@@ -920,7 +920,30 @@ with \(\alpha=n\beta\), and the admissible region
 Optimizing the branching ratio directly and mapping \(\alpha=n\beta\) enforces \(\alpha<\beta\) by construction. This avoids asking SLSQP to repair unstable Hawkes proposals after they have already entered the expensive pricing routine.
 
 \paragraph{Bates--Hawkes calibration routes.}
-The code exposes several Bates--Hawkes routes, but they answer different empirical questions. The exponential point-process likelihood estimates baseline intensity, excitation size, and decay from observed jump times, with the stationarity restriction \(\alpha/\beta<1\). The rough power-law likelihood uses a long-memory kernel to test whether event clustering decays more slowly than an exponential kernel; it is useful for event diagnostics, but it does not directly give the finite-dimensional affine option pricer used in the model comparison. The exact constant-volatility calibration prices options with the exponential Hawkes transform but replaces the Heston variance block by one diffusion volatility, so it is mainly a validation benchmark. The final candidate for the option-model stack is therefore the full affine Heston--Hawkes specification with an exponential kernel: it keeps the same stochastic-variance block as Heston and Bates, enforces Feller admissibility, enforces Hawkes stationarity through \(0\leq n<1\), and calibrates to the same GLD call sample.
+The code exposes three Bates--Hawkes routes before the final option-model choice is made, and they are not interchangeable. The exact calibration prices options with the affine Hawkes transform, but in the benchmark version it uses one constant volatility instead of the Heston variance state. The exponential-kernel route estimates a Markovian self-exciting intensity,
+\[
+    \phi(t)=\alpha e^{-\beta t}, \qquad n=\frac{\alpha}{\beta}<1,
+\]
+so it has a simple stationarity condition and can be embedded in the affine Bates--Hawkes pricer. The rough-kernel route replaces the exponential decay with a slower power-law decay; it is useful for checking whether jump clustering has long memory, but it is less convenient for the finite-dimensional Fourier/COS pricing stack used in this report. Table~\ref{tab:hawkes-methods} reports the three calibration routes side by side.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.3cm}>{\RaggedRight\arraybackslash}p{2.9cm}>{\RaggedRight\arraybackslash}p{4.6cm}>{\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Route} & \textbf{Target} & \textbf{Parameters and error} & \textbf{Interpretation} \\
+\midrule
+Exact constant-volatility Hawkes & GLD option prices, COS pricing, no CIR variance block. & \(\sigma=0.2341\), \(\lambda_0=\bar{\lambda}=3.5270\), \(n=0.0097\), \(\mu_J=-0.0811\), \(\sigma_J=0.0649\). Vega-weighted objective \(=1.947\cdot10^{-4}\). & Validates the exact Hawkes option-pricing transform, but it is not the final model because it removes stochastic variance. \\
+Exponential kernel & Event-time self-excitation benchmark with Markovian decay. & \(\lambda_0=0.3976\), \(\alpha=0.5631\), \(\beta=1.4497\), \(n=0.3884\). Log-likelihood \(=-67.75\), AIC \(=141.51\), BIC \(=147.36\). & Preferred kernel form for the final Bates--Hawkes model because it is stable, finite-dimensional, and compatible with affine pricing. \\
+Rough power-law kernel & Event-time long-memory benchmark. & \(\lambda_0=0.3868\), \(\alpha=0.1740\), tail index \(=0.9797\), cutoff \(=0.4237\), \(n=0.4119\). Log-likelihood \(=-68.03\), AIC \(=144.05\), BIC \(=151.86\). & Useful as a clustering diagnostic, but it does not improve the benchmark information criteria and would require a different pricing construction. \\
+\bottomrule
+\end{tabularx}
+\caption{Bates--Hawkes calibration routes compared before selecting the final option model. The rough and exponential rows are event-time kernel diagnostics; the exact row is an option-pricing benchmark.}
+\label{tab:hawkes-methods}
+\end{table}
+
+The preferred Bates--Hawkes specification is therefore the full affine Heston--Hawkes model with an exponential kernel. This choice is not made because it always produces the smallest scalar error. It is preferred because it is the only route that keeps the Heston variance state, enforces the Feller guard, enforces Hawkes stationarity through \(0\leq n<1\), calibrates to the GLD option surface, and still gives a coherent self-exciting jump law for path simulation.
 
 The practical objective remains aligned with the vega-weighted workflow:
 \begin{equation}
@@ -945,43 +968,63 @@ The comparison with standalone Heston makes the two-channel interpretation in \e
 \setlength{\tabcolsep}{3.0pt}
 \begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}p{3.7cm}@{}}
 \toprule
-\textbf{Calibration} & \textbf{Admissibility rule} & \textbf{Diagnostics deferred to Chapter 7} \\
+\textbf{Calibration} & \textbf{Admissibility rule} & \textbf{Visual diagnostics in Chapter 7} \\
 \midrule
 Heston & Positive variance parameters, \(-1<\rho<1\), and \(2\kappa\theta_v-\xi^2\geq0\). & Baseline stochastic-volatility residual map. \\
 Bates & Heston admissibility plus non-negative Poisson intensity and positive jump-size volatility. & Residual and smile comparison after adding independent jumps. \\
 Full Bates--Hawkes & Bates-style diffusion admissibility plus \(\lambda_0,\bar{\lambda},\beta,\sigma_J>0\) and \(0\leq n<1\). & Final Bates--Hawkes residual map, smile slices, and Bates-limit comparison. \\
 \bottomrule
 \end{tabularx}
-\caption{Calibration admissibility rules used by the report. Full Bates--Hawkes is the only Hawkes specification in the cross-model comparison because it shares the Heston variance state and GLD option target; the other Hawkes calibrations are discussed separately.}
+\caption{Calibration admissibility rules used by the report. Full Bates--Hawkes is the only Hawkes specification in the cross-model comparison because it shares the Heston variance state and GLD option target; the other Hawkes routes remain method diagnostics.}
 \label{tab:calibration-statistics}
 \end{table}
 
-\paragraph{Where the comparison belongs.}
-The scalar error comparison is interpreted together with the figures in Chapter~7. Keeping those diagnostics in one chapter avoids mixing two tasks: Chapter~6 defines the admissible calibration problem, while Chapter~7 checks how the resulting models behave on the implied-volatility surface.
+\section{Model Comparison}
 
-\section{Where SLSQP Enters the Calibration}
+The model comparison belongs in the calibration chapter because it uses the same sampled option surface, objective definition, and admissibility restrictions as the calibration routines. Chapter~7 then checks the same conclusion visually with residual heatmaps and smile slices. The comparison is deliberately not a one-dimensional ``largest model wins'' ranking: Black--Scholes is the baseline volatility layer, Heston is the stochastic-variance benchmark, Bates adds independent Poisson jumps, and the selected Bates--Hawkes model replaces independent arrivals with a self-exciting exponential intensity.
 
-Both Heston and Bates follow the same calibration pattern:
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}p{2.8cm}@{}}
+\toprule
+\textbf{Model} & \textbf{Calibrated parameters used in the comparison} & \textbf{Admissibility note} \\
+\midrule
+Black--Scholes & \(\sigma=0.3009\). & Positive volatility. \\
+Heston & \(v_0=0.1293\), \(\kappa=4.7261\), \(\theta_v=0.0847\), \(\xi=0.8948\), \(\rho=-0.1872\). & Feller gap \(=1.48\cdot10^{-4}\). \\
+Bates, Poisson jumps & \(v_0=0.0791\), \(\kappa=1.7164\), \(\theta_v=0.0428\), \(\xi=0.3833\), \(\rho=0.2206\), \(\lambda=0.8963\), \(\mu_J=-0.1901\), \(\sigma_J=0.1006\). & Feller gap \(=3.19\cdot10^{-7}\). \\
+Selected Bates--Hawkes & \(v_0=0.0793\), \(\kappa=1.7164\), \(\theta_v=0.0429\), \(\xi=0.3840\), \(\rho=0.2206\), \(\lambda_0=0.8964\), \(\bar{\lambda}=0.8784\), \(n=0.0200\), \(\beta=7.6910\), \(\mu_J=-0.1902\), \(\sigma_J=0.1006\). & Feller gap \(=4.99\cdot10^{-6}\), \(n<1\). \\
+\bottomrule
+\end{tabularx}
+\caption{Model parameters in the Feller-constrained comparison on the 64-point Chebyshev GLD option sample.}
+\label{tab:model-parameters}
+\end{table}
 
-\begin{tcolorbox}[title={Calibration design}, colback=white, boxrule=0.4pt]
-\begin{enumerate}[leftmargin=8mm, itemsep=2pt]
-    \item define model prices through characteristic-function Fourier inversion;
-    \item define a vega-weighted objective over the market dataset;
-    \item reject inadmissible parameter values through bounds or large penalties;
-    \item run Differential Evolution over the bounded region;
-    \item pass the global solution to SLSQP for local constrained refinement;
-    \item compare the calibrated parameters with residual and path diagnostics.
-\end{enumerate}
-\end{tcolorbox}
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}rrrr>{\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Model} & \textbf{Price MAE} & \textbf{Price RMSE} & \textbf{IV MAE bp} & \textbf{IV RMSE bp} & \textbf{Interpretation} \\
+\midrule
+Black--Scholes & 1.734 & 2.045 & 116.68 & 164.94 & Baseline fit is too rigid for the observed smile. \\
+Heston & 0.464 & 0.540 & 32.09 & 43.34 & Best scalar fit in the Feller-constrained local rerun. \\
+Bates, Poisson jumps & 0.640 & 0.736 & 37.61 & 43.01 & Adds tail-risk structure, but the Feller guard leaves little room for a lower scalar error on this sample. \\
+Selected Bates--Hawkes & 0.645 & 0.741 & 37.75 & 42.85 & Slightly improves IV RMSE versus Bates and gives the coherent clustered-jump path law used later. \\
+\bottomrule
+\end{tabularx}
+\caption{Calibration errors for the main model stack on the same GLD Chebyshev sample. Errors are computed after converting model prices back into implied volatility where possible.}
+\label{tab:model-errors}
+\end{table}
 
-The important point is conceptual. SLSQP is not a pricing model. It is the local numerical method that solves the constrained parameter-fitting problem produced by the pricing model. In this project, the pricing model answers ``what is \(C_i^{model}(\theta)\)?'' while SLSQP answers ``which admissible \(\theta\) makes those model prices close to market prices?''
-
-The calibration chapter therefore links back to Chapter 3 and forward to diagnostics. KKT conditions explain what a constrained optimum should look like; the dataset test checks whether the resulting optimum is useful for the surface being studied.
+These numbers explain the modelling choice. Heston is the strict scalar-error winner in this Feller-constrained rerun, while Bates and Bates--Hawkes are retained because they encode discontinuous tail risk. Within the Hawkes family, the exponential-kernel Bates--Hawkes route is preferred over the exact constant-volatility and rough-kernel routes because it is the only one that is simultaneously option-calibrated, Feller-admissible, Hawkes-stable, and usable as a self-exciting path generator. The calibration chapter therefore links back to Chapter~3 and forward to diagnostics: KKT conditions explain what a constrained optimum should satisfy, while Chapter~7 checks whether the fitted residual geometry is acceptable.
 
 % ===============================
 \chapter{Diagnostics and Model Interpretation}
 
-Chapter 6 described how the models are calibrated and which constraints make their parameters admissible. This chapter asks whether the calibrated models are useful on the option surface. It therefore collects the residual heatmaps, smile fits, Bates--Hawkes method diagnostics, and the final model comparison in one place instead of mixing them with the calibration mechanics.
+Chapter 6 described how the models are calibrated, compared, and constrained. This chapter checks whether those calibrated models behave sensibly on the option surface. It therefore collects the residual heatmaps, smile fits, and Bates--Hawkes visual diagnostics after the scalar model comparison has already been reported.
 
 \section{Residual Heatmaps}
 
@@ -993,7 +1036,7 @@ After calibration, the model price for each option is converted back into an imp
 \end{equation}
 Plotting residuals over maturity and moneyness helps identify systematic model failures. A good calibration should not only minimize a scalar loss; it should also avoid structured residual patterns that reveal missing model mechanisms.
 
-The residual figures are placed directly beside the relevant calibrations: Heston in Figure~\ref{fig:heston-residuals}, Bates in Figure~\ref{fig:bates-residuals}, and full Bates--Hawkes in Figure~\ref{fig:bates-hawkes-residuals}. Read together, they show that the jump layer materially reduces residuals relative to Heston, while the self-exciting extension remains close to the Bates boundary on this sample.
+The residual figures are placed directly beside the relevant calibrations: Heston in Figure~\ref{fig:heston-residuals}, Bates in Figure~\ref{fig:bates-residuals}, and full Bates--Hawkes in Figure~\ref{fig:bates-hawkes-residuals}. Read together with Tables~\ref{tab:model-parameters}--\ref{tab:model-errors}, they show the tradeoff between scalar fit and model structure: Heston is the tightest Feller-constrained fit on this sample, while the jump models add discontinuous tail-risk mechanisms needed for scenario design.
 
 \IfFileExists{img/diagnostics/heston_residual_heatmap.png}{%
 \begin{figure}[H]
@@ -1017,7 +1060,7 @@ The residual figures are placed directly beside the relevant calibrations: Hesto
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.62\textwidth]{img/diagnostics/bates_hawkes_residual_heatmap.png}
-    \caption{Final Bates--Hawkes implied-volatility residuals across maturity and moneyness. This is the residual map for the selected self-exciting model.}
+    \caption{Final Bates--Hawkes implied-volatility residuals after replacing Poisson arrivals with the selected self-exciting exponential-Hawkes jump layer.}
     \label{fig:bates-hawkes-residuals}
 \end{figure}
 }{}
@@ -1046,9 +1089,9 @@ The Bates smile slices are shown in Figure~\ref{fig:bates-smile}, and the full B
 \end{figure}
 }{}
 
-\section{Bates--Hawkes Method Diagnostics}
+\section{Bates--Hawkes Visual Checks}
 
-The Bates--Hawkes family is not a single calibration recipe. The exact constant-volatility Hawkes benchmark, the exponential point-process kernel, the rough power-law kernel, and the full affine Heston--Hawkes option calibration each measure a different aspect of clustering. The exponential likelihood is the most transparent event-time estimator and preserves the simple branching-ratio condition. The rough kernel is useful when the event data suggest slower decay and longer memory, but it would require a different pricing construction before it could enter the same option-surface comparison. The exact constant-volatility calibration is valuable because it validates the affine Hawkes transform, but it omits stochastic variance. For this article, the preferred method is therefore the full affine exponential-kernel Bates--Hawkes model: it is less general than a rough kernel, but it is the most coherent option-pricing choice because it shares the Heston variance state, can be priced by the same Fourier/COS machinery, and can be calibrated under both Feller and Hawkes-stability restrictions.
+The detailed Bates--Hawkes method comparison is now in Chapter~6. The figures here are kept as visual checks. Figure~\ref{fig:hawkes-exact-proxy} verifies that the exact Hawkes transform behaves consistently against the stationary-intensity proxy, while Figure~\ref{fig:bates-hawkes-vs-bates} shows how close the selected self-exciting model remains to the Bates boundary on the fitted GLD surface.
 
 \IfFileExists{img/diagnostics/hawkes_exact_vs_proxy.png}{%
 \begin{figure}[H]
@@ -1068,27 +1111,6 @@ The Bates--Hawkes family is not a single calibration recipe. The exact constant-
 \end{figure}
 }{}
 
-\section{Model Comparison}
-
-The model comparison is deliberately separated from the calibration mechanics. Black--Scholes is the inversion and benchmark layer, Heston introduces stochastic variance, Bates adds independent Poisson jumps, and the selected Bates--Hawkes model replaces independent jump arrivals with a self-exciting intensity. The ranking is therefore not only about the smallest error. It also asks whether the additional state variable is empirically identified and whether it remains interpretable under the admissibility constraints.
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}p{3.0cm}p{4.1cm}X@{}}
-\toprule
-\textbf{Model} & \textbf{Role in the stack} & \textbf{Diagnostic interpretation} \\
-\midrule
-Black--Scholes & Baseline price, implied-volatility inversion, and vega weights. & Too rigid as a final surface model because one volatility cannot reproduce the observed smile. \\
-Heston & Stochastic variance with Feller-constrained CIR dynamics. & Improves the model structure, but residual maps still reveal regions where variance alone is not enough. \\
-Bates with Poisson jumps & Heston plus independent lognormal jumps. & Captures most of the observed jump/tail improvement and is the strongest cross-sectional benchmark. \\
-Selected Bates--Hawkes & Heston plus self-exciting exponential-Hawkes jump intensity. & Preferred when the goal is a coherent clustered-jump path law; on this single option surface it remains close to Bates, so the Hawkes layer is economically sensible but not a clear fit winner. \\
-\bottomrule
-\end{tabularx}
-\caption{Model comparison used in the report. The selected Bates--Hawkes model is preferred for scenario design and clustered-jump interpretation, while Bates remains the strict cross-sectional benchmark when the self-excitation signal is weak.}
-\label{tab:model-test}
-\end{table}
-
 \section{What the Diagnostics Say Operationally}
 
 The diagnostic layer should be read as a quality-control stage:
@@ -1105,7 +1127,7 @@ This is why the article emphasizes diagnostics rather than only model formulas. 
 % ===============================
 \chapter{Monte Carlo Gold-Price Path Interface}
 
-The diagnostics in Chapter 7 decide which calibrated price models are credible enough to become path generators. This chapter explains how those calibrated option models connect to five-year gold-price simulations for the wider Barrick research pipeline. It does not extend the article into revenue or equity valuation; it only defines the model-specific random blocks that future work can reuse.
+Chapter 6 compares the calibrated models, and Chapter 7 checks their residual geometry on the implied-volatility surface. This chapter explains how those calibrated option models connect to five-year gold-price simulations for the wider Barrick research pipeline. It does not extend the article into revenue or equity valuation; it only defines the model-specific random blocks that future work can reuse.
 
 \section{From Calibrated Options to Gold-Price Paths}
 

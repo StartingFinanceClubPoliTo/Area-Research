@@ -1,0 +1,23 @@
+{
+  "full_bates_hawkes": {
+    "price_mae": 0.26827220756645176,
+    "price_rmse": 0.3397348316990665,
+    "iv_mae_bp": 16.562522595442623,
+    "iv_rmse_bp": 21.20223986163153,
+    "max_abs_price_error": 1.1436420957815514,
+    "max_abs_iv_error_bp": 73.8514717854566
+  },
+  "bates": {
+    "price_mae": 0.2545480288943789,
+    "price_rmse": 0.32786770254975833,
+    "iv_mae_bp": 15.872290312166907,
+    "iv_rmse_bp": 20.87285969339567,
+    "max_abs_price_error": 1.0971887059366452,
+    "max_abs_iv_error_bp": 77.03895267844318
+  },
+  "calibration_objective": 4.474878129782818e-06,
+  "bates_limit_objective": 4.386046862813575e-06,
+  "branching_ratio": 0.020002235012268527,
+  "minimum_branching_ratio": 0.02,
+  "observations": 64
+}

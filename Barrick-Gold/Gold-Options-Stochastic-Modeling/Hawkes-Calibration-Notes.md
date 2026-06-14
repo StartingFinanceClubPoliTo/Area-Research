@@ -40,8 +40,9 @@ intervals.
 
 ### Calibrating the exact engine
 
-`BatesHawkesExact.calibrate_hawkes_exact_constvol` fits the constant-volatility
-model `[sigma, lambda_bar, alpha, beta, mu_J, sigma_J]` with vega weighting,
+`ExactHawkesCalibration.calibrate_constvol` in `Hawkes.py` fits the
+constant-volatility model `[sigma, lambda_bar, alpha, beta, mu_J, sigma_J]`
+with vega weighting,
 mirroring the other calibration wrappers. Practical guidance:
 
 - tie the initial intensity to the baseline (`lambda0 = lambda_bar`) in the

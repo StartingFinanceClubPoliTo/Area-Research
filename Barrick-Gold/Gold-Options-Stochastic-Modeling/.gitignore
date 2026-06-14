@@ -1,5 +1,5 @@
-workflow.md
 Revisione/
+!workflow.md
 # *.ipynb
 .ipynb_checkpoints/
 .jupyter/

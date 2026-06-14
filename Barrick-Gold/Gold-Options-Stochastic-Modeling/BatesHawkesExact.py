@@ -59,9 +59,8 @@ import sys
 
 import numpy as np
 from scipy.integrate import quad
-from scipy.optimize import differential_evolution, minimize
 
-# Make the repository-root modules importable (mirrors calibrations/common.py).
+# Make the repository-root model modules importable.
 _ROOT = os.path.dirname(os.path.abspath(__file__))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
@@ -429,110 +428,36 @@ class BatesHawkesExact(Bates):
         u_k = np.arange(N) * np.pi / (b - a)
         phi_vals = phi(u_k)
         return BatesHawkesExact._cos_call_prices(phi_vals, u_k, a, b, k_arr, r, T)
-
-    # --- H. CONSTANT-VOL CALIBRATION -----------------------------------------
-    # Calibrating the exact model is intentionally constrained to the stationary
-    # region: the branching ratio alpha / beta is bounded below one and the
-    # initial intensity is tied to the baseline (lambda0 = lambda_bar). This is
-    # the cheap, identifiable first pass recommended in the paper digest; the
-    # initial intensity can be unlocked once a stable fit exists. Exact pricing
-    # is semi-analytic (one ODE solve per Fourier node), so calibration is much
-    # heavier than the Bates proxy and is meant to be seeded from it.
-
-    # params layout: [sigma, lambda_bar, alpha, beta, mu_J, sigma_J]
-    _MAX_BRANCHING = 0.98
-
     @staticmethod
-    def hawkes_objective_constvol(params, df_market, S0, q=0.0, n_steps=None,
-                                  cos_N=256):
-        """Vega-weighted calibration objective for the constant-vol exact model.
+    def hawkes_price_cos(S0, K, T, v0, kappa, theta, sigma, rho, lambda0,
+                         lambda_bar, alpha, beta, mu_J, sigma_J, r, q=0.0,
+                         N=256, L=12.0, n_steps=None):
+        """Heston--Hawkes call prices for a vector of strikes using COS.
 
-        ``params = [sigma, lambda_bar, alpha, beta, mu_J, sigma_J]`` with the
-        initial intensity tied to the baseline (``lambda0 = lambda_bar``).
-        Options are priced with the COS method grouped by maturity, so the jump
-        ODE is solved once per maturity. Returns a large constant outside the
-        admissible stationary region.
+        This is the full affine Bates--Hawkes pricer used by calibration. The
+        Heston variance block and the event-dependent Hawkes jump transform are
+        evaluated on the same Fourier grid, once per maturity.
         """
-        sigma, lambda_bar, alpha, beta, mu_J, sigma_J = params
+        k_arr = np.atleast_1d(np.asarray(K, dtype=float))
+        if T <= 0:
+            return np.maximum(S0 - k_arr, 0.0)
 
-        if sigma <= 0 or lambda_bar <= 0 or beta <= 0 or sigma_J <= 0:
-            return 1e8
-        if alpha < 0 or alpha >= beta:
-            return 1e8
-        if alpha / beta >= BatesHawkesExact._MAX_BRANCHING:
-            return 1e8
-
-        error = 0.0
-        count = 0
-        for maturity, group in df_market.groupby("T"):
-            strikes = group["K"].to_numpy(dtype=float)
-            rate = float(group["rate"].iloc[0])
-            model_prices = BatesHawkesExact.hawkes_price_constvol_cos(
-                S0, strikes, float(maturity), sigma,
-                lambda_bar, lambda_bar, alpha, beta, mu_J, sigma_J,
-                rate, q, N=cos_N, n_steps=n_steps,
+        def phi(u):
+            return BatesHawkesExact.hawkes_charfunc(
+                u, S0, v0, kappa, theta, sigma, rho,
+                lambda0, lambda_bar, alpha, beta, mu_J, sigma_J,
+                T, r, q, n_steps,
             )
-            market_prices = group["price"].to_numpy(dtype=float)
-            safe_vega = np.maximum(group["vega"].to_numpy(dtype=float), 1e-4)
-            error += float(np.sum(((model_prices - market_prices) / safe_vega) ** 2))
-            count += len(group)
 
-        branching = alpha / beta
-        # Mild regularisation away from the near-critical regime, as in the proxy.
-        penalty = 0.01 * branching ** 2 / max(1.0 - branching, 1e-4)
-        return error / count + penalty
+        h = 0.05
+        log_phi = np.log(phi(h))
+        c1 = log_phi.imag / h
+        c2 = max(-2.0 * log_phi.real / h ** 2, 1e-6)
+        width = L * math.sqrt(c2)
+        a, b = c1 - width, c1 + width
 
-    @staticmethod
-    def calibrate_hawkes_exact_constvol(df_market, S0, q=0.0, maxiter=30,
-                                        popsize=8, n_steps=None, seed=None):
-        """Calibrate the constant-vol exact-Hawkes model (heavy; seed from Bates).
+        u_k = np.arange(N) * np.pi / (b - a)
+        phi_vals = phi(u_k)
+        return BatesHawkesExact._cos_call_prices(phi_vals, u_k, a, b, k_arr, r, T)
 
-        Two-stage Differential Evolution + SLSQP, matching the other models. The
-        branching ratio is bounded by a linear constraint ``beta > alpha``.
-        """
-        bounds = [
-            (1e-2, 2.0),    # sigma
-            (1e-2, 5.0),    # lambda_bar
-            (0.0, 5.0),     # alpha
-            (1e-2, 8.0),    # beta
-            (-0.5, 0.5),    # mu_J
-            (1e-3, 0.6),    # sigma_J
-        ]
-        constraints = (
-            {"type": "ineq", "fun": lambda x: x[3] - x[2] - 1e-4},  # beta > alpha
-        )
-
-        print("[INFO] Starting Global Calibration for exact constant-vol Hawkes...")
-        result_global = differential_evolution(
-            BatesHawkesExact.hawkes_objective_constvol,
-            bounds=bounds,
-            args=(df_market, S0, q, n_steps),
-            maxiter=maxiter,
-            popsize=popsize,
-            tol=1e-3,
-            polish=False,
-            seed=seed,
-            disp=True,
-        )
-
-        print("\n[INFO] Global candidate found. Starting Local Refinement (SLSQP)...")
-        result_local = minimize(
-            BatesHawkesExact.hawkes_objective_constvol,
-            x0=result_global.x,
-            args=(df_market, S0, q, n_steps),
-            method="SLSQP",
-            bounds=bounds,
-            constraints=constraints,
-            options={"ftol": 1e-6, "maxiter": 60},
-        )
-
-        sigma, lambda_bar, alpha, beta, mu_J, sigma_J = result_local.x
-        print("\n===================================================")
-        print("  OPTIMAL EXACT CONSTANT-VOL HAWKES PARAMETERS")
-        print("===================================================")
-        labels = ["sigma", "lambda_bar", "alpha", "beta", "mu_J", "sigma_J"]
-        for label, value in zip(labels, result_local.x):
-            print(f"{label:11s}: {value:.6f}")
-        print(f"branching  : {alpha / beta:.6f}  (lambda0 fixed to lambda_bar)")
-        print("===================================================")
-        return result_local.x
+    # Calibration objectives and optimizers are defined in Hawkes.py.

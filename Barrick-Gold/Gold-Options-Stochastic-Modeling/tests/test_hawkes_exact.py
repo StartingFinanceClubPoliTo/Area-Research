@@ -26,7 +26,7 @@ import sys
 
 import numpy as np
 
-# Make the repository root modules importable, mirroring calibrations/common.py.
+# Make the repository root model modules importable.
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 for _p in (HERE, ROOT):
@@ -36,6 +36,7 @@ for _p in (HERE, ROOT):
 from BatesHawkesExact import BatesHawkesExact  # noqa: E402
 from Bates import Bates  # noqa: E402
 from BnS import BnS  # noqa: E402
+from Hawkes import ExactHawkesCalibration  # noqa: E402
 
 
 # --- Shared test parameters --------------------------------------------------
@@ -278,6 +279,51 @@ def test_cos_black_scholes_limit():
         assert abs(p_cos - bs) < 5e-3, f"K={K}: COS {p_cos} vs BS {bs}"
 
 
+def test_cos_matches_carr_madan_heston_hawkes():
+    """The full Heston--Hawkes COS pricer matches Carr-Madan."""
+    ks = np.array(STRIKES)
+    cos_prices = BatesHawkesExact.hawkes_price_cos(
+        S0, ks, T, V0, KAPPA, THETA, SIGMA_V, RHO,
+        LAMBDA0, LAMBDA_BAR, ALPHA, BETA, MU_J, SIGMA_J, R, Q,
+    )
+    for K, p_cos in zip(ks, cos_prices):
+        p_cm = BatesHawkesExact.hawkes_price_fast(
+            S0, K, T, V0, KAPPA, THETA, SIGMA_V, RHO,
+            LAMBDA0, LAMBDA_BAR, ALPHA, BETA, MU_J, SIGMA_J, R, Q,
+        )
+        assert abs(p_cos - p_cm) < 8e-3, f"K={K}: COS {p_cos} vs Carr-Madan {p_cm}"
+
+
+def test_cos_full_bates_limit():
+    """At zero branching the full COS pricer reduces to Bates."""
+    ks = np.array(STRIKES)
+    cos_prices = BatesHawkesExact.hawkes_price_cos(
+        S0, ks, T, V0, KAPPA, THETA, SIGMA_V, RHO,
+        LAMBDA_CONST, LAMBDA_CONST, 0.0, 2.0, MU_J, SIGMA_J, R, Q,
+    )
+    for K, p_cos in zip(ks, cos_prices):
+        p_bates = Bates.bates_price_fast(
+            S0, K, T, V0, KAPPA, THETA, SIGMA_V, RHO,
+            LAMBDA_CONST, MU_J, SIGMA_J, R, Q,
+        )
+        assert abs(p_cos - p_bates) < 8e-3, f"K={K}: COS {p_cos} vs Bates {p_bates}"
+
+
+def test_put_call_parity_heston_hawkes():
+    """The full stochastic-volatility Hawkes model obeys put-call parity."""
+    for K in STRIKES:
+        call = BatesHawkesExact.hawkes_price_fast(
+            S0, K, T, V0, KAPPA, THETA, SIGMA_V, RHO,
+            LAMBDA0, LAMBDA_BAR, ALPHA, BETA, MU_J, SIGMA_J, R, Q,
+        )
+        put = BatesHawkesExact.hawkes_put_price_fast(
+            S0, K, T, V0, KAPPA, THETA, SIGMA_V, RHO,
+            LAMBDA0, LAMBDA_BAR, ALPHA, BETA, MU_J, SIGMA_J, R, Q,
+        )
+        parity = S0 * math.exp(-Q * T) - K * math.exp(-R * T)
+        assert abs((call - put) - parity) < 1e-2
+
+
 # --- Calibration guard -------------------------------------------------------
 
 def test_calibration_objective_penalizes_alpha_ge_beta():
@@ -288,7 +334,7 @@ def test_calibration_objective_penalizes_alpha_ge_beta():
                        "price": [6.4], "vega": [10.0]})
     # params = [sigma, lambda_bar, alpha, beta, mu_J, sigma_J]
     bad = [SIGMA, LAMBDA_BAR, 1.5, 1.0, MU_J, SIGMA_J]  # alpha=1.5 >= beta=1.0
-    value = BatesHawkesExact.hawkes_objective_constvol(bad, df, S0, Q)
+    value = ExactHawkesCalibration.objective_constvol(bad, df, S0, Q)
     assert value >= 1e8, f"alpha>=beta not penalized in objective: {value}"
 
 
@@ -299,8 +345,30 @@ def test_calibration_objective_finite_for_valid_params():
     df = pd.DataFrame({"K": [100.0], "T": [T], "rate": [R],
                        "price": [6.4], "vega": [10.0]})
     good = [SIGMA, LAMBDA_BAR, ALPHA, BETA, MU_J, SIGMA_J]
-    value = BatesHawkesExact.hawkes_objective_constvol(good, df, S0, Q)
+    value = ExactHawkesCalibration.objective_constvol(good, df, S0, Q)
     assert math.isfinite(value) and value >= 0.0, f"objective not finite/>=0: {value}"
+
+
+def test_full_calibration_objective_finite():
+    """The full Heston--Hawkes objective is finite for an admissible vector."""
+    import pandas as pd
+
+    df = pd.DataFrame({"K": [100.0], "T": [T], "rate": [R],
+                       "price": [6.4], "vega": [10.0]})
+    params = [V0, KAPPA, THETA, SIGMA_V, RHO, 0.9, 0.6, 0.5, BETA, MU_J, SIGMA_J]
+    value = ExactHawkesCalibration.objective_heston(params, df, S0, Q, cos_N=128)
+    assert math.isfinite(value) and value >= 0.0
+
+
+def test_full_calibration_objective_rejects_nonstationary_branching():
+    """The full objective rejects branching ratios outside [0, 1)."""
+    import pandas as pd
+
+    df = pd.DataFrame({"K": [100.0], "T": [T], "rate": [R],
+                       "price": [6.4], "vega": [10.0]})
+    params = [V0, KAPPA, THETA, SIGMA_V, RHO, 0.9, 0.6, 1.0, BETA, MU_J, SIGMA_J]
+    value = ExactHawkesCalibration.objective_heston(params, df, S0, Q, cos_N=128)
+    assert value >= 1e8
 
 
 # --- Standalone runner -------------------------------------------------------

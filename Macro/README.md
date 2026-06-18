@@ -1,5 +1,7 @@
 # Macro 🌍
 
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThe%20Output%20Cost%20of%20Inflation%20Stabilization.pdf&lang=it
+
 Macroeconomic research material for Starting Finance Club PoliTo.
 
 ## 👥 Authors
@@ -11,7 +13,7 @@ Macroeconomic research material for Starting Finance Club PoliTo.
 
 | Project | Topic | Materials |
 | --- | --- | --- |
-| [New Keynesian Cost-Push Shock Project](./NK_cost_push_prj/) | Monetary policy responses to a cost-push shock under alternative Taylor-rule regimes | Dynare model, MATLAB runner, exported IRF figures, results file, and CSV summary table. |
+| [New Keynesian Cost-Push Shock Project](./NK_cost_push_prj/) | Monetary policy responses to a cost-push shock under alternative Taylor-rule regimes | Article PDF, Dynare model, MATLAB runner, exported IRF figures, results file, and CSV summary table. |
 
 ## 🎯 Purpose
 

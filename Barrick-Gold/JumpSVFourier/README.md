@@ -1,5 +1,7 @@
 # Beyond Black-Scholes Synthetic Examples 🚀
 
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FBeyond%20Black-Scholes%20-%20Jumps%20%26%20Stochastic%20Volatility.pdf&lang=it
+
 This folder provides reproducible synthetic examples for the Starting Finance Club PoliTo Research article on jump processes, stochastic volatility, and Fourier methods.
 
 ## 👥 Authors
@@ -47,9 +49,9 @@ python "1 Simulations/simulate_examples.py"
 
 - The script fixes the random seed and documents parameters near the top of the file.
 - Paths are synthetic and meant to visualize mechanisms discussed in the article.
-- The article is scheduled for publication on June 12, 2026.
+- The article was published on June 12, 2026.
 - The examples are educational research material and do not provide investment advice.
 
 ## 📚 Citation
 
-Sisto, D. and Armando, M., *Beyond Black-Scholes: Mathematical Foundations for Jump Processes, Stochastic Volatility, and Fourier Methods*, Starting Finance Club PoliTo Research, GitHub repository, expected publication 12/06/2026, accessed 31/05/2026.
+Sisto, D. and Armando, M., *Beyond Black-Scholes: Mathematical Foundations for Jump Processes, Stochastic Volatility, and Fourier Methods*, Starting Finance Club PoliTo Research, GitHub repository, publication PDF at https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FBeyond%20Black-Scholes%20-%20Jumps%20%26%20Stochastic%20Volatility.pdf&lang=it, published 12/06/2026, accessed 31/05/2026.

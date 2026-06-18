@@ -12,7 +12,7 @@ This repository collects scripts, notebooks, curated outputs, and documentation 
 | --- | --- | --- | --- |
 | Barrick Gold | [Barrick-Gold](./Barrick-Gold/) | Multiple article teams | Gold-mining valuation, mathematical foundations, option modelling, Monte Carlo, volatility, and macro-financial code companions. |
 | Markoviz | [Markoviz](./Markoviz/) | [Antonio Guarini](https://github.com/Anthony27-x) | Markowitz portfolio optimization script, data notice, requirements, and citation text. |
-| Macro | [Macro](./Macro/) | Emanuele Ravello, Valentina Romeo | New Keynesian cost-push shock model with Dynare/MATLAB outputs. |
+| Macro | [Macro](./Macro/) | Emanuele Ravello, Valentina Romeo | New Keynesian cost-push shock model with Dynare/MATLAB outputs and article PDF link. |
 | Stoikov-Avellonada | [Stoikov-Avellonada](./Stoikov-Avellonada/) | Niccolò Soriano, Salvatore Messina | Avellaneda-Stoikov market-making notebook, video-rendering pipeline, and rough-volatility HJB code companions. |
 
 ## 🪙 Barrick Gold Article Index
@@ -24,8 +24,8 @@ This repository collects scripts, notebooks, curated outputs, and documentation 
 | Article 3 | [Monte Carlo Methods and Portfolio Simulation](./Barrick-Gold/Monte-Carlo-Risk/) | [Andrea Rostagno](https://github.com/Andrea-Rostagno), [Francesco Florio](https://github.com/Francesco-Florio) | May 1, 2026 | Python package for Monte Carlo methods, option pricing, variance reduction, and portfolio risk. |
 | Article 4 | [Component-Driven EBITDA Forecast for Barrick Gold](./Barrick-Gold/Component-Driven-EBITDA-Barrick/) | [Giacomo Scali](https://www.linkedin.com/in/giacomo-scali-abp01/), [Jacopo Foralosso](https://www.linkedin.com/in/jacopo-foralosso-6753a2256) | May 8, 2026 | Cost-of-sales, production, GLD volatility, and EBITDA Monte Carlo workflows. |
 | Article 5 | [Three-Stage DCF with Simulated Data](./Barrick-Gold/Three-Stage-DCF/) | Federico Vesco, Lorenzo Pietra, Bader Moussaif | May 30, 2026 | Synthetic three-stage DCF and Monte Carlo simulation, with generated figures, CSV outputs, and the published PDF linked in the article README. |
-| Article 6 | [Beyond Black-Scholes Synthetic Examples](./Barrick-Gold/JumpSVFourier/) | [Davide Sisto](https://github.com/sistox5), Matteo Armando | June 12, 2026 | Synthetic jump, stochastic-volatility, Fourier, and Hawkes examples. |
-| Article 7 | [Gold, Monetary Regimes, and Volatility Dynamics](./Barrick-Gold/Gold-Volatility-Research/) | Davide D'Amico, Pietro Weisz | June 19, 2026 | Gold, silver, dollar, equity, and Treasury-yield data pipeline with tables and figures. |
+| Article 6 | [Beyond Black-Scholes Synthetic Examples](./Barrick-Gold/JumpSVFourier/) | [Davide Sisto](https://github.com/sistox5), Matteo Armando | June 12, 2026 | Synthetic jump, stochastic-volatility, Fourier, and Hawkes examples, with the published PDF linked in the article README. |
+| Article 7 | [Gold, Monetary Regimes, and Volatility Dynamics](./Barrick-Gold/Gold-Volatility-Research/) | [Davide D'Amico](https://github.com/0fmate), Pietro Weisz | June 19, 2026 | Gold, silver, dollar, equity, and Treasury-yield data pipeline with tables and figures. |
 | Article 8 | [Advanced Stochastic Modeling for Gold Options](./Barrick-Gold/Gold-Options-Stochastic-Modeling/) | [0c0c](https://github.com/0c0c), [SalvatoreMessina11](https://github.com/SalvatoreMessina11) | July 3, 2026 | Black-Scholes, Heston, and Bates calibration notebooks for GLD options. |
 
 ## 🗂️ Repository Map

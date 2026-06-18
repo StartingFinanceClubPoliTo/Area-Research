@@ -1,5 +1,7 @@
 # New Keynesian Cost-Push Shock Project ⚖️
 
+📄 Article PDF: https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThe%20Output%20Cost%20of%20Inflation%20Stabilization.pdf&lang=it
+
 This project simulates impulse responses in a linear New Keynesian model after a cost-push shock. It supports a macroeconomic Research article on how monetary-policy intensity affects inflation and output-gap dynamics.
 
 ## 👥 Authors
@@ -56,4 +58,4 @@ Curated outputs in `Outputs/` are part of the reproducibility material. Dynare-g
 
 ## 📚 Citation
 
-Ravello, E. and Romeo, V., *New Keynesian Cost-Push Shock Project: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, accessed 30/05/2026.
+Ravello, E. and Romeo, V., *The Output Cost of Inflation Stabilization: supporting code*, Starting Finance Club PoliTo Research, GitHub repository, publication PDF at https://sfclubpolito.it/pdf-viewer.html?file=Pubblicazioni%2FThe%20Output%20Cost%20of%20Inflation%20Stabilization.pdf&lang=it, accessed 30/05/2026.

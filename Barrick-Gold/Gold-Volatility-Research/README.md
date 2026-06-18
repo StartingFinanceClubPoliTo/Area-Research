@@ -4,7 +4,7 @@ This folder supports the Starting Finance Club PoliTo Research article on gold, 
 
 ## 👥 Authors
 
-- Davide D'Amico
+- [Davide D'Amico](https://github.com/0fmate)
 - Pietro Weisz
 
 ## 🎯 Purpose

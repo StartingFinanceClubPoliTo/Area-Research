@@ -86,32 +86,72 @@ class ArticleFigureGenerator:
             self.config.sample_paths, self._seed(200, hurst)
         )
         target = fbm_covariance(self.grid.time, hurst)
+        induced = model.induced_covariance
+        covariance_rmse = float(np.sqrt(np.mean((induced - target) ** 2)))
+        kernel_limit = max(float(model.kernel.max()), 1e-12)
+        covariance_limit = max(float(induced.max()), float(target.max()), 1e-12)
         figure, axes = plt.subplots(3, 2, figsize=(10, 12))
         for row in paths:
             axes[0, 0].plot(self.grid.time, row, lw=1)
         axes[0, 0].set_title("Sample Paths")
-        image = axes[0, 1].imshow(model.kernel, origin="lower", aspect="auto")
-        figure.colorbar(image, ax=axes[0, 1])
-        axes[0, 1].set_title("Volterra Kernel")
+        image = axes[0, 1].imshow(
+            model.kernel,
+            origin="lower",
+            aspect="auto",
+            cmap="viridis",
+            vmin=0.0,
+            vmax=kernel_limit,
+        )
+        colorbar = figure.colorbar(image, ax=axes[0, 1])
+        colorbar.set_label("K(t,s)")
+        axes[0, 1].set_title("Volterra Kernel K(t,s)")
         for row in brownian[:3]:
             axes[1, 0].plot(self.grid.time, row, lw=1)
-        axes[1, 0].set_title("Gaussian Noise")
+        axes[1, 0].set_title("Driving Brownian Paths")
         for row in np.diff(brownian[:3], axis=1):
             axes[1, 1].plot(self.grid.time[1:], row, lw=0.8)
-        axes[1, 1].set_title("Gaussian Noise")
+        axes[1, 1].set_title("Brownian Increments")
         for fraction in (0.25, 0.50, 0.75):
             index = int(fraction * (self.config.steps - 1))
-            axes[2, 0].plot(
-                self.grid.time[:index],
-                model.kernel[index, :index],
+            (line,) = axes[2, 0].plot(
+                self.grid.time,
+                model.kernel[index],
                 lw=2,
+                drawstyle="steps-post",
                 label=f"t={self.grid.time[index]:.2f}",
             )
+            axes[2, 0].axvline(
+                self.grid.time[index], color=line.get_color(), ls="--", lw=0.9, alpha=0.5
+            )
         axes[2, 0].legend()
-        axes[2, 0].set_title("Causal Structure")
-        image = axes[2, 1].imshow(target, origin="lower", aspect="auto")
-        figure.colorbar(image, ax=axes[2, 1])
-        axes[2, 1].set_title("Covariance vs fBM")
+        axes[2, 0].set(
+            title="Causal Kernel Support",
+            xlabel="s",
+            ylabel="K(t,s)",
+            xlim=(self.grid.time[0], self.grid.time[-1]),
+        )
+        if abs(hurst - 0.5) < 1e-12:
+            axes[2, 0].text(
+                0.02,
+                0.05,
+                "Brownian benchmark: K=1 on s<t, K=0 on s>=t",
+                transform=axes[2, 0].transAxes,
+                fontsize=8,
+                bbox={"facecolor": "white", "alpha": 0.85, "edgecolor": "0.75"},
+            )
+        image = axes[2, 1].imshow(
+            induced,
+            origin="lower",
+            aspect="auto",
+            cmap="viridis",
+            vmin=0.0,
+            vmax=covariance_limit,
+        )
+        colorbar = figure.colorbar(image, ax=axes[2, 1])
+        colorbar.set_label("Cov(X_t,X_s)")
+        axes[2, 1].set_title(
+            f"Kernel-Induced Covariance\nfBM target RMSE: {covariance_rmse:.2e}"
+        )
         figure.suptitle(
             f"Time Steps: {self.config.steps}    Sample Paths: {self.config.sample_paths}    "
             f"Hurst H: {hurst:.1f}"

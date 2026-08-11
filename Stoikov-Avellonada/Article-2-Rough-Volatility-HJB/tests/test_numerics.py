@@ -104,6 +104,20 @@ class RoughProcessTests(unittest.TestCase):
         _, _, _, kernel = rp.simulate_volterra(24, 0.3, 5, 0.75, 11)
         self.assertTrue(np.allclose(np.triu(kernel), 0.0))
 
+    def test_brownian_volterra_kernel_is_causal_and_covariance_is_exact(self) -> None:
+        grid = rp.SimulationGrid(24, 0.75)
+        model = rp.VolterraProcess(grid, 0.5)
+        expected_kernel = np.tril(np.ones((grid.steps, grid.steps)), k=-1)
+
+        np.testing.assert_array_equal(model.kernel, expected_kernel)
+        np.testing.assert_allclose(
+            model.induced_covariance,
+            rp.fbm_covariance(grid.time, 0.5),
+            rtol=0.0,
+            atol=1e-14,
+        )
+        self.assertTrue(np.all(model.kernel[np.triu_indices(grid.steps)] == 0.0))
+
     def test_validation_rejects_invalid_parameters(self) -> None:
         with self.assertRaises(ValueError):
             rp.SimulationGrid(2)

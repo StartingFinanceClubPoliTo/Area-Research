@@ -31,7 +31,7 @@ class VolterraDashboard(InteractiveDashboard):
         samples, brownian = model.simulate(paths, seed=456)
         stop = max(2, int(self.value("window") * (steps - 1)))
         target = fbm_covariance(model.grid.time, hurst)
-        empirical = np.cov(samples, rowvar=False)
+        induced = model.induced_covariance
 
         for row in samples[: min(paths, 15)]:
             self.axes[0, 0].plot(model.grid.time, row, lw=1.0)
@@ -56,20 +56,35 @@ class VolterraDashboard(InteractiveDashboard):
 
         for fraction in (0.25, 0.50, 0.75):
             index = max(2, int(fraction * (steps - 1)))
-            self.axes[2, 0].plot(
-                model.grid.time[:index],
-                model.kernel[index, :index],
+            (line,) = self.axes[2, 0].plot(
+                model.grid.time,
+                model.kernel[index],
                 lw=2.0,
+                drawstyle="steps-post",
                 label=f"t={model.grid.time[index]:.2f}",
             )
-        self.axes[2, 0].set(title="Causal Kernel Slices", xlabel="s", ylabel="K(t,s)")
+            self.axes[2, 0].axvline(
+                model.grid.time[index], color=line.get_color(), ls="--", lw=0.9, alpha=0.5
+            )
+        self.axes[2, 0].set(
+            title="Causal Kernel Support",
+            xlabel="s",
+            ylabel="K(t,s)",
+            xlim=(model.grid.time[0], model.grid.time[-1]),
+        )
         self.axes[2, 0].legend(fontsize=8)
 
-        rmse = float(np.sqrt(np.mean((empirical - target) ** 2)))
+        rmse = float(np.sqrt(np.mean((induced - target) ** 2)))
+        covariance_limit = max(float(induced.max()), float(target.max()), 1e-12)
         image = self.axes[2, 1].imshow(
-            empirical, origin="lower", aspect="auto", cmap="viridis"
+            induced,
+            origin="lower",
+            aspect="auto",
+            cmap="viridis",
+            vmin=0.0,
+            vmax=covariance_limit,
         )
-        self.axes[2, 1].set_title(f"Empirical Covariance, RMSE={rmse:.2e}")
+        self.axes[2, 1].set_title(f"Kernel-Induced Covariance, fBM RMSE={rmse:.2e}")
         self.add_colorbar(image, self.axes[2, 1])
 
 

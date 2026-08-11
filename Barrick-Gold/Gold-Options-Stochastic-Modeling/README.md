@@ -25,12 +25,19 @@ Neither benchmark replaces the full stochastic-volatility calibration used by th
 | `BnS.py` | Black-Scholes pricing, implied-volatility inversion, and vega. |
 | `Heston.py` | Heston characteristic function, pricing, and calibration. |
 | `Bates.py` | Heston stochastic variance plus constant-intensity lognormal jumps. |
+| `calibration_core.py` | Validated immutable option-surface slices and serialisable calibration reports. |
+| `fourier_pricing.py` | Shared Carr--Madan, Gil--Pelaez, and vectorised COS kernels. |
+| `calibration_workflow.py` | Dataset loading and publication diagnostics used by thin notebooks. |
+| `path_simulation.py` | Deterministic GBM, Heston, Bates, and full Bates--Hawkes path engines. |
 | `Hawkes.py` | Exponential, rough power-law, and exact affine Hawkes calibration classes, diagnostics, and simulation. |
 | `Hawkes Calibration.ipynb` | Thin notebook for fitting both Hawkes kernels and producing comparison plots. |
 | `workflow.md` | Hawkes event-data, calibration, model-selection, and diagnostics workflow. |
 | `BatesHawkes.py` | Stationary-intensity proxy benchmark. |
 | `BatesHawkesExact.py` | Full affine Heston-Hawkes characteristic function and COS/Fourier pricing engine. |
 | `Data/` | GLD option inputs, calibrated parameters, metrics, and generated figures. |
+| `lse_dataset.py` | Local-only reconstruction of a comparable GLD dataset from the LSE API. |
+| `benchmarks/` | Deterministic scalar-versus-batch pricing benchmark. |
+| `tools/` | Notebook and publication-output rebuild entry points. |
 | `tests/test_hawkes_calibration.py` | Exponential and rough likelihood, fit, residual, and compatibility tests. |
 | `tests/test_hawkes_exact.py` | Characteristic-function, limit, pricing, parity, and objective tests. |
 
@@ -55,14 +62,29 @@ Open the notebook matching the model and run its cells in order:
 - `Hawkes Calibration.ipynb`
 
 The notebooks import the root `.py` modules; they do not define alternative
-model implementations.
+model implementations. Bates-family calibrations accept an optional random
+seed and can return a `CalibrationReport` with objective values, status,
+iterations, evaluations, elapsed time, and named parameters.
 
-Run the Hawkes tests from the repository root with:
+Run all regression tests and the pricing benchmark from the repository root:
 
 ```bash
-python tests/test_hawkes_calibration.py
-python tests/test_hawkes_exact.py
+python -m pytest tests -q
+python benchmarks/benchmark_pricing.py
 ```
+
+## Optional LSE data build
+
+The committed historical dataset remains the calibration baseline. To build a
+new comparable snapshot, configure `LSE_API_KEY` and run:
+
+```bash
+python lse_dataset.py --max-dte 1000 --annual-rate 0.037
+```
+
+Outputs are written to the Git-ignored `Data/lse_local/` directory. See
+`LSE-DATASET.md` for the schema mapping, rate assumption, historical-snapshot
+limitation, and redistribution constraint.
 
 ## Interpretation
 

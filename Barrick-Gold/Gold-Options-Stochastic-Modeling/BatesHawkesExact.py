@@ -58,7 +58,6 @@ import os
 import sys
 
 import numpy as np
-from scipy.integrate import quad
 
 # Make the repository-root model modules importable.
 _ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -67,6 +66,12 @@ if _ROOT not in sys.path:
 
 from Heston import Heston  # noqa: E402
 from Bates import Bates  # noqa: E402
+from fourier_pricing import (  # noqa: E402
+    adaptive_cos_call_prices,
+    carr_madan_call,
+    cos_call_prices_from_values,
+    gil_pelaez_call_put,
+)
 
 # Real part of ``alpha * B`` is capped here before exponentiation. This only
 # bites in the far Fourier tail, where the diffusion factor exp(-0.5 sigma^2 v^2 T)
@@ -249,19 +254,7 @@ class BatesHawkesExact(Bates):
         ``charfunc`` is a callable ``u -> E[exp(i u log S_T)]``. The formula is
         identical to the one used by ``Heston``/``Bates``.
         """
-        if T <= 0:
-            return float(max(S0 - K, 0.0))
-
-        def integrand(u):
-            cf_shifted = charfunc(u - 1j)
-            cf_standard = charfunc(u)
-            num = np.exp(-r * T) * (cf_shifted - K * cf_standard)
-            den = 1j * u * K ** (1j * u)
-            return np.real(num / den)
-
-        real_val, _ = quad(integrand, 0.0, 100.0, limit=200, epsabs=1e-4, epsrel=1e-4)
-        price = np.real((S0 * np.exp(-q * T) - K * np.exp(-r * T)) / 2 + real_val / np.pi)
-        return float(max(price, 0.0))
+        return carr_madan_call(charfunc, S0, K, T, r, q)
 
     @staticmethod
     def hawkes_price_constvol_fast(S0, K, T, sigma, lambda0, lambda_bar, alpha,
@@ -295,29 +288,7 @@ class BatesHawkesExact(Bates):
         ``_carr_madan_call``; agreement between the two validates the
         characteristic function and the inversion, and hence put-call parity.
         """
-        if T <= 0:
-            call = float(max(S0 - K, 0.0))
-            return call, float(max(K - S0, 0.0))
-
-        ln_k = math.log(K)
-        fwd_cf = charfunc(-1j)  # E[S_T]; equals S0 exp((r - q) T) for a valid model
-
-        def integrand_p2(u):
-            return np.real(np.exp(-1j * u * ln_k) * charfunc(u) / (1j * u))
-
-        def integrand_p1(u):
-            return np.real(np.exp(-1j * u * ln_k) * charfunc(u - 1j) / (1j * u * fwd_cf))
-
-        p2 = 0.5 + quad(integrand_p2, 0.0, 100.0, limit=200,
-                        epsabs=1e-4, epsrel=1e-4)[0] / np.pi
-        p1 = 0.5 + quad(integrand_p1, 0.0, 100.0, limit=200,
-                        epsabs=1e-4, epsrel=1e-4)[0] / np.pi
-
-        disc_spot = S0 * np.exp(-q * T)
-        disc_strike = K * np.exp(-r * T)
-        call = disc_spot * p1 - disc_strike * p2
-        put = disc_strike * (1.0 - p2) - disc_spot * (1.0 - p1)
-        return float(call), float(put)
+        return gil_pelaez_call_put(charfunc, S0, K, T, r, q)
 
     @staticmethod
     def hawkes_call_price_constvol_gp(S0, K, T, sigma, lambda0, lambda_bar, alpha,
@@ -367,35 +338,9 @@ class BatesHawkesExact(Bates):
         ``phi_vals`` are the characteristic-function values of log S_T on the
         grid ``u_k = k*pi/(b-a)`` over the truncation range ``[a, b]``.
         """
-        f_re = np.real(phi_vals * np.exp(-1j * u_k * a))
-        weights = np.ones_like(u_k)
-        weights[0] = 0.5
-        fac = weights * f_re  # shape (N,)
-
-        k_arr = np.atleast_1d(np.asarray(K_array, dtype=float))
-        c = np.clip(np.log(k_arr), a, b)[:, None]  # (M, 1)
-        d = b
-        uk = u_k[None, :]  # (1, N)
-
-        arg_c = uk * (c - a)           # (M, N)
-        arg_d = uk * (d - a)           # (1, N)
-        e_c = np.exp(c)                # (M, 1)
-        e_d = math.exp(d)              # scalar
-        inv = 1.0 / (1.0 + uk ** 2)    # (1, N)
-
-        chi = inv * (
-            np.cos(arg_d) * e_d - np.cos(arg_c) * e_c
-            + uk * (np.sin(arg_d) * e_d - np.sin(arg_c) * e_c)
+        return cos_call_prices_from_values(
+            phi_vals, u_k, a, b, K_array, r, T
         )
-
-        uk_safe = uk.copy()
-        uk_safe[0, 0] = 1.0
-        psi = (np.sin(arg_d) - np.sin(arg_c)) / uk_safe
-        psi[:, 0] = (d - c[:, 0])  # k = 0 column
-
-        u_payoff = (2.0 / (b - a)) * (chi - k_arr[:, None] * psi)  # (M, N)
-        prices = math.exp(-r * T) * (u_payoff * fac[None, :]).sum(axis=1)
-        return np.maximum(prices, 0.0)
 
     @staticmethod
     def hawkes_price_constvol_cos(S0, K, T, sigma, lambda0, lambda_bar, alpha,
@@ -417,17 +362,9 @@ class BatesHawkesExact(Bates):
                 T, r, q, n_steps
             )
 
-        # Truncation range from numerically estimated cumulants of log S_T.
-        h = 0.05
-        log_phi = np.log(phi(h))
-        c1 = log_phi.imag / h
-        c2 = max(-2.0 * log_phi.real / h ** 2, 1e-6)
-        width = L * math.sqrt(c2)
-        a, b = c1 - width, c1 + width
-
-        u_k = np.arange(N) * np.pi / (b - a)
-        phi_vals = phi(u_k)
-        return BatesHawkesExact._cos_call_prices(phi_vals, u_k, a, b, k_arr, r, T)
+        return adaptive_cos_call_prices(
+            phi, k_arr, T, r, terms=N, width_scale=L
+        )
     @staticmethod
     def hawkes_price_cos(S0, K, T, v0, kappa, theta, sigma, rho, lambda0,
                          lambda_bar, alpha, beta, mu_J, sigma_J, r, q=0.0,
@@ -449,15 +386,8 @@ class BatesHawkesExact(Bates):
                 T, r, q, n_steps,
             )
 
-        h = 0.05
-        log_phi = np.log(phi(h))
-        c1 = log_phi.imag / h
-        c2 = max(-2.0 * log_phi.real / h ** 2, 1e-6)
-        width = L * math.sqrt(c2)
-        a, b = c1 - width, c1 + width
-
-        u_k = np.arange(N) * np.pi / (b - a)
-        phi_vals = phi(u_k)
-        return BatesHawkesExact._cos_call_prices(phi_vals, u_k, a, b, k_arr, r, T)
+        return adaptive_cos_call_prices(
+            phi, k_arr, T, r, terms=N, width_scale=L
+        )
 
     # Calibration objectives and optimizers are defined in Hawkes.py.

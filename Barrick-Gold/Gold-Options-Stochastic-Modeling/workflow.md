@@ -1,5 +1,22 @@
 # Hawkes Calibration Workflow
 
+## Restructured execution boundary
+
+The reusable numerical path is now split by responsibility:
+
+1. `calibration_core.py` validates a market frame once and groups immutable
+   arrays by `(T, rate)`.
+2. `fourier_pricing.py` owns stateless Fourier inversion kernels.
+3. `Bates.py`, `BatesHawkes.py`, and `BatesHawkesExact.py` own only model
+   characteristic functions, admissibility checks, and model APIs.
+4. `calibration_workflow.py` builds diagnostics for the notebooks.
+5. The notebooks select data, call one calibration API, and render outputs.
+
+The scalar Carr--Madan price is the frozen numerical reference. Bates and its
+stationary Hawkes proxy use vectorised COS batches inside calibration. Every
+optimizer accepts an optional seed; parameter admissibility includes positivity,
+correlation bounds, the Heston Feller condition, and Hawkes stationarity.
+
 ## Architecture
 
 Hawkes point-process calibration follows the same repository convention as the

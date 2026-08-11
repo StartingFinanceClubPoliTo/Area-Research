@@ -4,3 +4,4 @@ scipy
 matplotlib
 jupyter
 nelson-siegel-svensson
+lse-data>=0.14,<1

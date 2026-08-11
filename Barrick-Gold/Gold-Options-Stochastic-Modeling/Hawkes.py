@@ -4,6 +4,8 @@ import numpy as np
 from scipy.optimize import differential_evolution, minimize
 from scipy.special import expit
 
+from calibration_core import OptionSurface
+
 
 class Hawkes:
     """
@@ -591,15 +593,13 @@ class ExactHawkesCalibration:
             return 1e8
 
         pricer = cls._pricer()
+        surface = OptionSurface.from_frame(df_market)
         error = 0.0
-        count = 0
-        for maturity, group in df_market.groupby("T"):
-            strikes = group["K"].to_numpy(dtype=float)
-            rate = float(group["rate"].iloc[0])
+        for maturity_slice in surface.slices:
             model_prices = pricer.hawkes_price_constvol_cos(
                 S0,
-                strikes,
-                float(maturity),
+                maturity_slice.strikes,
+                maturity_slice.maturity,
                 sigma,
                 lambda_bar,
                 lambda_bar,
@@ -607,19 +607,21 @@ class ExactHawkesCalibration:
                 beta,
                 mu_j,
                 sigma_j,
-                rate,
+                maturity_slice.rate,
                 q,
                 N=cos_N,
                 n_steps=n_steps,
             )
-            market_prices = group["price"].to_numpy(dtype=float)
-            safe_vega = np.maximum(group["vega"].to_numpy(dtype=float), 1e-4)
-            error += float(np.sum(((model_prices - market_prices) / safe_vega) ** 2))
-            count += len(group)
+            error += float(
+                np.sum(
+                    ((model_prices - maturity_slice.market_prices)
+                     / maturity_slice.safe_vegas) ** 2
+                )
+            )
 
         branching = alpha / beta
         penalty = 0.01 * branching ** 2 / max(1.0 - branching, 1e-4)
-        return error / max(count, 1) + penalty
+        return error / surface.size + penalty
 
     @classmethod
     def calibrate_constvol(
@@ -644,10 +646,11 @@ class ExactHawkesCalibration:
         constraints = (
             {"type": "ineq", "fun": lambda x: x[3] - x[2] - 1e-4},
         )
+        surface = OptionSurface.from_frame(df_market)
         result_global = differential_evolution(
             cls.objective_constvol,
             bounds=bounds,
-            args=(df_market, S0, q, n_steps),
+            args=(surface, S0, q, n_steps),
             maxiter=maxiter,
             popsize=popsize,
             tol=1e-3,
@@ -657,7 +660,7 @@ class ExactHawkesCalibration:
         result_local = minimize(
             cls.objective_constvol,
             x0=result_global.x,
-            args=(df_market, S0, q, n_steps),
+            args=(surface, S0, q, n_steps),
             method="SLSQP",
             bounds=bounds,
             constraints=constraints,
@@ -737,17 +740,15 @@ class ExactHawkesCalibration:
         if p["alpha"] >= p["beta"]:
             return 1e8
 
+        surface = OptionSurface.from_frame(df_market)
         pricer = cls._pricer()
         error = 0.0
-        count = 0
         try:
-            for maturity, group in df_market.groupby("T"):
-                strikes = group["K"].to_numpy(dtype=float)
-                rate = float(group["rate"].iloc[0])
+            for maturity_slice in surface.slices:
                 model_prices = pricer.hawkes_price_cos(
                     S0,
-                    strikes,
-                    float(maturity),
+                    maturity_slice.strikes,
+                    maturity_slice.maturity,
                     p["v0"],
                     p["kappa"],
                     p["theta"],
@@ -759,20 +760,22 @@ class ExactHawkesCalibration:
                     p["beta"],
                     p["mu_J"],
                     p["sigma_J"],
-                    rate,
+                    maturity_slice.rate,
                     q,
                     N=cos_N,
                     n_steps=n_steps,
                 )
                 if not np.all(np.isfinite(model_prices)):
                     return 1e8
-                market_prices = group["price"].to_numpy(dtype=float)
-                safe_vega = np.maximum(group["vega"].to_numpy(dtype=float), 1e-4)
-                error += float(np.sum(((model_prices - market_prices) / safe_vega) ** 2))
-                count += len(group)
+                error += float(
+                    np.sum(
+                        ((model_prices - maturity_slice.market_prices)
+                         / maturity_slice.safe_vegas) ** 2
+                    )
+                )
         except (FloatingPointError, OverflowError, ValueError):
             return 1e8
-        return error / max(count, 1)
+        return error / surface.size
 
     @classmethod
     def calibrate_heston(
@@ -790,6 +793,7 @@ class ExactHawkesCalibration:
         min_branching=0.02,
     ):
         """Calibrate the full affine Heston-Hawkes option model in two stages."""
+        surface = OptionSurface.from_frame(df_market)
         if bates_seed is None:
             bates_seed = (
                 0.07997,
@@ -821,7 +825,7 @@ class ExactHawkesCalibration:
         def conditional_objective(hawkes_params):
             full = np.concatenate([diffusion_seed, hawkes_params])
             return cls.objective_heston(
-                full, df_market, S0, q, n_steps, global_cos_N
+                full, surface, S0, q, n_steps, global_cos_N
             )
 
         result_global = differential_evolution(
@@ -856,14 +860,21 @@ class ExactHawkesCalibration:
             ]
         )
         candidates = []
+        constraints = (
+            {
+                "type": "ineq",
+                "fun": lambda x: 2.0 * x[1] * x[2] - x[3] ** 2,
+            },
+        )
         for start in (x0, bates_like):
             candidates.append(
                 minimize(
                     cls.objective_heston,
                     x0=start,
-                    args=(df_market, S0, q, n_steps, local_cos_N),
+                    args=(surface, S0, q, n_steps, local_cos_N),
                     method="SLSQP",
                     bounds=full_bounds,
+                    constraints=constraints,
                     options={"ftol": 1e-8, "maxiter": 80, "disp": False},
                 )
             )

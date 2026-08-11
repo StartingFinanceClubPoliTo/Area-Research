@@ -6,3 +6,6 @@ Revisione/
 .jupyter_runtime/
 __pycache__/
 *.pyc
+Data/lse_local/
+.env
+.env.*

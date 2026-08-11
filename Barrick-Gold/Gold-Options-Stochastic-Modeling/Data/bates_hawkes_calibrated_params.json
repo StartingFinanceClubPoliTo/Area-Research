@@ -1,24 +1,23 @@
 {
-  "model": "Legacy full affine Bates-Hawkes snapshot (pre-Feller-guard output)",
-  "parameterization": "lambda0 and lambda_bar are calibrated separately; alpha=branching_ratio*beta enforces stationarity",
+  "model": "Full affine Bates-Hawkes (Feller constrained)",
+  "parameterization": "lambda0 and lambda_bar are separate; alpha=branching_ratio*beta enforces stationarity",
   "parameters": {
-    "v0": 0.08009997931036386,
-    "kappa": 1.7164295914288497,
-    "theta": 0.044259500600719925,
-    "xi": 0.7195451021228274,
-    "rho": 0.22059285759545227,
-    "lambda0": 0.896393452257699,
-    "lambda_bar": 0.8784706444696915,
-    "stationary_mean_intensity": 0.8964006611593537,
-    "branching_ratio": 0.020002235012268527,
-    "alpha": 0.15383716864664987,
-    "beta": 7.690998958481022,
-    "mu_J": -0.19078639077166856,
-    "sigma_J": 0.10085894357791045,
-    "feller_gap": -0.3658085209230729
+    "v0": 0.07936004581158475,
+    "kappa": 1.7163907294954897,
+    "theta": 0.04602942364872479,
+    "xi": 0.38382901867497,
+    "rho": 0.2219288300375485,
+    "lambda0": 1.1297214770325104,
+    "lambda_bar": 0.6572354551659886,
+    "stationary_mean_intensity": 0.8890316564314038,
+    "branching_ratio": 0.2607288498542911,
+    "alpha": 2.899961650537678,
+    "beta": 11.12251924617597,
+    "mu_J": -0.19361571235863878,
+    "sigma_J": 0.07233540693473091,
+    "feller_gap": 0.010684236492392918
   },
-  "final_objective": 4.474878129782818e-06,
-  "bates_limit_objective": 4.386046862813575e-06,
+  "final_objective": 5.878930223548894e-06,
   "dataset": {
     "instrument": "GLD calls",
     "observations": 64,
@@ -26,14 +25,17 @@
     "spot": 437.82
   },
   "calibration": {
-    "global_stage": "Differential Evolution on Hawkes/jump block with Bates diffusion fixed",
-    "local_stage": "Joint eleven-parameter SLSQP refinement",
-    "seed": 20260613,
+    "seed": 20260811,
     "global_cos_N": 128,
     "local_cos_N": 192,
     "final_cos_N": 256,
     "minimum_branching_ratio": 0.02
   },
-  "status": "legacy_pre_feller_guard",
-  "interpretation": "This snapshot predates the current code guard that rejects Heston variance parameters with negative Feller gap. Regenerate the calibration with the current code before treating these numbers as the final Feller-constrained output."
+  "optimizer": {
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "iterations": 8,
+    "evaluations": 98
+  },
+  "status": "feller_constrained_restructured_workflow"
 }

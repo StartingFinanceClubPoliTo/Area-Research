@@ -1,25 +1,24 @@
 {
   "full_bates_hawkes": {
-    "price_mae": 0.26827220756645176,
-    "price_rmse": 0.3397348316990665,
-    "iv_mae_bp": 16.562522595442623,
-    "iv_rmse_bp": 21.20223986163153,
-    "max_abs_price_error": 1.1436420957815514,
-    "max_abs_iv_error_bp": 73.8514717854566
+    "price_mae": 0.27290514046749825,
+    "price_rmse": 0.3542785294113166,
+    "iv_mae_bp": 17.91525322145029,
+    "iv_rmse_bp": 24.349195075924634,
+    "max_abs_price_error": 1.2517169187018382,
+    "max_abs_iv_error_bp": 77.79181879013831
   },
   "bates": {
-    "price_mae": 0.2545480288943789,
-    "price_rmse": 0.32786770254975833,
-    "iv_mae_bp": 15.872290312166907,
-    "iv_rmse_bp": 20.87285969339567,
-    "max_abs_price_error": 1.0971887059366452,
-    "max_abs_iv_error_bp": 77.03895267844318
+    "price_mae": 0.636350554563377,
+    "price_rmse": 0.7322378678387104,
+    "iv_mae_bp": 37.378855280476564,
+    "iv_rmse_bp": 42.80238997262692,
+    "max_abs_price_error": 1.4375406407340776,
+    "max_abs_iv_error_bp": 100.21854916587469
   },
-  "calibration_objective": 4.474878129782818e-06,
-  "bates_limit_objective": 4.386046862813575e-06,
-  "branching_ratio": 0.020002235012268527,
+  "calibration_objective": 5.878930223548894e-06,
+  "bates_objective": 1.8266700323266688e-05,
+  "branching_ratio": 0.2607288498542911,
   "minimum_branching_ratio": 0.02,
   "observations": 64,
-  "status": "legacy_pre_feller_guard",
-  "interpretation": "Metrics correspond to the stored legacy parameter snapshot. Regenerate with the current Feller-constrained objective before using as final publication numbers."
+  "status": "feller_constrained_restructured_workflow"
 }

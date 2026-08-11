@@ -1,6 +1,8 @@
-# Source code
+# Source Code ⚙️
 
-Python source for the Rough Volatility and End-of-Day Inventory Control companion project.
+Python source for the Rough Volatility and End-of-Day Inventory Control companion folder.
+
+## Files
 
 | File | Role |
 | --- | --- |
@@ -12,4 +14,4 @@ Python source for the Rough Volatility and End-of-Day Inventory Control companio
 | `interactive_volterra_dashboard.py` | Local Volterra memory and filtration dashboard. |
 | `interactive_lift_dashboard.py` | Local Markovian-lifting dashboard. |
 
-Run scripts from the project root so output paths remain stable. Stateless numerical kernels remain functions; classes own validated configuration, cached matrices, reusable state, or orchestration.
+Run scripts from the article folder root so relative output paths remain stable. Stateless numerical kernels remain functions; classes own validated configuration, cached matrices, reusable state, or orchestration.

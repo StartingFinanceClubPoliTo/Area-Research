@@ -16,7 +16,7 @@ The project reproduces the numerical material used in the article: fractional Br
 | Path | Role |
 | --- | --- |
 | `src/rough_processes.py` | Validated and cached classes for Davies--Harte and Cholesky fBM, Volterra, and Markovian-lifting simulations, plus lag-wise covariance diagnostics and functional wrappers. |
-| `src/Rough_Volatility_HJB_Standalone.ipynb` | Downloadable standalone notebook containing the project classes and functions directly, without imports from local Python modules. |
+| `src/Rough_Volatility_HJB_Standalone.ipynb` | Downloadable standalone notebook containing the project classes and functions directly, without imports from local Python modules; its single entry point generates all 16 article images. |
 | `src/dashboard_base.py` | Shared slider, redraw, and colorbar lifecycle for the interactive dashboards. |
 | `src/generate_article_figures.py` | Class-based batch generator for static article-style figures. |
 | `src/interactive_fbm_dashboard.py` | Matplotlib dashboard for fBM covariance and path diagnostics. |
@@ -66,6 +66,12 @@ Open the self-contained notebook without relying on the surrounding source tree:
 jupyter lab src/Rough_Volatility_HJB_Standalone.ipynb
 ```
 
+Inside the notebook, generate the complete 16-image article set with:
+
+```python
+generate_all_article_images("standalone_outputs")
+```
+
 Run the automated checks:
 
 ```bash
@@ -80,7 +86,7 @@ python -m unittest discover -s tests -v
 | `output/hjb_summary.json` | Curated snapshot of the HJB summary. |
 | `img/2/hjb_surfaces.png` | Reduced HJB surfaces across Hurst regimes. |
 | `img/2/hjb_simulation.png` | Representative simulation and PnL comparison across Hurst regimes. |
-| `output/generated_figures/` | fBM, Volterra, Markovian-lifting, and iterative-filtration figures, with covariance errors aggregated by lag. |
+| `output/generated_figures/` | fBM, Volterra, Markovian-lifting, iterative-filtration, convergence, and HJB figures, with covariance errors aggregated by lag. |
 
 ## ⚡ Design and performance
 

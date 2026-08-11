@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -180,6 +182,43 @@ class DashboardTests(unittest.TestCase):
             self.assertEqual(len(dashboard._colorbars), 2)
         finally:
             plt.close(dashboard.figure)
+
+
+class StandaloneNotebookTests(unittest.TestCase):
+    def test_notebook_is_self_contained_and_generates_all_article_images(self) -> None:
+        notebook_path = ROOT / "src" / "Rough_Volatility_HJB_Standalone.ipynb"
+        notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
+        code = "\n".join(
+            "".join(cell.get("source", []))
+            for cell in notebook["cells"]
+            if cell.get("cell_type") == "code"
+        )
+
+        local_modules = (
+            "rough_processes",
+            "dashboard_base",
+            "generate_article_figures",
+            "solve_rough_hjb",
+            "interactive_fbm_dashboard",
+            "interactive_volterra_dashboard",
+            "interactive_lift_dashboard",
+        )
+        for module in local_modules:
+            self.assertIsNone(
+                re.search(rf"(^|\n)\s*(?:from|import)\s+{module}\b", code),
+                msg=f"Notebook imports local module {module}",
+            )
+
+        self.assertIn("class ArticleFigureGenerator", code)
+        self.assertIn("class RoughHJBExperiment", code)
+        self.assertIn("def generate_all_article_images", code)
+        for image_name in (
+            "img_4.png",
+            "img_5.png",
+            "hjb_surfaces.png",
+            "hjb_simulation.png",
+        ):
+            self.assertIn(image_name, code)
 
 
 if __name__ == "__main__":

@@ -15,7 +15,8 @@ The project reproduces the numerical material used in the article: fractional Br
 
 | Path | Role |
 | --- | --- |
-| `src/rough_processes.py` | Validated and cached classes for fBM, Volterra, and Markovian-lifting simulations, with backward-compatible functional wrappers. |
+| `src/rough_processes.py` | Validated and cached classes for Davies--Harte and Cholesky fBM, Volterra, and Markovian-lifting simulations, plus lag-wise covariance diagnostics and functional wrappers. |
+| `src/Rough_Volatility_HJB_Standalone.ipynb` | Downloadable standalone notebook containing the project classes and functions directly, without imports from local Python modules. |
 | `src/dashboard_base.py` | Shared slider, redraw, and colorbar lifecycle for the interactive dashboards. |
 | `src/generate_article_figures.py` | Class-based batch generator for static article-style figures. |
 | `src/interactive_fbm_dashboard.py` | Matplotlib dashboard for fBM covariance and path diagnostics. |
@@ -59,6 +60,12 @@ python src/interactive_volterra_dashboard.py
 python src/interactive_lift_dashboard.py
 ```
 
+Open the self-contained notebook without relying on the surrounding source tree:
+
+```bash
+jupyter lab src/Rough_Volatility_HJB_Standalone.ipynb
+```
+
 Run the automated checks:
 
 ```bash
@@ -73,11 +80,11 @@ python -m unittest discover -s tests -v
 | `output/hjb_summary.json` | Curated snapshot of the HJB summary. |
 | `img/2/hjb_surfaces.png` | Reduced HJB surfaces across Hurst regimes. |
 | `img/2/hjb_simulation.png` | Representative simulation and PnL comparison across Hurst regimes. |
-| `output/generated_figures/` | fBM, Volterra, Markovian-lifting, and iterative-filtration figures. |
+| `output/generated_figures/` | fBM, Volterra, Markovian-lifting, and iterative-filtration figures, with covariance errors aggregated by lag. |
 
 ## ⚡ Design and performance
 
-Deterministic matrices are cached inside model instances. Markovian-lift paths are batched across simulations, leaving only the time recursion in Python. The Monte Carlo comparison constructs the lifted state, volatility, and mid-price once per shock stream and shares them between the naive and HJB policies. Dashboard redraws remove old colorbars before adding new ones, so figure axes do not accumulate.
+Deterministic matrices are cached inside model instances. Article-facing fBM paths use the FFT-based Davies--Harte construction, while direct Cholesky simulation remains available as a covariance reference. Covariance-error profiles aggregate constant-lag diagonals rather than time columns. Markovian-lift paths are batched across simulations, leaving only the time recursion in Python. The Monte Carlo comparison constructs the lifted state, volatility, and mid-price once per shock stream and shares them between the naive and HJB policies. Dashboard redraws remove old colorbars before adding new ones, so figure axes do not accumulate.
 
 The regression suite verifies that these optimizations preserve the numerical results.
 

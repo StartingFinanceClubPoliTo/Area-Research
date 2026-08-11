@@ -6,7 +6,8 @@ Python source for the Rough Volatility and End-of-Day Inventory Control companio
 
 | File | Role |
 | --- | --- |
-| `rough_processes.py` | `SimulationGrid`, `FractionalBrownianMotion`, `VolterraProcess`, and `MarkovianLift`, plus backward-compatible functional wrappers. |
+| `rough_processes.py` | `SimulationGrid`, Davies--Harte and Cholesky fBM classes, `VolterraProcess`, `MarkovianLift`, lag-wise covariance diagnostics, and functional wrappers. |
+| `Rough_Volatility_HJB_Standalone.ipynb` | Executed, downloadable notebook with the source classes embedded directly; it does not import any local project module. |
 | `dashboard_base.py` | Common Matplotlib slider wiring, redraw lifecycle, and bounded colorbar management. |
 | `generate_article_figures.py` | `ArticleFigureGenerator` and `FigureConfig` for deterministic batch output. |
 | `solve_rough_hjb.py` | HJB solve, shared `MarketEnvironment`, `PolicySimulator`, and `RoughHJBExperiment`. |
@@ -15,3 +16,5 @@ Python source for the Rough Volatility and End-of-Day Inventory Control companio
 | `interactive_lift_dashboard.py` | Local Markovian-lifting dashboard. |
 
 Run scripts from the article folder root so relative output paths remain stable. Stateless numerical kernels remain functions; classes own validated configuration, cached matrices, reusable state, or orchestration.
+
+The standalone notebook was also executed from an isolated folder containing no project modules. Its embedded smoke checks cover Davies--Harte fBM, lag-wise covariance errors, the Markovian lift, and a reduced HJB run.

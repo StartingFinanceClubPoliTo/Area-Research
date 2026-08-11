@@ -8,6 +8,7 @@ __pycache__/
 
 # Jupyter / local scratch
 *.ipynb
+!src/Rough_Volatility_HJB_Standalone.ipynb
 .ipynb_checkpoints/
 .jupyter/
 .jupyter_runtime/

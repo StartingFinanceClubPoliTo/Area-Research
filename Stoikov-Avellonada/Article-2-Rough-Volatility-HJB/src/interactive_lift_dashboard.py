@@ -5,7 +5,13 @@ from __future__ import annotations
 import numpy as np
 
 from dashboard_base import InteractiveDashboard, SliderSpec
-from rough_processes import MarkovianLift, SimulationGrid, covariance_error, fbm_covariance
+from rough_processes import (
+    MarkovianLift,
+    SimulationGrid,
+    covariance_error,
+    fbm_covariance,
+    lagwise_covariance_error,
+)
 
 
 class LiftDashboard(InteractiveDashboard):
@@ -41,9 +47,13 @@ class LiftDashboard(InteractiveDashboard):
         )
 
         self.axes[0, 1].plot(
-            np.sqrt(np.mean(difference**2, axis=0)), color="#e74c3c", lw=2.0
+            lagwise_covariance_error(difference), color="#e74c3c", lw=2.0
         )
-        self.axes[0, 1].set(title="Covariance Error by Lag", xlabel="Lag", ylabel="RMSE")
+        self.axes[0, 1].set(
+            title="Covariance Error by Lag",
+            xlabel="Lag",
+            ylabel="Mean absolute error",
+        )
         self.axes[0, 1].grid(alpha=0.25)
 
         image = self.axes[1, 0].imshow(

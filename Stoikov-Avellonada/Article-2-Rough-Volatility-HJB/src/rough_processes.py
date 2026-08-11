@@ -82,6 +82,68 @@ class FractionalBrownianMotion:
 
 
 @dataclass(frozen=True)
+class DaviesHarteFractionalBrownianMotion:
+    """FFT-based fBM simulator built from fractional Gaussian increments.
+
+    The direct-covariance class above remains useful as a small-grid reference.
+    This class matches the Davies--Harte construction described in the article
+    and fixes the initial value exactly at zero.
+    """
+
+    grid: SimulationGrid
+    hurst: float = 0.5
+    eigenvalue_tolerance: float = 1e-12
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "hurst", _validate_hurst(self.hurst))
+        tolerance = float(self.eigenvalue_tolerance)
+        if tolerance <= 0.0:
+            raise ValueError("eigenvalue_tolerance must be positive")
+        object.__setattr__(self, "eigenvalue_tolerance", tolerance)
+
+    @property
+    def increment_count(self) -> int:
+        return self.grid.steps - 1
+
+    @cached_property
+    def increment_covariance(self) -> np.ndarray:
+        lag = np.arange(self.increment_count, dtype=float)
+        exponent = 2.0 * self.hurst
+        covariance = 0.5 * (
+            np.abs(lag + 1.0) ** exponent
+            - 2.0 * np.abs(lag) ** exponent
+            + np.abs(lag - 1.0) ** exponent
+        )
+        return (self.grid.dt ** exponent) * covariance
+
+    @cached_property
+    def embedding_eigenvalues(self) -> np.ndarray:
+        covariance = self.increment_covariance
+        embedding = np.concatenate((covariance, [0.0], covariance[1:][::-1]))
+        eigenvalues = np.fft.fft(embedding).real
+        tolerance = self.eigenvalue_tolerance * max(1.0, float(eigenvalues.max()))
+        if float(eigenvalues.min()) < -tolerance:
+            raise ValueError("Davies--Harte circulant embedding is not positive")
+        return np.maximum(eigenvalues, 0.0)
+
+    def simulate(self, paths: int = 10, seed: int = 42) -> np.ndarray:
+        count = _positive_int(paths, "paths")
+        embedding_size = 2 * self.increment_count
+        draws = np.random.default_rng(seed).standard_normal((count, embedding_size))
+        increments = np.fft.ifft(
+            np.fft.fft(draws, axis=1) * np.sqrt(self.embedding_eigenvalues),
+            axis=1,
+        ).real[:, : self.increment_count]
+        samples = np.zeros((count, self.grid.steps), dtype=float)
+        samples[:, 1:] = np.cumsum(increments, axis=1)
+        return samples
+
+    @cached_property
+    def covariance(self) -> np.ndarray:
+        return fbm_covariance(self.grid.time, self.hurst)
+
+
+@dataclass(frozen=True)
 class VolterraProcess:
     """Causal Volterra representation with a vectorized kernel build."""
 
@@ -229,10 +291,49 @@ def simulate_fbm_cholesky(
     return model.simulate(paths, seed), model.grid.time.copy(), model.covariance.copy()
 
 
+def simulate_fbm_davies_harte(
+    steps: int = 300,
+    hurst: float = 0.5,
+    paths: int = 10,
+    T: float = 1.0,
+    seed: int = 42,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    model = DaviesHarteFractionalBrownianMotion(SimulationGrid(steps, T), hurst)
+    return model.simulate(paths, seed), model.grid.time.copy(), model.covariance.copy()
+
+
 def covariance_error(paths: np.ndarray, target_cov: np.ndarray) -> tuple[np.ndarray, float]:
     empirical = np.cov(np.asarray(paths, dtype=float), rowvar=False)
     difference = empirical - np.asarray(target_cov, dtype=float)
     return difference, float(np.sqrt(np.mean(difference**2)))
+
+
+def lagwise_covariance_error(
+    difference: np.ndarray,
+    reduction: str = "mae",
+) -> np.ndarray:
+    """Aggregate a covariance-error matrix along constant-lag diagonals.
+
+    ``axis=0`` aggregation groups errors by time column, not by lag.  A true
+    lag profile uses diagonal ``k`` for every non-negative lag ``k``.  The
+    article figures use mean absolute error; RMSE remains available for
+    diagnostics that explicitly request it.
+    """
+
+    values = np.asarray(difference, dtype=float)
+    if values.ndim != 2 or values.shape[0] != values.shape[1]:
+        raise ValueError("difference must be a square covariance-error matrix")
+    if reduction not in {"mae", "rmse"}:
+        raise ValueError("reduction must be 'mae' or 'rmse'")
+
+    profile = np.empty(values.shape[0], dtype=float)
+    for lag in range(values.shape[0]):
+        diagonal = np.diagonal(values, offset=lag)
+        if reduction == "mae":
+            profile[lag] = np.mean(np.abs(diagonal))
+        else:
+            profile[lag] = np.sqrt(np.mean(diagonal**2))
+    return profile
 
 
 def fractional_kernel_matrix(
@@ -296,6 +397,7 @@ def ensure_dir(path: str | Path) -> Path:
 
 
 __all__ = [
+    "DaviesHarteFractionalBrownianMotion",
     "FractionalBrownianMotion",
     "MarkovianLift",
     "SimulationGrid",
@@ -304,9 +406,11 @@ __all__ = [
     "ensure_dir",
     "fbm_covariance",
     "fractional_kernel_matrix",
+    "lagwise_covariance_error",
     "lift_rates_weights",
     "ou_innovation_cov",
     "simulate_fbm_cholesky",
+    "simulate_fbm_davies_harte",
     "simulate_markov_lift",
     "simulate_volterra",
     "time_grid",

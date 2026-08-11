@@ -16,10 +16,56 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import rough_processes as rp  # noqa: E402
 import solve_rough_hjb as hjb  # noqa: E402
+from generate_article_figures import FigureConfig  # noqa: E402
 from interactive_fbm_dashboard import FBMDashboard  # noqa: E402
 
 
 class RoughProcessTests(unittest.TestCase):
+    def test_davies_harte_is_deterministic_and_matches_fbm_covariance(self) -> None:
+        model = rp.DaviesHarteFractionalBrownianMotion(
+            rp.SimulationGrid(24, 0.75), 0.3
+        )
+        first = model.simulate(4000, 17)
+        second = model.simulate(4000, 17)
+
+        np.testing.assert_array_equal(first, second)
+        np.testing.assert_array_equal(first[:, 0], np.zeros(first.shape[0]))
+        _, rmse = rp.covariance_error(first, model.covariance)
+        self.assertLess(rmse, 0.025)
+
+    def test_lagwise_covariance_error_uses_constant_lag_diagonals(self) -> None:
+        difference = np.array(
+            [
+                [0.0, 1.0, 2.0],
+                [1.0, -3.0, 4.0],
+                [2.0, 4.0, 5.0],
+            ]
+        )
+        np.testing.assert_allclose(
+            rp.lagwise_covariance_error(difference),
+            np.array([8.0 / 3.0, 2.5, 2.0]),
+        )
+        np.testing.assert_allclose(
+            rp.lagwise_covariance_error(difference, reduction="rmse"),
+            np.array([np.sqrt(34.0 / 3.0), np.sqrt(8.5), 2.0]),
+        )
+
+        model = rp.DaviesHarteFractionalBrownianMotion(rp.SimulationGrid(30), 0.2)
+        paths = model.simulate(20, 31)
+        covariance_difference, _ = rp.covariance_error(paths, model.covariance)
+        self.assertEqual(rp.lagwise_covariance_error(covariance_difference)[-1], 0.0)
+
+        with self.assertRaises(ValueError):
+            rp.lagwise_covariance_error(np.ones((2, 3)))
+        with self.assertRaises(ValueError):
+            rp.lagwise_covariance_error(np.eye(3), reduction="unknown")
+
+    def test_article_figure_defaults_match_reference_panels(self) -> None:
+        config = FigureConfig()
+        self.assertEqual(config.sample_paths, 10)
+        self.assertEqual(config.lift_paths, 10)
+        self.assertEqual(config.lift_factors, 10)
+
     def test_functional_api_matches_class_api(self) -> None:
         grid = rp.SimulationGrid(24, 0.75)
 

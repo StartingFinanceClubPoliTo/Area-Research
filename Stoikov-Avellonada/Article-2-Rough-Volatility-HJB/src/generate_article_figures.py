@@ -13,13 +13,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from rough_processes import (
-    FractionalBrownianMotion,
+    DaviesHarteFractionalBrownianMotion,
     MarkovianLift,
     SimulationGrid,
     VolterraProcess,
     covariance_error,
     ensure_dir,
     fbm_covariance,
+    lagwise_covariance_error,
 )
 
 
@@ -27,7 +28,7 @@ from rough_processes import (
 class FigureConfig:
     steps: int = 300
     sample_paths: int = 10
-    lift_paths: int = 25
+    lift_paths: int = 10
     lift_factors: int = 10
     dpi: int = 160
 
@@ -45,12 +46,15 @@ class ArticleFigureGenerator:
         return base + int(hurst * 100)
 
     def _save(self, figure, name: str) -> None:
-        figure.tight_layout()
+        if figure._suptitle is None:
+            figure.tight_layout()
+        else:
+            figure.tight_layout(rect=(0.0, 0.0, 1.0, 0.96))
         figure.savefig(self.output / name, dpi=self.config.dpi)
         plt.close(figure)
 
     def save_fbm(self, hurst: float) -> None:
-        model = FractionalBrownianMotion(self.grid, hurst)
+        model = DaviesHarteFractionalBrownianMotion(self.grid, hurst)
         paths = model.simulate(self.config.sample_paths, self._seed(100, hurst))
         difference, rmse = covariance_error(paths, model.covariance)
         figure, axes = plt.subplots(2, 2, figsize=(10, 8))
@@ -60,8 +64,13 @@ class ArticleFigureGenerator:
         image = axes[0, 1].imshow(np.cov(paths, rowvar=False), origin="lower", aspect="auto")
         figure.colorbar(image, ax=axes[0, 1])
         axes[0, 1].set_title(f"Covariance\nRMSE: {rmse:.2e}")
-        axes[1, 0].plot(np.sqrt(np.mean(difference**2, axis=0)), color="#e74c3c", lw=2)
-        axes[1, 0].set_title("Covariance Error")
+        axes[1, 0].plot(
+            lagwise_covariance_error(difference), color="#e74c3c", lw=2
+        )
+        axes[1, 0].set(
+            title="Covariance Error by Lag", xlabel="Lag", ylabel="Mean absolute error"
+        )
+        axes[1, 0].grid(alpha=0.25)
         image = axes[1, 1].imshow(model.covariance, origin="lower", aspect="auto")
         figure.colorbar(image, ax=axes[1, 1])
         axes[1, 1].set_title("Theoretical Covariance")
@@ -121,6 +130,7 @@ class ArticleFigureGenerator:
                 )
             axis.axvline(self.grid.time[stop], color="red", ls="--", lw=1)
             axis.set(title=f"Filtration Window s: {window:g}", xlabel="t", ylabel="X(t)")
+        figure.suptitle(f"Causal Volterra Construction    Hurst H: {hurst:.1f}")
         self._save(figure, f"iterative{hurst:.1f}.png")
 
     def save_lift(self, hurst: float) -> None:
@@ -133,8 +143,13 @@ class ArticleFigureGenerator:
         for row in paths[:10]:
             axes[0, 0].plot(self.grid.time, row, lw=1)
         axes[0, 0].set_title("Sample Paths")
-        axes[0, 1].plot(np.sqrt(np.mean(difference**2, axis=0)), color="#e74c3c", lw=2)
-        axes[0, 1].set_title("Covariance Error")
+        axes[0, 1].plot(
+            lagwise_covariance_error(difference), color="#e74c3c", lw=2
+        )
+        axes[0, 1].set(
+            title="Covariance Error by Lag", xlabel="Lag", ylabel="Mean absolute error"
+        )
+        axes[0, 1].grid(alpha=0.25)
         image = axes[1, 0].imshow(target, origin="lower", aspect="auto")
         figure.colorbar(image, ax=axes[1, 0])
         axes[1, 0].set_title("Theoretical Covariance")

@@ -1,16 +1,15 @@
-# Source Code ⚙️
+# Source code
 
-Python source for the Rough Volatility and End-of-Day Inventory Control companion folder.
-
-## Files
+Python source for the Rough Volatility and End-of-Day Inventory Control companion project.
 
 | File | Role |
 | --- | --- |
-| `rough_processes.py` | Shared stochastic-process helpers for fBM, Volterra, and Markovian-lifting simulations. |
-| `generate_article_figures.py` | Batch generator for static article-style figures. |
-| `solve_rough_hjb.py` | Reduced HJB solver and Monte Carlo comparison between naive and inventory-aware policies. |
-| `interactive_fbm_dashboard.py` | Local dashboard for fBM covariance and path diagnostics. |
-| `interactive_volterra_dashboard.py` | Local dashboard for Volterra memory and filtration diagnostics. |
-| `interactive_lift_dashboard.py` | Local dashboard for Markovian-lifting diagnostics. |
+| `rough_processes.py` | `SimulationGrid`, `FractionalBrownianMotion`, `VolterraProcess`, and `MarkovianLift`, plus backward-compatible functional wrappers. |
+| `dashboard_base.py` | Common Matplotlib slider wiring, redraw lifecycle, and bounded colorbar management. |
+| `generate_article_figures.py` | `ArticleFigureGenerator` and `FigureConfig` for deterministic batch output. |
+| `solve_rough_hjb.py` | HJB solve, shared `MarketEnvironment`, `PolicySimulator`, and `RoughHJBExperiment`. |
+| `interactive_fbm_dashboard.py` | Local fBM covariance and path dashboard. |
+| `interactive_volterra_dashboard.py` | Local Volterra memory and filtration dashboard. |
+| `interactive_lift_dashboard.py` | Local Markovian-lifting dashboard. |
 
-Run scripts from the article folder root so relative output paths remain stable.
+Run scripts from the project root so output paths remain stable. Stateless numerical kernels remain functions; classes own validated configuration, cached matrices, reusable state, or orchestration.

@@ -58,6 +58,42 @@ class ModelParams:
     mc_seed: int = 321
 
 
+@dataclass(frozen=True)
+class SimulationShocks:
+    """All random inputs for one market path, shared by both policies."""
+
+    z_lift: np.ndarray
+    z0_lift: np.ndarray
+    z_s: np.ndarray
+    u_b: np.ndarray
+    u_a: np.ndarray
+
+    @classmethod
+    def draw(cls, params: ModelParams, rng: np.random.Generator) -> "SimulationShocks":
+        return cls(
+            z_lift=rng.standard_normal((params.n_steps, params.lift_dim)),
+            z0_lift=rng.standard_normal(params.lift_dim),
+            z_s=rng.standard_normal(params.n_steps),
+            u_b=rng.random(params.n_steps),
+            u_a=rng.random(params.n_steps),
+        )
+
+    def __getitem__(self, name: str) -> np.ndarray:
+        return getattr(self, name)
+
+
+@dataclass(frozen=True)
+class MarketEnvironment:
+    """Policy-independent state computed once and reused across strategies."""
+
+    minutes: np.ndarray
+    y: np.ndarray
+    mid_price: np.ndarray
+    variance: np.ndarray
+    realized_vol: float
+    integrated_variance: float
+
+
 def base_half_spread(params: ModelParams) -> float:
     return (1.0 / params.gamma) * np.log(1.0 + params.gamma / params.k)
 
@@ -234,13 +270,143 @@ def simulate_lifted_state(
 
     factors = np.zeros((params.n_steps + 1, len(lam)), dtype=float)
     factors[0] = chol_stationary @ np.asarray(z0_lift, dtype=float)
+    innovations = np.asarray(z_lift, dtype=float) @ chol.T
 
-    for i in range(params.n_steps):
-        innov = chol @ np.asarray(z_lift[i], dtype=float)
-        factors[i + 1] = a * factors[i] + innov
+    for i, innovation in enumerate(innovations):
+        factors[i + 1] = a * factors[i] + innovation
 
     y = factors @ w
     return factors, y
+
+
+def build_market_environment(
+    params: ModelParams,
+    lift: dict[str, np.ndarray | float],
+    shocks: SimulationShocks | dict[str, np.ndarray],
+) -> MarketEnvironment:
+    """Build the lifted state, variance, and mid-price once per shock stream."""
+
+    dt = params.T / params.n_steps
+    _, y = simulate_lifted_state(params, lift, shocks["z_lift"], shocks["z0_lift"])
+    variance = volatility_from_y(y, params, lift)
+    increments = (
+        np.sqrt(np.maximum(variance[:-1], 1e-10) * dt)
+        * np.asarray(shocks["z_s"], dtype=float)
+    )
+    mid_price = np.empty(params.n_steps + 1, dtype=float)
+    mid_price[0] = params.s0
+    mid_price[1:] = params.s0 + np.cumsum(increments)
+    return MarketEnvironment(
+        minutes=np.linspace(0.0, float(params.trading_minutes), params.n_steps + 1),
+        y=y,
+        mid_price=mid_price,
+        variance=variance,
+        realized_vol=float(np.sqrt(np.sum(increments**2))),
+        integrated_variance=float(np.sum(variance[:-1]) * dt),
+    )
+
+
+@dataclass(frozen=True)
+class PolicySimulator:
+    """Simulate naive or HJB quoting on a reusable market environment."""
+
+    params: ModelParams
+    lift: dict[str, np.ndarray | float]
+    solution: dict[str, np.ndarray]
+
+    def simulate(
+        self,
+        mode: str,
+        shocks: SimulationShocks | dict[str, np.ndarray],
+        environment: MarketEnvironment | None = None,
+    ) -> dict[str, np.ndarray | float]:
+        if mode not in {"naive", "hjb"}:
+            raise ValueError(f"Unknown mode: {mode}")
+
+        params = self.params
+        market = environment or build_market_environment(params, self.lift, shocks)
+        dt = params.T / params.n_steps
+        q_grid = self.solution["q_grid"]
+        y_grid = self.solution["y_grid"]
+        delta_bid = self.solution["delta_bid"]
+        delta_ask = self.solution["delta_ask"]
+        delta0 = base_half_spread(params)
+
+        inventory = np.zeros(params.n_steps + 1)
+        wealth = np.zeros(params.n_steps + 1)
+        cash = np.zeros(params.n_steps + 1)
+        bid_offsets = np.empty(params.n_steps)
+        ask_offsets = np.empty(params.n_steps)
+        q = 0
+        x = 0.0
+        fills_bid = 0
+        fills_ask = 0
+
+        for step in range(params.n_steps):
+            if mode == "naive":
+                bid_offset = delta0
+                ask_offset = delta0
+            else:
+                bid_offset = interpolate_quote(
+                    step, q, market.y[step], delta_bid, q_grid, y_grid
+                )
+                ask_offset = interpolate_quote(
+                    step, q, market.y[step], delta_ask, q_grid, y_grid
+                )
+
+            bid_offsets[step] = bid_offset
+            ask_offsets[step] = ask_offset
+            bid_intensity = (
+                params.A * np.exp(-params.k * bid_offset) if q < params.q_max else 0.0
+            )
+            ask_intensity = (
+                params.A * np.exp(-params.k * ask_offset) if q > -params.q_max else 0.0
+            )
+            bid_probability = 1.0 - np.exp(-bid_intensity * dt)
+            ask_probability = 1.0 - np.exp(-ask_intensity * dt)
+
+            if shocks["u_b"][step] < bid_probability and q < params.q_max:
+                q += 1
+                x -= market.mid_price[step] - bid_offset
+                fills_bid += 1
+            if shocks["u_a"][step] < ask_probability and q > -params.q_max:
+                q -= 1
+                x += market.mid_price[step] + ask_offset
+                fills_ask += 1
+
+            inventory[step + 1] = q
+            cash[step + 1] = x
+            wealth[step + 1] = x + q * market.mid_price[step + 1]
+
+        preclose_inventory = float(q)
+        liquidation_cost = float(
+            terminal_inventory_cost(
+                np.array([q]), np.array([market.y[-1]]), params, self.lift
+            )[0]
+        )
+        final_cash = x + q * market.mid_price[-1] - liquidation_cost
+        inventory[-1] = 0.0
+        cash[-1] = final_cash
+        wealth[-1] = final_cash
+
+        return {
+            "minutes": market.minutes,
+            "y": market.y,
+            "s": market.mid_price,
+            "vol": market.variance,
+            "inv": inventory,
+            "cash": cash,
+            "wealth": wealth,
+            "bid_offsets": bid_offsets,
+            "ask_offsets": ask_offsets,
+            "preclose_inventory": preclose_inventory,
+            "liquidation_cost": liquidation_cost,
+            "trade_count": float(fills_bid + fills_ask),
+            "fills_bid": float(fills_bid),
+            "fills_ask": float(fills_ask),
+            "realized_vol": market.realized_vol,
+            "integrated_variance": market.integrated_variance,
+        }
 
 
 def simulate_policy(
@@ -248,91 +414,12 @@ def simulate_policy(
     lift: dict[str, np.ndarray | float],
     solution: dict[str, np.ndarray],
     mode: str,
-    shocks: dict[str, np.ndarray],
+    shocks: SimulationShocks | dict[str, np.ndarray],
+    environment: MarketEnvironment | None = None,
 ) -> dict[str, np.ndarray | float]:
-    dt = params.T / params.n_steps
-    q_grid = solution["q_grid"]
-    y_grid = solution["y_grid"]
-    delta_bid = solution["delta_bid"]
-    delta_ask = solution["delta_ask"]
-    delta0 = base_half_spread(params)
+    """Backward-compatible functional entry point."""
 
-    minutes = np.linspace(0.0, float(params.trading_minutes), params.n_steps + 1)
-    _, y = simulate_lifted_state(params, lift, shocks["z_lift"], shocks["z0_lift"])
-    vol = volatility_from_y(y, params, lift)
-
-    s = np.zeros(params.n_steps + 1)
-    inv = np.zeros(params.n_steps + 1)
-    wealth = np.zeros(params.n_steps + 1)
-    cash = np.zeros(params.n_steps + 1)
-    bid_offsets = np.zeros(params.n_steps)
-    ask_offsets = np.zeros(params.n_steps)
-
-    s[0] = params.s0
-    q = 0
-    x = 0.0
-    fills_bid = 0
-    fills_ask = 0
-
-    for i in range(params.n_steps):
-        time_idx = min(i, params.n_steps)
-        if mode == "naive":
-            db = delta0
-            da = delta0
-        elif mode == "hjb":
-            db = interpolate_quote(time_idx, q, y[i], delta_bid, q_grid, y_grid)
-            da = interpolate_quote(time_idx, q, y[i], delta_ask, q_grid, y_grid)
-        else:
-            raise ValueError(f"Unknown mode: {mode}")
-
-        bid_offsets[i] = db
-        ask_offsets[i] = da
-
-        lam_b = params.A * np.exp(-params.k * db) if q < params.q_max else 0.0
-        lam_a = params.A * np.exp(-params.k * da) if q > -params.q_max else 0.0
-        p_fill_b = 1.0 - np.exp(-lam_b * dt)
-        p_fill_a = 1.0 - np.exp(-lam_a * dt)
-
-        if shocks["u_b"][i] < p_fill_b and q < params.q_max:
-            q += 1
-            x -= s[i] - db
-            fills_bid += 1
-        if shocks["u_a"][i] < p_fill_a and q > -params.q_max:
-            q -= 1
-            x += s[i] + da
-            fills_ask += 1
-
-        s[i + 1] = s[i] + np.sqrt(max(vol[i], 1e-10) * dt) * shocks["z_s"][i]
-        inv[i + 1] = q
-        cash[i + 1] = x
-        wealth[i + 1] = x + q * s[i + 1]
-
-    preclose_inventory = float(q)
-    liquidation_cost = float(terminal_inventory_cost(np.array([q]), np.array([y[-1]]), params, lift)[0])
-    x_final = x + q * s[-1] - liquidation_cost
-
-    inv[-1] = 0.0
-    cash[-1] = x_final
-    wealth[-1] = x_final
-
-    return {
-        "minutes": minutes,
-        "y": y,
-        "s": s,
-        "vol": vol,
-        "inv": inv,
-        "cash": cash,
-        "wealth": wealth,
-        "bid_offsets": bid_offsets,
-        "ask_offsets": ask_offsets,
-        "preclose_inventory": preclose_inventory,
-        "liquidation_cost": liquidation_cost,
-        "trade_count": float(fills_bid + fills_ask),
-        "fills_bid": float(fills_bid),
-        "fills_ask": float(fills_ask),
-        "realized_vol": float(np.sqrt(np.sum(np.diff(s) ** 2))),
-        "integrated_variance": float(np.sum(vol[:-1]) * dt),
-    }
+    return PolicySimulator(params, lift, solution).simulate(mode, shocks, environment)
 
 
 def summarize_mode(
@@ -364,6 +451,7 @@ def summarize_mode(
 
 def mc_compare(params: ModelParams, lift: dict[str, np.ndarray | float], solution: dict[str, np.ndarray]) -> dict:
     rng = np.random.default_rng(params.mc_seed)
+    simulator = PolicySimulator(params, lift, solution)
     terminal_pnl = {"naive": np.zeros(params.mc_paths), "hjb": np.zeros(params.mc_paths)}
     preclose_inv = {"naive": np.zeros(params.mc_paths), "hjb": np.zeros(params.mc_paths)}
     path_abs_inv = {"naive": np.zeros(params.mc_paths), "hjb": np.zeros(params.mc_paths)}
@@ -373,16 +461,11 @@ def mc_compare(params: ModelParams, lift: dict[str, np.ndarray | float], solutio
     integrated_variance = np.zeros(params.mc_paths)
 
     for m in range(params.mc_paths):
-        shocks = {
-            "z_lift": rng.standard_normal((params.n_steps, params.lift_dim)),
-            "z0_lift": rng.standard_normal(params.lift_dim),
-            "z_s": rng.standard_normal(params.n_steps),
-            "u_b": rng.random(params.n_steps),
-            "u_a": rng.random(params.n_steps),
-        }
+        shocks = SimulationShocks.draw(params, rng)
+        environment = build_market_environment(params, lift, shocks)
 
         for mode in ("naive", "hjb"):
-            path = simulate_policy(params, lift, solution, mode, shocks)
+            path = simulator.simulate(mode, shocks, environment)
             terminal_pnl[mode][m] = path["wealth"][-1]
             preclose_inv[mode][m] = path["preclose_inventory"]
             path_abs_inv[mode][m] = float(np.mean(np.abs(path["inv"][:-1])))
@@ -425,17 +508,13 @@ def representative_path(
     solution: dict[str, np.ndarray],
 ) -> tuple[dict, dict, int]:
     candidates = []
+    simulator = PolicySimulator(params, lift, solution)
     for seed in range(params.representative_seed, params.representative_seed + 60):
         rng = np.random.default_rng(seed)
-        shocks = {
-            "z_lift": rng.standard_normal((params.n_steps, params.lift_dim)),
-            "z0_lift": rng.standard_normal(params.lift_dim),
-            "z_s": rng.standard_normal(params.n_steps),
-            "u_b": rng.random(params.n_steps),
-            "u_a": rng.random(params.n_steps),
-        }
-        naive = simulate_policy(params, lift, solution, "naive", shocks)
-        hjb = simulate_policy(params, lift, solution, "hjb", shocks)
+        shocks = SimulationShocks.draw(params, rng)
+        environment = build_market_environment(params, lift, shocks)
+        naive = simulator.simulate("naive", shocks, environment)
+        hjb = simulator.simulate("hjb", shocks, environment)
         pnl_diff = float(hjb["wealth"][-1] - naive["wealth"][-1])
         inv_improvement = abs(naive["preclose_inventory"]) - abs(hjb["preclose_inventory"])
         candidates.append((seed, pnl_diff, inv_improvement, naive, hjb))
@@ -451,21 +530,35 @@ def representative_path(
     return naive, hjb, seed
 
 
+@dataclass(frozen=True)
+class RoughHJBExperiment:
+    """Orchestrate one Hurst-regime solve and its validation simulations."""
+
+    params: ModelParams
+
+    def run(self) -> dict[str, object]:
+        lift = build_lift(self.params)
+        solution = solve_hjb(self.params, lift)
+        single_naive, single_hjb, chosen_seed = representative_path(
+            self.params, lift, solution
+        )
+        mc = mc_compare(self.params, lift, solution)
+        return {
+            "params": self.params,
+            "regime_label": hurst_regime(self.params.hurst),
+            "lift": lift,
+            "solution": solution,
+            "single_naive": single_naive,
+            "single_hjb": single_hjb,
+            "chosen_seed": chosen_seed,
+            "mc": mc,
+        }
+
+
 def run_case(params: ModelParams) -> dict[str, object]:
-    lift = build_lift(params)
-    solution = solve_hjb(params, lift)
-    single_naive, single_hjb, chosen_seed = representative_path(params, lift, solution)
-    mc = mc_compare(params, lift, solution)
-    return {
-        "params": params,
-        "regime_label": hurst_regime(params.hurst),
-        "lift": lift,
-        "solution": solution,
-        "single_naive": single_naive,
-        "single_hjb": single_hjb,
-        "chosen_seed": chosen_seed,
-        "mc": mc,
-    }
+    """Backward-compatible functional entry point for one experiment."""
+
+    return RoughHJBExperiment(params).run()
 
 
 def plot_surfaces(cases: list[dict[str, object]]) -> None:

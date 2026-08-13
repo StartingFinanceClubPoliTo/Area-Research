@@ -108,7 +108,17 @@ def plot_residuals(diagnostics, model_label, output_path):
     field = axis.tricontourf(
         triangulation, values, levels=levels, cmap="coolwarm", extend="both"
     )
-    axis.scatter(x, y, facecolors="none", edgecolors="black", s=28, linewidth=0.45)
+    axis.scatter(
+        x,
+        y,
+        marker="o",
+        facecolors="none",
+        edgecolors="black",
+        s=36,
+        linewidths=0.75,
+        antialiaseds=True,
+        zorder=3,
+    )
     figure.colorbar(field, ax=axis, label="Market - model IV (pp)")
     axis.axhline(1.0, color="black", linestyle="--", linewidth=1.2)
     axis.set(

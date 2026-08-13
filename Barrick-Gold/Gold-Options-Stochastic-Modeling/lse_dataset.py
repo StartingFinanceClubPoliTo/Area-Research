@@ -7,9 +7,8 @@ redistributed market-data snapshot.
 
 import argparse
 import json
-import math
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
@@ -28,6 +27,21 @@ CHAIN_COLUMNS = (
 CALIBRATION_COLUMNS = (
     "expiry", "T", "K", "price", "rate", "implied_vol", "vega",
     "source_updated_at", "source_age_hours", "price_method",
+)
+YIELD_CURVE_COLUMNS = (
+    "symbol", "date", "maturity", "maturity_days", "maturity_years",
+    "par_yield_pct", "continuous_rate", "source_fetched_at",
+)
+YIELD_HISTORY_COLUMNS = (
+    "symbol", "date", "maturity", "maturity_days", "maturity_years",
+    "par_yield_pct", "continuous_rate", "source_fetched_at",
+)
+RETURN_COLUMNS = (
+    "timestamp", "symbol", "open", "high", "low", "close", "volume",
+    "log_return", "simple_return",
+)
+US_TREASURY_TENORS = (
+    "US1M", "US2M", "US3M", "US6M", "US1Y", "US2Y", "US3Y", "US5Y",
 )
 
 
@@ -103,9 +117,123 @@ def normalise_lse_chain(rows):
     return chain
 
 
+def normalise_lse_yield_curve(rows, required_symbols=US_TREASURY_TENORS):
+    """Build one coherent USD Treasury curve from LSE bond-yield rows.
+
+    The latest date shared by all required tenors is selected, preventing a
+    visually smooth but internally asynchronous curve. LSE quotes par yields in
+    percent; ``continuous_rate`` is the explicitly documented log(1+y) proxy
+    used by the option-pricing functions, which expect continuously compounded
+    annual rates.
+    """
+    source = pd.DataFrame(rows)
+    required = {"symbol", "date", "maturity", "maturity_days", "close"}
+    missing = sorted(required.difference(source.columns))
+    if missing:
+        raise ValueError(f"LSE bond-yield response is missing columns: {missing}")
+    source = source.loc[source["symbol"].isin(required_symbols)].copy()
+    source["date"] = pd.to_datetime(source["date"], errors="coerce")
+    source["maturity_days"] = _numeric(source, "maturity_days")
+    source["close"] = _numeric(source, "close")
+    source = source.dropna(subset=["date", "maturity_days", "close"])
+    dates_by_symbol = [
+        set(source.loc[source["symbol"] == symbol, "date"])
+        for symbol in required_symbols
+    ]
+    common_dates = set.intersection(*dates_by_symbol) if dates_by_symbol else set()
+    if not common_dates:
+        raise ValueError("LSE Treasury tenors have no common observation date.")
+    curve_date = max(common_dates)
+    curve = source.loc[source["date"] == curve_date].copy()
+    curve = curve.drop_duplicates("symbol", keep="last")
+    if set(curve["symbol"]) != set(required_symbols):
+        raise ValueError("The selected LSE Treasury date is missing required tenors.")
+    curve["maturity_years"] = curve["maturity_days"] / 365.25
+    curve["par_yield_pct"] = curve["close"]
+    curve["continuous_rate"] = np.log1p(curve["par_yield_pct"] / 100.0)
+    curve["date"] = curve["date"].dt.strftime("%Y-%m-%d")
+    if "fetched_at" in curve:
+        curve["source_fetched_at"] = curve["fetched_at"].astype(str)
+    else:
+        curve["source_fetched_at"] = ""
+    curve = curve.loc[:, YIELD_CURVE_COLUMNS]
+    return curve.sort_values("maturity_years").reset_index(drop=True)
+
+
+def normalise_lse_yield_history(rows, required_symbols=US_TREASURY_TENORS):
+    """Return complete historical Treasury curves on common observation dates.
+
+    Keeping only dates shared by every tenor prevents a later observation from
+    leaking into one end of an otherwise older curve.  A backtest can therefore
+    select the latest complete curve whose date is no later than the option date.
+    """
+    source = pd.DataFrame(rows)
+    required = {"symbol", "date", "maturity", "maturity_days", "close"}
+    missing = sorted(required.difference(source.columns))
+    if missing:
+        raise ValueError(f"LSE bond-yield response is missing columns: {missing}")
+    source = source.loc[source["symbol"].isin(required_symbols)].copy()
+    source["date"] = pd.to_datetime(source["date"], errors="coerce")
+    source["maturity_days"] = _numeric(source, "maturity_days")
+    source["close"] = _numeric(source, "close")
+    source = source.dropna(subset=["date", "maturity_days", "close"])
+    source = source.drop_duplicates(["date", "symbol"], keep="last")
+    counts = source.groupby("date")["symbol"].nunique()
+    complete_dates = counts[counts == len(required_symbols)].index
+    history = source.loc[source["date"].isin(complete_dates)].copy()
+    if history.empty:
+        raise ValueError("LSE Treasury history has no complete common-date curves.")
+    history["maturity_years"] = history["maturity_days"] / 365.25
+    history["par_yield_pct"] = history["close"]
+    history["continuous_rate"] = np.log1p(history["par_yield_pct"] / 100.0)
+    if "fetched_at" in history:
+        history["source_fetched_at"] = history["fetched_at"].astype(str)
+    else:
+        history["source_fetched_at"] = ""
+    history["date"] = history["date"].dt.strftime("%Y-%m-%d")
+    history = history.loc[:, YIELD_HISTORY_COLUMNS]
+    return history.sort_values(["date", "maturity_years"]).reset_index(drop=True)
+
+
+def interpolate_zero_rates(maturities, rate_curve):
+    """Interpolate the LSE continuous-rate proxy without extrapolating slope."""
+    maturities = np.asarray(maturities, dtype=float)
+    if np.any(~np.isfinite(maturities)) or np.any(maturities <= 0.0):
+        raise ValueError("Option maturities must be positive and finite.")
+    curve = pd.DataFrame(rate_curve).sort_values("maturity_years")
+    if len(curve) < 2:
+        raise ValueError("At least two LSE Treasury tenors are required.")
+    tenors = curve["maturity_years"].to_numpy(dtype=float)
+    rates = curve["continuous_rate"].to_numpy(dtype=float)
+    if np.any(np.diff(tenors) <= 0.0) or np.any(~np.isfinite(rates)):
+        raise ValueError("Invalid LSE Treasury curve.")
+    return np.interp(maturities, tenors, rates, left=rates[0], right=rates[-1])
+
+
+def normalise_lse_history(rows):
+    """Map LSE daily GLD candles to a return series kept in local-only data."""
+    history = pd.DataFrame(rows)
+    required = {"timestamp", "symbol", "open", "high", "low", "close", "volume"}
+    missing = sorted(required.difference(history.columns))
+    if missing:
+        raise ValueError(f"LSE candle response is missing columns: {missing}")
+    history["timestamp"] = pd.to_datetime(
+        history["timestamp"], errors="coerce", utc=True
+    )
+    for column in ("open", "high", "low", "close", "volume"):
+        history[column] = _numeric(history, column)
+    history = history.dropna(subset=["timestamp", "close"])
+    history = history.loc[history["close"].gt(0.0)].copy()
+    history = history.sort_values("timestamp").drop_duplicates("timestamp", keep="last")
+    history["log_return"] = np.log(history["close"]).diff()
+    history["simple_return"] = history["close"].pct_change(fill_method=None)
+    history["timestamp"] = history["timestamp"].dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return history.loc[:, RETURN_COLUMNS].reset_index(drop=True)
+
+
 def build_calibration_sample(
     chain,
-    annual_rate=0.037,
+    rate_curve,
     moneyness_window=0.20,
     min_dte=60,
     min_price=1.0,
@@ -120,7 +248,7 @@ def build_calibration_sample(
     snapshot.  It is retained in the local chain for audit only.  Calibration
     prices are rebuilt from LSE implied volatility with the protected
     Black--Scholes implementation, one spot, one maturity clock, and the
-    explicitly supplied rate.  This preserves the LSE volatility surface while
+    LSE Treasury term structure. This preserves the LSE volatility surface while
     enforcing call-price bounds on a coherent snapshot.
     """
     calls = chain.loc[chain["option_type"] == "C"].copy()
@@ -144,14 +272,14 @@ def build_calibration_sample(
         subset=["expiry", "T", "K", "implied_vol", "source_updated_at"]
     )
     calls = calls.drop_duplicates(["expiry", "K"], keep="first")
-    calls["rate"] = float(annual_rate)
+    calls["rate"] = interpolate_zero_rates(calls["T"], rate_curve)
     calls["price"] = [
-        BnS.bs_call_price(spot, row.K, row.T, annual_rate, row.implied_vol)
+        BnS.bs_call_price(spot, row.K, row.T, row.rate, row.implied_vol)
         for row in calls.itertuples(index=False)
     ]
     calls["vega"] = [
         BnS.calculate_bs_vega(
-            spot, row.K, row.T, annual_rate, 0.0, row.implied_vol
+            spot, row.K, row.T, row.rate, 0.0, row.implied_vol
         )
         for row in calls.itertuples(index=False)
     ]
@@ -174,24 +302,122 @@ def build_calibration_sample(
     return calibration, sample, spot
 
 
-def fetch_lse_calls(max_dte=1000, limit=5000):
-    """Fetch the current GLD call chain using ``LSE_API_KEY`` from the environment."""
+def _lse_client():
+    """Return the official SDK client without ever logging the configured key."""
     if not os.environ.get("LSE_API_KEY"):
         raise RuntimeError("LSE_API_KEY is not configured in the environment.")
     from lse import LSE
 
-    return LSE().options(
+    return LSE()
+
+
+def fetch_lse_calls(max_dte=1000, limit=5000):
+    """Fetch the current GLD call chain from LSE."""
+    return _lse_client().options(
         "GLD", type="call", max_dte=int(max_dte), limit=int(limit)
     )
 
 
-def write_local_dataset(rows, output_dir, annual_rate=0.037):
+def fetch_lse_yields(lookback_days=120):
+    """Fetch enough history to locate one date shared by all curve tenors."""
+    client = _lse_client()
+    start = (datetime.now(timezone.utc) - timedelta(days=lookback_days)).date().isoformat()
+    rows = []
+    for symbol in US_TREASURY_TENORS:
+        rows.extend(client.bond_yields(symbol, start=start, order="asc", limit=5000))
+    return rows
+
+
+def fetch_lse_history(start="2021-01-01", end=None, limit=5000):
+    """Fetch daily GLD candles used for empirical return diagnostics."""
+    return _lse_client().candles(
+        "GLD", "1d", start=start, end=end, limit=int(limit), order="asc"
+    )
+
+
+def fetch_lse_historical_yields(start, end=None):
+    """Fetch complete tenor histories used by the no-look-ahead backtest."""
+    client = _lse_client()
+    rows = []
+    for symbol in US_TREASURY_TENORS:
+        rows.extend(
+            client.bond_yields(
+                symbol, start=str(start), end=end, order="asc", limit=5000
+            )
+        )
+    return rows
+
+
+def fetch_lse_option_history(
+    start,
+    end,
+    output_dir="Data/lse_local",
+    timeframe="1d",
+    reuse_existing=True,
+):
+    """Export historical GLD option bars to a local-only Parquet file.
+
+    A recent cache is reused only when it covers the requested start and comes
+    within five calendar days of the requested end (weekends and vault lag).
+    The function deliberately returns a path, so raw licensed rows never enter
+    publication artifacts.
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    path = output_dir / f"options_GLD_{timeframe}.parquet"
+    if reuse_existing and path.exists():
+        try:
+            timestamps = pd.read_parquet(path, columns=["ts"])["ts"]
+            first = pd.to_datetime(timestamps.min(), utc=True).normalize()
+            last = pd.to_datetime(timestamps.max(), utc=True).normalize()
+            requested_start = pd.Timestamp(start, tz="UTC").normalize()
+            requested_end = pd.Timestamp(end, tz="UTC").normalize()
+            if first <= requested_start + pd.Timedelta(days=3) and last >= requested_end - pd.Timedelta(days=5):
+                return path
+        except (ImportError, OSError, ValueError, KeyError):
+            pass
+    exported = _lse_client().history(
+        "GLD",
+        dataset="options",
+        timeframe=timeframe,
+        start=str(start),
+        end=str(end),
+        dest=str(output_dir),
+        dataframe=False,
+    )
+    return Path(exported)
+
+
+def write_local_historical_inputs(yield_rows, output_dir="Data/lse_local"):
+    """Store only the local historical rate panel and an audit manifest."""
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    history = normalise_lse_yield_history(yield_rows)
+    rate_path = output_dir / "usd_treasury_history.csv"
+    history.to_csv(rate_path, index=False)
+    audit = {
+        "source": "London Strategic Edge options vault and /ref/bond_yields",
+        "rate_history_start": str(history["date"].iloc[0]),
+        "rate_history_end": str(history["date"].iloc[-1]),
+        "complete_curve_dates": int(history["date"].nunique()),
+        "tenors": int(history["symbol"].nunique()),
+        "look_ahead_policy": "latest complete Treasury curve dated no later than each option observation",
+        "redistribution": "prohibited; local-only outputs ignored by Git",
+    }
+    audit_path = output_dir / "historical_input_audit.json"
+    audit_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
+    return rate_path, audit_path, audit
+
+
+def write_local_dataset(rows, yield_rows, history_rows, output_dir):
     """Write local-only wide, filtered, sampled, metadata, and audit outputs."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     chain = normalise_lse_chain(rows)
+    rate_curve = normalise_lse_yield_curve(yield_rows)
+    history = normalise_lse_history(history_rows)
     calibration, sample, spot = build_calibration_sample(
-        chain, annual_rate=annual_rate
+        chain, rate_curve=rate_curve
     )
 
     chain_path = output_dir / "gld_lse_chain.csv"
@@ -199,24 +425,37 @@ def write_local_dataset(rows, output_dir, annual_rate=0.037):
     sample_path = output_dir / "gld_lse_calibration_chebyshev.csv"
     metadata_path = output_dir / "gld_lse_meta.json"
     audit_path = output_dir / "lse_build_audit.json"
+    curve_path = output_dir / "usd_treasury_curve.csv"
+    history_path = output_dir / "gld_daily_history.csv"
     chain.to_csv(chain_path, index=False)
     calibration.to_csv(full_path, index=False)
     sample.to_csv(sample_path, index=False)
+    rate_curve.to_csv(curve_path, index=False)
+    history.to_csv(history_path, index=False)
 
     as_of = chain.attrs.get("as_of_utc", datetime.now(timezone.utc).isoformat())
     metadata = {
         "underlying_symbol": "GLD",
         "S0": spot,
         "as_of_utc": as_of,
-        "source": "London Strategic Edge /options/chain",
+        "source": "London Strategic Edge /options/chain, /ref/bond_yields, /candles",
         "snapshot_kind": "current_lse_option_chain",
-        "risk_free_rate_assumption": float(annual_rate),
+        "risk_free_rate_source": "LSE US Treasury par-yield curve",
+        "risk_free_rate_curve_date": str(rate_curve["date"].iloc[0]),
+        "risk_free_rate_conversion": "continuous proxy log(1 + par_yield_decimal)",
+        "risk_free_rate_interpolation": "linear in maturity; flat outside observed tenor range",
+        "risk_free_rate_min": float(rate_curve["continuous_rate"].min()),
+        "risk_free_rate_max": float(rate_curve["continuous_rate"].max()),
         "dividend_yield_assumption": 0.0,
         "calibration_price_method": "Black-Scholes price implied by LSE IV",
         "maximum_source_age_days": 7,
         "n_rows_total": int(len(chain)),
         "n_rows_calibration_eligible": int(len(calibration)),
         "n_rows_chebyshev": int(len(sample)),
+        "n_treasury_tenors": int(len(rate_curve)),
+        "history_start": str(history["timestamp"].iloc[0]),
+        "history_end": str(history["timestamp"].iloc[-1]),
+        "history_observations": int(history["log_return"].notna().sum()),
         "redistribution": "prohibited; local-only outputs ignored by Git",
     }
     metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
@@ -225,7 +464,12 @@ def write_local_dataset(rows, output_dir, annual_rate=0.037):
         "success": True,
         "schema_matches_lse_chain": list(chain.columns) == list(CHAIN_COLUMNS),
         "schema_matches_calibration": list(sample.columns) == list(CALIBRATION_COLUMNS),
-        "files": [path.name for path in (chain_path, full_path, sample_path, metadata_path)],
+        "files": [
+            path.name for path in (
+                chain_path, full_path, sample_path, curve_path, history_path,
+                metadata_path,
+            )
+        ],
         **metadata,
     }
     audit_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
@@ -237,20 +481,26 @@ def parse_args():
     parser.add_argument("--output-dir", default="Data/lse_local")
     parser.add_argument("--max-dte", type=int, default=1000)
     parser.add_argument("--limit", type=int, default=5000)
-    parser.add_argument("--annual-rate", type=float, default=0.037)
+    parser.add_argument("--history-start", default="2021-01-01")
+    parser.add_argument("--yield-lookback-days", type=int, default=120)
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    if not math.isfinite(args.annual_rate):
-        raise ValueError("annual rate must be finite.")
     rows = fetch_lse_calls(max_dte=args.max_dte, limit=args.limit)
+    yield_rows = fetch_lse_yields(lookback_days=args.yield_lookback_days)
+    history_rows = fetch_lse_history(start=args.history_start)
     audit_path, audit = write_local_dataset(
-        rows, args.output_dir, annual_rate=args.annual_rate
+        rows, yield_rows, history_rows, args.output_dir
     )
     print(f"LSE dataset build completed: {audit['n_rows_total']} chain rows")
     print(f"Calibration sample: {audit['n_rows_chebyshev']} rows")
+    print(
+        "LSE Treasury curve: "
+        f"{audit['n_treasury_tenors']} tenors at {audit['risk_free_rate_curve_date']}"
+    )
+    print(f"GLD daily return observations: {audit['history_observations']}")
     print(f"Local audit: {audit_path}")
 
 

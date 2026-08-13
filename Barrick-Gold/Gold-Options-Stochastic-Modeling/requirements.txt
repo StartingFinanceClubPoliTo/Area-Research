@@ -5,3 +5,4 @@ matplotlib
 jupyter
 nelson-siegel-svensson
 lse-data>=0.14,<1
+pyarrow>=20,<26

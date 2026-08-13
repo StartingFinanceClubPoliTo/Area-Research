@@ -4,8 +4,10 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import matplotlib.tri as mtri
 import numpy as np
 import pandas as pd
+from scipy.stats import jarque_bera, kurtosis, normaltest, shapiro, skew
 
 from BnS import BnS
 
@@ -90,22 +92,24 @@ def plot_smiles(diagnostics, model_label, output_path):
         axis.remove()
     figure.tight_layout()
     figure.savefig(output_path, dpi=200, bbox_inches="tight")
+    plt.close(figure)
     return figure
 
 
 def plot_residuals(diagnostics, model_label, output_path):
-    """Plot IV residuals across maturity and moneyness."""
+    """Plot an interpolated IV-residual map with observed nodes overlaid."""
     figure, axis = plt.subplots(figsize=(11, 6.5))
-    points = axis.scatter(
-        diagnostics["T"],
-        diagnostics["moneyness"],
-        c=diagnostics["iv_residual_pct"],
-        cmap="coolwarm",
-        s=60,
-        edgecolors="black",
-        linewidth=0.4,
+    x = diagnostics["T"].to_numpy(dtype=float)
+    y = diagnostics["moneyness"].to_numpy(dtype=float)
+    values = diagnostics["iv_residual_pct"].to_numpy(dtype=float)
+    bound = max(float(np.nanpercentile(np.abs(values), 95)), 0.25)
+    levels = np.linspace(-bound, bound, 31)
+    triangulation = mtri.Triangulation(x, y)
+    field = axis.tricontourf(
+        triangulation, values, levels=levels, cmap="coolwarm", extend="both"
     )
-    figure.colorbar(points, ax=axis, label="Market - model IV (pp)")
+    axis.scatter(x, y, facecolors="none", edgecolors="black", s=28, linewidth=0.45)
+    figure.colorbar(field, ax=axis, label="Market - model IV (pp)")
     axis.axhline(1.0, color="black", linestyle="--", linewidth=1.2)
     axis.set(
         title=f"{model_label} implied-volatility residuals",
@@ -115,4 +119,35 @@ def plot_residuals(diagnostics, model_label, output_path):
     axis.grid(True, linestyle=":", alpha=0.5)
     figure.tight_layout()
     figure.savefig(output_path, dpi=200, bbox_inches="tight")
+    plt.close(figure)
     return figure
+
+
+def normality_statistics(values):
+    """Return reproducible omnibus normality diagnostics for one residual vector."""
+    values = np.asarray(values, dtype=float)
+    values = values[np.isfinite(values)]
+    if values.size < 3:
+        raise ValueError("At least three finite observations are required.")
+    jb = jarque_bera(values)
+    sw = shapiro(values)
+    if values.size >= 8:
+        dagostino = normaltest(values)
+        dagostino_stat = float(dagostino.statistic)
+        dagostino_pvalue = float(dagostino.pvalue)
+    else:
+        dagostino_stat = float("nan")
+        dagostino_pvalue = float("nan")
+    return {
+        "n": int(values.size),
+        "mean": float(np.mean(values)),
+        "std": float(np.std(values, ddof=1)),
+        "skewness": float(skew(values, bias=False)),
+        "excess_kurtosis": float(kurtosis(values, fisher=True, bias=False)),
+        "shapiro_stat": float(sw.statistic),
+        "shapiro_pvalue": float(sw.pvalue),
+        "jarque_bera_stat": float(jb.statistic),
+        "jarque_bera_pvalue": float(jb.pvalue),
+        "dagostino_k2_stat": dagostino_stat,
+        "dagostino_k2_pvalue": dagostino_pvalue,
+    }

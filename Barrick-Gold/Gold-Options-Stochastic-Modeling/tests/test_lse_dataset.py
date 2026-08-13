@@ -3,7 +3,16 @@
 import pandas as pd
 
 from BnS import BnS
-from lse_dataset import CHAIN_COLUMNS, CALIBRATION_COLUMNS, build_calibration_sample, normalise_lse_chain
+from lse_dataset import (
+    CALIBRATION_COLUMNS,
+    CHAIN_COLUMNS,
+    US_TREASURY_TENORS,
+    build_calibration_sample,
+    interpolate_zero_rates,
+    normalise_lse_chain,
+    normalise_lse_history,
+    normalise_lse_yield_curve,
+)
 
 
 def sample_rows():
@@ -32,6 +41,24 @@ def sample_rows():
     return rows
 
 
+def sample_yields():
+    maturities = {
+        "US1M": ("1M", 30, 3.70), "US2M": ("2M", 60, 3.75),
+        "US3M": ("3M", 90, 3.80), "US6M": ("6M", 180, 3.90),
+        "US1Y": ("1Y", 365, 4.00), "US2Y": ("2Y", 730, 4.10),
+        "US3Y": ("3Y", 1095, 4.20), "US5Y": ("5Y", 1825, 4.30),
+    }
+    rows = []
+    for date in ("2026-07-23", "2026-07-24"):
+        for symbol, (maturity, days, close) in maturities.items():
+            rows.append({
+                "symbol": symbol, "date": date, "maturity": maturity,
+                "maturity_days": days, "close": close,
+                "fetched_at": "2026-07-26T00:49:16Z",
+            })
+    return rows
+
+
 def test_lse_mapping_uses_source_native_schema():
     chain = normalise_lse_chain(sample_rows())
     assert tuple(chain.columns) == CHAIN_COLUMNS
@@ -42,8 +69,9 @@ def test_lse_mapping_uses_source_native_schema():
 
 def test_lse_chebyshev_sample_matches_calibration_contract():
     chain = normalise_lse_chain(sample_rows())
+    curve = normalise_lse_yield_curve(sample_yields())
     full, sampled, spot = build_calibration_sample(
-        chain, n_maturities=2, n_strikes=4
+        chain, curve, n_maturities=2, n_strikes=4
     )
     assert tuple(full.columns) == CALIBRATION_COLUMNS
     assert tuple(sampled.columns) == CALIBRATION_COLUMNS
@@ -58,3 +86,28 @@ def test_lse_chebyshev_sample_matches_calibration_contract():
     assert max(abs(a - b) for a, b in zip(recovered, sampled["implied_vol"])) < 1e-6
     lower = spot - sampled["K"] * (-sampled["rate"] * sampled["T"]).map(__import__("math").exp)
     assert (sampled["price"] >= lower.clip(lower=0.0) - 1e-10).all()
+    assert sampled.groupby("T")["rate"].nunique().max() == 1
+    assert sampled["rate"].nunique() == 2
+
+
+def test_lse_curve_uses_latest_common_date_and_interpolates():
+    rows = sample_yields()
+    rows = [r for r in rows if not (r["date"] == "2026-07-24" and r["symbol"] == "US5Y")]
+    curve = normalise_lse_yield_curve(rows)
+    assert set(curve["symbol"]) == set(US_TREASURY_TENORS)
+    assert set(curve["date"]) == {"2026-07-23"}
+    rates = interpolate_zero_rates([0.25, 1.5, 4.0], curve)
+    assert rates.shape == (3,)
+    assert rates[0] < rates[1] < rates[2]
+
+
+def test_lse_history_produces_log_and_simple_returns():
+    rows = [
+        {"timestamp": "2026-01-02T00:00:00Z", "symbol": "GLD", "open": 99,
+         "high": 101, "low": 98, "close": 100, "volume": 10},
+        {"timestamp": "2026-01-05T00:00:00Z", "symbol": "GLD", "open": 100,
+         "high": 103, "low": 99, "close": 102, "volume": 12},
+    ]
+    history = normalise_lse_history(rows)
+    assert history["log_return"].isna().sum() == 1
+    assert abs(history["simple_return"].iloc[-1] - 0.02) < 1e-12

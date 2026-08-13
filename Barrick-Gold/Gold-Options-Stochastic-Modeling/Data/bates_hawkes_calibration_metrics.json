@@ -1,23 +1,23 @@
 {
   "full_bates_hawkes": {
-    "price_mae": 0.3004611862021229,
-    "price_rmse": 0.4589129068269998,
-    "iv_mae_bp": 41.74476261240478,
-    "iv_rmse_bp": 60.0958053862802,
-    "max_abs_price_error": 1.7952496243329819,
-    "max_abs_iv_error_bp": 162.4913036022349
+    "price_mae": 0.2943775737610568,
+    "price_rmse": 0.4075746353163197,
+    "iv_mae_bp": 42.255496278274244,
+    "iv_rmse_bp": 61.01730453112376,
+    "max_abs_price_error": 1.2634569325017537,
+    "max_abs_iv_error_bp": 231.41333385091167
   },
   "bates": {
-    "price_mae": 0.44551830808137716,
-    "price_rmse": 0.6113800962380208,
-    "iv_mae_bp": 59.58837492961918,
-    "iv_rmse_bp": 81.73057213618237,
-    "max_abs_price_error": 2.087524825332281,
-    "max_abs_iv_error_bp": 254.89051648322547
+    "price_mae": 0.43289611916417137,
+    "price_rmse": 0.5363910152076495,
+    "iv_mae_bp": 60.77552007508346,
+    "iv_rmse_bp": 78.12538979659097,
+    "max_abs_price_error": 1.3520518291977623,
+    "max_abs_iv_error_bp": 302.8687934037291
   },
-  "calibration_objective": 3.610473882652353e-05,
-  "bates_objective": 6.062369216295219e-05,
-  "branching_ratio": 0.052007568643978944,
+  "calibration_objective": 3.9668825952237696e-05,
+  "bates_objective": 5.665410181324446e-05,
+  "branching_ratio": 0.413753876308929,
   "minimum_branching_ratio": 0.02,
   "observations": 64,
   "status": "lse_feller_constrained_restructured_workflow"

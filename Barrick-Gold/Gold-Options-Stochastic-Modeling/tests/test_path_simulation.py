@@ -2,7 +2,12 @@
 
 import numpy as np
 
-from path_simulation import simulate_bates_paths, simulate_full_hawkes_paths
+from path_simulation import (
+    forward_rates_from_zero_curve,
+    simulate_bates_paths,
+    simulate_full_hawkes_paths,
+    terminal_statistics,
+)
 
 
 def test_bates_paths_are_reproducible_and_positive():
@@ -30,3 +35,20 @@ def test_full_hawkes_paths_include_variance_intensity_and_counts():
     assert np.all(variances >= 0.0)
     assert np.all(intensities > 0.0)
     assert np.all(np.diff(counts, axis=1) >= 0)
+
+
+def test_forward_rates_preserve_zero_curve_discount_integral():
+    maturities = np.array([0.25, 1.0, 2.0, 5.0])
+    zero_rates = np.array([0.03, 0.035, 0.04, 0.045])
+    forwards = forward_rates_from_zero_curve(maturities, zero_rates, 5.0, 20)
+    dt = 5.0 / 20
+    assert abs(np.sum(forwards * dt) - 5.0 * zero_rates[-1]) < 1e-12
+
+
+def test_terminal_statistics_include_percentage_return_shape():
+    paths = np.array([[100.0, 80.0], [100.0, 100.0], [100.0, 130.0]])
+    stats = terminal_statistics("test", 100.0, paths, simulation_method="unit")
+    assert np.isclose(stats["return_p00_pct"], -20.0)
+    assert np.isclose(stats["return_p50_pct"], 0.0)
+    assert np.isclose(stats["return_p100_pct"], 30.0)
+    assert "return_skewness" in stats and "return_excess_kurtosis" in stats

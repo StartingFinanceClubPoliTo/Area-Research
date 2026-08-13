@@ -1,0 +1,365 @@
+{
+  "design": {
+    "purpose": "retrospective model-behaviour diagnostic only",
+    "valuation_separation": "current Barrick/GLD valuation continues to use current-date LSE calibration",
+    "source": "London Strategic Edge GLD option 1d bars, GLD 1d candles, and US Treasury yields",
+    "training_window_start": "2025-08-15",
+    "calibration_cutoff": "2026-02-10",
+    "holdout_start": "2026-02-13",
+    "holdout_end": "2026-08-10",
+    "training_weeks": 27,
+    "holdout_weeks": 27,
+    "nodes_per_week": 64,
+    "parameter_policy": "all model parameters frozen at the cutoff surface; no holdout refit",
+    "mean_benchmark": "prevailing mean IV initialized on training weeks and updated only after each realized holdout week",
+    "sampling": "liquid calls, volume >= 25, 0.85 <= K/S <= 1.20, 21--730 DTE, deterministic 8x8 Chebyshev nodes",
+    "rate_policy": "latest complete LSE Treasury curve dated no later than each option date",
+    "oos_target": "historical traded-close implied volatility",
+    "r2_definition": "1 - SSE_model / SSE_benchmark on common OOS observations",
+    "cumulative_loss_definition": "sum through week t of comparator MSE minus model MSE",
+    "systematic_test": "two-sided Newey-West HAC test of the weekly loss-difference mean, four lags",
+    "seed": 20260813
+  },
+  "metrics": [
+    {
+      "model": "Black-Scholes",
+      "observations": 1728,
+      "weeks": 27,
+      "mae_bp": 268.3543453107991,
+      "rmse_bp": 377.11127332832024,
+      "r2_oos_vs_prevailing_mean": 0.46475328212980094,
+      "sse_iv_decimal": 2.457439127504186,
+      "mean_benchmark_sse_iv_decimal": 4.591226896789924,
+      "training_window_start": "2025-08-15",
+      "calibration_cutoff": "2026-02-10",
+      "holdout_start": "2026-02-13",
+      "holdout_end": "2026-08-10"
+    },
+    {
+      "model": "Heston",
+      "observations": 1728,
+      "weeks": 27,
+      "mae_bp": 289.9048562380573,
+      "rmse_bp": 383.6576147575568,
+      "r2_oos_vs_prevailing_mean": 0.44600910505548186,
+      "sse_iv_decimal": 2.5434978974459925,
+      "mean_benchmark_sse_iv_decimal": 4.591226896789924,
+      "training_window_start": "2025-08-15",
+      "calibration_cutoff": "2026-02-10",
+      "holdout_start": "2026-02-13",
+      "holdout_end": "2026-08-10"
+    },
+    {
+      "model": "Bates",
+      "observations": 1728,
+      "weeks": 27,
+      "mae_bp": 291.1447527616715,
+      "rmse_bp": 381.98372393451336,
+      "r2_oos_vs_prevailing_mean": 0.4508326628278707,
+      "sse_iv_decimal": 2.521351849263181,
+      "mean_benchmark_sse_iv_decimal": 4.591226896789924,
+      "training_window_start": "2025-08-15",
+      "calibration_cutoff": "2026-02-10",
+      "holdout_start": "2026-02-13",
+      "holdout_end": "2026-08-10"
+    },
+    {
+      "model": "Full Bates-Hawkes",
+      "observations": 1728,
+      "weeks": 27,
+      "mae_bp": 273.8268145021851,
+      "rmse_bp": 355.59516759128763,
+      "r2_oos_vs_prevailing_mean": 0.5240879698909233,
+      "sse_iv_decimal": 2.1850201131426887,
+      "mean_benchmark_sse_iv_decimal": 4.591226896789924,
+      "training_window_start": "2025-08-15",
+      "calibration_cutoff": "2026-02-10",
+      "holdout_start": "2026-02-13",
+      "holdout_end": "2026-08-10"
+    }
+  ],
+  "pairwise": [
+    {
+      "model": "Black-Scholes",
+      "comparator": "Heston",
+      "r2_oos_pairwise": 0.03383481072589878,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Black-Scholes",
+      "comparator": "Bates",
+      "r2_oos_pairwise": 0.025348592969153594,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Black-Scholes",
+      "comparator": "Full Bates-Hawkes",
+      "r2_oos_pairwise": -0.12467574679195059,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Heston",
+      "comparator": "Black-Scholes",
+      "r2_oos_pairwise": -0.03501969549463846,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Heston",
+      "comparator": "Bates",
+      "r2_oos_pairwise": -0.008783402518487637,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Heston",
+      "comparator": "Full Bates-Hawkes",
+      "r2_oos_pairwise": -0.16406154897480985,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Bates",
+      "comparator": "Black-Scholes",
+      "r2_oos_pairwise": -0.02600785551254159,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Bates",
+      "comparator": "Heston",
+      "r2_oos_pairwise": 0.008706926082010624,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Bates",
+      "comparator": "Full Bates-Hawkes",
+      "r2_oos_pairwise": -0.15392615111297547,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Full Bates-Hawkes",
+      "comparator": "Black-Scholes",
+      "r2_oos_pairwise": 0.11085483718091937,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Full Bates-Hawkes",
+      "comparator": "Heston",
+      "r2_oos_pairwise": 0.1409388954727514,
+      "interpretation": "positive means model has lower OOS SSE"
+    },
+    {
+      "model": "Full Bates-Hawkes",
+      "comparator": "Bates",
+      "r2_oos_pairwise": 0.13339341600371202,
+      "interpretation": "positive means model has lower OOS SSE"
+    }
+  ],
+  "loss_tests": [
+    {
+      "weeks": 27,
+      "mean_loss_difference": 12.348308850033206,
+      "hac_lags": 4,
+      "hac_standard_error": 7.556061464625819,
+      "hac_t": 1.6342255694772463,
+      "hac_pvalue_two_sided": 0.10221149549421722,
+      "model": "Black-Scholes",
+      "comparator": "Prevailing mean",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Black-Scholes",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 0.49802528901508286,
+      "hac_lags": 4,
+      "hac_standard_error": 1.4471269604854569,
+      "hac_t": 0.3441476129005392,
+      "hac_pvalue_two_sided": 0.7307352773930611,
+      "model": "Black-Scholes",
+      "comparator": "Heston",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Black-Scholes",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 0.3698652879571448,
+      "hac_lags": 4,
+      "hac_standard_error": 1.5401754034435884,
+      "hac_t": 0.24014491280031128,
+      "hac_pvalue_two_sided": 0.8102179173400507,
+      "model": "Black-Scholes",
+      "comparator": "Bates",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Black-Scholes",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": -1.5764989257031081,
+      "hac_lags": 4,
+      "hac_standard_error": 1.4059431272361715,
+      "hac_t": -1.121310595829163,
+      "hac_pvalue_two_sided": 0.2621556768728427,
+      "model": "Black-Scholes",
+      "comparator": "Full Bates-Hawkes",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Black-Scholes",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 11.850283561018122,
+      "hac_lags": 4,
+      "hac_standard_error": 8.935430895043657,
+      "hac_t": 1.3262128822003747,
+      "hac_pvalue_two_sided": 0.18476919345032672,
+      "model": "Heston",
+      "comparator": "Prevailing mean",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Heston",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": -0.49802528901508286,
+      "hac_lags": 4,
+      "hac_standard_error": 1.4471269604854569,
+      "hac_t": -0.3441476129005392,
+      "hac_pvalue_two_sided": 0.7307352773930611,
+      "model": "Heston",
+      "comparator": "Black-Scholes",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Heston",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": -0.12816000105793807,
+      "hac_lags": 4,
+      "hac_standard_error": 0.139429038353707,
+      "hac_t": -0.9191772572713198,
+      "hac_pvalue_two_sided": 0.3580028647470539,
+      "model": "Heston",
+      "comparator": "Bates",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Heston",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": -2.074524214718191,
+      "hac_lags": 4,
+      "hac_standard_error": 0.5383864460076007,
+      "hac_t": -3.85322518815584,
+      "hac_pvalue_two_sided": 0.00011657208689917035,
+      "model": "Heston",
+      "comparator": "Full Bates-Hawkes",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Heston",
+      "decision_5pct_two_sided": "different"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 11.97844356207606,
+      "hac_lags": 4,
+      "hac_standard_error": 9.013546875276957,
+      "hac_t": 1.3289378452040284,
+      "hac_pvalue_two_sided": 0.18386847669564355,
+      "model": "Bates",
+      "comparator": "Prevailing mean",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Bates",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": -0.3698652879571448,
+      "hac_lags": 4,
+      "hac_standard_error": 1.5401754034435884,
+      "hac_t": -0.24014491280031128,
+      "hac_pvalue_two_sided": 0.8102179173400507,
+      "model": "Bates",
+      "comparator": "Black-Scholes",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Bates",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 0.12816000105793807,
+      "hac_lags": 4,
+      "hac_standard_error": 0.139429038353707,
+      "hac_t": 0.9191772572713198,
+      "hac_pvalue_two_sided": 0.3580028647470539,
+      "model": "Bates",
+      "comparator": "Heston",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Bates",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": -1.9463642136602533,
+      "hac_lags": 4,
+      "hac_standard_error": 0.4825182496066627,
+      "hac_t": -4.0337628996351595,
+      "hac_pvalue_two_sided": 5.489070483369443e-05,
+      "model": "Bates",
+      "comparator": "Full Bates-Hawkes",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Bates",
+      "decision_5pct_two_sided": "different"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 13.924807775736312,
+      "hac_lags": 4,
+      "hac_standard_error": 8.798376789697269,
+      "hac_t": 1.5826564499990494,
+      "hac_pvalue_two_sided": 0.11349978953731316,
+      "model": "Full Bates-Hawkes",
+      "comparator": "Prevailing mean",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Full Bates-Hawkes",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 1.5764989257031081,
+      "hac_lags": 4,
+      "hac_standard_error": 1.4059431272361715,
+      "hac_t": 1.121310595829163,
+      "hac_pvalue_two_sided": 0.2621556768728427,
+      "model": "Full Bates-Hawkes",
+      "comparator": "Black-Scholes",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Full Bates-Hawkes",
+      "decision_5pct_two_sided": "not distinguishable"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 2.074524214718191,
+      "hac_lags": 4,
+      "hac_standard_error": 0.5383864460076007,
+      "hac_t": 3.85322518815584,
+      "hac_pvalue_two_sided": 0.00011657208689917035,
+      "model": "Full Bates-Hawkes",
+      "comparator": "Heston",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Full Bates-Hawkes",
+      "decision_5pct_two_sided": "different"
+    },
+    {
+      "weeks": 27,
+      "mean_loss_difference": 1.9463642136602533,
+      "hac_lags": 4,
+      "hac_standard_error": 0.4825182496066627,
+      "hac_t": 4.0337628996351595,
+      "hac_pvalue_two_sided": 5.489070483369443e-05,
+      "model": "Full Bates-Hawkes",
+      "comparator": "Bates",
+      "loss_difference": "comparator MSE minus model MSE (IV percentage-points squared)",
+      "positive_mean_favors": "Full Bates-Hawkes",
+      "decision_5pct_two_sided": "different"
+    }
+  ]
+}

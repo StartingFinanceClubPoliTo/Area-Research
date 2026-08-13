@@ -1,16 +1,16 @@
 {
   "model": "Exact constant-volatility Bates-Hawkes",
   "parameters": {
-    "sigma": 0.2112904006152161,
-    "lambda_bar": 0.512073647308098,
-    "lambda0": 0.512073647308098,
-    "alpha": 0.04803327159780135,
-    "beta": 4.637698740908387,
-    "branching_ratio": 0.010357134924290719,
-    "mu_J": 0.06526094778726288,
-    "sigma_J": 0.16075435784147762
+    "sigma": 0.2244825875227368,
+    "lambda_bar": 0.30217524774382193,
+    "lambda0": 0.30217524774382193,
+    "alpha": 0.03213101589207715,
+    "beta": 6.989967313290233,
+    "branching_ratio": 0.004596733353957963,
+    "mu_J": 0.05435556439977413,
+    "sigma_J": 0.16464751512832954
   },
-  "final_objective": 8.351589058691234e-05,
+  "final_objective": 8.673792843658256e-05,
   "optimizer_success": true,
   "source": "current LSE GLD option chain",
   "note": "Exact COS benchmark; lambda0 is tied to lambda_bar and alpha/beta < 1."

@@ -1,0 +1,21 @@
+{
+  "n": 1414,
+  "mean": 0.055695151261792385,
+  "std": 1.1420871635948704,
+  "skewness": -0.765458244833665,
+  "excess_kurtosis": 7.701106096396902,
+  "shapiro_stat": 0.9426879158362692,
+  "shapiro_pvalue": 5.613245622886005e-23,
+  "jarque_bera_stat": 3603.4868420109296,
+  "jarque_bera_pvalue": 0.0,
+  "dagostino_k2_stat": 331.1944740626562,
+  "dagostino_k2_pvalue": 1.2079076697232327e-72,
+  "series": "GLD daily log return (%)",
+  "source": "London Strategic Edge /candles, 1d",
+  "sample_start": "2021-01-05",
+  "sample_end": "2026-08-13",
+  "null_hypothesis": "daily log returns are normally distributed",
+  "decision_5pct_shapiro": "reject",
+  "decision_5pct_jarque_bera": "reject",
+  "decision_5pct_dagostino": "reject"
+}

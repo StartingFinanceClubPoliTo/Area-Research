@@ -1,26 +1,26 @@
 {
   "Black-Scholes": {
-    "price_mae": 0.7131334672140324,
-    "price_rmse": 0.9238926252997847,
-    "iv_mae_bp": 96.44928332255226,
-    "iv_rmse_bp": 128.66574203535743,
-    "max_abs_price_error": 3.0261161806566292,
-    "max_abs_iv_error_bp": 443.0153667097908
+    "price_mae": 0.6374685567920617,
+    "price_rmse": 0.815610097470657,
+    "iv_mae_bp": 87.77807126505651,
+    "iv_rmse_bp": 117.9272170902997,
+    "max_abs_price_error": 2.3709361733379453,
+    "max_abs_iv_error_bp": 387.86723983939675
   },
   "Heston": {
-    "price_mae": 0.4430832174374426,
-    "price_rmse": 0.5812413925667146,
-    "iv_mae_bp": 63.60384093578602,
-    "iv_rmse_bp": 82.18848811909582,
-    "max_abs_price_error": 1.8115154897862666,
-    "max_abs_iv_error_bp": 233.96044729370513
+    "price_mae": 0.5104959601243799,
+    "price_rmse": 0.631723704429221,
+    "iv_mae_bp": 73.35356881959888,
+    "iv_rmse_bp": 94.43909634351468,
+    "max_abs_price_error": 1.4840947802399107,
+    "max_abs_iv_error_bp": 300.0041490243743
   },
   "Bates": {
-    "price_mae": 0.44551830808137716,
-    "price_rmse": 0.6113800962380208,
-    "iv_mae_bp": 59.58837492961918,
-    "iv_rmse_bp": 81.73057213618237,
-    "max_abs_price_error": 2.087524825332281,
-    "max_abs_iv_error_bp": 254.89051648322547
+    "price_mae": 0.43289611916417137,
+    "price_rmse": 0.5363910152076495,
+    "iv_mae_bp": 60.77552007508346,
+    "iv_rmse_bp": 78.12538979659097,
+    "max_abs_price_error": 1.3520518291977623,
+    "max_abs_iv_error_bp": 302.8687934037291
   }
 }

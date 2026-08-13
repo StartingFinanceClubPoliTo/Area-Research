@@ -9,6 +9,29 @@ from BatesHawkesExact import BatesHawkesExact
 from Hawkes import Hawkes
 
 
+def forward_rates_from_zero_curve(maturities, zero_rates, horizon, n_steps):
+    """Convert an interpolated zero curve to stepwise deterministic forwards.
+
+    This preserves the discount integral ``R(T)T`` used by pricing rather than
+    feeding a five-year simulation one median spot rate.
+    """
+    maturities = np.asarray(maturities, dtype=float)
+    zero_rates = np.asarray(zero_rates, dtype=float)
+    if maturities.ndim != 1 or zero_rates.shape != maturities.shape:
+        raise ValueError("maturities and zero_rates must be aligned vectors")
+    if len(maturities) < 2 or np.any(np.diff(maturities) <= 0.0):
+        raise ValueError("zero-curve maturities must be strictly increasing")
+    if horizon <= 0.0 or n_steps < 1:
+        raise ValueError("horizon and n_steps must be positive")
+    edges = np.linspace(0.0, float(horizon), int(n_steps) + 1)
+    edge_zero = np.interp(
+        edges, maturities, zero_rates, left=zero_rates[0], right=zero_rates[-1]
+    )
+    integrated = edges * edge_zero
+    integrated[0] = 0.0
+    return np.diff(integrated) / np.diff(edges)
+
+
 def normal_draws(n_paths, n_factors, seed):
     """Scrambled Sobol standard normals with column-wise moment matching."""
     power = int(math.ceil(math.log2(max(n_paths, 2))))
@@ -215,11 +238,15 @@ def simulate_full_hawkes_paths(
     return prices, variances, counts, intensities
 
 
-def terminal_statistics(model, spot, paths, counts=None, status="calibrated"):
+def terminal_statistics(
+    model, spot, paths, counts=None, status="calibrated", simulation_method=""
+):
     terminal = np.asarray(paths)[:, -1]
     log_returns = np.log(np.maximum(terminal, 1e-12) / spot)
+    simple_returns_pct = (terminal / spot - 1.0) * 100.0
     return {
         "model": model,
+        "simulation_method": simulation_method,
         "terminal_mean": float(np.mean(terminal)),
         "terminal_std": float(np.std(terminal, ddof=1)),
         "p05": float(np.percentile(terminal, 5)),
@@ -227,6 +254,19 @@ def terminal_statistics(model, spot, paths, counts=None, status="calibrated"):
         "p95": float(np.percentile(terminal, 95)),
         "logret_skew": float(skew(log_returns)),
         "logret_excess_kurtosis": float(kurtosis(log_returns, fisher=True)),
+        "return_mean_pct": float(np.mean(simple_returns_pct)),
+        "return_std_pct": float(np.std(simple_returns_pct, ddof=1)),
+        "return_p00_pct": float(np.percentile(simple_returns_pct, 0)),
+        "return_p05_pct": float(np.percentile(simple_returns_pct, 5)),
+        "return_p25_pct": float(np.percentile(simple_returns_pct, 25)),
+        "return_p50_pct": float(np.percentile(simple_returns_pct, 50)),
+        "return_p75_pct": float(np.percentile(simple_returns_pct, 75)),
+        "return_p95_pct": float(np.percentile(simple_returns_pct, 95)),
+        "return_p100_pct": float(np.percentile(simple_returns_pct, 100)),
+        "return_skewness": float(skew(simple_returns_pct, bias=False)),
+        "return_excess_kurtosis": float(
+            kurtosis(simple_returns_pct, fisher=True, bias=False)
+        ),
         "mean_jump_count": 0.0 if counts is None else float(np.mean(counts[:, -1])),
         "calibration_status": status,
         "missing_work": "",

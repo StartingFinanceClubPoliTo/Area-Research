@@ -2,27 +2,27 @@
   "model": "Full affine Bates-Hawkes (Feller constrained)",
   "parameterization": "lambda0 and lambda_bar are separate; alpha=branching_ratio*beta enforces stationarity",
   "parameters": {
-    "v0": 0.05532390317647219,
-    "kappa": 5.239335488490048,
-    "theta": 0.04135350306637134,
-    "xi": 0.4048366232578983,
-    "rho": -0.2042590507854056,
-    "lambda0": 0.3417002803706693,
-    "lambda_bar": 0.2402079667265051,
-    "stationary_mean_intensity": 0.25338595412930504,
-    "branching_ratio": 0.052007568643978944,
-    "alpha": 0.4831804848643123,
-    "beta": 9.290580149438526,
-    "mu_J": 0.159791022607314,
-    "sigma_J": 0.15482523039955498,
-    "feller_gap": 0.2694370608471853
+    "v0": 0.047860995462793,
+    "kappa": 4.669576250860899,
+    "theta": 0.043561124660496324,
+    "xi": 0.6375524544241362,
+    "rho": -0.12790945619885694,
+    "lambda0": 2.145506235728764,
+    "lambda_bar": 1.136986799380438,
+    "stationary_mean_intensity": 1.9394359355791424,
+    "branching_ratio": 0.413753876308929,
+    "alpha": 3.570880498726505,
+    "beta": 8.630446028885805,
+    "mu_J": 0.056079654327072286,
+    "sigma_J": 0.06440354028648038,
+    "feller_gap": 0.00035085420864910954
   },
-  "final_objective": 3.610473882652353e-05,
+  "final_objective": 3.9668825952237696e-05,
   "dataset": {
     "instrument": "GLD calls",
     "observations": 64,
     "maturities": 8,
-    "spot": 401.91
+    "spot": 404.77
   },
   "calibration": {
     "seed": 20260811,
@@ -34,8 +34,8 @@
   "optimizer": {
     "success": true,
     "message": "Optimization terminated successfully",
-    "iterations": 19,
-    "evaluations": 229
+    "iterations": 68,
+    "evaluations": 866
   },
   "status": "lse_feller_constrained_restructured_workflow"
 }

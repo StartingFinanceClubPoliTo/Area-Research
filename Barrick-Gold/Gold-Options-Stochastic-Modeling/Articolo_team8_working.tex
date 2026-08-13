@@ -146,7 +146,7 @@ Website: \url{https://sfclubpolito.it/}
 
 \vspace{1cm}
 \begin{tightabstract}
-This article develops the affine option-pricing layer of the Barrick Gold research track. Earlier papers motivate the move from return diagnostics toward conditional and continuous-time volatility models. Building on that work rather than repeating it, the present article calibrates Black--Scholes, Heston, Bates, and one directly comparable Hawkes specification to a current GLD call-implied volatility surface obtained from London Strategic Edge (LSE): the full affine Heston--Hawkes model with an exponential excitation kernel. The kernel preserves a finite-dimensional Markov state and an affine characteristic function, making Fourier/COS pricing and constrained calibration executable. Alternative Hawkes calibrations---point-process likelihood with exponential or rough power-law kernels and an exact constant-volatility option benchmark---are discussed separately because they answer different empirical questions and are not placed in the main model ranking. The operational-research core is the nonlinear calibration problem solved through Differential Evolution and SLSQP under explicit positivity, Feller, correlation, and Hawkes-stability restrictions. On the 64-option sample, the full model attains a price RMSE of (0.4589) and an implied-volatility RMSE of (60.10) basis points, improving on the constrained Bates benchmark in sample. Residuals, smile slices, parameter reallocation, numerical limit tests, and five-year simulations are reported.
+This article develops the affine option-pricing layer of the Barrick Gold research track using London Strategic Edge (LSE) as the sole source for current and historical GLD options, a maturity-specific US Treasury curve, and GLD returns. The analysis proceeds model by model---Black--Scholes, Heston, Bates, and full affine Bates--Hawkes---combining theory, calibration choices, residual maps, smile slices, and transition tests in each chapter. On the current 64-option surface, IV RMSE falls from 117.93 basis points for Black--Scholes to 94.44 for Heston, 78.13 for Bates, and 61.02 for full Bates--Hawkes. Normality tests diagnose heavy-tailed returns and residuals but do not rank predictive performance. The primary test therefore recalibrates every model on date $t$, forecasts a fixed normalized IV grid at the next trading date, and rolls forward without look-ahead. Across 124 transitions and 3,052 common observations, every model beats the prevailing mean, while none beats the previous day's IV surface; Black--Scholes records the lowest OOS RMSE and full Bates--Hawkes remains close while outperforming Heston. A fixed six-month holdout is retained as a secondary stability stress test. The final appendix reports parameters, errors, residual tests, simulation methods, and all integer percentiles from 0 to 100 of five-year simulated GLD returns.
 \end{tightabstract}
 \end{center}
 \end{titlepage}
@@ -163,27 +163,29 @@ This article develops the affine option-pricing layer of the Barrick Gold resear
 \setcounter{page}{1}
 
 % ===============================
+
+% ===============================
 \chapter{Introduction and Roadmap}
 
 \section{Purpose of the Article}
 
-Previous articles in the Barrick Gold research track have already developed the mathematical, numerical, and empirical material needed to understand why a single constant-volatility diffusion is too rigid for commodity-linked valuation. In earlier work, we evaluated Monte Carlo machinery, random-number generation, convergence, confidence intervals, variance reduction, path simulation, and risk engines \cite{BarrickArticle4}. The same project also showed why gold-price scenarios matter for a component-driven Barrick framework, while leaving the revenue and EBITDA layer outside the scope of the present analysis \cite{BarrickArticle5}. Further theoretical work in the track developed the stochastic-process and commodity-volatility background: jump processes, stochastic volatility, characteristic functions, Fourier inversion, and the empirical reasons why gold volatility changes over time \cite{BarrickArticle7,BarrickArticle8}.
+Previous articles in the Barrick Gold research track have already developed the mathematical, numerical, and empirical material needed to understand why a single constant-volatility diffusion is too rigid for commodity-linked valuation. The sequence runs from Black--Scholes foundations and time-series inference \cite{BarrickArticle1,BarrickArticle2}, through Monte Carlo and company-level scenario links \cite{BarrickArticle3,BarrickArticle4,BarrickArticle5}, to gold-volatility evidence and the theory of stochastic variance, jumps, and Fourier pricing \cite{BarrickArticle6,BarrickArticle7}. This article adds to that sequence rather than replacing or compressing it.
 
 This article takes the next step inside the gold-price block only. It asks a computational question: which stochastic model should produce simulated gold paths and how should its parameters be estimated from market data? The answer is not only financial. It is also an operational-research problem. Heston and Bates calibration require the solution of a constrained, nonlinear, expensive, and potentially non-convex optimization problem. Parameters must remain economically admissible, numerical pricing must be stable, and the fitted model must be compared against an observed implied-volatility surface rather than against isolated option prices.
 
 The core numerical engine used in the local refinement stage is SLSQP, Sequential Least Squares Programming. In practice, SLSQP is a local constrained optimizer that repeatedly solves quadratic approximations of the original nonlinear calibration problem. Its logic is governed by the same optimality conditions that appear in nonlinear programming: feasibility, stationarity of the Lagrangian, multiplier signs, and complementary slackness. These are the Karush--Kuhn--Tucker (KKT) conditions.
 
 \begin{tcolorbox}[title={Scope of this article}, colback=white, boxrule=0.4pt]
-The article completes the volatility-to-option-pricing bridge left by previous work. It focuses on pricing, calibration, and path generation for Black--Scholes, Heston, Bates, and a full Bates--Hawkes self-exciting jump model. Previous work supplies the Monte Carlo logic, explains why later company-level work needs gold-price scenarios, and provides the stochastic-volatility and commodity-market background \cite{BarrickArticle4,BarrickArticle5,BarrickArticle7,BarrickArticle8}. The present article stops before revenue, EBITDA, and equity valuation. Its principal Hawkes contribution is the full affine Heston--Hawkes specification calibrated from the same GLD calls as Heston and Bates. Other Hawkes routes are grouped in a separate methodological paragraph and are not mixed into the cross-model comparison.
+The article completes the volatility-to-option-pricing bridge left by previous work. It focuses on pricing, calibration, diagnostics, and path generation for Black--Scholes, Heston, Bates, and a full Bates--Hawkes self-exciting jump model. Previous work supplies the Monte Carlo logic, explains why later company-level work needs gold-price scenarios, and provides the stochastic-volatility and commodity-market background \cite{BarrickArticle3,BarrickArticle4,BarrickArticle5,BarrickArticle6,BarrickArticle7}. The present article stops before revenue, EBITDA, and equity valuation. Its principal Hawkes contribution is the full affine Heston--Hawkes specification calibrated from the same GLD calls as Heston and Bates. Other Hawkes routes are grouped in a separate methodological paragraph and are not mixed into the cross-model comparison.
 \end{tcolorbox}
 
 \section{From Volatility Evidence to Affine Option Models}
 
-The modelling path behind this article was not immediate. Previous Barrick work studied gold returns, showed why mean forecasts alone are too weak for the option-pricing task, and then shifted the attention from the level of the price to the dynamics of volatility \cite{BarrickArticle5}. That earlier step is important here as background, not as an objective to repeat. It explains why the present article starts from volatility, tails, and market-implied expectations rather than from a fresh time-series forecast of the gold price.
+The modelling path behind this article was not immediate. Previous Barrick work studied gold returns, showed why mean forecasts alone are too weak for the option-pricing task, and then shifted the attention from the level of the price to the dynamics of volatility \cite{BarrickArticle6}. That earlier step is important here as background, not as an objective to repeat. It explains why the present article starts from volatility, tails, and market-implied expectations rather than from a fresh time-series forecast of the gold price.
 
-More specifically, AR, ARMA, and ARIMA models organize linear dependence in the conditional mean, while ARIMA handles non-stationary price levels through differencing. An ARFIMA extension can add fractional persistence to that mean equation. These models are useful for return forecasting and diagnostics, but by themselves they retain a conditionally homoskedastic innovation law, do not represent volatility clustering, and do not define the risk-neutral dynamics needed to price an option surface. The preceding paper therefore moved the modelling target from the conditional mean to the conditional variance: GARCH captures discrete-time volatility persistence, and CIR supplies a positive mean-reverting continuous-time variance state \cite{BarrickArticle7}. The present article completes that progression by embedding CIR-type variance in Heston, adding Bates jumps, and then replacing independent Bates arrivals with a Hawkes intensity.
+More specifically, AR, ARMA, and ARIMA models organize linear dependence in the conditional mean, while ARIMA handles non-stationary price levels through differencing. An ARFIMA extension can add fractional persistence to that mean equation. These models are useful for return forecasting and diagnostics, but by themselves they retain a conditionally homoskedastic innovation law, do not represent volatility clustering, and do not define the risk-neutral dynamics needed to price an option surface. The preceding paper therefore moved the modelling target from the conditional mean to the conditional variance: GARCH captures discrete-time volatility persistence, and CIR supplies a positive mean-reverting continuous-time variance state \cite{BarrickArticle6}. The present article completes that progression by embedding CIR-type variance in Heston, adding Bates jumps, and then replacing independent Bates arrivals with a Hawkes intensity.
 
-The next bridge was the move from discrete-time volatility diagnostics to continuous-time state variables. GARCH captures volatility clustering and gives conditional variance forecasts, while the CIR square-root process gives a continuous-time mean-reverting variance law that can be embedded inside Heston-type pricing models \cite{BarrickArticle7,BarrickArticle8}. However, a historical GARCH or CIR estimate is still not a calibrated option-pricing model. It does not by itself specify the risk-neutral dynamics, characteristic function, option-pricing integral, or constrained calibration problem needed to fit an observed implied-volatility surface.
+The next bridge was the move from discrete-time volatility diagnostics to continuous-time state variables. GARCH captures volatility clustering and gives conditional variance forecasts, while the CIR square-root process gives a continuous-time mean-reverting variance law that can be embedded inside Heston-type pricing models \cite{BarrickArticle6,BarrickArticle7}. However, a historical GARCH or CIR estimate is still not a calibrated option-pricing model. It does not by itself specify the risk-neutral dynamics, characteristic function, option-pricing integral, or constrained calibration problem needed to fit an observed implied-volatility surface.
 
 This article completes that bridge. Black--Scholes is used to extract implied volatilities and vega weights. Heston turns the CIR-style variance idea into an affine stochastic-volatility pricing model. Bates adds affine jump risk. Bates--Hawkes then replaces independent Poisson jump arrivals with self-exciting arrivals, using the Hawkes mathematics developed in the advanced stochastic-process material. The sequence is therefore not a return-forecasting exercise: it is the construction of an executable, calibrated, and inspectable affine option-model stack for the gold-price block.
 
@@ -201,22 +203,47 @@ The model sequence follows a simple narrative. Each layer solves a weakness left
 
 Read in this order, the article is not a catalogue of models. It is a progression from a transparent benchmark to richer dynamics, with diagnostics used at every stage to check whether the additional complexity is justified.
 
+\section{Map of the Prior Barrick Articles}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{@{}c>{\RaggedRight\arraybackslash}p{4.2cm}>{\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Article} & \textbf{Topic} & \textbf{Connection used here} \\
+\midrule
+1 & Black--Scholes foundations & Arbitrage-free baseline and probabilistic foundations \cite{BarrickArticle1}. \\
+2 & OLS and dynamic financial time series & Return diagnostics and statistical hypothesis testing \cite{BarrickArticle2}. \\
+3 & Monte Carlo and portfolio simulation & QMC, convergence, variance reduction, and risk summaries \cite{BarrickArticle3}. \\
+4 & Component-driven EBITDA & Why gold-price scenarios matter for operating outcomes \cite{BarrickArticle4}. \\
+5 & Three-stage DCF with simulated data & How scenarios can later enter a valuation layer \cite{BarrickArticle5}. \\
+6 & Gold regimes and volatility dynamics & Heavy tails, clustering, GARCH, and the CIR bridge \cite{BarrickArticle6}. \\
+7 & Beyond Black--Scholes & Jumps, stochastic volatility, characteristic functions, and Fourier methods \cite{BarrickArticle7}. \\
+\bottomrule
+\end{tabularx}
+\caption{Canonical map of the preceding Barrick Gold research articles.}
+\label{tab:prior-articles}
+\end{table}
+
 \section{Structure of the Report}
 
-Chapter 2 describes the empirical dataset and the construction of the implied-volatility surface. Chapter 3 introduces constrained optimization, KKT conditions, and SLSQP through a toy example that can be solved by hand. Chapter 4 explains Black--Scholes, Heston, and Bates pricing. Chapter 5 develops the exponential-Hawkes state used by the affine option model and places the alternative Hawkes calibration routes in one separate methodological paragraph. Chapter 6 calibrates Heston, Bates, and the full affine Heston--Hawkes model in benchmark order. Chapter 7 interprets the diagnostic figures and dataset-level tests. Chapter 8 connects calibrated option models to Monte Carlo gold-price paths for the broader Barrick project. The final chapter summarizes what this price layer contributes and what must remain outside its scope.
+Chapter 2 builds the LSE option surface, Treasury term structure, daily-return normality tests, and shared SLSQP/KKT calibration architecture. Chapters 3--6 then proceed one model at a time: Black--Scholes, Heston, Bates, and full Bates--Hawkes. Each chapter combines mechanism, calibration choices, residual geometry, smile slices, error tests, and an explicit transition motivated by the preceding model's insufficiency. Chapter 7 compares the four current calibrations, performs the rolling one-step-ahead and fixed-cutoff historical tests, and then connects the models to the Monte Carlo gold-price interface. The conclusion is followed by a results appendix; numbered references remain the final element of the article.
 
 This roadmap also clarifies the relationship with the earlier papers in the track. The theory tells us why the models are meaningful; the present article explains how they become executable, calibrated, and inspectable.
 
 % ===============================
-\chapter{Data Pipeline and Volatility-Surface Construction}
+
+% ===============================
+\chapter{LSE Market Inputs and Shared Calibration Architecture}
 
 The introduction defined the modelling objective; this chapter builds the empirical object to which the models will be fitted. It starts from the option chain, constructs implied volatilities, chooses a structured calibration sample, and ends with the market surface that becomes the input for the constrained optimization problem.
 
 \section{From Option Chain to Calibration Dataset}
 
-After the introduction has fixed the role of the present article inside the broader Barrick project, the first concrete object is the market surface. London Strategic Edge (LSE) is the sole market-data source used by the reproducible pipeline \cite{LondonStrategicEdge2026}. The current-chain extraction records \(S_0=401.91\) for GLD at 16:01:35 UTC on 11 August 2026. It returns 2,475 call records; 456 pass the freshness, maturity, moneyness, and numerical filters, and 64 enter the structured Chebyshev sample across eight expiries.
+After the introduction has fixed the role of the present article inside the broader Barrick project, the first concrete object is the market surface. London Strategic Edge (LSE) is the sole market-data source used by the reproducible pipeline \cite{LondonStrategicEdge2026}. The current-chain extraction records \(S_0=404.77\) for GLD at 20:15:07 UTC on 12 August 2026. It returns 2,477 call records; 445 pass the freshness, maturity, moneyness, and numerical filters, and 64 enter the structured Chebyshev sample across eight expiries.
 
-An important timing issue must be handled explicitly. An option's LSE \texttt{last\_price} can come from a trade older than the current underlying snapshot and may therefore be inconsistent with the current spot. The workflow keeps that field only in the local audit. It treats LSE implied volatility as the observed surface and reconstructs a coherent call price and vega with the protected Black--Scholes implementation, one snapshot spot, one maturity clock, \(q=0\), and the stated rate assumption. Only contracts updated within seven days are eligible. Raw and row-level LSE data remain in a Git-ignored local directory under the provider's redistribution terms; the public repository contains the code, a hashed aggregate manifest, calibrated parameters, aggregate errors, and research figures.
+An important timing issue must be handled explicitly. An option's LSE \texttt{last\_price} can come from a trade older than the current underlying snapshot and may therefore be inconsistent with the current spot. The workflow keeps that field only in the local audit. It treats LSE implied volatility as the observed surface and reconstructs a coherent call price and vega with the Black--Scholes implementation, one snapshot spot, one maturity clock, \(q=0\), and the maturity-specific LSE Treasury rate. Only contracts updated within seven days are eligible. Raw and row-level LSE data remain in a Git-ignored local directory under the provider's redistribution terms; the public repository contains the code, a hashed aggregate manifest, calibrated parameters, aggregate errors, and research figures.
 
 The practical cleaning pipeline performs four tasks:
 
@@ -227,7 +254,7 @@ The practical cleaning pipeline performs four tasks:
     \item map LSE IV into a no-arbitrage call price and vega, then select the 64-point Chebyshev sample.
 \end{enumerate}
 
-The Black--Scholes formula is used here as a consistency map, not as the final explanatory model. This is the same modelling limitation already visible in previous work on gold-price scenarios: a Black--Scholes volatility provides a useful benchmark for a first Monte Carlo exercise, but one constant volatility cannot reproduce the full smile \cite{BarrickArticle5}. Given the LSE implied volatility \(\sigma_i^{LSE}\), the normalized calibration price is
+The Black--Scholes formula is used here as a consistency map, not as the final explanatory model. This is the same modelling limitation already visible in previous work on gold-price scenarios: a Black--Scholes volatility provides a useful benchmark for a first Monte Carlo exercise, but one constant volatility cannot reproduce the full smile \cite{BarrickArticle4}. Given the LSE implied volatility \(\sigma_i^{LSE}\), the normalized calibration price is
 \begin{equation}
     C_i^{mkt}:=C^{BS}(S_0,K_i,T_i,r_i,q,\sigma_i^{LSE}).
 \end{equation}
@@ -235,7 +262,20 @@ This construction ensures that the price target and vega share the same timestam
 
 \section{Rate Assignment}
 
-The LSE chain does not supply a risk-free curve. The reproducible build therefore states a flat continuously compounded annual rate of \(r=3.7\%\) as an input assumption and applies it to every expiry. This is not presented as an estimated term structure: it is a transparent normalization choice whose sensitivity should be tested in later snapshots.
+The option-chain response does not carry a risk-free curve in each contract row, but the same LSE API exposes US government-bond yields. The default build calls the official \texttt{bond\_yields()} method for the 1M, 2M, 3M, 6M, 1Y, 2Y, 3Y, and 5Y Treasury tenors. It selects the latest date shared by all eight series---24 July 2026 in this run---instead of mixing asynchronous quotes. If \(y(\tau)\) is the reported par yield in decimal form, the pricing input is the documented continuous-rate proxy
+\[
+    R(\tau)=\log\!\left(1+y(\tau)\right),
+\]
+linearly interpolated in maturity and held flat only beyond the observed tenor endpoints. The resulting rates span 3.693\% to 4.343\%. They are a reproducible Treasury-based proxy, not a fully bootstrapped zero-coupon curve; this limitation is preferable to silently treating 3.7\% as a flat market term structure.
+
+\IfFileExists{img/diagnostics/usd_treasury_curve.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{img/diagnostics/usd_treasury_curve.png}
+    \caption{LSE US Treasury term structure used to assign one maturity-specific rate to each option.}
+    \label{fig:lse-rate-curve}
+\end{figure}
+}{}
 
 Once rates are assigned, each option record contains the quantities needed by the pricing functions:
 \[
@@ -273,7 +313,7 @@ The filtered dataset is visualized as an implied-volatility surface. This is the
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{img/diagnostics/volatility_surface_3d.png}
-    \caption{Filtered GLD implied-volatility surface used for calibration.}
+    \caption{Filtered GLD implied-volatility surface used for calibration. The visible sheet is a piecewise-linear interpolation inside the convex hull of the 64 observed LSE nodes, which are overlaid as points; it is a visualization, not an extrapolated arbitrage-free surface.}
     \label{fig:iv-surface}
 \end{figure}
 }{}
@@ -281,7 +321,39 @@ The filtered dataset is visualized as an implied-volatility surface. This is the
 The surface is not interpreted as a deterministic forecast of future gold prices. It is a market-implied object: it summarizes option prices through the Black--Scholes volatility parameter. The calibration problem is therefore to choose model parameters that reproduce this surface as closely as possible under the chosen stochastic dynamics. Once calibrated, those parameters can become inputs for a Monte Carlo gold-price path generator, replacing a single-volatility GBM block with a stochastic-volatility or jump--stochastic-volatility path model. This is the bridge to the next chapter: fitting the surface is not just a finance problem, but a constrained optimization problem.
 
 % ===============================
-\chapter{SLSQP, KKT Conditions, and a Toy Example}
+
+\section{Empirical GLD Returns and the Normality Hypothesis}
+
+The option surface is a risk-neutral cross-section, whereas the daily GLD series is a historical diagnostic. Both are obtained from LSE, but they answer different questions. Let \(r_t=100[\log S_t-\log S_{t-1}]\). The null hypothesis is that \(r_t\) is normally distributed. The density comparison and Q--Q plot in Figure~\ref{fig:return-normality} make tail departures visible, while Shapiro--Wilk, Jarque--Bera, and D'Agostino \(K^2\) provide complementary hypothesis tests.
+
+\IfFileExists{img/diagnostics/gld_return_normality.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\textwidth]{img/diagnostics/gld_return_normality.png}
+    \caption{LSE GLD daily log returns from 5 January 2021 to 13 August 2026: empirical density against a matched normal law and normal Q--Q plot.}
+    \label{fig:return-normality}
+\end{figure}
+}{}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+Test & Statistic & \(p\)-value & Decision at 5\% \\
+\midrule
+Shapiro--Wilk & 0.9427 & \(5.61\cdot10^{-23}\) & Reject normality \\
+Jarque--Bera & 3603.49 & \(<10^{-300}\) & Reject normality \\
+D'Agostino \(K^2\) & 331.19 & \(1.21\cdot10^{-72}\) & Reject normality \\
+\bottomrule
+\end{tabular}
+\caption{Normality tests for 1,414 daily LSE GLD log returns. Sample skewness is \(-0.765\) and excess kurtosis is \(7.701\).}
+\label{tab:return-normality}
+\end{table}
+
+All three tests reject. With a large, heterogeneous financial sample, rejection is unsurprising and does not identify a preferred option model. The tests are therefore used only to reject Gaussian adequacy and motivate richer dynamics; relative predictive performance is evaluated separately in the rolling test of Chapter~7.
+
+\section{Shared Constrained-Optimization Framework}
 
 Chapter 2 ended with the object that must be fitted: a cleaned implied-volatility surface built from market option prices. This chapter explains the optimization language used to fit that surface. It introduces the constrained calibration problem, the KKT conditions that characterize feasible local optima, and the SLSQP logic used later in the numerical calibrations. The toy example is intentionally simple: it isolates feasibility and stationarity before the article returns to Heston, Bates, and Bates--Hawkes prices.
 
@@ -495,7 +567,40 @@ which is already the constrained optimum.
 The toy example is deliberately simple, but it shows the same structural idea used in Heston and Bates calibration. The optimizer is not allowed to chase the raw best fit if doing so violates admissible parameter conditions. The local step must balance objective improvement and feasibility.
 
 % ===============================
-\chapter{From Pricing Models to Calibration}
+
+Chapters 3--5 built the ingredients of the calibration problem: constrained optimization, affine pricing models, and the Hawkes self-exciting jump state. This chapter puts those ingredients into a workflow. It explains how the objective is weighted, how global and local search are combined, and which constraints define the admissible Heston, Bates, and Bates--Hawkes parameter regions.
+
+\section{Why Raw Price Errors Are Not Enough}
+
+The pricing models are now defined; calibration decides how they are fitted to the surface. This is where the operational-research discussion becomes practical. The objective function, the parameter bounds, and the initialization strategy determine whether the final result is a meaningful model or only a numerical fit.
+
+Option prices have very different scales. Deep in-the-money contracts can have large dollar prices, while out-of-the-money contracts can be cheap but highly informative about tail risk. If calibration minimizes raw squared price errors,
+\[
+    \sum_i \left(C_i^{model}(\theta)-C_i^{mkt}\right)^2,
+\]
+then expensive options tend to dominate the fit. The optimizer may improve the dollar error on high-price contracts while ignoring regions of the volatility smile that are crucial for model interpretation.
+
+The project therefore uses the vega-weighted objective in \eqref{eq:vega-weighted-objective}. This is a practical operational-research choice: it changes the geometry of the objective so that the optimizer behaves more like it is fitting implied volatilities, but without forcing an implied-volatility inversion inside every objective evaluation.
+
+\section{Global Initialization and Local Refinement}
+
+Heston and Bates objectives are not simple convex functions. They contain numerical integration, nonlinear parameter interactions, and regions where different parameter combinations produce similar option prices. A purely local method can converge to a poor local minimum if it starts from an unlucky point.
+
+For this reason, the calibration uses a two-stage design:
+
+\begin{enumerate}[leftmargin=8mm, itemsep=2pt]
+    \item \textbf{Differential Evolution.} A global population-based search explores the bounded parameter space and returns a robust candidate.
+    \item \textbf{SLSQP.} The global candidate becomes the starting point for local constrained refinement.
+\end{enumerate}
+
+This is a pragmatic compromise. Differential Evolution is expensive but more exploratory. SLSQP is faster near a good candidate and can exploit local smoothness. The global stage protects the local optimizer from starting too far away, while SLSQP improves the final local fit under the parameter restrictions described earlier.
+
+The shared machinery is now fixed. The remaining question is incremental: which empirical defect remains after each calibrated model, and which new state variable is needed to address it? The next four chapters answer that question in model order.
+
+% ===============================
+\chapter{Black--Scholes Baseline: Calibration, Errors, and Rejection}
+
+Black--Scholes is the transparent starting point inherited from the foundational article in this research track \cite{BarrickArticle1}. It supplies the price/IV conversion and vega weights used everywhere else, so its limitations must be measured before a richer model is introduced.
 
 The previous chapter explained why SLSQP matters: the models are useful only if their parameters can be estimated under economically meaningful restrictions. We now connect that optimization language to the three model families used in the article. The goal is not to document a technical workflow, but to make clear what each model contributes to the gold-price block.
 
@@ -521,6 +626,49 @@ The corresponding vega is
 \end{equation}
 
 In this article, Black--Scholes has three roles. First, it gives a transparent reference price. Second, it converts option prices into implied volatilities, allowing the surface in Chapter 2 to be drawn and interpreted. Third, it provides the vega term used in the calibration loss \eqref{eq:vega-weighted-objective}. Its weakness is exactly the reason the article continues: a single volatility parameter cannot reproduce the full strike-maturity geometry of the observed surface.
+
+\section{Calibration Choice and Error Tests}
+
+The baseline estimates one constant volatility by minimizing the same vega-weighted loss used for the richer models. The deterministic fit gives \(\widehat\sigma=0.243713\). Price MAE and RMSE are \(0.6375\) and \(0.8156\); IV MAE and RMSE are \(87.78\) and \(117.93\) basis points. Applying normality tests to the 64 market-minus-model IV residuals rejects normality with Shapiro \(p=6.10\cdot10^{-5}\), Jarque--Bera \(p=8.32\cdot10^{-6}\), and D'Agostino \(p=8.24\cdot10^{-5}\). The rejection is secondary to the geometry: a constant volatility leaves a structured smile error.
+
+\section{Residual Heatmaps}
+
+After calibration, the model price for each option is converted back into an implied volatility and compared with market implied volatility. The residual is reported as
+\begin{equation}
+    \text{Residual}_i
+    =
+    \sigma_i^{mkt}-\sigma_i^{model}.
+\end{equation}
+Plotting residuals over maturity and moneyness helps identify systematic model failures. A good calibration should not only minimize a scalar loss; it should also avoid structured residual patterns that reveal missing model mechanisms.
+
+The residual figures are placed directly beside the relevant calibrations: Heston in Figure~\ref{fig:heston-residuals}, Bates in Figure~\ref{fig:bates-residuals}, and full Bates--Hawkes in Figure~\ref{fig:bates-hawkes-residuals}. Read together with Tables~\ref{tab:model-parameters}--\ref{tab:model-errors}, they show both the improved residual scale of the refreshed full model and the additional discontinuous tail-risk mechanism used for scenario design.
+
+\IfFileExists{img/diagnostics/black_scholes_residual_heatmap.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.76\textwidth]{img/diagnostics/black_scholes_residual_heatmap.png}
+    \caption{Black--Scholes implied-volatility residual map. The continuous colour field is linearly interpolated only inside the observed node domain; circles mark the 64 calibration observations.}
+    \label{fig:black-scholes-residuals}
+\end{figure}
+}{}
+
+\IfFileExists{img/diagnostics/black_scholes_volatility_smile.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{img/diagnostics/black_scholes_volatility_smile.png}
+    \caption{Black--Scholes market/model smile slices. A single volatility cannot follow the cross-strike curvature at every expiry.}
+    \label{fig:black-scholes-smile}
+\end{figure}
+}{}
+
+\section{Why Constant Volatility Is Not Sufficient}
+
+Black--Scholes remains essential as a numerical coordinate system, but the residual map and smile slices show that one \(\sigma\) cannot absorb maturity- and strike-dependent variance expectations. The next chapter therefore introduces a latent mean-reverting variance state rather than trying to repair the same constant-volatility law with a different optimizer.
+
+% ===============================
+\chapter{Heston: Stochastic Variance, Calibration, and Residual Structure}
+
+The preceding chapter isolated the failure of constant volatility. Heston is the smallest affine upgrade that changes the variance law itself: it embeds the CIR-style mean-reverting state motivated by the earlier gold-volatility study \cite{BarrickArticle6}.
 
 \section{Heston: Adding Stochastic Variance}
 
@@ -556,6 +704,58 @@ where \(C\) and \(D\) are Riccati-type functions. A single-integral pricing form
     \label{eq:single-integral}
 \end{equation}
 This is the first major upgrade over Black--Scholes: volatility is no longer fixed. It becomes a state variable, and the model can generate a curved implied-volatility surface rather than a flat one.
+
+\section{Heston Calibration}
+
+The Heston calibration vector is
+\[
+    \theta_H=(v_0,\kappa,\theta_v,\xi,\rho).
+\]
+The working bounds are approximately:
+\begin{align}
+    v_0 &\in [10^{-4},1],&
+    \kappa &\in [0.1,10],&
+    \theta_v &\in [10^{-4},1],\\
+    \xi &\in [0.01,15],&
+    \rho &\in [-0.99,0.99].
+\end{align}
+These are not claims that the true parameters must lie exactly in those intervals. They are numerical guardrails. Without such bounds, local optimizers may test unstable or meaningless parameter values while trying to reduce the objective.
+
+The calibration code also imposes the Feller condition
+\begin{equation}
+    2\kappa\theta_v-\xi^2\geq0,
+    \label{eq:feller}
+\end{equation}
+which ensures that the CIR variance process stays strictly positive under the classical boundary classification. This is deliberately stricter than many unconstrained implied-volatility calibrations. In the code, parameter proposals with \(2\kappa\theta_v-\xi^2<0\) receive a large objective penalty, so the reported Heston, Bates, and Bates--Hawkes calibrations must satisfy the same variance-admissibility rule. The residual heatmaps and smile plots are not shown here; they are diagnostic evidence and are collected in Chapter~7.
+
+The refreshed LSE fit is \(v_0=0.06666\), \(\kappa=2.05558\), \(\theta_v=0.04805\), \(\xi=0.18453\), and \(\rho=0.06951\). The Feller gap is \(0.16350>0\). Price RMSE falls to \(0.6317\), and IV RMSE falls to \(94.44\) bp. Residual normality is still rejected (Shapiro \(p=0.0128\), Jarque--Bera \(p=0.0146\), D'Agostino \(p=0.0112\)), so the additional variance state improves scale without eliminating systematic distributional misspecification.
+
+\IfFileExists{img/diagnostics/heston_residual_heatmap.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.76\textwidth]{img/diagnostics/heston_residual_heatmap.png}
+    \caption{Heston implied-volatility residual map after Feller-constrained calibration; observed nodes are overlaid on the interpolated field.}
+    \label{fig:heston-residuals}
+\end{figure}
+}{}
+
+\IfFileExists{img/diagnostics/heston_volatility_smile.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{img/diagnostics/heston_volatility_smile.png}
+    \caption{Heston market/model smile slices across the eight sampled expiries.}
+    \label{fig:heston-smile}
+\end{figure}
+}{}
+
+\section{Why Stochastic Variance Is Still Not Sufficient}
+
+Heston reduces the smooth smile error and creates endogenous volatility dynamics, but its paths remain continuous. The remaining short-maturity and tail residuals can be represented only indirectly through the diffusion parameters. The next model adds an explicit discontinuous return channel and then checks whether that mechanism earns its extra parameters.
+
+% ===============================
+\chapter{Bates: Independent Jumps, Calibration, and Tail Errors}
+
+Heston explains changing variance but not discontinuous repricing. Bates adds a compensated compound-Poisson block to the same affine diffusion, following the jump and Fourier foundations developed in the preceding theoretical article \cite{BarrickArticle7}.
 
 \section{Bates: Adding Jump Risk}
 
@@ -610,29 +810,54 @@ Adding jumps does not literally create a second diffusion-volatility process. It
 \end{equation}
 The first term is generated by the Heston diffusion and the second by jump arrivals and jump sizes. Once the second channel is available, the optimizer no longer needs the Heston block to reproduce every short-maturity tail and skew feature. The diffusion parameters can therefore fall because part of the option-implied variation is reallocated to \((\lambda,\mu_J,\sigma_J)\). This is a joint-identification effect, not evidence that the underlying economic variance mechanically falls whenever jumps are added.
 
-\section{What Each Layer Adds}
+\section{Bates Calibration}
 
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{@{}p{3.2cm}p{4.2cm}X@{}}
-\toprule
-\textbf{Layer} & \textbf{Main idea} & \textbf{Contribution to the article} \\
-\midrule
-Black--Scholes & One volatility parameter & Provides the implied-volatility surface, a benchmark price, and the vega used in the calibration objective. \\
-Heston & Stochastic variance & Allows volatility to move over time and helps explain non-flat smile and term-structure patterns. \\
-Bates & Stochastic variance plus jumps & Adds discontinuous price moves and improves the fit in tail-sensitive regions of the GLD option surface. \\
-Full Bates--Hawkes & Stochastic variance plus self-exciting jumps & Provides the only Hawkes specification directly compared with the other option models; alternative Hawkes calibrations are discussed separately. \\
-\bottomrule
-\end{tabularx}
-\caption{Conceptual role of each pricing layer in the gold-price modelling track.}
-\label{tab:model-layers}
-\end{table}
+Bates extends Heston by adding three jump parameters:
+\[
+    \theta_B=(v_0,\kappa,\theta_v,\xi,\rho,\lambda,\mu_J,\sigma_J).
+\]
+The working bounds for the jump layer are:
+\[
+    \lambda\in[0,5],\qquad
+    \mu_J\in[-0.5,0.5],\qquad
+    \sigma_J\in[10^{-4},0.5].
+\]
+The jump component gives the model additional flexibility, especially at short maturities and in skewed regions of the surface. This flexibility is useful but creates identification risk. For example, high volatility of volatility and high jump volatility can both help explain fat tails. The calibration should therefore be read together with residual plots, parameter plausibility, and robustness checks.
 
-This chapter closes the constant-intensity model-building part of the article. The next chapter develops the Hawkes extension that turns Bates from an independent-jump model into a clustered-jump calibration layer.
+The refreshed fit is \(v_0=0.05899\), \(\kappa=4.68004\), \(\theta_v=0.04787\), \(\xi=0.51835\), \(\rho=0.05882\), \(\lambda=1.20287\), \(\mu_J=0.05062\), and \(\sigma_J=0.05987\), with Feller gap \(0.17941\). Price RMSE is \(0.5364\) and IV RMSE is \(78.13\) bp. Residual normality remains rejected (Shapiro \(p=0.0116\), Jarque--Bera \(p=1.28\cdot10^{-4}\), D'Agostino \(p=6.59\cdot10^{-4}\)).
 
+\section{Smile Slices}
+
+Residual heatmaps give a global view, but smile slices make the fit easier to inspect maturity by maturity. Each panel compares market implied volatilities with the model-implied smile for a given expiration.
+
+The Bates smile slices are shown in Figure~\ref{fig:bates-smile}, and the full Bates--Hawkes slices are shown in Figure~\ref{fig:bates-hawkes-smile}. Smile slices are especially useful for detecting overfitting. A model may reduce average residuals while producing an implausible curve shape in a sparse maturity bucket. The refreshed full-model panels show where the lower aggregate error comes from and where maturity-specific deviations remain.
+
+\IfFileExists{img/diagnostics/bates_residual_heatmap.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.76\textwidth]{img/diagnostics/bates_residual_heatmap.png}
+    \caption{Bates implied-volatility residual map after adding constant-intensity Poisson jump risk.}
+    \label{fig:bates-residuals}
+\end{figure}
+}{}
+
+\IfFileExists{img/diagnostics/bates_volatility_smile.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{img/diagnostics/bates_volatility_smile.png}
+    \caption{Bates market/model smile slices across the sampled expiries.}
+    \label{fig:bates-smile}
+\end{figure}
+}{}
+
+\section{Why Independent Jump Arrivals Are Not Sufficient}
+
+Bates improves the fit and assigns part of tail variation to jumps, but its arrival clock is memoryless: a jump does not alter the conditional probability of another jump. The final model asks whether the remaining residual structure is better represented when arrivals cluster through a stationary self-exciting intensity.
 
 % ===============================
-\chapter{Self-Exciting Jumps: The Hawkes Process}
+\chapter{Full Bates--Hawkes: Self-Excitation, Calibration, and Model Tests}
+
+The Bates chapter left one specific restriction: jump times are independent. The exponential Hawkes layer replaces the constant arrival rate with a finite-dimensional self-exciting state while retaining Heston variance, affine pricing, and a direct comparison on the same LSE calls.
 
 The previous chapter moved from Black--Scholes to Heston and then to Bates. This progression relaxes one rigid assumption at a time: constant volatility becomes stochastic variance, and continuous diffusion paths receive discontinuous jumps. One structural restriction still remains in the standard Bates layer. Jump times are generated by a homogeneous Poisson process, so the probability of a market shock tomorrow is independent of whether a shock occurred today.
 
@@ -781,9 +1006,9 @@ with \(J\sim\mathcal{N}(\mu_J,\sigma_J^2)\), \(k=\E^\Q[e^J-1]\), and \(N_t\) now
 This specification changes the interpretation of the jump layer. In Bates, \(\lambda\) measures the average arrival rate of independent jumps. In Bates--Hawkes, \(\bar{\lambda}\) is the exogenous mean-reversion baseline, \(\lambda_0\) is the intensity observed at the calibration origin, \(\alpha\) is the upward intensity jump after an event, and \(\beta\) controls the decay speed. The branching ratio \(n=\alpha/\beta\) measures endogenous clustering and the stationary mean is \(\bar{\lambda}/(1-n)\) when \(n<1\).
 
 \paragraph{Hawkes calibration routes and comparison rule.}
-The code now exposes four distinct calibration routes, collected here because they should not be interpreted as interchangeable estimates. \emph{Exponential point-process likelihood} estimates a baseline, excitation size, and decay rate from observed event times. \emph{Rough power-law likelihood} uses the regularized kernel \(\mu(\tau)=\alpha(\tau+c)^{-(1+\gamma)}\), with \(0<\gamma<1\), to diagnose longer-lived event memory. \emph{Exact constant-volatility option calibration} uses the affine exponential-Hawkes transform but replaces Heston variance by one diffusion volatility; on the current LSE sample it returns \(\sigma=0.2113\) and a branching ratio of approximately \(0.0104\), so it is useful for validation rather than as the final model. Finally, \emph{full affine Heston--Hawkes calibration} combines stochastic variance and the exact exponential-Hawkes jump transform on the same LSE GLD option sample used by Heston and Bates. Only this fourth route enters the cross-model tables and figures. The likelihood fits require event times rather than option prices, while the constant-volatility benchmark has a different diffusion block; comparing either of them directly with Heston and Bates would therefore confound model fit with a change of target or state variables.
+The code now exposes four distinct calibration routes, collected here because they should not be interpreted as interchangeable estimates. \emph{Exponential point-process likelihood} estimates a baseline, excitation size, and decay rate from observed event times. \emph{Rough power-law likelihood} uses the regularized kernel \(\mu(\tau)=\alpha(\tau+c)^{-(1+\gamma)}\), with \(0<\gamma<1\), to diagnose longer-lived event memory. \emph{Exact constant-volatility option calibration} uses the affine exponential-Hawkes transform but replaces Heston variance by one diffusion volatility; on the current LSE sample it returns \(\sigma=0.22448\) and a branching ratio of approximately \(0.00460\), so it is useful for validation rather than as the final model. Finally, \emph{full affine Heston--Hawkes calibration} combines stochastic variance and the exact exponential-Hawkes jump transform on the same LSE GLD option sample used by Heston and Bates. Only this fourth route enters the cross-model tables and figures. The likelihood fits require event times rather than option prices, while the constant-volatility benchmark has a different diffusion block; comparing either of them directly with Heston and Bates would therefore confound model fit with a change of target or state variables.
 
-This comparison rule also determines the empirical interpretation. The current LSE constrained run estimates a branching ratio of (0.0520), above the imposed 0.02 floor and far from the instability boundary, and the full affine model improves the in-sample price and implied-volatility errors relative to Bates. This is evidence that the self-exciting layer is useful for this cross-section; it is not, by itself, an out-of-sample or time-series proof of persistent clustering.
+This comparison rule also determines the empirical interpretation. The current LSE constrained run estimates a branching ratio of \(0.41375\), above the imposed 0.02 floor and below the instability boundary, and the full affine model improves the in-sample price and implied-volatility errors relative to Bates. This is evidence that the self-exciting layer is useful for this cross-section; it is not, by itself, an out-of-sample or time-series proof of persistent clustering.
 
 \section{Exact Affine Pricing of the Self-Exciting Jump Layer}
 
@@ -834,72 +1059,6 @@ The rough likelihood calibration implemented for event diagnostics does not by i
 The Hawkes chapter has therefore defined the self-exciting state variable, the stability restriction, the proxy baseline, the exact affine transform, and the rough-kernel extension. The next chapter returns to calibration in benchmark order: Heston first, Bates second, and Hawkes only after the constant-intensity jump model has been established.
 
 % ===============================
-\chapter{Calibration Workflow}
-
-Chapters 3--5 built the ingredients of the calibration problem: constrained optimization, affine pricing models, and the Hawkes self-exciting jump state. This chapter puts those ingredients into a workflow. It explains how the objective is weighted, how global and local search are combined, and which constraints define the admissible Heston, Bates, and Bates--Hawkes parameter regions.
-
-\section{Why Raw Price Errors Are Not Enough}
-
-The pricing models are now defined; calibration decides how they are fitted to the surface. This is where the operational-research discussion becomes practical. The objective function, the parameter bounds, and the initialization strategy determine whether the final result is a meaningful model or only a numerical fit.
-
-Option prices have very different scales. Deep in-the-money contracts can have large dollar prices, while out-of-the-money contracts can be cheap but highly informative about tail risk. If calibration minimizes raw squared price errors,
-\[
-    \sum_i \left(C_i^{model}(\theta)-C_i^{mkt}\right)^2,
-\]
-then expensive options tend to dominate the fit. The optimizer may improve the dollar error on high-price contracts while ignoring regions of the volatility smile that are crucial for model interpretation.
-
-The project therefore uses the vega-weighted objective in \eqref{eq:vega-weighted-objective}. This is a practical operational-research choice: it changes the geometry of the objective so that the optimizer behaves more like it is fitting implied volatilities, but without forcing an implied-volatility inversion inside every objective evaluation.
-
-\section{Global Initialization and Local Refinement}
-
-Heston and Bates objectives are not simple convex functions. They contain numerical integration, nonlinear parameter interactions, and regions where different parameter combinations produce similar option prices. A purely local method can converge to a poor local minimum if it starts from an unlucky point.
-
-For this reason, the calibration uses a two-stage design:
-
-\begin{enumerate}[leftmargin=8mm, itemsep=2pt]
-    \item \textbf{Differential Evolution.} A global population-based search explores the bounded parameter space and returns a robust candidate.
-    \item \textbf{SLSQP.} The global candidate becomes the starting point for local constrained refinement.
-\end{enumerate}
-
-This is a pragmatic compromise. Differential Evolution is expensive but more exploratory. SLSQP is faster near a good candidate and can exploit local smoothness. The global stage protects the local optimizer from starting too far away, while SLSQP improves the final local fit under the parameter restrictions described earlier.
-
-\section{Heston Calibration}
-
-The Heston calibration vector is
-\[
-    \theta_H=(v_0,\kappa,\theta_v,\xi,\rho).
-\]
-The working bounds are approximately:
-\begin{align}
-    v_0 &\in [10^{-4},1],&
-    \kappa &\in [0.1,10],&
-    \theta_v &\in [10^{-4},1],\\
-    \xi &\in [0.01,15],&
-    \rho &\in [-0.99,0.99].
-\end{align}
-These are not claims that the true parameters must lie exactly in those intervals. They are numerical guardrails. Without such bounds, local optimizers may test unstable or meaningless parameter values while trying to reduce the objective.
-
-The calibration code also imposes the Feller condition
-\begin{equation}
-    2\kappa\theta_v-\xi^2\geq0,
-    \label{eq:feller}
-\end{equation}
-which ensures that the CIR variance process stays strictly positive under the classical boundary classification. This is deliberately stricter than many unconstrained implied-volatility calibrations. In the code, parameter proposals with \(2\kappa\theta_v-\xi^2<0\) receive a large objective penalty, so the reported Heston, Bates, and Bates--Hawkes calibrations must satisfy the same variance-admissibility rule. The residual heatmaps and smile plots are not shown here; they are diagnostic evidence and are collected in Chapter~7.
-
-\section{Bates Calibration}
-
-Bates extends Heston by adding three jump parameters:
-\[
-    \theta_B=(v_0,\kappa,\theta_v,\xi,\rho,\lambda,\mu_J,\sigma_J).
-\]
-The working bounds for the jump layer are:
-\[
-    \lambda\in[0,5],\qquad
-    \mu_J\in[-0.5,0.5],\qquad
-    \sigma_J\in[10^{-4},0.5].
-\]
-The jump component gives the model additional flexibility, especially at short maturities and in skewed regions of the surface. This flexibility is useful but creates identification risk. For example, high volatility of volatility and high jump volatility can both help explain fat tails. The calibration should therefore be read together with residual plots, parameter plausibility, and robustness checks.
-
 
 \section{Bates--Hawkes Calibration}
 
@@ -936,7 +1095,7 @@ so it has a simple stationarity condition and can be embedded in the affine Bate
 \toprule
 \textbf{Route} & \textbf{Target} & \textbf{Parameters and error} & \textbf{Interpretation} \\
 \midrule
-Exact constant-volatility Hawkes & LSE GLD option surface, COS pricing, no CIR variance block. & \(\sigma=0.2113\), \(\lambda_0=\bar{\lambda}=0.5121\), \(n=0.0104\), \(\mu_J=0.0653\), \(\sigma_J=0.1608\). Vega-weighted objective \(=8.352\cdot10^{-5}\). & Validates the exact Hawkes option-pricing transform, but it is not the final model because it removes stochastic variance. \\
+Exact constant-volatility Hawkes & LSE GLD option surface, COS pricing, no CIR variance block. & \(\sigma=0.22448\), \(\lambda_0=\bar{\lambda}=0.30218\), \(n=0.00460\), \(\mu_J=0.05436\), \(\sigma_J=0.16465\). Vega-weighted objective \(=8.674\cdot10^{-5}\). & Validates the exact Hawkes option-pricing transform, but it is not the final model because it removes stochastic variance. \\
 Exponential kernel & Event-time self-excitation benchmark with Markovian decay. & \(\lambda_0=0.3976\), \(\alpha=0.5631\), \(\beta=1.4497\), \(n=0.3884\). Log-likelihood \(=-67.75\), AIC \(=141.51\), BIC \(=147.36\). & Preferred kernel form for the final Bates--Hawkes model because it is stable, finite-dimensional, and compatible with affine pricing. \\
 Rough power-law kernel & Event-time long-memory benchmark. & \(\lambda_0=0.3868\), \(\alpha=0.1740\), tail index \(=0.9797\), cutoff \(=0.4237\), \(n=0.4119\). Log-likelihood \(=-68.03\), AIC \(=144.05\), BIC \(=151.86\). & Useful as a clustering diagnostic, but it does not improve the benchmark information criteria and would require a different pricing construction. \\
 \bottomrule
@@ -962,7 +1121,7 @@ where parameter bounds enforce positivity and \(0\leq n<1\). The engine reproduc
 The selected full model should not be interpreted as a mechanical claim that Hawkes always improves option-surface fit. Its role is narrower: it is the only Hawkes route that is both option-calibrated and structurally comparable with Heston and Bates after Feller and stationarity restrictions are imposed. Chapter~7 therefore checks whether the lower scalar error is accompanied by a credible residual geometry rather than treating additional parameters as sufficient evidence.
 
 \paragraph{Parameter reallocation after adding jumps.}
-The comparison with standalone Heston makes the two-channel interpretation in \eqref{eq:quadratic-variation-split} visible. Once a jump channel is added, the optimizer can explain part of the short-maturity tail and skew through jump arrivals and jump sizes rather than through the continuous variance process alone. The relevant interpretation is therefore not that volatility mechanically falls when jumps are introduced. It is that the fitted model reallocates variation between a continuous stochastic-variance channel and a discontinuous jump channel, while the Feller guard prevents the variance block from reaching an inadmissible square-root diffusion region. In the full Bates--Hawkes specification, the estimated branching ratio (n=0.0520) couples this reallocation with a stationary, modest self-exciting arrival mechanism.
+The comparison with standalone Heston makes the two-channel interpretation in \eqref{eq:quadratic-variation-split} visible. Once a jump channel is added, the optimizer can explain part of the short-maturity tail and skew through jump arrivals and jump sizes rather than through the continuous variance process alone. The relevant interpretation is therefore not that volatility mechanically falls when jumps are introduced. It is that the fitted model reallocates variation between a continuous stochastic-variance channel and a discontinuous jump channel, while the Feller guard prevents the variance block from reaching an inadmissible square-root diffusion region. In the current full Bates--Hawkes specification, the estimated branching ratio \(n=0.41375\) couples this reallocation with a stationary self-exciting arrival mechanism.
 
 \begin{table}[H]
 \centering
@@ -981,112 +1140,22 @@ Full Bates--Hawkes & Bates-style diffusion admissibility plus \(\lambda_0,\bar{\
 \label{tab:calibration-statistics}
 \end{table}
 
-\section{Model Comparison}
-
-The model comparison belongs in the calibration chapter because it uses the same sampled option surface, objective definition, and admissibility restrictions as the calibration routines. Chapter~7 then checks the same conclusion visually with residual heatmaps and smile slices. The comparison is deliberately not a one-dimensional ``largest model wins'' ranking: Black--Scholes is the baseline volatility layer, Heston is the stochastic-variance benchmark, Bates adds independent Poisson jumps, and the selected Bates--Hawkes model replaces independent arrivals with a self-exciting exponential intensity.
-
-\begin{table}[H]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{2.8pt}
-\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}p{2.8cm}@{}}
-\toprule
-\textbf{Model} & \textbf{Calibrated parameters used in the comparison} & \textbf{Admissibility note} \\
-\midrule
-Black--Scholes & \(\sigma=0.2441\). & Positive volatility. \\
-Heston & \(v_0=0.06811\), \(\kappa=1.74335\), \(\theta_v=0.04563\), \(\xi=0.28283\), \(\rho=0.18525\). & Feller gap \(=0.07910\). \\
-Bates, Poisson jumps & \(v_0=0.06041\), \(\kappa=5.24508\), \(\theta_v=0.03858\), \(\xi=0.21086\), \(\rho=-0.02598\), \(\lambda=0.32520\), \(\mu_J=0.19602\), \(\sigma_J=0.03951\). & Feller gap \(=0.36025\). \\
-Selected Bates--Hawkes & \(v_0=0.05532\), \(\kappa=5.23934\), \(\theta_v=0.04135\), \(\xi=0.40484\), \(\rho=-0.20426\), \(\lambda_0=0.34170\), \(\bar{\lambda}=0.24021\), \(n=0.05201\), \(\beta=9.29058\), \(\mu_J=0.15979\), \(\sigma_J=0.15483\). & Feller gap \(=0.26944\), \(n<1\). \\
-\bottomrule
-\end{tabularx}
-\caption{Model parameters in the Feller-constrained comparison on the 64-point Chebyshev GLD option sample.}
-\label{tab:model-parameters}
-\end{table}
-
-\begin{table}[H]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3.2pt}
-\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}rrrr>{\RaggedRight\arraybackslash}X@{}}
-\toprule
-\textbf{Model} & \textbf{Price MAE} & \textbf{Price RMSE} & \textbf{IV MAE bp} & \textbf{IV RMSE bp} & \textbf{Interpretation} \\
-\midrule
-Black--Scholes & 0.713 & 0.924 & 96.45 & 128.67 & Baseline fit is too rigid for the observed smile. \\
-Heston & 0.443 & 0.581 & 63.60 & 82.19 & Stochastic variance improves on the constant-volatility baseline. \\
-Bates, Poisson jumps & 0.446 & 0.611 & 59.59 & 81.73 & Adds tail-risk structure through independent arrivals. \\
-Selected Bates--Hawkes & 0.300 & 0.459 & 41.74 & 60.10 & Best in-sample fit in the current LSE constrained comparison; self-excitation remains stationary. \\
-\bottomrule
-\end{tabularx}
-\caption{Calibration errors for the main model stack on the same GLD Chebyshev sample. Errors are computed after converting model prices back into implied volatility where possible.}
-\label{tab:model-errors}
-\end{table}
-
-These numbers explain the modelling choice. The current LSE full Bates--Hawkes run is the in-sample scalar-error winner while preserving a positive Feller gap and a stationary branching ratio. Its stationary mean intensity, (0.2534), has the same order of magnitude as the Bates intensity, (0.3252), while the timing of arrivals becomes state dependent. Within the Hawkes family, the exponential-kernel route is preferred over the exact constant-volatility and rough-kernel routes because it is simultaneously option-calibrated, Feller-admissible, Hawkes-stable, and usable as a self-exciting path generator. The result remains a single-cross-section fit and therefore requires the residual and sensitivity checks in Chapter~7.
-
-% ===============================
-\chapter{Diagnostics and Model Interpretation}
-
-Chapter 6 described how the models are calibrated, compared, and constrained. This chapter checks whether those calibrated models behave sensibly on the option surface. It therefore collects the residual heatmaps, smile fits, and Bates--Hawkes visual diagnostics after the scalar model comparison has already been reported.
-
-\section{Residual Heatmaps}
-
-After calibration, the model price for each option is converted back into an implied volatility and compared with market implied volatility. The residual is reported as
-\begin{equation}
-    \text{Residual}_i
-    =
-    \sigma_i^{mkt}-\sigma_i^{model}.
-\end{equation}
-Plotting residuals over maturity and moneyness helps identify systematic model failures. A good calibration should not only minimize a scalar loss; it should also avoid structured residual patterns that reveal missing model mechanisms.
-
-The residual figures are placed directly beside the relevant calibrations: Heston in Figure~\ref{fig:heston-residuals}, Bates in Figure~\ref{fig:bates-residuals}, and full Bates--Hawkes in Figure~\ref{fig:bates-hawkes-residuals}. Read together with Tables~\ref{tab:model-parameters}--\ref{tab:model-errors}, they show both the improved residual scale of the refreshed full model and the additional discontinuous tail-risk mechanism used for scenario design.
-
-\IfFileExists{img/diagnostics/heston_residual_heatmap.png}{%
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.62\textwidth]{img/diagnostics/heston_residual_heatmap.png}
-    \caption{Heston implied-volatility residuals across maturity and moneyness after constrained calibration.}
-    \label{fig:heston-residuals}
-\end{figure}
-}{}
-
-\IfFileExists{img/diagnostics/bates_residual_heatmap.png}{%
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.62\textwidth]{img/diagnostics/bates_residual_heatmap.png}
-    \caption{Bates implied-volatility residuals after adding constant-intensity Poisson jump risk.}
-    \label{fig:bates-residuals}
-\end{figure}
-}{}
+The selected full fit has \(v_0=0.04786\), \(\kappa=4.66958\), \(\theta_v=0.04356\), \(\xi=0.63755\), \(\rho=-0.12791\), \(\lambda_0=2.14551\), \(\bar\lambda=1.13699\), \(n=0.41375\), \(\alpha=3.57088\), \(\beta=8.63045\), \(\mu_J=0.05608\), and \(\sigma_J=0.06440\). The Feller gap \(0.000351\) and \(n<1\) satisfy the imposed admissibility rules. Price RMSE is \(0.4076\), and IV RMSE is \(61.02\) bp. All three residual-normality tests still reject; in particular, Jarque--Bera \(p=1.51\cdot10^{-11}\). The scalar improvement is therefore real in sample, but the remaining heavy-tailed residual law prevents an overstatement of adequacy.
 
 \IfFileExists{img/diagnostics/bates_hawkes_residual_heatmap.png}{%
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.62\textwidth]{img/diagnostics/bates_hawkes_residual_heatmap.png}
-    \caption{Final Bates--Hawkes implied-volatility residuals after replacing Poisson arrivals with the selected self-exciting exponential-Hawkes jump layer.}
+    \includegraphics[width=0.76\textwidth]{img/diagnostics/bates_hawkes_residual_heatmap.png}
+    \caption{Full Bates--Hawkes implied-volatility residual map after replacing independent arrivals with the selected self-exciting exponential-Hawkes layer.}
     \label{fig:bates-hawkes-residuals}
-\end{figure}
-}{}
-
-\section{Smile Slices}
-
-Residual heatmaps give a global view, but smile slices make the fit easier to inspect maturity by maturity. Each panel compares market implied volatilities with the model-implied smile for a given expiration.
-
-The Bates smile slices are shown in Figure~\ref{fig:bates-smile}, and the full Bates--Hawkes slices are shown in Figure~\ref{fig:bates-hawkes-smile}. Smile slices are especially useful for detecting overfitting. A model may reduce average residuals while producing an implausible curve shape in a sparse maturity bucket. The refreshed full-model panels show where the lower aggregate error comes from and where maturity-specific deviations remain.
-
-\IfFileExists{img/diagnostics/bates_volatility_smile.png}{%
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.82\textwidth]{img/diagnostics/bates_volatility_smile.png}
-    \caption{Bates smile fit across selected maturity buckets.}
-    \label{fig:bates-smile}
 \end{figure}
 }{}
 
 \IfFileExists{img/diagnostics/bates_hawkes_volatility_smile.png}{%
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.82\textwidth]{img/diagnostics/bates_hawkes_volatility_smile.png}
-    \caption{Market and selected full Bates--Hawkes smile slices after the deterministic Feller-constrained calibration.}
+    \includegraphics[width=0.90\textwidth]{img/diagnostics/bates_hawkes_volatility_smile.png}
+    \caption{Market and full Bates--Hawkes smile slices after deterministic Feller- and stationarity-constrained calibration.}
     \label{fig:bates-hawkes-smile}
 \end{figure}
 }{}
@@ -1113,6 +1182,135 @@ The detailed Bates--Hawkes method comparison is in Chapter~6. The figures here a
 \end{figure}
 }{}
 
+\section{What the Final Layer Adds---and What It Does Not Prove}
+
+Self-excitation provides the lowest current cross-sectional error and a coherent clustered-jump simulator. It does not establish out-of-sample dominance from one option snapshot, and it does not make residuals Gaussian. A dated panel of option surfaces would be required to test parameter stability and a time-varying clustering premium. The next chapter therefore compares all four models and treats Monte Carlo outputs as conditional scenarios, not forecasts or recommendations.
+
+% ===============================
+\chapter{Cross-Model Comparison and Monte Carlo Implications}
+
+\section{What Each Layer Adds}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{@{}p{3.2cm}p{4.2cm}X@{}}
+\toprule
+\textbf{Layer} & \textbf{Main idea} & \textbf{Contribution to the article} \\
+\midrule
+Black--Scholes & One volatility parameter & Provides the implied-volatility surface, a benchmark price, and the vega used in the calibration objective. \\
+Heston & Stochastic variance & Allows volatility to move over time and helps explain non-flat smile and term-structure patterns. \\
+Bates & Stochastic variance plus jumps & Adds discontinuous price moves and improves the fit in tail-sensitive regions of the GLD option surface. \\
+Full Bates--Hawkes & Stochastic variance plus self-exciting jumps & Provides the only Hawkes specification directly compared with the other option models; alternative Hawkes calibrations are discussed separately. \\
+\bottomrule
+\end{tabularx}
+\caption{Conceptual role of each pricing layer in the gold-price modelling track.}
+\label{tab:model-layers}
+\end{table}
+
+This summary makes the nested mechanisms explicit before current and historical performance are compared on common observations.
+
+
+% ===============================
+
+\section{Model Comparison}
+
+The model comparison belongs in the calibration chapter because it uses the same sampled option surface, objective definition, and admissibility restrictions as the calibration routines. Chapter~7 then checks the same conclusion visually with residual heatmaps and smile slices. The comparison is deliberately not a one-dimensional ``largest model wins'' ranking: Black--Scholes is the baseline volatility layer, Heston is the stochastic-variance benchmark, Bates adds independent Poisson jumps, and the selected Bates--Hawkes model replaces independent arrivals with a self-exciting exponential intensity.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}p{2.8cm}@{}}
+\toprule
+\textbf{Model} & \textbf{Calibrated parameters used in the comparison} & \textbf{Admissibility note} \\
+\midrule
+Black--Scholes & \(\sigma=0.24371\). & Positive volatility. \\
+Heston & \(v_0=0.06666\), \(\kappa=2.05558\), \(\theta_v=0.04805\), \(\xi=0.18453\), \(\rho=0.06951\). & Feller gap \(=0.16350\). \\
+Bates, Poisson jumps & \(v_0=0.05899\), \(\kappa=4.68004\), \(\theta_v=0.04787\), \(\xi=0.51835\), \(\rho=0.05882\), \(\lambda=1.20287\), \(\mu_J=0.05062\), \(\sigma_J=0.05987\). & Feller gap \(=0.17941\). \\
+Selected Bates--Hawkes & \(v_0=0.04786\), \(\kappa=4.66958\), \(\theta_v=0.04356\), \(\xi=0.63755\), \(\rho=-0.12791\), \(\lambda_0=2.14551\), \(\bar{\lambda}=1.13699\), \(n=0.41375\), \(\beta=8.63045\), \(\mu_J=0.05608\), \(\sigma_J=0.06440\). & Feller gap \(=0.00035\), \(n<1\). \\
+\bottomrule
+\end{tabularx}
+\caption{Model parameters in the Feller-constrained comparison on the 64-point Chebyshev GLD option sample.}
+\label{tab:model-parameters}
+\end{table}
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{2.4cm}rrrr>{\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Model} & \textbf{Price MAE} & \textbf{Price RMSE} & \textbf{IV MAE bp} & \textbf{IV RMSE bp} & \textbf{Interpretation} \\
+\midrule
+Black--Scholes & 0.637 & 0.816 & 87.78 & 117.93 & Baseline fit is too rigid for the observed smile. \\
+Heston & 0.510 & 0.632 & 73.35 & 94.44 & Stochastic variance improves on the constant-volatility baseline. \\
+Bates, Poisson jumps & 0.433 & 0.536 & 60.78 & 78.13 & Independent jumps improve tail-sensitive regions. \\
+Selected Bates--Hawkes & 0.294 & 0.408 & 42.26 & 61.02 & Lowest current in-sample error; predictive ranking is tested separately. \\
+\bottomrule
+\end{tabularx}
+\caption{Calibration errors for the main model stack on the same GLD Chebyshev sample. Errors are computed after converting model prices back into implied volatility where possible.}
+\label{tab:model-errors}
+\end{table}
+
+These numbers explain the current-snapshot modelling choice. Full Bates--Hawkes is the in-sample scalar-error winner while preserving a positive Feller gap and a stationary branching ratio. Its stationary mean intensity is \(1.9394\), versus the Bates constant intensity \(1.2029\), while the timing of arrivals becomes state dependent. Within the Hawkes family, the exponential-kernel route is preferred because it is option-calibrated, Feller-admissible, Hawkes-stable, and usable as a self-exciting path generator. Parameter count alone is not evidence of predictive superiority; the next section therefore separates current fit from true one-step-ahead performance.
+
+
+\section{Primary Online Test: Recalibrate at \texorpdfstring{\(t\)}{t}, Forecast \texorpdfstring{\(t+1\)}{t+1}}
+
+Residual normality cannot answer whether one model predicts better than another. The primary historical exercise therefore reproduces the information set of a daily production run. The last six months of available LSE option history contain 125 trading dates, giving 124 transitions from 10 February to 10 August 2026. At each origin \(t\), the model is calibrated only to traded GLD calls and the latest complete Treasury curve dated no later than \(t\). It then forecasts the next available trading date, whose calendar gap is one to four days. The target is fixed ex ante at 25 nodes spanning moneyness \(0.95\)--\(1.05\) and 90--270 days to maturity. This normalized target prevents the next day's spot from entering the forecast: \(S_{t+1}\) is used only ex post to construct the realized surface.
+
+The first date uses global initialization followed by local refinement. Thereafter SLSQP starts from the same model's parameter vector at \(t-1\). This warm start is computational, not Bayesian: no prior density or intertemporal penalty enters the objective. Black--Scholes, Heston, Bates, and full Bates--Hawkes form four independent chronological chains and therefore run in parallel Python processes; dates remain sequential inside each chain. Current variance is projected one step through its mean-reversion law. Full Bates--Hawkes also projects expected intensity toward \(\bar\lambda/(1-n)\). All 496 daily model calibrations produced an admissible non-worsening update, with no fallback.
+
+For model \(m\) and common node-date observations, the Campbell--Thompson statistic is
+\begin{equation}
+R^2_{OOS,m\mid b}=1-\frac{\sum e_{m,t,j}^2}{\sum e_{b,t,j}^2},
+\end{equation}
+where \(b\) is either the node-specific expanding mean, the previous observed IV surface, or another model. A positive value favors \(m\). The Welch--Goyal curve accumulates the daily mean loss difference,
+\begin{equation}
+CSSED_{m\mid b}(T)=\sum_{t\leq T}\left(\overline{e_{b,t}^2}-\overline{e_{m,t}^2}\right),
+\end{equation}
+so an upward segment favors the named model \cite{WelchGoyal2008,CampbellThompson2008}. A Newey--West HAC test with four lags checks whether the average daily difference is distinguishable from zero \cite{NeweyWest1987}.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & MAE bp & RMSE bp & \(R^2_{OOS}\) vs mean & \(R^2_{OOS}\) vs random walk \\
+\midrule
+Black--Scholes & 111.71 & 148.09 & 91.33\% & -3.76\% \\
+Heston & 122.99 & 165.93 & 89.12\% & -30.26\% \\
+Bates & 116.62 & 159.85 & 89.90\% & -20.88\% \\
+Full Bates--Hawkes & 110.90 & 150.96 & 91.00\% & -7.82\% \\
+\bottomrule
+\end{tabular}
+\caption{Rolling one-step-ahead IV forecasts on 3,052 common node-date observations. The random walk is the previous observed normalized IV surface.}
+\label{tab:online-oos}
+\end{table}
+
+\IfFileExists{img/diagnostics/online_welch_goyal_cumulative.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.98\textwidth]{img/diagnostics/online_welch_goyal_cumulative.png}
+    \caption{Rolling Welch--Goyal cumulative squared-error differences. An upward line favors the named model; a downward line favors the comparator stated in the panel title.}
+    \label{fig:online-welch-goyal}
+\end{figure}
+}{}
+
+All four models beat the expanding mean, and the HAC differences are significant. The stronger random-walk benchmark reverses the conclusion: no model has positive \(R^2_{OOS}\) against yesterday's surface. Black--Scholes has the lowest pooled RMSE, while full Bates--Hawkes is close; their pairwise \(R^2\) favors Black--Scholes by 3.77\%, but the HAC difference is not significant (\(p=0.421\)). Full Bates--Hawkes beats Heston by 17.23\% pairwise and the difference is systematic (\(p=1.06\times10^{-4}\)); its 10.81\% advantage over Bates is not significant (\(p=0.126\)). Thus added structure helps some comparisons, but daily IV persistence remains the hardest benchmark.
+
+Rolling parameters also expose identification pressure. The full model's branching ratio has a median of 0.0203, close to the imposed 0.02 floor, and some jump-size parameters approach lower bounds. The current cross-section estimates stronger self-excitation, but the online history does not support presenting that current estimate as a stable law.
+
+\subsection{Fixed-Cutoff Six-Month Stress Test}
+
+The earlier frozen-parameter design is retained as a deliberately harsher robustness check, not as the primary online test. Parameters are estimated once on 10 February 2026 and never refitted during 27 weekly holdout surfaces through 10 August. Against the prevailing mean, \(R^2_{OOS}\) is 46.48\% for Black--Scholes, 44.60\% for Heston, 45.08\% for Bates, and 52.41\% for full Bates--Hawkes. The full model has the lowest frozen-parameter RMSE and significantly lower weekly loss than Heston and Bates, but not Black--Scholes. This stress result measures six-month parameter stability; it never replaces the current LSE calibration used for today's Barrick/GLD scenario layer.
+
+
+% ===============================
+
+The preceding model chapters described calibration, constraints, residuals, and smile slices in one place. This chapter checks whether those calibrated models behave sensibly on the option surface. It therefore collects the residual heatmaps, smile fits, and Bates--Hawkes visual diagnostics after the scalar model comparison has already been reported.
+
 \section{What the Diagnostics Say Operationally}
 
 The diagnostic layer should be read as a quality-control stage:
@@ -1127,17 +1325,14 @@ The diagnostic layer should be read as a quality-control stage:
 This is why the article emphasizes diagnostics rather than only model formulas. In applied quantitative finance, a calibrated parameter vector is not self-validating. The model must be checked against the geometry of the observed surface, the admissibility of the parameters, and the stability of the numerical routine. These checks prepare the final step: translating calibrated parameters into simulated gold-price paths.
 
 % ===============================
-\chapter{Monte Carlo Gold-Price Path Interface}
-
-Chapter 6 compares the calibrated models, and Chapter 7 checks their residual geometry on the implied-volatility surface. This chapter explains how those calibrated option models connect to five-year gold-price simulations for the wider Barrick research pipeline. It does not extend the article into revenue or equity valuation; it only defines the model-specific random blocks that future work can reuse.
 
 \section{From Calibrated Options to Gold-Price Paths}
 
-Previous work in this track shows why Monte Carlo is the natural numerical language for path-dependent risk and valuation problems, following the same simulation logic developed in standard references such as Glasserman \cite{Glasserman2003,BarrickArticle4}. Once a stochastic law is specified, many scenarios can be generated and the resulting distribution can be summarized through percentiles, confidence intervals, VaR, CVaR, or other functionals. Earlier company-level modelling also shows why a future Barrick framework will need gold-price scenarios, but the present article stops at the construction and testing of the gold-price process \cite{BarrickArticle5}.
+Previous work in this track shows why Monte Carlo is the natural numerical language for path-dependent risk and valuation problems, following the same simulation logic developed in standard references such as Glasserman \cite{Glasserman2003,BarrickArticle3}. Once a stochastic law is specified, many scenarios can be generated and the resulting distribution can be summarized through percentiles, confidence intervals, VaR, CVaR, or other functionals. Earlier company-level modelling also shows why a future Barrick framework will need gold-price scenarios, but the present article stops at the construction and testing of the gold-price process \cite{BarrickArticle4,BarrickArticle5}.
 
-The present article supplies the price-model block only. In the earlier scenario exercise, we used a GBM driven by a Black--Scholes-implied volatility term structure \cite{BarrickArticle5}. That choice was coherent as a first benchmark, but it inherits the limitations of Black--Scholes: lognormal continuous paths, no stochastic volatility, no jump risk, and no endogenous volatility smile. Heston and Bates provide two natural upgrades because they can be calibrated to the option surface rather than only to a per-maturity scalar volatility.
+The present article supplies the price-model block only. In the earlier scenario exercise, a GBM was driven by a Black--Scholes-implied volatility term structure \cite{BarrickArticle4}. That choice was coherent as a first benchmark, but it inherits the limitations of Black--Scholes: lognormal continuous paths, no stochastic volatility, no jump risk, and no endogenous volatility smile. Heston and Bates provide two natural upgrades because they can be calibrated to the option surface rather than only to a per-maturity scalar volatility.
 
-The simulation layer can reuse the numerical improvements developed in previous Monte Carlo work \cite{BarrickArticle4}, but it should not repeat that article's comparison between pseudo-random Monte Carlo, quasi Monte Carlo, antithetic variates, and moment matching. Here those tools are inputs. The applied question is different: once a calibrated gold-price law has been chosen, which simulation map is coherent with its state variables?
+The simulation layer can reuse the numerical improvements developed in previous Monte Carlo work \cite{BarrickArticle3}, but it should not repeat that article's comparison between pseudo-random Monte Carlo, quasi Monte Carlo, antithetic variates, and moment matching. Here those tools are inputs. The applied question is different: once a calibrated gold-price law has been chosen, which simulation map is coherent with its state variables?
 
 The target implementation should first test whether a single Sobol-based engine with moment matching, common random numbers, and model-specific transformations is robust enough for all path generators. If that unified design is too rigid, the code should expose model-specific policies. A GBM path only needs Brownian shocks, while a Bates--Hawkes path needs diffusive shocks, stochastic variance, jump marks, and a self-exciting arrival mechanism. Treating these models as if they had the same random structure would make the path simulation mechanically tidy but financially weak.
 
@@ -1224,17 +1419,26 @@ Before the path figures, Table~\ref{tab:terminal-path-stats} records the termina
 \setlength{\tabcolsep}{2.6pt}
 \begin{tabular}{@{}lrrrrrrrr@{}}
 \toprule
-Model & Mean & Std & P05 & P50 & P95 & Skew & Ex. kurt. & Mean jumps \\
+Model & Mean price & Std price & P05 price & P50 price & P95 price & Return skew & Return ex. kurt. & Mean jumps \\
 \midrule
-GBM / BS & 483.582 & 279.241 & 166.548 & 421.868 & 1005.789 & -0.027 & -0.052 & 0.000 \\
-Heston & 484.554 & 267.479 & 194.628 & 420.326 & 963.235 & 0.130 & 0.246 & 0.000 \\
-Bates & 481.492 & 275.450 & 190.179 & 418.562 & 982.204 & 0.131 & 0.174 & 1.625 \\
-Full Bates--Hawkes & 486.063 & 290.891 & 177.662 & 418.758 & 1023.044 & 0.070 & 0.272 & 1.284 \\
+GBM / BS & 502.938 & 292.955 & 171.604 & 437.799 & 1050.782 & 1.783 & 5.161 & 0.000 \\
+Heston & 503.999 & 272.618 & 195.528 & 434.366 & 1018.872 & 1.798 & 5.914 & 0.000 \\
+Bates & 501.438 & 298.424 & 187.214 & 433.237 & 1049.763 & 2.594 & 14.894 & 6.014 \\
+Full Bates--Hawkes & 500.715 & 306.304 & 172.737 & 432.400 & 1065.299 & 2.417 & 12.152 & 9.760 \\
 \bottomrule
 \end{tabular}
-\caption{Terminal distribution statistics from 4,096 five-year paths with 260 time steps and a fixed random seed. The full Bates--Hawkes row uses the refreshed Feller-constrained affine parameters.}
+\caption{Terminal price statistics and simple-return shape from 4,096 five-year paths with 260 time steps, a fixed seed, current parameters, and LSE forward rates.}
 \label{tab:terminal-path-stats}
 \end{table}
+
+\IfFileExists{img/diagnostics/terminal_return_percentiles.png}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{img/diagnostics/terminal_return_percentiles.png}
+    \caption{All integer percentiles 0--100 of simulated five-year simple GLD percentage returns. The symmetric-log scale preserves the central distribution while keeping both extreme endpoints visible.}
+    \label{fig:terminal-return-percentiles}
+\end{figure}
+}{}
 
 \clearpage
 
@@ -1327,6 +1531,8 @@ The models in this article are research tools. They are used to study the shape 
 With the simulation boundary and the non-recommendation scope fixed, the final chapter can summarize what the calibrated price layer contributes to the Barrick research track.
 
 % ===============================
+
+% ===============================
 \chapter*{Conclusion}
 \phantomsection
 \addcontentsline{toc}{chapter}{Conclusion}
@@ -1341,10 +1547,176 @@ From an operational-research perspective, the key object is the calibration prob
 \]
 The KKT conditions explain what it means for a constrained optimum to be locally coherent, while SLSQP provides a practical algorithmic route to such a point through sequential quadratic approximations. The toy example shows the mechanism in a two-dimensional setting; the Heston and Bates calibrations apply the same logic to expensive pricing functions and financially meaningful parameter bounds.
 
-From a modelling perspective, the pipeline shows why diagnostics are indispensable. A scalar objective value is not enough. The fitted model must be inspected through residual heatmaps, smile slices, parameter plausibility, model-comparison tables, and path-level distributional checks. In the current LSE deterministic run, the full Bates--Hawkes model reduces price RMSE from (0.6114) for Bates to (0.4589) and implied-volatility RMSE from (81.73) to (60.10) basis points. Its Feller gap is (0.26944), and the branching ratio (n=0.0520) is stationary and above the imposed minimum. These results support the self-exciting layer as an in-sample description of this GLD cross-section. They do not establish out-of-sample dominance or a time-series clustering premium without additional dates. In the five-year simulation, the full model combines Heston stochastic variance with event-driven Hawkes jumps and keeps the state variables visible for downstream validation.
+From a modelling perspective, the pipeline shows why diagnostics are indispensable. A scalar objective value is not enough. In the current LSE run, full Bates--Hawkes reduces price RMSE from 0.5364 for Bates to 0.4076 and IV RMSE from 78.13 to 61.02 basis points; its Feller gap is 0.000351 and its branching ratio is 0.41375. That is current cross-sectional evidence, not a predictive verdict. In the primary online test, Black--Scholes has the lowest OOS RMSE at 148.09 bp, full Bates--Hawkes follows at 150.96 bp, and neither beats the previous day's IV surface. The full model nevertheless improves significantly on Heston, while its advantage over Bates and its difference from Black--Scholes are not statistically decisive. The fixed six-month test favors full Bates--Hawkes under frozen parameters, showing that rankings depend on the operational question. This separation between fit, one-step prediction, and long-horizon stability is the article's central empirical safeguard.
 
-The final purpose of the article is therefore to propose and test gold-price models for the Barrick research pipeline. Previous work supplies the Monte Carlo, quasi-Monte Carlo, and variance-reduction framework, and earlier company-level modelling explains why future valuation work will need gold-price scenarios \cite{BarrickArticle4,BarrickArticle5}. The present article uses those numerical tools as inputs for an applied path generator and makes the model-specific random blocks explicit. The current LSE chain is the sole empirical input; its raw rows remain local, while the reproducible transformation and aggregate outputs are published. The revenue, EBITDA, and equity-valuation model is not built here: it belongs to a later unified article. The principal extension is the full affine Bates--Hawkes model; proxy, constant-volatility, event-likelihood, and rough-kernel approaches are retained as clearly separated alternatives rather than presented as the article's objective.
+The final purpose of the article is therefore to propose and test gold-price models for the Barrick research pipeline. Previous work supplies the Monte Carlo, quasi-Monte Carlo, and variance-reduction framework, and earlier company-level modelling explains why future valuation work will need gold-price scenarios \cite{BarrickArticle3,BarrickArticle4,BarrickArticle5}. The present article uses those numerical tools as inputs for an applied path generator and makes the model-specific random blocks explicit. LSE options, Treasury yields, and GLD candles are the sole empirical inputs; their raw rows remain local, while the reproducible transformation and aggregate outputs are published. The revenue, EBITDA, and equity-valuation model is not built here: it belongs to a later unified article. The principal extension is the full affine Bates--Hawkes model; proxy, constant-volatility, event-likelihood, and rough-kernel approaches are retained as clearly separated alternatives rather than presented as the article's objective.
 
+% ===============================
+\chapter*{Results Appendix}
+\phantomsection
+\addcontentsline{toc}{chapter}{Results Appendix}
+\markboth{Results Appendix}{Results Appendix}
+
+This appendix is generated from the aggregate outputs of the same deterministic build used by the figures. Historical backtest parameters and current valuation parameters remain deliberately separate. Raw LSE rows, daily forecasts, and optimizer checkpoints are local-only and are not reproduced here.
+
+\section*{Current calibrated parameters}
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{@{}p{2.8cm}X@{}}
+\toprule
+Model & Current LSE parameter estimates \\
+\midrule
+Black--Scholes & $\sigma=0.24371$ \\
+Heston & $v_0=0.06666$, $\kappa=2.05558$, $\theta_v=0.04805$, $\xi=0.18453$, $\rho=0.06951$, $Feller gap=0.16350$ \\
+Bates & $v_0=0.05899$, $\kappa=4.68004$, $\theta_v=0.04787$, $\sigma=0.51835$, $\rho=0.05882$, $\lambda=1.20287$, $\mu_J=0.05062$, $\sigma_J=0.05987$, $Feller gap=0.17941$ \\
+Full Bates--Hawkes & $v_0=0.04786$, $\kappa=4.66958$, $\theta_v=0.04356$, $\xi=0.63755$, $\rho=-0.12791$, $\lambda_0=2.14551$, $\bar\lambda=1.13699$, $\lambda_\infty=1.93944$, $n=0.41375$, $\alpha=3.57088$, $\beta=8.63045$, $\mu_J=0.05608$, $\sigma_J=0.06440$, $Feller gap=0.00035$ \\
+\bottomrule
+\end{tabularx}
+\caption{Current-snapshot parameters used by the point-in-time comparison and five-year simulations.}
+\label{tab:appendix-current-parameters}
+\end{table}
+
+\section*{Calibration errors and residual tests}
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Model & Price RMSE & IV RMSE bp & Shapiro $p$ & JB $p$ & D'Agostino $p$ \\
+\midrule
+Black--Scholes & 0.8156 & 117.93 & $6.10\times10^{-5}$ & $8.32\times10^{-6}$ & $8.24\times10^{-5}$ \\
+Heston & 0.6317 & 94.44 & $0.0128$ & $0.0146$ & $0.0112$ \\
+Bates & 0.5364 & 78.13 & $0.0116$ & $1.28\times10^{-4}$ & $6.59\times10^{-4}$ \\
+Full Bates--Hawkes & 0.4076 & 61.02 & $6.21\times10^{-4}$ & $1.51\times10^{-11}$ & $0.0013$ \\
+\bottomrule
+\end{tabular}
+\caption{Current calibration errors and normality tests on the 64 market-minus-model IV residuals. Rejection diagnoses residual shape; it is not a predictive ranking.}
+\label{tab:appendix-errors-normality}
+\end{table}
+
+\section*{Primary rolling predictive test}
+\begin{table}[H]
+\centering
+\scriptsize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & OOS MAE bp & OOS RMSE bp & $R^2_{OOS}$ vs mean (\%) & $R^2_{OOS}$ vs RW (\%) \\
+\midrule
+Black--Scholes & 111.71 & 148.09 & 91.33 & -3.76 \\
+Heston & 122.99 & 165.93 & 89.12 & -30.26 \\
+Bates & 116.62 & 159.85 & 89.90 & -20.88 \\
+Full Bates--Hawkes & 110.90 & 150.96 & 91.00 & -7.82 \\
+\bottomrule
+\end{tabular}
+\caption{Rolling one-step-ahead results on 3,052 common node-date observations from 11 February to 10 August 2026. RW is the previous observed IV surface.}
+\label{tab:appendix-online}
+\end{table}
+
+\section*{Simulation methods and terminal return shape}
+\begin{table}[H]
+\centering
+\fontsize{7.2}{8.2}\selectfont
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabularx}{\textwidth}{@{}p{2.0cm}Xrrrrrrr@{}}
+\toprule
+Model & Monte Carlo method & Mean \% & Std \% & Skew & Ex. kurt. & P00 \% & P50 \% & P100 \% \\
+\midrule
+Black--Scholes & exact GBM log step; scrambled Sobol normals; LSE forward-rate curve & 24.25 & 72.38 & 1.783 & 5.161 & -82.23 & 8.16 & 533.74 \\
+Heston & full-truncation Euler; correlated scrambled Sobol normals; LSE forward-rate curve & 24.51 & 67.35 & 1.798 & 5.914 & -80.03 & 7.31 & 550.87 \\
+Bates & full-truncation Euler; inverse-Poisson lognormal jumps; scrambled Sobol draws & 23.88 & 73.73 & 2.594 & 14.894 & -88.83 & 7.03 & 871.65 \\
+Full Bates--Hawkes & full-truncation Euler; event-driven exponential Hawkes jumps; Sobol diffusion & 23.70 & 75.67 & 2.417 & 12.152 & -92.18 & 6.83 & 966.51 \\
+\bottomrule
+\end{tabularx}
+\caption{Five-year simple-return distribution from 4,096 paths and 260 steps, using current LSE calibrations and the LSE forward-rate curve.}
+\label{tab:appendix-simulation}
+\end{table}
+
+\clearpage
+\begin{table}[p]
+\centering
+\fontsize{7.4}{8.4}\selectfont
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}rrrrr@{\hspace{8mm}}rrrrr@{}}
+\toprule
+p & BS & H & B & BH & p & BS & H & B & BH \\
+\midrule
+0 & -82.2 & -80.0 & -88.8 & -92.2 & 26 & -24.0 & -20.6 & -24.1 & -24.7 \\
+1 & -69.6 & -65.8 & -68.0 & -71.8 & 27 & -22.6 & -19.3 & -22.9 & -23.5 \\
+2 & -65.3 & -60.8 & -62.9 & -65.9 & 28 & -21.2 & -18.1 & -21.6 & -22.1 \\
+3 & -62.3 & -57.1 & -59.8 & -63.0 & 29 & -19.9 & -17.0 & -20.0 & -20.9 \\
+4 & -59.6 & -54.2 & -57.0 & -59.3 & 30 & -18.3 & -15.9 & -18.8 & -19.7 \\
+5 & -57.6 & -51.7 & -53.7 & -57.3 & 31 & -17.2 & -14.8 & -17.5 & -18.3 \\
+6 & -55.2 & -49.5 & -50.7 & -55.0 & 32 & -15.9 & -13.7 & -16.5 & -16.7 \\
+7 & -52.9 & -46.9 & -48.7 & -52.4 & 33 & -14.8 & -12.5 & -15.4 & -15.6 \\
+8 & -50.8 & -45.3 & -47.3 & -50.3 & 34 & -13.5 & -11.3 & -14.3 & -14.1 \\
+9 & -49.0 & -43.7 & -45.6 & -48.2 & 35 & -12.2 & -10.2 & -13.1 & -13.0 \\
+10 & -47.5 & -41.7 & -43.8 & -46.2 & 36 & -11.1 & -9.2 & -12.2 & -11.7 \\
+11 & -45.6 & -39.7 & -42.6 & -44.9 & 37 & -9.8 & -7.9 & -10.5 & -10.3 \\
+12 & -43.8 & -38.2 & -41.3 & -43.4 & 38 & -8.3 & -6.9 & -9.2 & -9.0 \\
+13 & -42.7 & -36.9 & -40.3 & -42.1 & 39 & -7.1 & -6.1 & -8.1 & -7.8 \\
+14 & -41.1 & -35.3 & -39.4 & -40.9 & 40 & -5.5 & -4.8 & -6.7 & -6.5 \\
+15 & -39.8 & -33.9 & -37.5 & -39.6 & 41 & -4.3 & -3.6 & -5.4 & -5.1 \\
+16 & -38.5 & -32.6 & -36.0 & -38.1 & 42 & -2.9 & -2.1 & -4.2 & -3.9 \\
+17 & -37.2 & -31.4 & -34.7 & -36.6 & 43 & -1.9 & -1.3 & -3.1 & -2.6 \\
+18 & -35.7 & -30.1 & -33.2 & -34.8 & 44 & -0.9 & -0.2 & -1.5 & -1.5 \\
+19 & -33.8 & -28.6 & -32.5 & -33.2 & 45 & 0.1 & 0.8 & -0.3 & -0.2 \\
+20 & -32.5 & -27.2 & -31.4 & -32.1 & 46 & 1.7 & 2.1 & 1.6 & 1.2 \\
+21 & -30.9 & -26.1 & -30.1 & -31.1 & 47 & 3.4 & 3.2 & 3.0 & 2.4 \\
+22 & -29.5 & -25.1 & -28.9 & -29.9 & 48 & 4.7 & 4.4 & 4.3 & 4.2 \\
+23 & -28.1 & -24.1 & -27.8 & -28.5 & 49 & 6.6 & 5.6 & 5.5 & 5.2 \\
+24 & -27.0 & -22.7 & -26.7 & -26.9 & 50 & 8.2 & 7.3 & 7.0 & 6.8 \\
+25 & -25.8 & -21.7 & -25.6 & -25.6 & 51 & 9.4 & 8.6 & 8.4 & 8.1 \\
+\bottomrule
+\end{tabular}
+\caption{Integer percentiles 0--51 of five-year simulated simple GLD percentage returns. BS denotes GBM/Black--Scholes, H denotes Heston, B denotes Bates, and BH denotes full Bates--Hawkes. Values are generated directly from the published aggregate CSV.}
+\label{tab:appendix-percentiles-0-51}
+\end{table}
+\clearpage
+\begin{table}[p]
+\centering
+\fontsize{7.4}{8.4}\selectfont
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}rrrrr@{\hspace{8mm}}rrrrr@{}}
+\toprule
+p & BS & H & B & BH & p & BS & H & B & BH \\
+\midrule
+52 & 10.8 & 10.5 & 9.7 & 9.4 & 78 & 63.3 & 62.5 & 60.0 & 58.3 \\
+53 & 12.1 & 11.9 & 11.5 & 10.6 & 79 & 67.0 & 65.0 & 63.1 & 61.4 \\
+54 & 13.5 & 13.4 & 12.9 & 11.8 & 80 & 70.6 & 67.3 & 65.9 & 63.9 \\
+55 & 15.1 & 15.3 & 14.7 & 13.3 & 81 & 73.4 & 70.6 & 69.3 & 67.6 \\
+56 & 16.5 & 17.1 & 16.2 & 15.3 & 82 & 76.4 & 73.4 & 72.2 & 72.7 \\
+57 & 18.2 & 18.5 & 17.5 & 16.5 & 83 & 80.9 & 77.1 & 75.0 & 76.2 \\
+58 & 19.6 & 20.2 & 19.2 & 18.0 & 84 & 85.5 & 81.7 & 78.4 & 80.5 \\
+59 & 21.3 & 21.8 & 21.1 & 19.8 & 85 & 89.3 & 85.4 & 84.6 & 85.7 \\
+60 & 22.8 & 23.9 & 22.7 & 21.1 & 86 & 94.2 & 89.1 & 88.8 & 90.3 \\
+61 & 24.3 & 25.9 & 24.3 & 22.9 & 87 & 99.1 & 94.7 & 93.0 & 95.1 \\
+62 & 26.6 & 27.5 & 25.7 & 24.6 & 88 & 105.2 & 99.5 & 97.5 & 99.5 \\
+63 & 28.3 & 29.2 & 27.5 & 26.3 & 89 & 110.7 & 104.5 & 103.6 & 105.0 \\
+64 & 30.6 & 31.0 & 29.1 & 28.5 & 90 & 115.6 & 112.6 & 110.6 & 110.0 \\
+65 & 32.3 & 33.4 & 31.2 & 30.9 & 91 & 120.1 & 118.9 & 117.9 & 119.1 \\
+66 & 34.1 & 35.2 & 32.9 & 32.3 & 92 & 127.6 & 127.2 & 126.6 & 128.1 \\
+67 & 35.6 & 37.3 & 35.0 & 34.1 & 93 & 136.5 & 136.6 & 135.1 & 137.9 \\
+68 & 37.4 & 39.1 & 37.3 & 35.7 & 94 & 145.9 & 142.8 & 146.6 & 148.7 \\
+69 & 40.0 & 41.4 & 39.1 & 37.9 & 95 & 159.6 & 151.7 & 159.3 & 163.2 \\
+70 & 41.9 & 43.3 & 41.3 & 40.2 & 96 & 175.1 & 167.6 & 175.0 & 181.2 \\
+71 & 44.2 & 45.3 & 43.6 & 42.2 & 97 & 201.9 & 179.0 & 191.4 & 204.6 \\
+72 & 46.3 & 47.1 & 45.5 & 44.2 & 98 & 227.6 & 206.2 & 222.9 & 239.3 \\
+73 & 48.8 & 49.3 & 47.4 & 46.2 & 99 & 279.9 & 247.5 & 285.8 & 301.6 \\
+74 & 51.4 & 52.0 & 49.3 & 47.8 & 100 & 533.7 & 550.9 & 871.6 & 966.5 \\
+75 & 53.5 & 54.3 & 52.0 & 50.5 &  &  &  &  &  \\
+76 & 57.1 & 56.8 & 54.7 & 53.0 &  &  &  &  &  \\
+77 & 60.3 & 59.1 & 57.7 & 55.4 &  &  &  &  &  \\
+\bottomrule
+\end{tabular}
+\caption{Integer percentiles 52--100 of five-year simulated simple GLD percentage returns. BS denotes GBM/Black--Scholes, H denotes Heston, B denotes Bates, and BH denotes full Bates--Hawkes. Values are generated directly from the published aggregate CSV.}
+\label{tab:appendix-percentiles-52-100}
+\end{table}
+
+
+% ===============================
 \begin{references}
 
 \bibitem{BlackScholes1973}
@@ -1433,14 +1805,34 @@ L. A. Souto Arias, P. Cirillo, and C. W. Oosterlee,
 \textit{A New Self-Exciting Jump-Diffusion Process for Option Pricing},
 arXiv:2205.13321, 2023.
 
-\bibitem{BarrickArticle4}
+\bibitem{BarrickArticle1}
+S. Falcione and M. Fracca,
+\textit{Foundations for the Black--Scholes Framework},
+Starting Finance Club PoliTo Research, 2026.
+
+\bibitem{BarrickArticle2}
+F. Triassi and G. Zoccatelli,
+\textit{From OLS to Dynamic Correlations: A Statistical Exploration of Financial Time Series},
+Starting Finance Club PoliTo Research, 2026.
+
+\bibitem{BarrickArticle3}
 A. Rostagno and F. Florio,
 \textit{Monte Carlo Methods and Portfolio Simulation: Theory, Convergence, and Applications to Risk Analysis},
 Starting Finance Club PoliTo Research, 2026.
 
-\bibitem{BarrickArticle5}
+\bibitem{BarrickArticle4}
 G. Scali and J. Foralosso,
 \textit{A Component-Driven Methodology for EBITDA Forecasting in Gold Mining},
+Starting Finance Club PoliTo Research, 2026.
+
+\bibitem{BarrickArticle5}
+F. Vesco, L. Pietra, and B. Moussaif,
+\textit{Three-Stage DCF with Simulated Data: A Reproducible Monte Carlo Illustration},
+Starting Finance Club PoliTo Research, 2026.
+
+\bibitem{BarrickArticle6}
+D. D'Amico and P. Weisz,
+\textit{Gold, Monetary Regimes, and Volatility Dynamics},
 Starting Finance Club PoliTo Research, 2026.
 
 \bibitem{BarrickArticle7}
@@ -1448,10 +1840,20 @@ D. Sisto and M. Armando,
 \textit{Beyond Black--Scholes: Mathematical Foundations for Jump Processes, Stochastic Volatility, and Fourier Methods},
 Starting Finance Club PoliTo Research, 2026.
 
-\bibitem{BarrickArticle8}
-D. D'Amico and P. Weisz,
-\textit{Gold, Monetary Regimes, and Volatility Dynamics},
-Starting Finance Club PoliTo Research, 2026.
+\bibitem{WelchGoyal2008}
+I. Welch and A. Goyal,
+\textit{A Comprehensive Look at the Empirical Performance of Equity Premium Prediction},
+Review of Financial Studies, 21(4), 1455--1508, 2008.
+
+\bibitem{CampbellThompson2008}
+J. Y. Campbell and S. B. Thompson,
+\textit{Predicting Excess Stock Returns Out of Sample: Can Anything Beat the Historical Average?},
+Review of Financial Studies, 21(4), 1509--1531, 2008.
+
+\bibitem{NeweyWest1987}
+W. K. Newey and K. D. West,
+\textit{A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix},
+Econometrica, 55(3), 703--708, 1987.
 
 \bibitem{MessinaSoriano2026}
 S. G. Messina and N. Soriano,
@@ -1462,14 +1864,14 @@ Starting Finance Club PoliTo Research, 2026.
 London Strategic Edge,
 \textit{LSE Data API: Options Chain Documentation and Terms of Service},
 \url{https://github.com/londonstrategicedge/lse-data},
-accessed 11/08/2026.
+accessed 13/08/2026.
 
 \bibitem{GitHubArticle6}
 S. G. Messina and A. Coco,
 \textit{Advanced Stochastic Modeling for Gold Options: supplementary research materials},
 Starting Finance Club PoliTo Research repository,
 \url{https://github.com/StartingFinanceClubPoliTo/Research/tree/main/Barrick-Gold/Gold-Options-Stochastic-Modeling},
-accessed 11/08/2026.
+accessed 13/08/2026.
 
 \end{references}
 

@@ -21,6 +21,7 @@ from BatesHawkesExact import BatesHawkesExact  # noqa: E402
 from Hawkes import ExactHawkesCalibration  # noqa: E402
 from calibration_workflow import (  # noqa: E402
     load_calibration_surface,
+    normality_statistics,
     option_diagnostics,
     plot_residuals,
     plot_smiles,
@@ -235,6 +236,30 @@ def main():
             {"model": "Full Bates-Hawkes", **metrics["full_bates_hawkes"]},
         ]
     ).to_csv(data_dir / "bates_hawkes_calibration_metrics.csv", index=False)
+
+    residual_path = data_dir / "calibration_residual_normality.csv"
+    residual_normality = pd.read_csv(residual_path)
+    residual_normality = residual_normality.loc[
+        residual_normality["model"] != "Full Bates-Hawkes"
+    ].copy()
+    full_normality = normality_statistics(full_diagnostics["iv_residual_pct"])
+    full_normality.update({
+        "model": "Full Bates-Hawkes",
+        "residual": "market minus model implied volatility (pp)",
+        "decision_5pct_shapiro": (
+            "reject" if full_normality["shapiro_pvalue"] < 0.05 else "do not reject"
+        ),
+        "decision_5pct_jarque_bera": (
+            "reject" if full_normality["jarque_bera_pvalue"] < 0.05 else "do not reject"
+        ),
+        "decision_5pct_dagostino": (
+            "reject" if full_normality["dagostino_k2_pvalue"] < 0.05 else "do not reject"
+        ),
+    })
+    residual_normality = pd.concat(
+        [residual_normality, pd.DataFrame([full_normality])], ignore_index=True
+    )
+    residual_normality.to_csv(residual_path, index=False)
 
     payload = {
         "model": "Full affine Bates-Hawkes (Feller constrained)",

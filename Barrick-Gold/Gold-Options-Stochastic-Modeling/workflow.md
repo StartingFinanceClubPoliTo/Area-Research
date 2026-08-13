@@ -12,11 +12,26 @@ The reusable numerical path is now split by responsibility:
 4. `calibration_workflow.py` builds diagnostics for the notebooks.
 5. The notebooks select data, call one calibration API, and render outputs.
 
-The sole market-data path is `lse_dataset.py -> Data/lse_local`. LSE IV is the
-observed surface; coherent prices and vegas are reconstructed with `BnS.py`
-after the freshness filter. Raw chain and option-level diagnostics are local
-only. `tools/rebuild_lse_benchmarks.py`, `rebuild_exact_hawkes_outputs.py`, and
-`rebuild_path_outputs.py` publish aggregates and figures in that order.
+The sole market-data path is `Main.ipynb -> main.py -> lse_dataset.py ->
+Data/lse_local`. LSE IV is the observed surface; coherent prices and vegas are
+reconstructed with `BnS.py` after the freshness filter and use the
+maturity-specific LSE Treasury curve. LSE daily GLD candles provide the return
+series. Raw chain, curve, history, and option-level diagnostics are local only.
+`tools/rebuild_lse_benchmarks.py`, `rebuild_exact_hawkes_outputs.py`,
+`rebuild_online_validation.py`, `rebuild_oos_validation.py`, and
+`rebuild_path_outputs.py` publish aggregates and figures in that order. The
+online test is primary; the fixed-cutoff run is a parameter-stability stress
+test and never supplies today's valuation parameters.
+
+The online runner fixes a normalized IV grid ex ante, calibrates every model on
+date `t`, evolves the current variance/intensity state over the calendar gap,
+and predicts the next available trading date. Four independent Python
+processes execute the chronological Black--Scholes, Heston, Bates, and full
+Bates--Hawkes chains concurrently. Within a chain, the previous parameter
+vector is only the SLSQP warm start; the objective contains no Bayesian prior
+or intertemporal penalty. Checkpoints and row-level predictions stay local.
+Both the surface cache and each model checkpoint carry SHA-256 fingerprints of
+their exact local inputs; a mismatch forces a clean rebuild before resuming.
 
 The scalar Carr--Madan price is the frozen numerical reference. Bates and its
 stationary Hawkes proxy use vectorised COS batches inside calibration. Every

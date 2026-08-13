@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
 
 from calibration_workflow import load_calibration_surface  # noqa: E402
 from path_simulation import (  # noqa: E402
+    forward_rates_from_zero_curve,
     simulate_bates_paths,
     simulate_full_hawkes_paths,
     simulate_gbm_paths,
@@ -67,6 +68,31 @@ def save_fan_chart(times, simulations, output_path):
     figure.tight_layout()
     figure.savefig(output_path, dpi=220, bbox_inches="tight")
     plt.close(figure)
+
+
+def save_terminal_return_percentiles(simulations, spot, output_dir):
+    percentile_levels = np.arange(0, 101, dtype=int)
+    table = pd.DataFrame({"percentile": percentile_levels})
+    figure, axis = plt.subplots(figsize=(9.4, 5.2))
+    colors = ("#1f77b4", "#2ca02c", "#d62728", "#6f42c1")
+    for (label, paths), color in zip(simulations.items(), colors):
+        returns = (paths[:, -1] / spot - 1.0) * 100.0
+        values = np.percentile(returns, percentile_levels)
+        table[label] = values
+        axis.plot(percentile_levels, values, linewidth=1.8, label=label, color=color)
+    axis.axhline(0.0, color="black", linestyle="--", linewidth=1.0)
+    axis.set_yscale("symlog", linthresh=25.0, linscale=1.1)
+    axis.set(
+        title="Five-year simulated GLD return percentiles (0--100; symlog scale)",
+        xlabel="Percentile", ylabel="Cumulative return (%)",
+    )
+    axis.legend(loc="upper left")
+    axis.grid(True, alpha=0.22)
+    figure.tight_layout()
+    figure.savefig(output_dir / "terminal_return_percentiles.png", dpi=220, bbox_inches="tight")
+    plt.close(figure)
+    table.to_csv(output_dir / "terminal_return_percentiles_0_100.csv", index=False)
+    return table
 
 
 def save_state_figures(times, heston_var, bates_var, full_var, bates_counts,
@@ -136,8 +162,14 @@ def main():
     )["parameters"]
     dt = HORIZON / N_STEPS
     times = np.linspace(0.0, HORIZON, N_STEPS + 1)
-    rates = np.repeat(float(surface["rate"].median()), N_STEPS)
-    bs_volatility = float(surface["implied_vol"].median())
+    rate_curve = pd.read_csv(data_dir / "lse_local" / "usd_treasury_curve.csv")
+    rates = forward_rates_from_zero_curve(
+        rate_curve["maturity_years"], rate_curve["continuous_rate"],
+        HORIZON, N_STEPS,
+    )
+    bs_volatility = float(json.loads(
+        (data_dir / "black_scholes_calibrated_params.json").read_text(encoding="utf-8")
+    )["parameters"]["sigma"])
 
     gbm = simulate_gbm_paths(spot, rates, bs_volatility, dt, N_PATHS, SEED)
     heston, heston_var = simulate_heston_paths(
@@ -161,22 +193,59 @@ def main():
     save_five_paths(times, bates, "Bates", "Heston variance and Poisson jumps", data_dir / "paths_bates_5.png")
     save_five_paths(times, full, "Full Bates--Hawkes", "Heston variance and self-exciting jumps", data_dir / "paths_bates_hawkes_5.png")
     save_fan_chart(times, simulations, data_dir / "gold_path_stats_by_model.png")
+    save_terminal_return_percentiles(simulations, spot, data_dir)
     save_state_figures(
         times, heston_var, bates_var, full_var, bates_counts,
         full_counts, full_intensity, full_params, bates_params, data_dir
     )
 
     rows = [
-        terminal_statistics("GBM / BS", spot, gbm),
-        terminal_statistics("Heston", spot, heston),
-        terminal_statistics("Bates", spot, bates, bates_counts),
+        terminal_statistics(
+            "Black-Scholes", spot, gbm, simulation_method=(
+                "exact GBM log step; scrambled Sobol normals; LSE forward-rate curve"
+            )
+        ),
+        terminal_statistics(
+            "Heston", spot, heston, simulation_method=(
+                "full-truncation Euler; correlated scrambled Sobol normals; LSE forward-rate curve"
+            )
+        ),
+        terminal_statistics(
+            "Bates", spot, bates, bates_counts, simulation_method=(
+                "full-truncation Euler; inverse-Poisson lognormal jumps; scrambled Sobol draws"
+            )
+        ),
         terminal_statistics(
             "Full Bates-Hawkes", spot, full, full_counts,
-            "Feller-constrained affine calibration"
+            "Feller-constrained affine calibration",
+            "full-truncation Euler; event-driven exponential Hawkes jumps; Sobol diffusion",
         ),
     ]
     result = pd.DataFrame(rows)
     result.to_csv(data_dir / "path_simulation_summary.csv", index=False)
+
+    baseline_metrics = pd.read_csv(data_dir / "baseline_calibration_metrics.csv")
+    full_metrics = pd.read_csv(data_dir / "bates_hawkes_calibration_metrics.csv")
+    full_metrics = full_metrics.loc[full_metrics["model"] == "Full Bates-Hawkes"]
+    calibration_metrics = pd.concat([baseline_metrics, full_metrics], ignore_index=True)
+    residual_normality = pd.read_csv(data_dir / "calibration_residual_normality.csv")
+    appendix = calibration_metrics.merge(residual_normality, on="model", how="left")
+    appendix = appendix.merge(result, on="model", how="left")
+    appendix.to_csv(data_dir / "model_appendix_summary.csv", index=False)
+
+    parameter_payloads = {
+        "Black-Scholes": json.loads((data_dir / "black_scholes_calibrated_params.json").read_text(encoding="utf-8"))["parameters"],
+        "Heston": heston_payload,
+        "Bates": bates_payload,
+        "Full Bates-Hawkes": full_params,
+    }
+    parameter_rows = [
+        {"model": model, "parameter": name, "value": float(value)}
+        for model, parameters in parameter_payloads.items()
+        for name, value in parameters.items()
+        if isinstance(value, (int, float))
+    ]
+    pd.DataFrame(parameter_rows).to_csv(data_dir / "model_parameters_long.csv", index=False)
     print(result.to_string(index=False))
 
 

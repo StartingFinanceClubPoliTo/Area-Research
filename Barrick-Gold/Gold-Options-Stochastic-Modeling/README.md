@@ -34,8 +34,9 @@ Neither benchmark replaces the full stochastic-volatility calibration used by th
 | `workflow.md` | Hawkes event-data, calibration, model-selection, and diagnostics workflow. |
 | `BatesHawkes.py` | Stationary-intensity proxy benchmark. |
 | `BatesHawkesExact.py` | Full affine Heston-Hawkes characteristic function and COS/Fourier pricing engine. |
-| `Data/` | GLD option inputs, calibrated parameters, metrics, and generated figures. |
-| `lse_dataset.py` | Local-only reconstruction of a comparable GLD dataset from the LSE API. |
+| `Data/` | Publication-safe aggregate parameters, metrics, manifests, and generated figures. |
+| `Data/lse_local/` | Git-ignored current LSE chain and sampled calibration rows. |
+| `lse_dataset.py` | Sole data-ingestion path: current GLD options from the LSE API. |
 | `benchmarks/` | Deterministic scalar-versus-batch pricing benchmark. |
 | `tools/` | Notebook and publication-output rebuild entry points. |
 | `tests/test_hawkes_calibration.py` | Exponential and rough likelihood, fit, residual, and compatibility tests. |
@@ -73,22 +74,28 @@ python -m pytest tests -q
 python benchmarks/benchmark_pricing.py
 ```
 
-## Optional LSE data build
+## LSE data build
 
-The committed historical dataset remains the calibration baseline. To build a
-new comparable snapshot, configure `LSE_API_KEY` and run:
+LSE is the sole calibration-data source. Configure `LSE_API_KEY` and run:
 
 ```bash
 python lse_dataset.py --max-dte 1000 --annual-rate 0.037
 ```
 
-Outputs are written to the Git-ignored `Data/lse_local/` directory. See
-`LSE-DATASET.md` for the schema mapping, rate assumption, historical-snapshot
-limitation, and redistribution constraint.
+The API's reported last trade may be older than its current underlying snapshot.
+The workflow therefore calibrates to LSE implied volatility: it applies a
+seven-day freshness filter, then reconstructs coherent call prices and vegas
+with the protected Black--Scholes functions, the snapshot spot, `q=0`, and the
+explicit 3.7% flat-rate assumption. Raw and row-level LSE outputs stay under
+the Git-ignored `Data/lse_local/`; only aggregate research outputs are committed.
+See `LSE-DATASET.md` for the exact contract and licence boundary.
 
 ## Interpretation
 
-The calibration code enforces positivity, the Heston Feller condition, correlation bounds, and Hawkes stationarity. The GLD call surface used here remains close to the Bates boundary when self-excitation is left unconstrained, so the Hawkes layer should be read as a coherent clustered-jump scenario extension rather than automatic evidence of a better cross-sectional fit.
+The calibration code enforces positivity, the Heston Feller condition,
+correlation bounds, and Hawkes stationarity. Cross-sectional improvements are
+reported as in-sample evidence only, not as proof of time-series clustering or
+out-of-sample dominance.
 
 The generated five-year Bates-Hawkes paths use the calibrated Heston variance state and event-driven Hawkes jump arrivals. Separate figures show stochastic volatility, Hawkes jump intensity/counts, and Bates Poisson intensity/counts on readable scales.
 

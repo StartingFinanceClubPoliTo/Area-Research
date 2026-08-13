@@ -29,10 +29,6 @@ SEED = 20260811
 N_PATHS = 4096
 N_STEPS = 260
 HORIZON = 5.0
-Heston_KAPPA, HESTON_THETA = 4.7261, 0.0847
-HESTON_XI = float(np.sqrt(2.0 * Heston_KAPPA * HESTON_THETA - 1.48e-4))
-HESTON_PARAMS = (0.1293, Heston_KAPPA, HESTON_THETA, HESTON_XI, -0.1872)
-BATES_PARAMS = (0.0791, 1.7164, 0.0428, 0.3833, 0.2206, 0.8963, -0.1901, 0.1006)
 
 
 def quantile_indices(paths):
@@ -74,7 +70,8 @@ def save_fan_chart(times, simulations, output_path):
 
 
 def save_state_figures(times, heston_var, bates_var, full_var, bates_counts,
-                       full_counts, full_intensity, full_params, output_dir):
+                       full_counts, full_intensity, full_params, bates_params,
+                       output_dir):
     selected = range(4)
     figure, axes = plt.subplots(1, 3, figsize=(13.2, 3.8), sharey=True)
     for index in selected:
@@ -106,7 +103,7 @@ def save_state_figures(times, heston_var, bates_var, full_var, bates_counts,
     plt.close(figure)
 
     figure, (intensity_axis, count_axis) = plt.subplots(2, 1, figsize=(9.4, 6.5), sharex=True)
-    intensity_axis.plot(times, np.repeat(BATES_PARAMS[5], len(times)), linewidth=2.0)
+    intensity_axis.plot(times, np.repeat(bates_params[5], len(times)), linewidth=2.0)
     for index in selected:
         count_axis.step(times, bates_counts[index], where="post", alpha=0.72)
     intensity_axis.set(ylabel="Jump intensity", title="Bates Poisson jump states")
@@ -120,7 +117,20 @@ def save_state_figures(times, heston_var, bates_var, full_var, bates_counts,
 
 def main():
     data_dir = ROOT / "Data"
-    surface, spot = load_calibration_surface(data_dir)
+    surface, spot = load_calibration_surface(data_dir / "lse_local")
+    heston_payload = json.loads(
+        (data_dir / "heston_calibrated_params.json").read_text(encoding="utf-8")
+    )["parameters"]
+    heston_params = tuple(
+        float(heston_payload[name]) for name in ("v0", "kappa", "theta", "xi", "rho")
+    )
+    bates_payload = json.loads(
+        (data_dir / "bates_calibrated_params.json").read_text(encoding="utf-8")
+    )["parameters"]
+    bates_params = tuple(
+        float(bates_payload[name])
+        for name in ("v0", "kappa", "theta", "sigma", "rho", "lambd", "mu_J", "sigma_J")
+    )
     full_params = json.loads(
         (data_dir / "bates_hawkes_calibrated_params.json").read_text(encoding="utf-8")
     )["parameters"]
@@ -131,10 +141,10 @@ def main():
 
     gbm = simulate_gbm_paths(spot, rates, bs_volatility, dt, N_PATHS, SEED)
     heston, heston_var = simulate_heston_paths(
-        spot, rates, HESTON_PARAMS, dt, N_PATHS, SEED + 10
+        spot, rates, heston_params, dt, N_PATHS, SEED + 10
     )
     bates, bates_var, bates_counts = simulate_bates_paths(
-        spot, rates, BATES_PARAMS, dt, N_PATHS, SEED + 20
+        spot, rates, bates_params, dt, N_PATHS, SEED + 20
     )
     full, full_var, full_counts, full_intensity = simulate_full_hawkes_paths(
         spot, rates, full_params, dt, N_PATHS, SEED + 30
@@ -153,7 +163,7 @@ def main():
     save_fan_chart(times, simulations, data_dir / "gold_path_stats_by_model.png")
     save_state_figures(
         times, heston_var, bates_var, full_var, bates_counts,
-        full_counts, full_intensity, full_params, data_dir
+        full_counts, full_intensity, full_params, bates_params, data_dir
     )
 
     rows = [

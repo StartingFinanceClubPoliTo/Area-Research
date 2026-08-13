@@ -2,7 +2,8 @@
 
 import pandas as pd
 
-from lse_dataset import CALIBRATION_COLUMNS, WIDE_COLUMNS, build_calibration_sample, normalise_lse_chain
+from BnS import BnS
+from lse_dataset import CHAIN_COLUMNS, CALIBRATION_COLUMNS, build_calibration_sample, normalise_lse_chain
 
 
 def sample_rows():
@@ -31,22 +32,29 @@ def sample_rows():
     return rows
 
 
-def test_lse_mapping_matches_historical_wide_schema():
-    wide = normalise_lse_chain(sample_rows())
-    assert tuple(wide.columns) == WIDE_COLUMNS
-    assert set(wide["right"]) == {"C"}
-    assert set(wide["price_source"]) == {"lse_last_price"}
-    assert wide.attrs["as_of_utc"].startswith("2026-08-11")
-    assert wide["T"].min() > 0.0
+def test_lse_mapping_uses_source_native_schema():
+    chain = normalise_lse_chain(sample_rows())
+    assert tuple(chain.columns) == CHAIN_COLUMNS
+    assert set(chain["option_type"]) == {"C"}
+    assert chain.attrs["as_of_utc"].startswith("2026-08-11")
+    assert chain["T"].min() > 0.0
 
 
 def test_lse_chebyshev_sample_matches_calibration_contract():
-    wide = normalise_lse_chain(sample_rows())
+    chain = normalise_lse_chain(sample_rows())
     full, sampled, spot = build_calibration_sample(
-        wide, n_maturities=2, n_strikes=4
+        chain, n_maturities=2, n_strikes=4
     )
     assert tuple(full.columns) == CALIBRATION_COLUMNS
     assert tuple(sampled.columns) == CALIBRATION_COLUMNS
     assert len(sampled) == 8
     assert spot == 100.0
     assert isinstance(sampled, pd.DataFrame)
+    assert set(sampled["price_method"]) == {"LSE_IV_to_BS_price"}
+    recovered = [
+        BnS.implied_vol_call(row.price, spot, row.K, row.T, row.rate)
+        for row in sampled.itertuples(index=False)
+    ]
+    assert max(abs(a - b) for a, b in zip(recovered, sampled["implied_vol"])) < 1e-6
+    lower = spot - sampled["K"] * (-sampled["rate"] * sampled["T"]).map(__import__("math").exp)
+    assert (sampled["price"] >= lower.clip(lower=0.0) - 1e-10).all()

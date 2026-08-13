@@ -7,5 +7,6 @@ Revisione/
 __pycache__/
 *.pyc
 Data/lse_local/
+Data/*option_diagnostics.csv
 .env
 .env.*

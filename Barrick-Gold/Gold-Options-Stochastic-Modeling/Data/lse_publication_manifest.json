@@ -1,0 +1,16 @@
+{
+  "source": "London Strategic Edge /options/chain",
+  "as_of_utc": "2026-08-11T16:01:35.055833+00:00",
+  "spot": 401.91,
+  "risk_free_rate_assumption": 0.037,
+  "dividend_yield_assumption": 0.0,
+  "calibration_price_method": "Black-Scholes price implied by LSE IV",
+  "maximum_source_age_days": 7,
+  "chain_rows": 2475,
+  "eligible_rows": 456,
+  "sample_rows": 64,
+  "maturities": 8,
+  "sample_sha256": "892b1c9e3be19279514ee252c5f6d81f3b8d03101100f1eae482aee4a4cd5d4a",
+  "raw_data_committed": false,
+  "black_scholes_constant_volatility": 0.24409846156596116
+}

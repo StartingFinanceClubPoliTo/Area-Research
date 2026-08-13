@@ -1,15 +1,17 @@
 {
   "model": "Exact constant-volatility Bates-Hawkes",
   "parameters": {
-    "sigma": 0.23412526609639006,
-    "lambda_bar": 3.5270372801288383,
-    "lambda0": 3.5270372801288383,
-    "alpha": 0.0738826320701238,
-    "beta": 7.586004013003409,
-    "branching_ratio": 0.009739334693664708,
-    "mu_J": -0.08107049615871656,
-    "sigma_J": 0.06485261248851408
+    "sigma": 0.2112904006152161,
+    "lambda_bar": 0.512073647308098,
+    "lambda0": 0.512073647308098,
+    "alpha": 0.04803327159780135,
+    "beta": 4.637698740908387,
+    "branching_ratio": 0.010357134924290719,
+    "mu_J": 0.06526094778726288,
+    "sigma_J": 0.16075435784147762
   },
-  "final_objective": 0.00019471368878978742,
-  "note": "Exact event-dependent Hawkes calibration (COS pricing). lambda0 tied to lambda_bar; branching ratio alpha/beta < 1 enforced."
+  "final_objective": 8.351589058691234e-05,
+  "optimizer_success": true,
+  "source": "current LSE GLD option chain",
+  "note": "Exact COS benchmark; lambda0 is tied to lambda_bar and alpha/beta < 1."
 }

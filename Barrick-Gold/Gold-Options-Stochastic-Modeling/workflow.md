@@ -12,6 +12,12 @@ The reusable numerical path is now split by responsibility:
 4. `calibration_workflow.py` builds diagnostics for the notebooks.
 5. The notebooks select data, call one calibration API, and render outputs.
 
+The sole market-data path is `lse_dataset.py -> Data/lse_local`. LSE IV is the
+observed surface; coherent prices and vegas are reconstructed with `BnS.py`
+after the freshness filter. Raw chain and option-level diagnostics are local
+only. `tools/rebuild_lse_benchmarks.py`, `rebuild_exact_hawkes_outputs.py`, and
+`rebuild_path_outputs.py` publish aggregates and figures in that order.
+
 The scalar Carr--Madan price is the frozen numerical reference. Bates and its
 stationary Hawkes proxy use vectorised COS batches inside calibration. Every
 optimizer accepts an optional seed; parameter admissibility includes positivity,

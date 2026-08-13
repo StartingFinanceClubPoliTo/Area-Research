@@ -10,18 +10,18 @@ import pandas as pd
 from BnS import BnS
 
 
-def load_calibration_surface(data_dir="Data", dividend_yield=0.0):
-    """Load the immutable baseline sample and add Black--Scholes vega."""
+def load_calibration_surface(data_dir="Data/lse_local", dividend_yield=0.0):
+    """Load the local-only LSE sample and add protected Black--Scholes vega."""
     data_dir = Path(data_dir)
     metadata = json.loads(
-        (data_dir / "gld_chain_wide_meta.json").read_text(encoding="utf-8")
+        (data_dir / "gld_lse_meta.json").read_text(encoding="utf-8")
     )
     spot = next(
         float(metadata[name])
         for name in ("S0", "spot", "spot_price", "underlying_price", "underlying_last")
         if name in metadata
     )
-    surface = pd.read_csv(data_dir / "gld_iv_dataset_chebyshev.csv")
+    surface = pd.read_csv(data_dir / "gld_lse_calibration_chebyshev.csv")
     surface["vega"] = [
         BnS.calculate_bs_vega(
             spot,

@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from Bates import Bates  # noqa: E402
+from BatesHawkes import BatesHawkes  # noqa: E402
 from BatesHawkesExact import BatesHawkesExact  # noqa: E402
 from Hawkes import ExactHawkesCalibration  # noqa: E402
 from calibration_workflow import (  # noqa: E402
@@ -28,7 +29,6 @@ from calibration_workflow import (  # noqa: E402
 
 
 SEED = 20260811
-BATES_SEED = (0.0791, 1.7164, 0.0428, 0.3833, 0.2206, 0.8963, -0.1901, 0.1006)
 
 
 def error_metrics(diagnostics):
@@ -103,13 +103,93 @@ def comparison_figure(full_diagnostics, bates_diagnostics, output_path):
     plt.close(figure)
 
 
+def rebuild_constant_volatility_benchmark(surface, spot, data_dir):
+    """Recalibrate the exact constant-volatility Hawkes method check on LSE."""
+    result = ExactHawkesCalibration.calibrate_constvol(
+        surface, spot, maxiter=25, popsize=6, seed=SEED
+    )
+    sigma, lambda_bar, alpha, beta, mu_j, sigma_j = map(float, result.x)
+    branching = alpha / beta
+    parameters = {
+        "sigma": sigma,
+        "lambda_bar": lambda_bar,
+        "lambda0": lambda_bar,
+        "alpha": alpha,
+        "beta": beta,
+        "branching_ratio": branching,
+        "mu_J": mu_j,
+        "sigma_J": sigma_j,
+    }
+    payload = {
+        "model": "Exact constant-volatility Bates-Hawkes",
+        "parameters": parameters,
+        "final_objective": float(result.fun),
+        "optimizer_success": bool(result.success),
+        "source": "current LSE GLD option chain",
+        "note": "Exact COS benchmark; lambda0 is tied to lambda_bar and alpha/beta < 1.",
+    }
+    (data_dir / "hawkes_exact_constvol_params.json").write_text(
+        json.dumps(payload, indent=2), encoding="utf-8"
+    )
+
+    exact = option_diagnostics(
+        surface,
+        spot,
+        price_surface(
+            surface,
+            lambda strikes, maturity, rate: BatesHawkesExact.hawkes_price_constvol_cos(
+                spot, strikes, maturity, sigma, lambda_bar, lambda_bar,
+                alpha, beta, mu_j, sigma_j, rate, N=256
+            ),
+        ),
+    )
+    proxy = option_diagnostics(
+        surface,
+        spot,
+        price_surface(
+            surface,
+            lambda strikes, maturity, rate: BatesHawkes.prices_proxy_cos(
+                spot, strikes, maturity, sigma**2, 5.0, sigma**2, 0.01, 0.0,
+                lambda_bar, alpha, beta, mu_j, sigma_j, rate, N=256
+            ),
+        ),
+    )
+    figure, axes = plt.subplots(1, 2, figsize=(12, 4.8))
+    axes[0].scatter(exact["price"], exact["model_price"], s=28, label="Exact Hawkes")
+    axes[0].scatter(proxy["price"], proxy["model_price"], s=22, label="Stationary proxy")
+    limit = float(exact["price"].max())
+    axes[0].plot([0.0, limit], [0.0, limit], "k--", linewidth=1.0)
+    axes[0].set(xlabel="LSE-IV normalized call price", ylabel="Model price")
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.25)
+    axes[1].scatter(exact["T"], exact["iv_residual_pct"], s=28, label="Exact Hawkes")
+    axes[1].scatter(proxy["T"], proxy["iv_residual_pct"], s=22, label="Stationary proxy")
+    axes[1].axhline(0.0, color="black", linestyle="--", linewidth=1.0)
+    axes[1].set(xlabel="Maturity", ylabel="Market - model IV (pp)")
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.25)
+    figure.tight_layout()
+    figure.savefig(data_dir / "hawkes_exact_vs_proxy.png", dpi=220, bbox_inches="tight")
+    plt.close(figure)
+    return payload
+
+
 def main():
     data_dir = ROOT / "Data"
-    surface, spot = load_calibration_surface(data_dir)
+    surface, spot = load_calibration_surface(data_dir / "lse_local")
+    bates_payload = json.loads(
+        (data_dir / "bates_calibrated_params.json").read_text(encoding="utf-8")
+    )
+    bates_parameters = bates_payload["parameters"]
+    bates_seed = tuple(
+        float(bates_parameters[name])
+        for name in ("v0", "kappa", "theta", "sigma", "rho", "lambd", "mu_J", "sigma_J")
+    )
+    rebuild_constant_volatility_benchmark(surface, spot, data_dir)
     result = ExactHawkesCalibration.calibrate_heston(
         surface,
         spot,
-        bates_seed=BATES_SEED,
+        bates_seed=bates_seed,
         maxiter=25,
         popsize=6,
         seed=SEED,
@@ -132,23 +212,19 @@ def main():
     bates_prices = price_surface(
         surface,
         lambda strikes, maturity, rate: Bates.bates_prices_cos(
-            spot, strikes, maturity, *BATES_SEED, rate, N=256
+            spot, strikes, maturity, *bates_seed, rate, N=256
         ),
     )
     bates_diagnostics = option_diagnostics(surface, spot, bates_prices)
-    full_diagnostics.to_csv(
-        data_dir / "bates_hawkes_option_diagnostics.csv", index=False
-    )
-
     metrics = {
         "full_bates_hawkes": error_metrics(full_diagnostics),
         "bates": error_metrics(bates_diagnostics),
         "calibration_objective": float(result.fun),
-        "bates_objective": float(Bates.bates_objective(BATES_SEED, surface, spot)),
+        "bates_objective": float(Bates.bates_objective(bates_seed, surface, spot)),
         "branching_ratio": parameters["branching_ratio"],
         "minimum_branching_ratio": 0.02,
         "observations": int(len(surface)),
-        "status": "feller_constrained_restructured_workflow",
+        "status": "lse_feller_constrained_restructured_workflow",
     }
     (data_dir / "bates_hawkes_calibration_metrics.json").write_text(
         json.dumps(metrics, indent=2), encoding="utf-8"
@@ -187,7 +263,7 @@ def main():
             "iterations": int(getattr(result, "nit", 0)),
             "evaluations": int(getattr(result, "nfev", 0)),
         },
-        "status": "feller_constrained_restructured_workflow",
+        "status": "lse_feller_constrained_restructured_workflow",
     }
     (data_dir / "bates_hawkes_calibrated_params.json").write_text(
         json.dumps(payload, indent=2), encoding="utf-8"

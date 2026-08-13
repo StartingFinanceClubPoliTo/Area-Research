@@ -1,14 +1,15 @@
 # Data and Diagnostics
 
-This folder contains the GLD option inputs and publication-facing outputs.
+This folder contains publication-safe aggregate outputs. Raw LSE chain rows and
+the 64-row calibration sample stay in the Git-ignored `lse_local/` directory.
 
 | File | Description |
 | --- | --- |
-| `gld_chain_wide_chain.csv` | Wide option-chain input. |
-| `gld_chain_wide_meta.json` | Spot and dataset metadata. |
-| `gld_iv_dataset_chebyshev.csv` | 64-option structured calibration sample. |
+| `lse_publication_manifest.json` | Snapshot time, assumptions, counts, and hash of the local sample; no raw rows. |
+| `baseline_calibration_metrics.csv` | Aggregate Black--Scholes, Heston, and Bates errors. |
+| `heston_calibrated_params.json` | Deterministic Heston parameters from the current LSE surface. |
+| `bates_calibrated_params.json` | Deterministic Bates parameters from the current LSE surface. |
 | `bates_hawkes_calibrated_params.json` | Deterministic full affine Heston-Hawkes parameters from the explicit Feller-constrained workflow. |
-| `bates_hawkes_option_diagnostics.csv` | Option-level prices, implied volatilities, and residuals for full Bates-Hawkes and Bates. |
 | `bates_hawkes_calibration_metrics.csv` | Refreshed dataset-level price and implied-volatility error statistics. |
 | `bates_hawkes_calibration_metrics.json` | Refreshed metrics, objectives, branching ratio, and reproducibility status. |
 | `bates_hawkes_residual_heatmap.png` | Full-model implied-volatility residuals across maturity and moneyness. |
@@ -29,6 +30,6 @@ This folder contains the GLD option inputs and publication-facing outputs.
 
 Regenerated figures can change with data, filters, calibration bounds, numerical settings, or random seeds.
 
-The historical CSV files above are immutable baselines. `lse_dataset.py`
-creates a separate, comparable current snapshot under `Data/lse_local/`; that
-directory is excluded from version control and must not be redistributed.
+`lse_dataset.py` creates the sole calibration input under `Data/lse_local/`.
+That directory is excluded from version control and must not be redistributed.
+The repository intentionally contains no Interactive Brokers dataset.

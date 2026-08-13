@@ -50,8 +50,8 @@ BATES = notebook(
         markdown("""
 # Bates calibration
 
-Reproducible calibration of the eight-parameter Bates model on the immutable
-GLD Chebyshev sample. Pricing is maturity-batched with COS; scalar Fourier
+Reproducible calibration of the eight-parameter Bates model on the local-only
+current LSE GLD Chebyshev sample. Pricing is maturity-batched with COS; scalar Fourier
 inversion remains the regression reference.
 """),
         code("""
@@ -64,7 +64,7 @@ from calibration_workflow import (
     plot_smiles, price_surface,
 )
 
-DATA = Path("Data")
+DATA = Path("Data/lse_local")
 SEED = 20260811
 DIVIDEND_YIELD = 0.0
 surface, spot = load_calibration_surface(DATA, DIVIDEND_YIELD)
@@ -111,7 +111,8 @@ PROXY = notebook(
         markdown("""
 # Bates--Hawkes stationary proxy calibration
 
-This notebook calibrates the documented stationary-intensity proxy. It is a
+This notebook calibrates the documented stationary-intensity proxy on the
+current local-only LSE sample. It is a
 benchmark distinct from the exact event-dependent affine model.
 """),
         code("""
@@ -124,7 +125,7 @@ from calibration_workflow import (
     plot_smiles, price_surface,
 )
 
-DATA = Path("Data")
+DATA = Path("Data/lse_local")
 SEED = 20260811
 DIVIDEND_YIELD = 0.0
 surface, spot = load_calibration_surface(DATA, DIVIDEND_YIELD)
@@ -222,7 +223,7 @@ pd.DataFrame([
 RUN_EXACT_OPTION_CALIBRATION = False
 
 if RUN_EXACT_OPTION_CALIBRATION:
-    surface, spot = load_calibration_surface("Data")
+    surface, spot = load_calibration_surface("Data/lse_local")
     exact_result = ExactHawkesCalibration.calibrate_heston(
         surface,
         spot,

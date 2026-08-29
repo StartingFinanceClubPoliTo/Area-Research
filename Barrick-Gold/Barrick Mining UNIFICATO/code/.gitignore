@@ -1,0 +1,19 @@
+# Local data and environments
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Raw/licensed inputs remain local
+data/raw/*
+!data/raw/README.md
+
+# Public source PDFs are reacquired and hash-checked on demand
+data/raw/barrick_public/
+
+# Generated scratch artifacts
+outputs/tmp/
+*.log
+test-temp-parent/
+.pytest_cache/

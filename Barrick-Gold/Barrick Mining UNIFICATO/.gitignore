@@ -1,0 +1,22 @@
+# Python and local environments
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.venv/
+**/venv/
+**/.env
+
+# Licensed/local data
+code/data/raw/lse_local/
+
+# Scratch and build products
+**/.ipynb_checkpoints/
+**/.jupyter/
+**/.jupyter_runtime/
+**/test-temp-parent/
+code/outputs/tmp/
+**/*.aux
+**/*.log
+**/*.out
+**/*.toc
+**/*.synctex.gz

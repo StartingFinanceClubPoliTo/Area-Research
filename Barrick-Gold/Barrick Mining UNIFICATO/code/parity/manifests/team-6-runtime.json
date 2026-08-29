@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "team": 6,
+  "run_id": "20260814T193022Z-py3125",
+  "runtime_status": "candidate_runtime_lock_persisted_original_runtime_unknown",
+  "execution_isolation": "dedicated working directory and Matplotlib cache; existing shared interpreter; no dedicated virtual environment",
+  "interpreter": {
+    "executable": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe",
+    "implementation": "CPython",
+    "version": "3.12.5",
+    "architecture": "64bit",
+    "machine": "AMD64"
+  },
+  "operating_system": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "timezone_for_project_logs": "Europe/Rome"
+  },
+  "declared_requirements": [
+    "matplotlib>=3.9",
+    "numpy>=2.0"
+  ],
+  "installed_direct_dependencies": {
+    "matplotlib": "3.9.2",
+    "numpy": "2.1.0"
+  },
+  "runtime_lock": {
+    "path": "UNIFICATO/Github-Branch/parity/runs/team-6/20260814T193022Z-py3125/runtime-lock.txt",
+    "command": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe -m pip --disable-pip-version-check freeze --all",
+    "format": "pip_freeze_all_utf8_no_bom",
+    "captured_started_utc": "2026-08-14T19:31:03.6023506Z",
+    "captured_completed_utc": "2026-08-14T19:31:04.0616758Z",
+    "bytes": 12930,
+    "sha256": "4AB8AC8744334D48FB1B3CFD5C57653F55EADD8470F9EEC8F999C2E501C4BA7A",
+    "package_count": 185,
+    "exit_code": 0,
+    "stderr_path": "UNIFICATO/Github-Branch/parity/runs/team-6/20260814T193022Z-py3125/runtime-lock.stderr.txt",
+    "stderr_bytes": 0,
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  "declared_minima_satisfied": true,
+  "packages_installed_during_run": [],
+  "network_used": false,
+  "environment": {
+    "PYTHONHASHSEED": null,
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "UNIFICATO/Github-Branch/parity/runs/team-6/20260814T193022Z-py3125/mplconfig",
+    "MPLBACKEND": "Agg",
+    "matplotlib_cache_file": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-6/20260814T193022Z-py3125/mplconfig/fontlist-v390.json",
+      "bytes": 117794,
+      "sha256": "94E2962D3CA6626F3B1802FAA1F84BF0C896484B816E2717A8892DA96EA709A6"
+    }
+  },
+  "known_runtime_gaps": [
+    "The source does not declare a Python version.",
+    "The source requirements have no upper bounds.",
+    "The interpreter and dependency versions used to generate the original benchmark are unknown.",
+    "The candidate interpreter is shared; isolation covers the run working directory and Matplotlib cache, not an independent virtual environment."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "figure_spec": {
+    "figure_id": "fig_dcf_drivers",
+    "score": 10,
+    "chapter": "Chapter 11",
+    "title": "Growth, ROIC and reinvestment assumptions"
+  },
+  "config_fields": {
+    "model.high_growth": 0.085,
+    "model.stable_growth": 0.025,
+    "model.roic_high": 0.145,
+    "model.roic_stable": 0.105,
+    "model.tax_rate": 0.25
+  },
+  "formula": "reinvestment_rate_t = growth_t / ROIC_t; FCFF_t = after_tax_margin_t - max(after_tax_margin_t, 0) * reinvestment_rate_t",
+  "scope": "common DCF layer, identical across gold-price models"
+}

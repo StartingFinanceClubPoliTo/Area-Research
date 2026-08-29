@@ -1,0 +1,49 @@
+{
+  "method": "Nelson-Siegel-Svensson nonlinear least squares",
+  "source": "London Strategic Edge /ref/bond_yields",
+  "curve_date": "2026-07-24",
+  "available_symbols": [
+    "US1M",
+    "US2M",
+    "US3M",
+    "US6M",
+    "US1Y",
+    "US2Y",
+    "US3Y",
+    "US5Y",
+    "US7Y",
+    "US20Y",
+    "US30Y"
+  ],
+  "requested_symbols": [
+    "US1M",
+    "US2M",
+    "US3M",
+    "US6M",
+    "US1Y",
+    "US2Y",
+    "US3Y",
+    "US5Y",
+    "US7Y",
+    "US10Y",
+    "US20Y",
+    "US30Y"
+  ],
+  "missing_symbols_on_curve_date": [
+    "US10Y"
+  ],
+  "parameters": {
+    "beta0": 0.017385564545365727,
+    "beta1": 0.0193249198690013,
+    "beta2": 0.02852251877184989,
+    "beta3": 0.1032832428424333,
+    "tau1": 1.41891774985645,
+    "tau2": 15.07963754251128
+  },
+  "observations": 11,
+  "rmse_bp": 2.372586683839021,
+  "max_abs_error_bp": 5.281655337103855,
+  "rate_definition": "continuous proxy log(1 + Treasury par yield)",
+  "use": "common risk-free zero curve for Team 8 calibration and unified simulations",
+  "legacy_team4_nss_used": false
+}

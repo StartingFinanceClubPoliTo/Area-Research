@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "team": 3,
+  "run_id": "20260814T191734Z-py3125",
+  "input_class": "synthetic_constants_embedded_in_runner",
+  "external_input_files": [],
+  "network_inputs": [],
+  "input_hashes": {
+    "embedded_configuration_source": {
+      "path": "examples/run_reproducibility.py",
+      "sha256": "4510088AC3DBE2397625A8F0B8EABCB70F065AEB8B0497E62ECA9C3D05092B9F"
+    }
+  },
+  "configuration_and_seeds": {
+    "lcg": {
+      "sample_size": 10000,
+      "seed": 42,
+      "chi_square_bins": 30
+    },
+    "european_call": {
+      "S0": 100.0,
+      "K": 100.0,
+      "rate": 0.05,
+      "volatility": 0.20,
+      "maturity_years": 1.0,
+      "path_grid": "unique(round(logspace(2,5,16)))",
+      "seed_rule": "100 + n_paths"
+    },
+    "asian_call": {
+      "S0": 100.0,
+      "K": 100.0,
+      "rate": 0.04,
+      "volatility": 0.22,
+      "maturity_years": 1.0,
+      "steps": 32,
+      "mc_paths": 4096,
+      "qmc_power": 12,
+      "seed": 7
+    },
+    "antithetic_variates": {
+      "paths": 20000,
+      "seed": 11
+    },
+    "importance_sampling": {
+      "paths": 30000,
+      "normal_shift": 1.0,
+      "seed": 12
+    },
+    "return_and_wealth_examples": {
+      "mixture_return_count": 20000,
+      "mixture_seed": 21,
+      "shifted_return_seed": 22,
+      "wealth_paths": 2000,
+      "wealth_days": 252,
+      "wealth_seed": 23,
+      "initial_value": 100.0,
+      "weights": [0.55, 0.45],
+      "dependence": 0.45
+    }
+  },
+  "benchmark_reference_not_consumed_by_runner": {
+    "path": "Team 3 - Monte Carlo Risk/Github-Branch/outputs/monte_carlo_summary.csv",
+    "bytes": 858,
+    "sha256": "BC2870681ED15651D5AA1DA9A8DCCC867BC687A338BD2BF0211212D905B7C2B4"
+  },
+  "licensing_and_redistribution": {
+    "external_data": "not_applicable",
+    "source_code_license": "GAP"
+  }
+}

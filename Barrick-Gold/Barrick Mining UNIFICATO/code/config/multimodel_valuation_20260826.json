@@ -1,0 +1,81 @@
+{
+  "schema_version": "2.0",
+  "experiment": "CONDITIONAL_GOLD_PRICE_LAYER_COMPARISON",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "base_valuation_config": "config/provisional_valuation_20260825.json",
+  "simulation": {
+    "n_simulations": 8192,
+    "wacc_seed": 20260826,
+    "engine_seeds": {
+      "black_scholes": 20260811,
+      "heston": 20260811,
+      "bates_poisson": 20260811,
+      "full_bates_hawkes": 20260811
+    },
+    "common_random_numbers_note": "All engines use the same base seed. Heston, Bates-Poisson and Full Bates-Hawkes share the frozen two-factor Sobol diffusion construction; BS uses the frozen one-factor Sobol construction, so it is seed-aligned but not column-identical. Jump streams use the frozen internal offsets. WACC shocks are generated independently once and reused exactly."
+  },
+  "gold_price_layer": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "team8_source_dir": "parity/sources/team-8",
+    "parameter_files": {
+      "black_scholes": "parity/sources/team-8/Data/black_scholes_calibrated_params.json",
+      "heston": "parity/sources/team-8/Data/heston_calibrated_params.json",
+      "bates_poisson": "parity/sources/team-8/Data/bates_calibrated_params.json",
+      "full_bates_hawkes": "parity/sources/team-8/Data/bates_hawkes_calibrated_params.json"
+    },
+    "path_grid": {
+      "horizon_years": 5.0,
+      "fine_steps": 260,
+      "resampling": "every 13th fine step to 20 Team 4 quarters"
+    },
+    "common_scenario_start": {
+      "price": 4677.0,
+      "unit": "USD/troy oz",
+      "source_team": "Team 4",
+      "source_date": "2026-04-02"
+    },
+    "common_scenario_drift": {
+      "method": "Team 4 NSS curve repeated over the 13 fine steps inside each quarter",
+      "measure": "common conditional scenario drift; not estimated physical expected return"
+    },
+    "conditional_bridge": {
+      "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+      "source_instrument": "GLD call options",
+      "destination_variable": "gold USD/troy oz scenario paths",
+      "validated_physical_forecast": false,
+      "q_to_p_mapping": "NOT_VALIDATED",
+      "gld_to_gold_level_conversion": "NOT_PERFORMED; all engines restart at the common Team 4 gold USD/oz scenario value",
+      "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+    },
+    "calibration_snapshot": {
+      "surface_as_of_utc": "2026-08-12T20:15:07.826914+00:00",
+      "treasury_curve_date": "2026-07-24",
+      "instrument": "GLD calls",
+      "measure": "option-implied risk-neutral calibration"
+    }
+  },
+  "common_non_gold_layers": {
+    "production_and_cost": "IMPORTED_DETERMINISTIC_TEAM4_20_QUARTER_VECTORS",
+    "production_and_cost_note": "The new runner consumes the 20 quarterly outputs/vectors imported from Team 4 ad hoc production and cost models; it does not rerun those source models and does not treat them as new stochastic processes.",
+    "dcf_wacc_equity_bridge": "COMMON_TEAM5_ADAPTATION_IDENTICAL_ACROSS_MODELS",
+    "temporary_v3_gold_driver": "The Team 4 GBM/NSS gold block in v3 was a temporary gold-price driver only, separate from Team 4's ad hoc production and cost models."
+  },
+  "asynchronous_dates": {
+    "team4_gold_start": "2026-04-02",
+    "team8_surface": "2026-08-12T20:15:07.826914+00:00",
+    "team8_treasury_curve": "2026-07-24",
+    "b_close": "2026-08-24T00:00:00Z",
+    "valuation_as_of": "2026-08-25T00:00:00Z"
+  },
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "basis": "lowest in-sample IV RMSE on the frozen current surface and richest jump/variance structure",
+    "in_sample_iv_rmse_bp": {
+      "black_scholes": 117.9272170902997,
+      "heston": 94.43909634351468,
+      "bates_poisson": 78.12538979659097,
+      "full_bates_hawkes": 61.01730453112376
+    },
+    "oos_caveat": "Full Bates-Hawkes is not the one-step-ahead OOS winner; Black-Scholes has the slightly lower OOS RMSE in the frozen Team 8 validation."
+  }
+}

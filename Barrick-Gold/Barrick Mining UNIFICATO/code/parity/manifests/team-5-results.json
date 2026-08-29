@@ -1,0 +1,209 @@
+{
+  "schema_version": "1.0",
+  "team": 5,
+  "benchmark_class": "synthetic_valuation_methodological",
+  "run_id": "20260814T194100Z-py3125",
+  "gate": "G1.2_synthetic_valuation_baseline",
+  "gate_status": "ACCEPTED_LIMITED",
+  "accepted_at": "2026-08-15T07:02:00+02:00",
+  "acceptance_scope": "Current frozen source set, three six-decimal CSV benchmarks, deterministic shapes, finiteness, EV identity, and explicit-plus-terminal share identity only. PNG figures, historical runtime, license, probability measure, legacy appendix, DCF formula review, and any Barrick adapter remain excluded.",
+  "source_parity_passed": true,
+  "source_parity_scope": "Frozen current source set and all three primary six-decimal CSV benchmarks only; legacy appendix and PNG figures excluded.",
+  "full_historical_environment_parity_proven": false,
+  "source_manifest": {
+    "path": "UNIFICATO/Github-Branch/parity/manifests/team-5-source.json",
+    "sha256": "F90CB993628117BF2A623F7C0A773D9FF78F47CA0812A45A0CF0EBACFB2A4CD1"
+  },
+  "runtime_manifest": {
+    "path": "UNIFICATO/Github-Branch/parity/manifests/team-5-runtime.json",
+    "sha256": "43E0C1D6A9DADD48B66D0D8B86652A776B7D68C7CB6AFF95616384ABBF0053A2"
+  },
+  "inputs_manifest": {
+    "path": "UNIFICATO/Github-Branch/parity/manifests/team-5-inputs.json",
+    "sha256": "B0D6CC5D7D73A963FA78BDD7F8D06E433A2758FAA9BAEB04FD84732C2AC98329"
+  },
+  "source_hashes": {
+    "current/src/generate_three_stage_dcf.py": "DEF6AA639195B7F530AC5B969DD4F54D700FE8EB0E636248EF954E5E5054EE34",
+    "current/requirements.txt": "7CE1D52CB0E7309FA50FDF82F058DB2C2D7BC7537EFCEB8949B94762411191A4",
+    "legacy/Overleaf/contents/appendixA_code.tex": "0A03EC567ABCF8265DD7BBA64D4548744AAFE3A47DC888D502968153F409569F"
+  },
+  "runtime_hash": "43E0C1D6A9DADD48B66D0D8B86652A776B7D68C7CB6AFF95616384ABBF0053A2",
+  "runtime_lock": {
+    "path": "UNIFICATO/Github-Branch/parity/runs/team-5/20260814T194100Z-py3125/runtime-lock.txt",
+    "command": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe -m pip --disable-pip-version-check freeze --all",
+    "bytes": 12933,
+    "sha256": "E6ACD9A95FB24AEDF0882DBA29AED96B9D47022599D0161F6721BBB5038D1EE3",
+    "package_count": 185,
+    "exit_code": 0
+  },
+  "input_hashes": {
+    "inputs_manifest": "B0D6CC5D7D73A963FA78BDD7F8D06E433A2758FAA9BAEB04FD84732C2AC98329",
+    "embedded_configuration_source": "DEF6AA639195B7F530AC5B969DD4F54D700FE8EB0E636248EF954E5E5054EE34"
+  },
+  "execution": {
+    "command": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe src/generate_three_stage_dcf.py",
+    "cwd": "C:/Users/salvm/Desktop/SF/Research projects/Barrick gold/UNIFICATO/Github-Branch/parity/runs/team-5/20260814T194100Z-py3125/work",
+    "started_utc": "2026-08-14T19:41:08.2222123Z",
+    "completed_utc": "2026-08-14T19:41:13.6770282Z",
+    "exit_code": 0,
+    "network_used": false,
+    "packages_installed": [],
+    "stdout": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-5/20260814T194100Z-py3125/stdout.txt",
+      "bytes": 828,
+      "sha256": "C6D8E36D2AE9F3C8AB88E67786F321D03C815790F9DCF6CF9B65A356EE4B40A1"
+    },
+    "stderr": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-5/20260814T194100Z-py3125/stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  },
+  "seed": {
+    "source": "team-5-inputs.json#configuration_and_seeds",
+    "rng": "numpy.random.default_rng",
+    "values": {
+      "Conservative": 100,
+      "Base": 42,
+      "Expansion": 300
+    }
+  },
+  "artifact_hashes": {
+    "base_summary.csv": {
+      "bytes": 217,
+      "sha256": "13B686E1E63A2A373461281754114DD363B19AD0FB2025B4AE5FF91229CC37F0",
+      "primary": true
+    },
+    "scenario_summary.csv": {
+      "bytes": 288,
+      "sha256": "CCA73C6727CD06CD8AB4431FA3A18A4BFCE8A5E925D1B292D28CD951FB6CDDFC",
+      "primary": true
+    },
+    "sensitivity.csv": {
+      "bytes": 189,
+      "sha256": "2A077BEC4E5A4985DF420F44E89CF0E4B32E6226A6BAFAE9C82888282D599238",
+      "primary": true
+    },
+    "mc_dcf_results.png": {
+      "bytes": 244238,
+      "sha256": "B40E264D87A1ECBA7E2C16CBDEE120C1E3C2E2F5DBED754473E3690160392832",
+      "primary": false
+    },
+    "mc_scenarios.png": {
+      "bytes": 102177,
+      "sha256": "06528D54496D569F53D453EECC9D921D3502DD6A9DD74EDBA7FE6C5FBFF9C8A6",
+      "primary": false
+    }
+  },
+  "test_results": {
+    "planned_source_file_count": {
+      "status": "PASS",
+      "expected": 3,
+      "actual": 3
+    },
+    "frozen_source_sha256": {
+      "status": "PASS",
+      "matched": 3,
+      "total": 3
+    },
+    "working_current_source_sha256_after_run": {
+      "status": "PASS",
+      "matched": 2,
+      "total": 2
+    },
+    "legacy_tree_separation": {
+      "status": "PASS",
+      "legacy_executed": false,
+      "reason": "The ten-year appendix remains in a separate legacy freeze and was not copied into the run working directory."
+    },
+    "process_exit_code": {
+      "status": "PASS",
+      "expected": 0,
+      "actual": 0
+    },
+    "stderr_empty": {
+      "status": "PASS",
+      "bytes": 0
+    },
+    "primary_csv_tol_t5_csv6": {
+      "status": "PASS",
+      "tolerance_id": "TOL-T5-CSV6/TOL-BYTE-0",
+      "matched": 3,
+      "total": 3,
+      "bytes_equal": true
+    },
+    "array_shapes": {
+      "status": "PASS",
+      "n_sim": 20000,
+      "projection_years": 7,
+      "path_array_shape": [20000, 7],
+      "enterprise_value_shape": [20000]
+    },
+    "finite_values": {
+      "status": "PASS",
+      "arrays": ["revenue", "margin", "wacc", "fcff", "ev", "pv_fcff", "pv_terminal"]
+    },
+    "deterministic_fixed_seed": {
+      "status": "PASS",
+      "comparison": "array_equal for two Base runs across all result arrays"
+    },
+    "enterprise_value_identity": {
+      "status": "PASS",
+      "identity": "EV = PV(FCFF) + PV(TV)",
+      "max_absolute_error": 0.0
+    },
+    "explicit_plus_terminal_share": {
+      "status": "PASS",
+      "identity": "PV(FCFF)/EV + PV(TV)/EV = 1",
+      "max_absolute_error": 2.220446049250313e-16,
+      "csv_rounded_sum": 1.0
+    },
+    "scenario_median_order": {
+      "status": "PASS_INFORMATIONAL",
+      "ascending": ["Conservative", "Base", "Expansion"]
+    },
+    "secondary_figures_tol_image": {
+      "status": "NOT_PASSED",
+      "tolerance_id": "TOL-IMAGE",
+      "visual_inspection": "PASS_INFORMATIONAL: same panels, labels, plotted data geometry, and no clipping were observed in both pairs.",
+      "reason": "Both PNG hashes and decoded dimensions differ; no source-backed pixel tolerance exists, so visual similarity does not establish image parity."
+    },
+    "separate_test_suite": {
+      "status": "NOT_AVAILABLE",
+      "reason": "The Team 5 current source set has no separate unit or regression test suite."
+    }
+  },
+  "secondary_figure_comparison": [
+    {
+      "name": "mc_dcf_results.png",
+      "original_sha256": "F3E2EC40F75BD1500F46B698080E8FA27619F84F6C825BF519DA01DECBF1356E",
+      "actual_sha256": "B40E264D87A1ECBA7E2C16CBDEE120C1E3C2E2F5DBED754473E3690160392832",
+      "original_dimensions": [2231, 1505],
+      "actual_dimensions": [2230, 1505],
+      "decoded_pixels_equal": false,
+      "visual_inspection": "PASS_INFORMATIONAL"
+    },
+    {
+      "name": "mc_scenarios.png",
+      "original_sha256": "A5FEB4A8FFD9E274F12D73EB8D9FBA15D5ADEFAFDA9B8D7C9E1BFC3469BAB42F",
+      "actual_sha256": "06528D54496D569F53D453EECC9D921D3502DD6A9DD74EDBA7FE6C5FBFF9C8A6",
+      "original_dimensions": [2224, 841],
+      "actual_dimensions": [2223, 845],
+      "decoded_pixels_equal": false,
+      "visual_inspection": "PASS_INFORMATIONAL"
+    }
+  ],
+  "tolerance_ids": ["TOL-BYTE-0", "TOL-T5-CSV6", "TOL-IMAGE"],
+  "article_reference": "Team 5 - Three-Stage DCF/Overleaf/Articolo.tex",
+  "semantic_label": "synthetic valuation methodology; simulated value units; not Barrick enterprise value, equity value, or value per share",
+  "known_divergences": [
+    "The Python and package versions of the original benchmark environment are not distributed.",
+    "The two PNG artifacts are visually consistent but not byte-identical and have slightly different decoded dimensions; they remain unaccepted under TOL-IMAGE.",
+    "The current seven-year runner and the legacy ten-year appendix are different implementations; the appendix was not executed or used as an adapter.",
+    "The source does not declare whether simulated scenarios are under P or Q.",
+    "No separate unit or regression test suite is present in the authorized current source set.",
+    "The source-code license and redistribution approval remain a gap.",
+    "DCF formula corrections tracked by GAP-DCF-01 are outside this source-parity run and remain open.",
+    "This benchmark is wholly synthetic and cannot be treated as a Barrick valuation or feed FCFF/EV evidence into the unified thesis."
+  ]
+}

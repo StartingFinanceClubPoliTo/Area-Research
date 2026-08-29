@@ -1,0 +1,669 @@
+{
+  "schema_version": "1.0",
+  "team": 8,
+  "benchmark_class": "market_real_LSE_GLD_models_unit_scope_only",
+  "original_root": "Team 8 - Gold Options Stochastic Modeling/Github-Branch",
+  "frozen_root": "UNIFICATO/Github-Branch/parity/sources/team-8",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 168,
+      "sha256": "4EC6AD5992067DB463802CCDD42913AE7AB78ACE3C0C7DB74A782A39FC1F7187",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Articolo_team8_working.tex",
+      "bytes": 124443,
+      "sha256": "0192792D22487B1B75CABE0DA111834904721AF53DC31F9CAE123E565513D47D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Bates Calibration.ipynb",
+      "bytes": 2671,
+      "sha256": "4FEDDB25BF9DFB870264F4249F021F1DE6BA57F915CA9F37B160850DB67F6F53",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Bates-Hawkes Proxy Calibration.ipynb",
+      "bytes": 2872,
+      "sha256": "426165D25FEEB56B8C0AD2BE8B83EE62F319CF66B00142BE8676394B559A02D7",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Bates.py",
+      "bytes": 8348,
+      "sha256": "CCF5145EE1497BBB01891D6CB0C95803D7D9FD0F61ECA537BE81AFEA61F463C2",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "BatesHawkes.py",
+      "bytes": 7422,
+      "sha256": "606810CA162AF2B682788B88349B07119117BB3A2EC90E6243E4A344004B5790",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "BatesHawkesExact.py",
+      "bytes": 17690,
+      "sha256": "59F1207C9230E6522C2A0CFA5A66B638B05AB745B8D1C1BE7643E1DE169F8153",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "benchmarks/benchmark_pricing.py",
+      "bytes": 1869,
+      "sha256": "3AD7D76B0CE58C8C240090E8B87F683E8E5D0BD32EE32DB2DFEA38255D661BF3",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "benchmarks/README.md",
+      "bytes": 567,
+      "sha256": "43FA78146094BBCDDDEF7F2C4DCBC740F0365B840AF78D749CF9C6464F1F110D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Black and Scholes Calibration.ipynb",
+      "bytes": 829122,
+      "sha256": "AA8729BD45192DD1E038BCD53F45B2486033960F8CDCEE899A4022C03FCCCD59",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "BnS.py",
+      "bytes": 4723,
+      "sha256": "07465D4C9CCAAC9EA6A4CA28744875747685C88C5A5BB5BEB733C6C361A2EF04",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "calibration_core.py",
+      "bytes": 7250,
+      "sha256": "280C2603E19E0096200BB50C772E0F3D52C8929256CBE252BE5A28055E10BD8D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "calibration_workflow.py",
+      "bytes": 6049,
+      "sha256": "CDAAA3F5CDDE86C84D1CF7FFCBD051C54D78B9B3419A7ABB23A9017E148C7C81",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/baseline_calibration_metrics.csv",
+      "bytes": 452,
+      "sha256": "2065295387C4E7B16AEA3840083174E491C0FEE5D468B67D4B3633B9B5D451B9",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/baseline_calibration_metrics.json",
+      "bytes": 810,
+      "sha256": "56D9B7E32BA734A516822E22C0BCEA813298C7D14C7FC21775D3FCFA7F0DE58C",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_calibrated_params.json",
+      "bytes": 987,
+      "sha256": "EC18F6137BBD079849A7915E30817CCA36C34311F5D3432609767FE649179C34",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_hawkes_calibrated_params.json",
+      "bytes": 1253,
+      "sha256": "EA3643C643C1C26B4EA31B459B8CC5B856100121F05E417B9686D1141713CB79",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_hawkes_calibration_metrics.csv",
+      "bytes": 340,
+      "sha256": "3483D383D815FFB557BD5635F2EEAE073E830E8B3539D0C4B859405AB2A59323",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_hawkes_calibration_metrics.json",
+      "bytes": 808,
+      "sha256": "3B30FCBD9EBD1E757541C8FD202461358CAAB96AB1D92F476517BEA981DE1885",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_hawkes_residual_heatmap.png",
+      "bytes": 262025,
+      "sha256": "42E0645177A4CCC9F04F066F354A404F7BD7DCE3487F91A424071FCBB96B658D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_hawkes_volatility_smile.png",
+      "bytes": 480393,
+      "sha256": "DB11F5BE3F74717E8E0F558098DD37BA4FDD8B71692D48AEB9DCCE570ABADF92",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_hawkes_vs_bates.png",
+      "bytes": 174202,
+      "sha256": "5CB55B75B256200A2C9980234D325607593CE0F879709594EFA31D2D36C771CE",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_poisson_jump_paths.png",
+      "bytes": 64753,
+      "sha256": "8F70B3C3333B4D2ABE5D81977B2BAACDFF0371D6DC6051F6A2E91A21E641D488",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_residual_heatmap.png",
+      "bytes": 232853,
+      "sha256": "C08C067EE6CC95B8FAA9AE3FE9F65B0127733A7E9C351ED49A3DD4534783375D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/bates_volatility_smile.png",
+      "bytes": 424166,
+      "sha256": "22BF5DAF83A61346C7C2C087E7C122A36F5B4B19379181222BF4B42814AF5965",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/black_scholes_calibrated_params.json",
+      "bytes": 216,
+      "sha256": "06CA39A55DFDE4D92DD1002102D0A61DCE824BC34146B3B278AA00B785C25723",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/black_scholes_calibration_summary.csv",
+      "bytes": 485,
+      "sha256": "0F4DA53FB30BF708571737B80D886ABAD4C279C06CD3E2BE01867310E0ABAC84",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/black_scholes_residual_heatmap.png",
+      "bytes": 217936,
+      "sha256": "CA27255FB7F3F5E07C159D2EBFBA0F93E25535450B48F0C1689D218236941B73",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/black_scholes_volatility_smile.png",
+      "bytes": 342364,
+      "sha256": "D35FE335A7C9E292BB7A88C78ECCBF68FB921C4D6303E16448E11CD37423D56F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/calibration_residual_normality.csv",
+      "bytes": 1312,
+      "sha256": "550F5F5ADFDFA2901BDECC7F8303641583109EF3C5354E6ACDFE61576771F838",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/error_heatmaps_comparison.png",
+      "bytes": 161898,
+      "sha256": "F3661FBF3E0CD430FE3B50ADAD890DE20ED1C63EA2041CB159729359C478CF83",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/gld_return_normality.png",
+      "bytes": 153161,
+      "sha256": "A1B49A268247F0F9BEDB8C5790E1C2EBC4EA2993F8EB7D558044CCFA0401E9F1",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/gld_return_normality_tests.csv",
+      "bytes": 601,
+      "sha256": "770F389875DD150B3F1D1F907383CB26461B889A6C011B84A268DB22294A15E3",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/gld_return_normality_tests.json",
+      "bytes": 749,
+      "sha256": "6B04E20DA08630CF7D2E659FF90FACC5F910C76A12A21AEAECFBE8DD10D92E22",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/gold_path_stats_by_model.png",
+      "bytes": 200315,
+      "sha256": "DF710BA95A1960821E447DCAF6A17845410DC922A9D830A35612C7E2F11334C8",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/hawkes_exact_constvol_params.json",
+      "bytes": 581,
+      "sha256": "53CDCA021D0B7BC9DDA6CA934B6553B5CBF1EA1BEDC62885508695AF4D9DB5FA",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/hawkes_exact_vs_proxy.png",
+      "bytes": 147062,
+      "sha256": "474EA0D1D4A9BA5177964CF5F2487BBA6116C8CC0BDCE586A516610E92C5A2F8",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/hawkes_intensity_comparison.csv",
+      "bytes": 36576,
+      "sha256": "94CD2369D3E02DEBDB5F25186EA5F935CBFAF0B8BB4A221D92169EF43BB1E086",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/hawkes_intensity_comparison.png",
+      "bytes": 156234,
+      "sha256": "33D0F917EE290953A5A5DA89C91529A8ECCB87824C97BEEC3569FAFD252B43C1",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/hawkes_jump_paths.png",
+      "bytes": 203971,
+      "sha256": "DF7E945B1A36646C3A3ECCBB56D0F57F983E19EA5D2E8B60EB0CCB07C7E84450",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/heston_calibrated_params.json",
+      "bytes": 592,
+      "sha256": "02049BC35C35D68115C6B508713823883D31C5FB78E87BDC1BAD85A60C9019AB",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/heston_residual_heatmap.png",
+      "bytes": 236967,
+      "sha256": "1D4E0C3C88D79227773EEFF0DC0250A9D55689785B7A910DD7A453CA000078FE",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/heston_volatility_smile.png",
+      "bytes": 363063,
+      "sha256": "E4C82536EA11B796C2FBF91BDE5BB102B5A8618FC815FB273AC91BD4D5AAD0F3",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/lse_publication_manifest.json",
+      "bytes": 1051,
+      "sha256": "A3AFB261AE8CE4C82DE123BF336C6ECC6D50E0CD2154182126266BCD37476969",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/model_appendix_summary.csv",
+      "bytes": 3914,
+      "sha256": "6EE4E2B71746795E612FD57899A57B1897DEA1B6AD5414975986AAC42006E1D8",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/model_parameters_long.csv",
+      "bytes": 1211,
+      "sha256": "2F11A1EB1B92DD9FCF3E240D192B1939B18DE27D12141EBBB1DAA4D84D882EFC",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_calibration_convergence.csv",
+      "bytes": 482,
+      "sha256": "83731DAFB66C4E6ECCD536B38BBB4AA1AC5EAE7D70D42F972D039690C483044E",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_loss_differential_tests.csv",
+      "bytes": 4596,
+      "sha256": "9CD82A6AB1E209EEF3995D3559298C094EA02F3F284F30EA954D6DD7E2BA6A5F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_pairwise_r2.csv",
+      "bytes": 1329,
+      "sha256": "3443C56677B108ADC483BB1BD0ED30C0ADB4DC363B50A4D050DAE74F8AC1F8DF",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_parameter_stability.csv",
+      "bytes": 2341,
+      "sha256": "12A8E7309B9A0DB3D4ED3BBB9C34FC66BC2B0DB3F6CC885CA9F765683BC31726",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_validation_design.json",
+      "bytes": 1964,
+      "sha256": "2C425467043CC1BA7F2F399EEF6E7BA801620B27F8B06BBBC5560135F83E5E52",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_validation_metrics.csv",
+      "bytes": 1570,
+      "sha256": "019CD5135C1BC5A65532DE6310833B91BD7C8C9D637983B5787B26B10301DAA2",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_validation_metrics.json",
+      "bytes": 22625,
+      "sha256": "2ADF2A8CE0EA061CAF41EDF19B9DFCE6F7EA79E085BB14BEB572CA7E913EF95B",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_welch_goyal_cumulative.csv",
+      "bytes": 50948,
+      "sha256": "A440DA463E2E35E7A98FE7CAC84DA5586805347948DF60BE02C1824340B26E7C",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/online_welch_goyal_cumulative.png",
+      "bytes": 446029,
+      "sha256": "1FB889453C9E2FDAF00CED30989A45C45F995A258058C10D81D0DA7C1DC6264C",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_historical_calibration_metrics.csv",
+      "bytes": 645,
+      "sha256": "B2EE9C5F154BC35966E3BA934A70952F970CEB9589099548D09CC7675F71967B",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_historical_calibration_params.json",
+      "bytes": 2497,
+      "sha256": "C8F74C2A9DF4D4321D3F9FAD06D7EAE540BE3D788A903C07B3E038291D8B3B86",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_loss_differential_tests.csv",
+      "bytes": 3325,
+      "sha256": "2CA7FA415DDFA02542DDAB82B44F4B76D16F2EFD312D6CB3D474F97A3E3C3B15",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_pairwise_r2.csv",
+      "bytes": 1047,
+      "sha256": "D00A8F4C4EC4948CA7CF149A67F571A390EBD798C0427D9F311DD357FFBC624B",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_validation_design.json",
+      "bytes": 1268,
+      "sha256": "7800CA72A6563DC39E585A65A8A4EF86CCCB3B487BDC6E38607E023181CE729C",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_validation_metrics.csv",
+      "bytes": 807,
+      "sha256": "EF315DC2949FF3DBA04809776F7BB3BBF25DAF3AC07FF4DAD4B96B2E0D347CC4",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_validation_metrics.json",
+      "bytes": 13711,
+      "sha256": "8B2191FAD4C029E479DEF42E7C99A812642C03623498FA22EA8B299DDD9595FB",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_welch_goyal_cumulative.csv",
+      "bytes": 9241,
+      "sha256": "7281CDEFA288E0349EEBE1AC263B29A33475347D867A137DDC50FA63470D22B2",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/oos_welch_goyal_cumulative.png",
+      "bytes": 380168,
+      "sha256": "E34F81FC5D52899BE0A08F1DC47FEF0AA6743C9EA50E817BE599F98814C7CB38",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/path_simulation_summary.csv",
+      "bytes": 2140,
+      "sha256": "47F20C9EB8F48F8523E3DBF5E6674BE7BA8A56ED10AA3B028796CAAC450625CA",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/paths_bates_5.png",
+      "bytes": 164138,
+      "sha256": "5153A70BBFC8E340BEE9C3F9F3EB2B6149A073CC89E6378A080A22D0B700B046",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/paths_bates_hawkes_5.png",
+      "bytes": 164048,
+      "sha256": "5BB9A6E9E89726E06FCBE1D60E60D0B4F04F4FE0881C0C0AD4EDE975EAA5A29B",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/paths_black_scholes_5.png",
+      "bytes": 172120,
+      "sha256": "D9F270C0DFE61BB02AA8084CC0BB2B8E87BC04CAD9478EE96F50B08A7E64077D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/paths_heston_5.png",
+      "bytes": 166843,
+      "sha256": "DB3A910F1DACC144CDC1B80C652532331FF2D2BD9CB99265412BF1143246A71C",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/README.md",
+      "bytes": 4576,
+      "sha256": "67002CEA2DE9F664053494F560CF9DF0791CD528861E6E4BC1342EF61333E7D3",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/sampling_comparison.png",
+      "bytes": 122845,
+      "sha256": "47F12E23EAEE8086B2D14CEAB6CD28F7BA5398CCA4DD704D1219E4AE805CE13D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/terminal_return_percentiles.png",
+      "bytes": 135471,
+      "sha256": "CDFEA9872C2E544C0FF1A9955115FA038EE8CA74D63303F59C381BED0AF73861",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/terminal_return_percentiles_0_100.csv",
+      "bytes": 8037,
+      "sha256": "451E56DBA5A662F787B0BB4A7829F2221D29386F0A7AD1F1AD351C457D1478A7",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/usd_treasury_curve.png",
+      "bytes": 91585,
+      "sha256": "F98BD1462EC583D81D1AEFDCAEFD5606AF7043754C645F40A5BDB10DCA09AABC",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/volatility_and_jump_intensity_paths.png",
+      "bytes": 512528,
+      "sha256": "DD7647EFD9D1FCBE7D0B16F17A6BD0F7880D5FEEDE0E63C6CA52E6C6E2C62E82",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/volatility_smiles_2d.png",
+      "bytes": 287659,
+      "sha256": "34E9CAF2729C47FFF2A6217E46AC748701D2D6072DEED3978AB7B2E8EBA1B842",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/volatility_state_paths.png",
+      "bytes": 525224,
+      "sha256": "D6FDDCAF22D71DB6F6D4A8FFA17E82B810D16D4D5A38F3D8A96C3A8BA6CD4CF3",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Data/volatility_surface_3d.png",
+      "bytes": 528767,
+      "sha256": "ED6F9EA91FE59D55B301BBABCB5B354F4D7CC89155908FC1583B53A6B8B12C04",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "fourier_pricing.py",
+      "bytes": 4814,
+      "sha256": "3E212417D9B1A937F21EBB32E04C41C1883B26C4F5978F2CA3A3F16541A87F38",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Hawkes Calibration.ipynb",
+      "bytes": 2841,
+      "sha256": "49843C651E8364852AAFAF73CEEEA84DAF3D29A59E733C7834571941CBFA5631",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Hawkes-Calibration-Notes.md",
+      "bytes": 3098,
+      "sha256": "3552B171BF537BBB0D64CB4C9E9AA58C518862EBD7680DCE412ECE2C3939B8B9",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Hawkes.py",
+      "bytes": 32714,
+      "sha256": "AFB1B48D86F7A0E00AADA1091583F73C21BF3BB1CF6ADD7CC552BD1178658BBB",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Heston Calibration.ipynb",
+      "bytes": 518802,
+      "sha256": "9A292C90B0C0D12FBBDCCB8DFA4F24EB380304B65C51604CEF3C0B19BC47E55A",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Heston.py",
+      "bytes": 8024,
+      "sha256": "9D145E9F5A0DDF60FEC99BE4CCA39A2A48CA73CDE7089A83C0B8C53F67163794",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "historical_validation.py",
+      "bytes": 17480,
+      "sha256": "4A1E73623748BA917871DAFED9D2B0AC5DC2FD9E1E811088E452590111FFE162",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "LSE-DATASET.md",
+      "bytes": 2919,
+      "sha256": "6CD000343519623712005105FB26A8D00E1989DF1A35DED9E5C399E8407DF5EE",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "lse_dataset.py",
+      "bytes": 22230,
+      "sha256": "29A256925E9C48A5640EEF57337239437166C0C10C4E18112D8D96BB8D5BD441",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Main.ipynb",
+      "bytes": 977,
+      "sha256": "9D9EF8B36AC495977F2A12BE3BB7CF1D1F083C21F429AB7BB6030310BC96505F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "main.py",
+      "bytes": 5289,
+      "sha256": "F69BBDF4D17C70B07F7A0F786C88D40A89A71553E80C80B92FC8A165CBCAA427",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "online_validation.py",
+      "bytes": 17626,
+      "sha256": "C3240B12A174535D5F963D387EC799D7EAD12DDE5BF85EC337923155E7DDF86F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "path_simulation.py",
+      "bytes": 11319,
+      "sha256": "DE6AA684EB0937BFB808173B2A2518D9C5C1C2A3BE3533736F6A12FC6F4232BC",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 7347,
+      "sha256": "6DBAD45E5FFCE795D5F8C38A35189A0377C21A38CFFD87FA85C677BF7B0F2184",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 104,
+      "sha256": "10F1494EE48D2DABBBC4F85041472F6EC0E8D0F9B7186A99FE5170C7B61A5659",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "Sampling.py",
+      "bytes": 4699,
+      "sha256": "CC5F0BFFA5CC10DA35574204FC8B2FE5E283BA39CB1C9B5CEBF4E39E617E8FF7",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tests/test_bates_refactor.py",
+      "bytes": 3836,
+      "sha256": "6CC512DD8CF5434AA67AEC4C04E756B6EA6D922B9F4EB9F8C46D3DE20FEEEA49",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tests/test_hawkes_calibration.py",
+      "bytes": 4460,
+      "sha256": "458CE6D74FEF84B37859B2AACB51649B20849A0BBE99091B16BC6AE8C86C9E97",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tests/test_hawkes_exact.py",
+      "bytes": 17541,
+      "sha256": "4EBB3ACC30BC088893F9702792F9C4DE1F077D050D0EA882229922A357CCE5B5",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tests/test_historical_validation.py",
+      "bytes": 4296,
+      "sha256": "25DF4D77D35B9A1587E90493FFF069DE971E3351A0EBBB67999B03C4A2DBD62B",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tests/test_lse_dataset.py",
+      "bytes": 4218,
+      "sha256": "20D1AE682BA6EFE985E04939E14F063872F8DA40086E2C00DE24F8A9E28C40C8",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tests/test_path_simulation.py",
+      "bytes": 2134,
+      "sha256": "7046AAC113AACF5965CAFDAF55085EB29B3B1DBBDB2E309DAEE557489FCD4A10",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/README.md",
+      "bytes": 1805,
+      "sha256": "4ED5245F075F6255F603DF90A69A29F5F6FBA5115CDABAF112F08B209E056B38",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/rebuild_bates_notebooks.py",
+      "bytes": 6712,
+      "sha256": "F0F3EF1A97A54E32828C08B254DFCE8B56DE7FC34797991536ECF39262C176D6",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/rebuild_exact_hawkes_outputs.py",
+      "bytes": 11338,
+      "sha256": "31FB4136D34EB39B150C5A88C126D86F5F1B72ACA8425AE2319C6304479BE39E",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/rebuild_lse_benchmarks.py",
+      "bytes": 18569,
+      "sha256": "103D8DBA4554C0FCBE6ECAA2451DEDDB05DEEF30C208C3E654600B8226DBDEB0",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/rebuild_online_validation.py",
+      "bytes": 15211,
+      "sha256": "0AFF2294B2AB8465E30C4552EB44E8BADB5119F3EEFC94E6B42A3C7BC9135194",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/rebuild_oos_validation.py",
+      "bytes": 12295,
+      "sha256": "EE017B7F60B217C264941915478E7C207E5143C5BF9D2AEA3F2473D90C8FB743",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "tools/rebuild_path_outputs.py",
+      "bytes": 10847,
+      "sha256": "B2B54F54192D73C430904DC3491A1625F4ACAFDEEB9C4CE22580F8E0FC593312",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "workflow.md",
+      "bytes": 5931,
+      "sha256": "E298AD9EED0A792F4E890D053918B0B16CB1B7666742F476954053FF8B4E2F72",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "workflow_team8_overleaf.md",
+      "bytes": 6381,
+      "sha256": "B6B6652845350A5E2B1839D9FBFD35149B93DF63274AB6153AC580E905328601",
+      "copy_sha256_verified": true
+    }
+  ],
+  "verification": {
+    "file_count": 109,
+    "sentinel_count": 23,
+    "all_copies_verified": true,
+    "originals_modified": false
+  }
+}

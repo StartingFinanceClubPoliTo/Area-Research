@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "team": 5,
+  "benchmark_class": "synthetic_valuation_methodological",
+  "acquired_utc": "2026-08-14T19:40:16.2211846Z",
+  "original_roots": {
+    "current": "Team 5 - Three-Stage DCF/Github-Branch",
+    "legacy": "Team 5 - Three-Stage DCF/Overleaf/contents"
+  },
+  "frozen_roots": {
+    "current": "UNIFICATO/Github-Branch/parity/sources/team-5/current",
+    "legacy": "UNIFICATO/Github-Branch/parity/sources/team-5/legacy"
+  },
+  "copy_policy": "byte_identical_only_current_and_legacy_kept_separate",
+  "license": {
+    "status": "GAP",
+    "evidence": "No source-code license declaration was found in the distributed Team 5 GitHub-Branch inspected for this freeze.",
+    "redistribution_approval": "not_established"
+  },
+  "files": [
+    {
+      "path": "current/src/generate_three_stage_dcf.py",
+      "original_path": "Team 5 - Three-Stage DCF/Github-Branch/src/generate_three_stage_dcf.py",
+      "role": "current_synthetic_benchmark_runner",
+      "bytes": 13609,
+      "sha256": "DEF6AA639195B7F530AC5B969DD4F54D700FE8EB0E636248EF954E5E5054EE34",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "current/requirements.txt",
+      "original_path": "Team 5 - Three-Stage DCF/Github-Branch/requirements.txt",
+      "role": "current_declared_dependencies",
+      "bytes": 28,
+      "sha256": "7CE1D52CB0E7309FA50FDF82F058DB2C2D7BC7537EFCEB8949B94762411191A4",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "legacy/Overleaf/contents/appendixA_code.tex",
+      "original_path": "Team 5 - Three-Stage DCF/Overleaf/contents/appendixA_code.tex",
+      "role": "legacy_historical_ten_year_implementation_not_executed",
+      "bytes": 18111,
+      "sha256": "0A03EC567ABCF8265DD7BBA64D4548744AAFE3A47DC888D502968153F409569F",
+      "copy_sha256_verified": true
+    }
+  ],
+  "verification": {
+    "file_count": 3,
+    "current_file_count": 2,
+    "legacy_file_count": 1,
+    "all_planned_files_present": true,
+    "all_sha256_match_plan": true,
+    "current_and_legacy_trees_separate": true,
+    "legacy_executed": false,
+    "originals_modified": false,
+    "frozen_copies_used_as_run_working_directory": false,
+    "working_current_source_sha256_matches_after_run": true
+  }
+}

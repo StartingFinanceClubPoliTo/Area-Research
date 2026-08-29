@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "status": "CURRENT_PUBLIC_OPERATING_DATA",
+  "as_of_date": "2026-08-10",
+  "accessed_date": "2026-08-27",
+  "scope": "Barrick Q1 and Q2 2026 gold operating statistics used to refresh the Team 4 production/cost layer only",
+  "separation_policy": {
+    "included": [
+      "attributable gold production",
+      "ore processed",
+      "processed grade",
+      "recovery",
+      "cost of sales per ounce"
+    ],
+    "excluded": [
+      "Team 4 NSS curve",
+      "Team 4 implied-volatility inversion",
+      "Team 4 GBM gold paths",
+      "Team 4 illustrative stochastic EBITDA valuation"
+    ],
+    "gold_price_layer_owner": "Team 8 current option-calibrated models under the unified conditional bridge"
+  },
+  "sources": [
+    {
+      "quarter": "2026Q1",
+      "title": "Barrick Q1 2026 Mine Statistics",
+      "url": "https://s25.q4cdn.com/322814910/files/doc_financial/quarterly_results/2026/q1/Barrick_Q1_2026_Mine_Stats.pdf",
+      "sha256": "629DE408E88AC8659CBF5DB836A59B42124F16E8BB9176B08740C8C8703E01C2",
+      "tables": ["Gold Production and Cost Summary", "Gold Mine Statistics"]
+    },
+    {
+      "quarter": "2026Q2",
+      "title": "Barrick Q2 2026 Mine Statistics",
+      "url": "https://s25.q4cdn.com/322814910/files/doc_financial/quarterly_results/2026/q2/Barrick_Q2_2026_Mine_Stats.pdf",
+      "sha256": "967251969C528C1898045302533B7F46BBABB34D0654DCCEBCAD0789A87BD63A",
+      "tables": ["Gold Production and Cost Summary", "Gold Mine Statistics"]
+    }
+  ],
+  "derived_files": [
+    {
+      "path": "data/processed/team4/barrick_mine_operating_q1_q2_2026.csv",
+      "grain": "mine-quarter",
+      "note": "Eight mines retained from the Team 4 production study; production and cost are Barrick-attributable where reported."
+    },
+    {
+      "path": "data/processed/team4/barrick_total_gold_q1_q2_2026.csv",
+      "grain": "Barrick-quarter",
+      "note": "Company totals include operations outside the eight-mine analytical subset."
+    }
+  ],
+  "transformation_notes": [
+    "Values were transcribed from Barrick's published quarterly mine-statistics tables without interpolation.",
+    "Percentages are stored as percentage points, not decimal fractions.",
+    "The unified 20-quarter operating contract replaces only 2026Q1 and 2026Q2 with current Barrick actuals; 2026Q3 onward remains the Team 4 forecast and is labelled as forecast.",
+    "Market and realized gold prices are retained only as contemporaneous source facts. The unified valuation uses the Q2 realized price as an independently sourced level anchor and never imports Team 4 simulated price paths."
+  ]
+}

@@ -1,0 +1,30 @@
+\begin{table}[H]
+\centering
+\caption{Barrick conditional value-per-share quantiles by gold-price model.}
+\label{tab:conditional-multimodel-valuation-quantiles}
+\setlength{\tabcolsep}{8pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}r r r@{\hspace{10pt}}r r@{}}
+\toprule
+\textbf{Quantile} & \textbf{BS/GBM} & \textbf{Heston} &
+\textbf{Bates--Poisson} & \textbf{Full Bates--Hawkes} \\
+\midrule
+P01 & -0.92 & 1.01 & -3.08 & -0.54 \\
+P05 & 1.29 & 4.21 & -0.97 & 1.49 \\
+P10 & 2.75 & 10.02 & 0.37 & 3.31 \\
+P25 & 13.43 & 21.92 & 3.69 & 15.15 \\
+P50 & 34.50 & 39.48 & 23.99 & 34.94 \\
+P75 & 66.49 & 62.03 & 67.24 & 65.11 \\
+P90 & 106.29 & 91.37 & 137.65 & 104.81 \\
+P95 & 140.76 & 114.04 & 204.62 & 136.50 \\
+P99 & 227.16 & 165.19 & 397.63 & 218.11 \\
+\bottomrule
+\end{tabular}%
+}
+\par\smallskip
+\footnotesize Values are USD/share; the observed \texttt{B} close is USD~47.27
+on 27 August 2026. Operations use Barrick 2026Q1--Q2 actuals and Team~4
+forecasts from 2026Q3; the Team~4 price demonstrator is excluded. Negative
+lower-tail proxies reflect the unreconciled research DCF and are not target
+prices, confidence intervals or recommendations.
+\end{table}

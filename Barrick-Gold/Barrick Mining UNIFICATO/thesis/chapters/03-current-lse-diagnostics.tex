@@ -1,0 +1,44 @@
+\section{Current LSE diagnostic snapshot}
+
+The current London Strategic Edge refresh is a dated market diagnostic, not an
+implicit valuation date. Barrick equity and GLD are kept as separate economic
+objects and no issuer-series stitching, corporate-action adjustment or FX
+conversion is applied. The current catalog entry for \texttt{B} becomes valid
+on 27 April 2026; a ticker-reuse guard therefore excludes 1,415 earlier rows
+rather than attributing them to Barrick. The resulting sample contains only 86
+daily unadjusted-close bars through 27 August 2026. Its statistics are useful
+for describing the observed short window, but not for estimating long-horizon
+expected returns or producing a corporate valuation.\cite{lse-2026}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Aggregate LSE market diagnostics at the 28 August 2026 extraction cutoff.}
+\label{tab:lse-current-market-diagnostics}
+\begin{tabularx}{\textwidth}{lrrrrX}
+\toprule
+Series & Bars & Total return & Ann. volatility & Max drawdown & Interpretation \\
+\midrule
+Barrick \texttt{B} & 86 & 16.20\% & 51.23\% & $-26.10\%$ &
+27 April--27 August 2026; short, unadjusted-close equity sample. \\
+GLD & 1,425 & 131.06\% & 18.21\% & $-26.23\%$ &
+4 January 2021--27 August 2026; ETF in USD/share, not physical gold in USD/oz. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Returns are close-to-close log returns and annualization uses 252 observations;
+drawdown is computed from the running maximum of the canonical close. Prices
+and volumes are not forward-filled. Every trailing statistic is backward-looking
+and inclusive at time $t$, so no future observation enters the value reported
+at $t$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{img/lse/lse_market_context_20260826.png}
+\caption{Separately indexed LSE series and trailing 63-observation realized
+volatility. Barrick \texttt{B} is shown only over the catalog-valid interval;
+GLD is an ETF proxy in USD/share. The discontinuous coverage is deliberate and
+prevents an unsupported \texttt{GOLD}$\rightarrow$\texttt{B} stitch.}
+\label{fig:lse-current-market-context}
+\end{figure}

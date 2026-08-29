@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260828T143000Z-us10y-retry",
+  "provider": "London Strategic Edge",
+  "endpoint": "/ref/bond_yields",
+  "symbol": "US10Y",
+  "curve_date_requested": "2026-07-24",
+  "delay_seconds_between_requests": 3.0,
+  "attempts": [
+    {
+      "label": "narrow",
+      "start": "2026-07-20",
+      "end": "2026-07-31",
+      "row_count": 0,
+      "first_date": null,
+      "last_date": null,
+      "curve_date_present": false
+    },
+    {
+      "label": "curve_date",
+      "start": "2026-07-24",
+      "end": "2026-07-25",
+      "row_count": 0,
+      "first_date": null,
+      "last_date": null,
+      "curve_date_present": false
+    },
+    {
+      "label": "medium",
+      "start": "2026-07-01",
+      "end": "2026-08-28",
+      "row_count": 1,
+      "first_date": "2026-07-01",
+      "last_date": "2026-07-01",
+      "curve_date_present": false
+    },
+    {
+      "label": "wide",
+      "start": "2026-01-01",
+      "end": "2026-08-28",
+      "row_count": 126,
+      "first_date": "2026-01-01",
+      "last_date": "2026-07-01",
+      "curve_date_present": false
+    }
+  ],
+  "catalog": [
+    {
+      "symbol": "US10Y",
+      "name": "United States 10Y yield",
+      "first": "1990-01-08 00:00:00.000000",
+      "last": "2026-07-01 00:00:00.000000",
+      "ticks": 9260
+    }
+  ],
+  "unique_observation_dates_returned": 126,
+  "latest_observation_date_returned": "2026-07-01",
+  "curve_date_present": false,
+  "curve_date_par_yield_pct": null,
+  "decision": "DO_NOT_MIX_ASYNCHRONOUS_US10Y_WITH_2026_07_24_CURVE",
+  "redistribution": "raw rows local-only; this file contains aggregate coverage and one decision observation only"
+}

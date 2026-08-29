@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0",
+  "status": "CURRENT_LSE_EMPIRICAL_FIGURES",
+  "input_path": "C:/Users/salvm/Desktop/SF/Research projects/Barrick gold/UNIFICATO/Github-Branch/data/raw/lse_local/20260827T173500Z-codefig-v11-lse/empirical_figure_inputs.json",
+  "input_sha256": "3B0E37DB06E71F325911F31200296A80ACD7AB7B16380143CF177986BE498DD8",
+  "sample": {
+    "start": "2021-01-05",
+    "end": "2026-07-01",
+    "observations": 1370,
+    "rolling_window": 252
+  },
+  "asset_semantics": {
+    "gold": "GLD ETF close, USD/share",
+    "silver": "SLV ETF close, USD/share",
+    "sp500": "SPY ETF close, USD/share, used as S&P 500 market proxy",
+    "dxy": "transparent six-currency DXY formula proxy normalised to 100",
+    "ust10y": "LSE US10Y close/yield level; first differences used in returns panel"
+  },
+  "garch": {
+    "gold": {
+      "mu": 0.034938318994848686,
+      "omega": 0.053848330160260596,
+      "alpha": 0.10893866570246619,
+      "beta": 0.847981152745209,
+      "alpha_plus_beta": 0.9569198184476753,
+      "success": true,
+      "objective": 721.9882981921819
+    },
+    "silver": {
+      "mu": 0.014945631491045773,
+      "omega": 0.04080079300869844,
+      "alpha": 0.05453311143323498,
+      "beta": 0.938997458839784,
+      "alpha_plus_beta": 0.993530570273019,
+      "success": true,
+      "objective": 1624.6062206871775
+    }
+  },
+  "gph_d": {
+    "gold": 0.4524773327753317,
+    "silver": 0.49
+  },
+  "figures": [
+    {
+      "name": "correlation_heatmap.png",
+      "bytes": 187215,
+      "sha256": "208A6C6457382403161BFFEBEE50C06D5B63B1A68852A583D6B578DE841D9A74"
+    },
+    {
+      "name": "rolling_corr_gold_ust10y.png",
+      "bytes": 111143,
+      "sha256": "15E8739A9649573E18BC81522F33C1F9BDFD290C99C6D5067FE015C58AF54FD5"
+    },
+    {
+      "name": "rolling_corr_gold_sp500.png",
+      "bytes": 114765,
+      "sha256": "CAC8E0C90C783576B900BC7A8EFC0A12BE25A59B2C1CAC978E0561CB9D458F66"
+    },
+    {
+      "name": "rolling_corr_gold_dxy.png",
+      "bytes": 110879,
+      "sha256": "F289761147385BD7507D99AE3A6DCB991CE77BFAA83CC7625E8EC8B4153367CD"
+    },
+    {
+      "name": "rolling_corr_silver_ust10y.png",
+      "bytes": 113013,
+      "sha256": "908C62E76C1EC216AC3F23A3B91E68624308611FE12F3049568525294CD71D85"
+    },
+    {
+      "name": "rolling_corr_silver_sp500.png",
+      "bytes": 112331,
+      "sha256": "749384E5A43B524A665DACF7D5C4E980E2325C8AA96CD53BC9CC137076079C86"
+    },
+    {
+      "name": "rolling_corr_silver_dxy.png",
+      "bytes": 110879,
+      "sha256": "446A86ADA886CF6F8FBF542D5FF49D4FD9F4A5C8A0B7FF579D6246E7206924EB"
+    },
+    {
+      "name": "hist_normal_gold.png",
+      "bytes": 81896,
+      "sha256": "CADE4F2733F97D8BAFF8FCD3D589D159F4C50117F50BC94B9145278BCF494462"
+    },
+    {
+      "name": "hist_normal_silver.png",
+      "bytes": 78843,
+      "sha256": "33A47B013CDC5552274FD5EBE02D0C7D4CD8DBF14E4379164599C4550226461A"
+    },
+    {
+      "name": "qqplot_normal_gold.png",
+      "bytes": 87889,
+      "sha256": "B634A7A755DB7D7FB174F9295E2C488570310101CA21A422E725E608B560153F"
+    },
+    {
+      "name": "qqplot_normal_silver.png",
+      "bytes": 81901,
+      "sha256": "5A4373AE994C42825B53AFF0D6EFB659425C62104DB639B7D4697D5D907593F6"
+    },
+    {
+      "name": "returns_rollingvol_gold.png",
+      "bytes": 274221,
+      "sha256": "E670A201CE86A5EC2F3FED3D1029B6FD57CDF75C8C3D8F8FFF1B5E688C3881D4"
+    },
+    {
+      "name": "returns_rollingvol_silver.png",
+      "bytes": 239452,
+      "sha256": "A27B1FD9AE7D7A38FFC3688EED93319F03853A22138009977D802ABF8EA5B708"
+    },
+    {
+      "name": "acf_grid_gold_silver.png",
+      "bytes": 111124,
+      "sha256": "0BC50334767C3172C01DAEF7F95D74E9D4C4A7821EAFE18925860678747803B2"
+    },
+    {
+      "name": "garch_condvol_gold.png",
+      "bytes": 330536,
+      "sha256": "AFC13B2F80014B254066E68B11F0DAA67B0D355F41C6C16160A32BECEA7530F6"
+    },
+    {
+      "name": "garch_condvol_silver.png",
+      "bytes": 274103,
+      "sha256": "3B18A0AA9DAAE0E4E6833FC732E643DB7F94BA054BD33261317D167F6DF21D96"
+    },
+    {
+      "name": "acf_abs_returns_gold_silver.png",
+      "bytes": 75631,
+      "sha256": "947D32538E7A36B6C45C304D48BD12730C12F07827A921C741C50C7391AB2BCB"
+    },
+    {
+      "name": "arfima_fd_gold.png",
+      "bytes": 344867,
+      "sha256": "1ED7701F31854135E5909126494393F7F8E82A42B46B7F4A52E4CD4D091A6FEA"
+    },
+    {
+      "name": "arfima_fd_silver.png",
+      "bytes": 289051,
+      "sha256": "85BB9AD60D5B65C915D464FBA08C93E79D764192968FF496DA309F1B9E90F246"
+    }
+  ],
+  "figure_count": 19,
+  "raw_data_committed": false,
+  "not_investment_advice": true
+}

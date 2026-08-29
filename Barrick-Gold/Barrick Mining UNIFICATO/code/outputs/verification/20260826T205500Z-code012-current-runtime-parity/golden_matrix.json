@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260826T205500Z-code012-current-runtime-parity",
+  "status": "PASS_REFACTORED_VS_LEGACY_CURRENT_RUNTIME",
+  "historical_code010_array_hashes_match": false,
+  "historical_runtime_note": "Historical CODE-010 hashes differ under the currently resolved Sobol runtime; the accepted artifacts remain frozen and the refactored and legacy runners are bitwise identical under the same runtime.",
+  "golden_run_id": "20260826T111412Z-conditional-multimodel-v4-final",
+  "golden_manifest_path": "data/manifests/valuation/20260826T111412Z-conditional-multimodel-v4-final/run_manifest.json",
+  "golden_manifest_sha256": "AD50E3060ED64D0905A0DED9718FC22E385BDC241BD4D5DBB5F6784677E683ED",
+  "verified_counts": {
+    "inputs": 20,
+    "code": 4,
+    "artifacts": 7,
+    "models": 4
+  },
+  "wacc_shocks_sha256": "334D7A778ACF2B1DA6069F7A579819581AD654D2D05FD5E88A284FDA396C5EB2",
+  "common_input_hashes": {
+    "team4_production_koz": "D11E5B9A43775607E874F25540E52DF425901804451D2DAF44727C65A6A22DEE",
+    "team4_cost_usd_per_oz": "6767D930EA47866C79D7CD1A0FE4642AC947C7BDC93B5BCEEC22C1409F4BB7D0",
+    "team5_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+    "team5_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+    "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+    "common_gold_scenario": "36A6B5F053685107A3E4ABDA8B129ACE57DDE8D4C8528685EC38ECB75273E322"
+  },
+  "golden_file_audit": {
+    "verified": [
+      "config/multimodel_valuation_20260826.json",
+      "config/provisional_valuation_20260825.json",
+      "parity/sources/team-8/path_simulation.py",
+      "parity/sources/team-8/BatesHawkesExact.py",
+      "parity/sources/team-8/Hawkes.py",
+      "parity/sources/team-8/Data/lse_publication_manifest.json",
+      "parity/sources/team-8/Data/baseline_calibration_metrics.csv",
+      "parity/sources/team-8/Data/bates_hawkes_calibration_metrics.csv",
+      "pyproject.toml",
+      "requirements.txt",
+      "parity/sources/team-8/Data/black_scholes_calibrated_params.json",
+      "parity/sources/team-8/Data/heston_calibrated_params.json",
+      "parity/sources/team-8/Data/bates_calibrated_params.json",
+      "parity/sources/team-8/Data/bates_hawkes_calibrated_params.json",
+      "../../Team 4 - Component-Driven EBITDA/Github-Branch/ebitda_montecarlo/ebitda_mc.ipynb",
+      "../../Team 4 - Component-Driven EBITDA/Github-Branch/production/production_forecast.ipynb",
+      "../../Team 4 - Component-Driven EBITDA/Github-Branch/cost_of_sales/cost_of_sales.R",
+      "parity/sources/team-5/current/src/generate_three_stage_dcf.py",
+      "parity/sources/team-8/path_simulation.py",
+      "data/manifests/AUTHORITATIVE_CURRENT.json",
+      "src/barrick_unified/valuation.py",
+      "src/barrick_unified/multimodel_valuation.py",
+      "run_multimodel_valuation.py",
+      "outputs/valuation/20260826T111412Z-conditional-multimodel-v4-final/valuation_quantiles_by_model.csv",
+      "outputs/valuation/20260826T111412Z-conditional-multimodel-v4-final/valuation_quantiles_by_model.tex",
+      "outputs/valuation/20260826T111412Z-conditional-multimodel-v4-final/valuation_summary_by_model.csv",
+      "outputs/valuation/20260826T111412Z-conditional-multimodel-v4-final/valuation_summary_by_model.json",
+      "outputs/valuation/20260826T111412Z-conditional-multimodel-v4-final/terminal_gold_quantiles_by_model.csv",
+      "figures/valuation/20260826T111412Z-conditional-multimodel-v4-final/full_bates_hawkes_value_distribution.png",
+      "figures/valuation/20260826T111412Z-conditional-multimodel-v4-final/multimodel_value_distribution_comparison.png"
+    ],
+    "post_golden_changes": [
+      {
+        "path": "src/barrick_unified/multimodel_reporting.py",
+        "golden_bytes": 18544,
+        "golden_sha256": "0C40D6D21E183909D2F1353DBC539D103C607889521132B12F5A754480F3088C",
+        "current_bytes": 18611,
+        "current_sha256": "672C2A728DFE25B97406F1FD36BD9C07FEBD72EA8331971037467EDFC9ACC5EA",
+        "status": "KNOWN_POST_CODE010_REPORTING_ONLY_CHANGE_ARRAYS_REVERIFIED"
+      }
+    ]
+  },
+  "models": {
+    "black_scholes": {
+      "quarterly_gold_paths_sha256": "F679366276A94EE7FA424D93D74B473855134611B5C3FE27B1AD9F4B567FAC29",
+      "annual_wacc_sha256": "D536D75B83CFC8182AED21006D936C1FC083FB0DA16651B405E795EAE34D287C",
+      "value_per_share_sha256": "33BF74107912BE533AD4D17382417E9C4D48B71C89A8B5B9F1CED8116E046742",
+      "historical_code010_hash_match": {
+        "quarterly_gold_paths_sha256": false,
+        "annual_wacc_sha256": true,
+        "value_per_share_sha256": false
+      },
+      "value_per_share_quantiles_usd": {
+        "P01": 0.2300368512891804,
+        "P05": 2.2037689129918285,
+        "P10": 4.879962099445989,
+        "P25": 18.009254278824137,
+        "P50": 39.29253939271167,
+        "P75": 69.09573980362457,
+        "P90": 107.80550145566411,
+        "P95": 135.37185926334567,
+        "P99": 214.37170908450793
+      }
+    },
+    "heston": {
+      "quarterly_gold_paths_sha256": "E5E1FE271B61552307C64D6FE193E0D930109FB15EBA59CEF110313306A64FB7",
+      "annual_wacc_sha256": "D536D75B83CFC8182AED21006D936C1FC083FB0DA16651B405E795EAE34D287C",
+      "value_per_share_sha256": "FB5A69749FD0919B4A33FCC6B347EF1E0DA6239086B00681454DAE5C5BCB753B",
+      "historical_code010_hash_match": {
+        "quarterly_gold_paths_sha256": false,
+        "annual_wacc_sha256": true,
+        "value_per_share_sha256": false
+      },
+      "value_per_share_quantiles_usd": {
+        "P01": 0.6130225385873711,
+        "P05": 3.012226294897418,
+        "P10": 7.679494113882358,
+        "P25": 20.826038881115693,
+        "P50": 39.9995018685577,
+        "P75": 67.82563028108146,
+        "P90": 101.17842854051565,
+        "P95": 127.38858233976865,
+        "P99": 198.0976594475354
+      }
+    },
+    "bates_poisson": {
+      "quarterly_gold_paths_sha256": "1EA82BEF0B4E3FA7E903BB256399B441B47D63042CBF29727A325AC6095ECBA1",
+      "annual_wacc_sha256": "D536D75B83CFC8182AED21006D936C1FC083FB0DA16651B405E795EAE34D287C",
+      "value_per_share_sha256": "9D61B5B417E7B52AC60973E875D00B411F7FD7B371BAF2AC170808C14DE91811",
+      "historical_code010_hash_match": {
+        "quarterly_gold_paths_sha256": false,
+        "annual_wacc_sha256": true,
+        "value_per_share_sha256": false
+      },
+      "value_per_share_quantiles_usd": {
+        "P01": 0.37751093832986504,
+        "P05": 2.6155005094686836,
+        "P10": 6.16212136348265,
+        "P25": 19.18476761406227,
+        "P50": 38.735284185898365,
+        "P75": 67.97991444666617,
+        "P90": 103.52611141087992,
+        "P95": 130.65551635571862,
+        "P99": 212.72373802978953
+      }
+    },
+    "full_bates_hawkes": {
+      "quarterly_gold_paths_sha256": "753239EAA95857914E1711028886D7806CA03184186160891E6E49919422A1E7",
+      "annual_wacc_sha256": "D536D75B83CFC8182AED21006D936C1FC083FB0DA16651B405E795EAE34D287C",
+      "value_per_share_sha256": "5897EE54B839B96F8F97E3C74616D1072AD6AEC8FEACCA2C46ED7462DA949324",
+      "historical_code010_hash_match": {
+        "quarterly_gold_paths_sha256": false,
+        "annual_wacc_sha256": true,
+        "value_per_share_sha256": false
+      },
+      "value_per_share_quantiles_usd": {
+        "P01": 0.23019009391732675,
+        "P05": 2.4823768094492222,
+        "P10": 5.170741314169727,
+        "P25": 18.777326970701495,
+        "P50": 38.894106312846915,
+        "P75": 66.69166822372605,
+        "P90": 104.19684160749979,
+        "P95": 134.9027545182581,
+        "P99": 217.13653763823214
+      }
+    }
+  },
+  "notes": [
+    "Four engines model gold only.",
+    "Team 4 production/cost and Team 5 DCF/WACC are unchanged.",
+    "GLD/Q to gold and Q-to-P bridges remain unvalidated."
+  ]
+}

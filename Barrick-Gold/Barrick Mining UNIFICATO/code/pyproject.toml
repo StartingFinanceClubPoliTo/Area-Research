@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "barrick-unified-research"
+version = "0.1.0"
+description = "LSE-backed research snapshots and provenance-safe analytics for the Barrick unified article."
+requires-python = ">=3.11"
+dependencies = [
+  "lse-data>=0.14,<1",
+  "matplotlib>=3.8,<4",
+  "numpy>=1.26,<3",
+  "pandas>=2.1,<4",
+  "scipy>=1.11,<2",
+]
+
+[project.scripts]
+barrick-unified = "barrick_unified.cli:main"
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

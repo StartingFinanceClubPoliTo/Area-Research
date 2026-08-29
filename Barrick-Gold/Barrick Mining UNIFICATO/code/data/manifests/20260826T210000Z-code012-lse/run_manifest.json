@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "provider": "London Strategic Edge",
+  "lse_data_version": "0.14.0",
+  "pipeline_version": "0.1.0",
+  "pipeline_script_sha256": "BAA68934A8C34697E2748C64B3058CC350FB71DB4DD7D1F36AA5265FE49CE107",
+  "run_id": "20260826T210000Z-code012-lse",
+  "source_run_id": "20260826T210000Z-code012-lse",
+  "cutoff_utc_date": "2026-08-26",
+  "generated_at_utc": "2026-08-26T20:04:40.043363+00:00",
+  "transformed_at_utc": "2026-08-26T20:04:41.760472+00:00",
+  "code_provenance": {
+    "acquisition_runner_sha256": "BAA68934A8C34697E2748C64B3058CC350FB71DB4DD7D1F36AA5265FE49CE107",
+    "transformation_modules": {
+      "market_data": {
+        "path": "src/barrick_unified/market_data.py",
+        "sha256": "B3755B2585D9C9E7A00E6E6FA095FF497C55C2C2D2CA5AFF60DA077D73F7939D"
+      },
+      "research_snapshot": {
+        "path": "src/barrick_unified/research_snapshot.py",
+        "sha256": "DB0E7E32D8865641DA3ADAE9CC3D9EBBB756B7AB17C525324224F7F993312238"
+      },
+      "team8_option_audit": {
+        "path": "src/barrick_unified/team8_option_audit.py",
+        "sha256": "A809613C4C200A2120384FA670133EB258F9E2F7ECE3E72C4CD6659FBB0E7B7B"
+      },
+      "lse_adapter_current": {
+        "path": "src/barrick_unified/lse_adapter.py",
+        "sha256": "4284A30051EA52480AFEC289C776A9C9D4B9E55373EEE904D918B6C387032754"
+      }
+    },
+    "frozen_team8_lse_dataset": {
+      "path": "parity/sources/team-8/lse_dataset.py",
+      "sha256": "29A256925E9C48A5640EEF57337239437166C0C10C4E18112D8D96BB8D5BD441"
+    }
+  },
+  "request": {
+    "stock_symbols": [
+      "B",
+      "GLD"
+    ],
+    "stock_dataset": "stocks",
+    "timeframe": "1d",
+    "start": "2021-01-01",
+    "end": "2026-08-26",
+    "gld_option_type": "call",
+    "gld_max_dte": 1000,
+    "yield_lookback_days": 120,
+    "catalog_unavailable_symbols": []
+  },
+  "raw_snapshots": {
+    "barrick_equity": {
+      "path": "data/raw/lse_local/20260826T210000Z-code012-lse/barrick_equity_candles.json",
+      "sha256": "6C04E3AAB196579B64C0884C0D048575948DBD35F70369BD8E741BBDD6829C3A",
+      "bytes": 357637,
+      "redistribution": "row-level data are local-only and Git-ignored"
+    },
+    "gld_market_inputs": {
+      "path": "data/raw/lse_local/20260826T210000Z-code012-lse/gld_market_inputs.json",
+      "sha256": "B26C072F9421C28083DB48E51F6908D8874C2CD6B51E2FBDA8029D2333AECFF6",
+      "bytes": 3489422,
+      "redistribution": "row-level data are local-only and Git-ignored"
+    }
+  },
+  "dataset_manifests": {
+    "barrick_equity": {
+      "path": "data/manifests/20260826T210000Z-code012-lse/barrick_equity_manifest.json",
+      "sha256": "F6022B85D0A76C82ADC2B3D336C6FC268AABCE4CA3F06073DE7A4A15A20660E5"
+    },
+    "gld_option_surface": {
+      "path": "data/manifests/20260826T210000Z-code012-lse/gld_option_surface_manifest.json",
+      "sha256": "D6218CD9393DBB6D65EBC35204E77649E79F2290B2AA397255F91979BF9518EB"
+    }
+  },
+  "market_series": [
+    {
+      "symbol": "B",
+      "bars": 84,
+      "start_utc": "2026-04-27T00:00:00+00:00",
+      "end_utc": "2026-08-25T00:00:00+00:00",
+      "semantic_role": "current Barrick Mining Corporation NYSE equity; USD/share",
+      "pre_entity_rows_discarded": 1415
+    },
+    {
+      "symbol": "GLD",
+      "bars": 1423,
+      "start_utc": "2021-01-04T00:00:00+00:00",
+      "end_utc": "2026-08-25T00:00:00+00:00",
+      "semantic_role": "SPDR Gold Shares ETF proxy; USD/share; never relabelled gold USD/oz or realized gold price",
+      "pre_entity_rows_discarded": 0
+    }
+  ],
+  "statistics_contract": {
+    "returns": "close-to-close log returns",
+    "annualization": 252,
+    "rolling_window": 63,
+    "alignment": "trailing and inclusive at t; no look-ahead",
+    "missing_data": "no price or volume forward fill",
+    "historical_var": "empirical 5% log-return quantile; descriptive, not a forecast",
+    "ticker_reuse_guard": "stock rows before the current catalog entry's first timestamp are excluded"
+  },
+  "option_surface_gate": {
+    "status": "PASS_CURRENT_REFRESH_ONLY",
+    "as_of_utc": "2026-08-26T20:03:43.153371+00:00",
+    "raw_call_rows": 5000,
+    "normalized_call_rows": 1979,
+    "eligible_rows": 153,
+    "sampled_nodes": 32,
+    "sampled_maturities": 4,
+    "sampled_strikes": 20,
+    "treasury_curve_date": "2026-07-24",
+    "treasury_tenors": 8,
+    "team8_source_sha256": "29A256925E9C48A5640EEF57337239437166C0C10C4E18112D8D96BB8D5BD441"
+  },
+  "historical_parity_boundary": {
+    "G1_4": "Team 8 unit/benchmark parity is independent of this refresh",
+    "G1_5": "NOT_PROVEN; current data cannot reproduce the historical 2026-08-12 LSE snapshot",
+    "valuation_adapter": "NOT_STARTED; GLD is not converted to gold USD/oz or Barrick realized price"
+  },
+  "figures": {
+    "correlation_series_rendered": 1,
+    "publication_note": "derived figures only; no row-level LSE dataset is distributed"
+  },
+  "artifacts": [
+    {
+      "path": "outputs/current/20260826T210000Z-code012-lse/lse_market_summary.csv",
+      "bytes": 735,
+      "sha256": "75AC913BEB6AA1B59B002FBCE6FC2765917E0E024368E11040C575B98FE01215"
+    },
+    {
+      "path": "figures/current/20260826T210000Z-code012-lse/lse_market_context.png",
+      "bytes": 187704,
+      "sha256": "2124A18385F5870D76C115FA53C9E1C750102F805AF49B3A473A8AA412676E73"
+    },
+    {
+      "path": "figures/current/20260826T210000Z-code012-lse/lse_equity_gld_rolling_correlation.png",
+      "bytes": 66773,
+      "sha256": "8F8A67E89B30756DB555008AA76DF8AF654FF4DAD31FE178EBF378AC8EEB6F1A"
+    },
+    {
+      "path": "figures/current/20260826T210000Z-code012-lse/gld_lse_option_surface_audit.png",
+      "bytes": 98231,
+      "sha256": "E4AF98CF9DF73AB4FB4911F800CE9D628170C08543B2562787CFA3E049307203"
+    }
+  ]
+}

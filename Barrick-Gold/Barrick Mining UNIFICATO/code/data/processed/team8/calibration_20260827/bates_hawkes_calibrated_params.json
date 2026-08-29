@@ -1,0 +1,41 @@
+{
+  "model": "Full affine Bates-Hawkes (Feller constrained)",
+  "parameterization": "lambda0 and lambda_bar are separate; alpha=branching_ratio*beta enforces stationarity",
+  "parameters": {
+    "v0": 0.03567638296785311,
+    "kappa": 0.212764096811288,
+    "theta": 0.0187370986662522,
+    "xi": 0.08928944139274024,
+    "rho": 0.09878715158631518,
+    "lambda0": 1.8199717710142727,
+    "lambda_bar": 1.732080307932221,
+    "stationary_mean_intensity": 1.7674288856451235,
+    "branching_ratio": 0.02,
+    "alpha": 0.22926905899015126,
+    "beta": 11.463452949507563,
+    "mu_J": 0.014302504505548846,
+    "sigma_J": 0.14123763876935944,
+    "feller_gap": 5.594049506830318e-07
+  },
+  "final_objective": 1.0900072793476785e-05,
+  "dataset": {
+    "instrument": "GLD calls",
+    "observations": 24,
+    "maturities": 3,
+    "spot": 422.57
+  },
+  "calibration": {
+    "seed": 20260811,
+    "global_cos_N": 128,
+    "local_cos_N": 192,
+    "final_cos_N": 256,
+    "minimum_branching_ratio": 0.02
+  },
+  "optimizer": {
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "iterations": 18,
+    "evaluations": 220
+  },
+  "status": "lse_feller_constrained_restructured_workflow"
+}

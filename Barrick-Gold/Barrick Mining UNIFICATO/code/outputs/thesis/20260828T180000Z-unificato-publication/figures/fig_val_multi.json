@@ -1,0 +1,68 @@
+{
+  "figure_spec": {
+    "figure_id": "fig_val_multi",
+    "score": 10,
+    "chapter": "Chapter 12",
+    "title": "Conditional Barrick value by gold-price model"
+  },
+  "summaries": [
+    {
+      "model_id": "black_scholes",
+      "model": "Black–Scholes / GBM",
+      "p10_usd_per_share": 2.7545473452740197,
+      "median_usd_per_share": 34.4987320144305,
+      "p90_usd_per_share": 106.2896927763045,
+      "observed_close_usd_per_share": 47.27,
+      "observed_close_timestamp_utc": "2026-08-27T00:00:00Z",
+      "observed_close_percentile": 62.2802734375,
+      "probability_value_above_close": 0.377197265625,
+      "observed_minus_median_usd": 12.771267985569501,
+      "observed_vs_median_pct": 37.01952866043714
+    },
+    {
+      "model_id": "heston",
+      "model": "Heston",
+      "p10_usd_per_share": 10.016299544523601,
+      "median_usd_per_share": 39.480623090777485,
+      "p90_usd_per_share": 91.36908746266971,
+      "observed_close_usd_per_share": 47.27,
+      "observed_close_timestamp_utc": "2026-08-27T00:00:00Z",
+      "observed_close_percentile": 59.9365234375,
+      "probability_value_above_close": 0.400634765625,
+      "observed_minus_median_usd": 7.7893769092225185,
+      "observed_vs_median_pct": 19.729619999442427
+    },
+    {
+      "model_id": "bates_poisson",
+      "model": "Bates–Poisson",
+      "p10_usd_per_share": 0.36972473027036545,
+      "median_usd_per_share": 23.98889604844493,
+      "p90_usd_per_share": 137.6469989622302,
+      "observed_close_usd_per_share": 47.27,
+      "observed_close_timestamp_utc": "2026-08-27T00:00:00Z",
+      "observed_close_percentile": 66.11328125,
+      "probability_value_above_close": 0.3388671875,
+      "observed_minus_median_usd": 23.281103951555075,
+      "observed_vs_median_pct": 97.04950117145663
+    },
+    {
+      "model_id": "full_bates_hawkes",
+      "model": "Full Bates–Hawkes",
+      "p10_usd_per_share": 3.3066418501329182,
+      "median_usd_per_share": 34.94486674060628,
+      "p90_usd_per_share": 104.81201829655772,
+      "observed_close_usd_per_share": 47.27,
+      "observed_close_timestamp_utc": "2026-08-27T00:00:00Z",
+      "observed_close_percentile": 62.26806640625,
+      "probability_value_above_close": 0.3773193359375,
+      "observed_minus_median_usd": 12.325133259393724,
+      "observed_vs_median_pct": 35.27022538355196
+    }
+  ],
+  "display_range_usd_per_share": [
+    -2.4405798174939957,
+    325.42599068473527
+  ],
+  "n_paths_per_model": 8192,
+  "interpretation": "controlled model-risk comparison, not four independent company models"
+}

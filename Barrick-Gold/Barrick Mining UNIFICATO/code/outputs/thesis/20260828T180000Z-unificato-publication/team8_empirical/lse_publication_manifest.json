@@ -1,0 +1,39 @@
+{
+  "source": "London Strategic Edge /options/chain, /ref/bond_yields, /candles",
+  "as_of_utc": "2026-08-27T20:15:12.017875+00:00",
+  "spot": 422.57,
+  "risk_free_rate_source": "LSE US Treasury par-yield curve",
+  "risk_free_rate_curve_date": "2026-07-24",
+  "risk_free_rate_conversion": "continuous proxy log(1 + par_yield_decimal)",
+  "risk_free_rate_interpolation": "current LSE Nelson-Siegel-Svensson fit",
+  "risk_free_rate_model": "Nelson-Siegel-Svensson",
+  "risk_free_rate_nss_parameters": {
+    "beta0": 0.017385564545365727,
+    "beta1": 0.0193249198690013,
+    "beta2": 0.02852251877184989,
+    "beta3": 0.1032832428424333,
+    "tau1": 1.41891774985645,
+    "tau2": 15.07963754251128
+  },
+  "risk_free_rate_nss_rmse_bp": 2.372586683839021,
+  "risk_free_rate_missing_requested_tenors": [
+    "US10Y"
+  ],
+  "risk_free_rate_range": [
+    0.03723641334462473,
+    0.05056174219286855
+  ],
+  "dividend_yield_assumption": 0.0,
+  "calibration_price_method": "Black-Scholes price implied by LSE IV",
+  "maximum_source_age_days": 7,
+  "chain_rows": 1912,
+  "eligible_rows": 143,
+  "sample_rows": 24,
+  "maturities": 3,
+  "sample_sha256": "19243b6103fdcd50f5b0751aaed64863e0941c0c6ddbd6a033d13275d123d58a",
+  "history_start": "2021-01-04T00:00:00Z",
+  "history_end": "2026-08-27T00:00:00Z",
+  "history_observations": 1424,
+  "raw_data_committed": false,
+  "black_scholes_constant_volatility": 0.26562169489966636
+}

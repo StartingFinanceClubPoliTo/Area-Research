@@ -1,0 +1,6 @@
+metric,value,unit
+observed_share_price_usd,48.39,USD/share
+median_value_per_share_proxy_usd,34.00874515291589,USD/share
+median_enterprise_value_proxy_usd_mn,56981.9925911621,USD millions
+median_equity_value_proxy_usd_mn,56981.9925911621,USD millions
+probability_model_value_exceeds_observed,0.37948,fraction

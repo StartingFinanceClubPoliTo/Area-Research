@@ -1,0 +1,52 @@
+\section{Calibration Sample Audit}
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/sampling_comparison.png}
+  \captionof{figure}{Chebyshev sampling geometry for the admitted 27 August 2026 GLD calibration: 24 retained nodes from 143 eligible calls across three maturities. Colour represents observed implied volatility.}
+  \label{fig:chebyshev_audit}
+\par}
+
+\subsection{Why structured sampling is retained}
+The option surface is irregular in strike and maturity. Team 8 therefore passes a structured Chebyshev subset to the optimizer rather than allowing densely listed regions to dominate the loss. The figure is the sampling audit for the same 24-node surface used by the current valuation, not a later diagnostic snapshot.
+
+\begin{methodbox}[Evidence status]
+The calibrated inputs, residual maps and valuation paths share the same 27 August Team 8 parameter set. The Treasury curve remains dated 24 July and the timing mismatch is retained as an explicit limitation.
+\end{methodbox}
+
+\subsection{What the residual maps add}
+The residual heatmaps show where each specification systematically over- or under-prices the observed implied-volatility surface. Black--Scholes leaves the strongest smile and term-structure pattern; Heston reduces part of the curvature; jump-based specifications flatten the field further. Full Bates--Hawkes provides the lowest admitted IV RMSE, although its fitted branching ratio of 0.02 implies only mild self-excitation in this snapshot. The four maps are arranged as a two-by-two comparison so their common axes and colour scales remain directly comparable at a readable size.
+
+\end{multicols}
+
+\vspace{4pt}
+{\centering
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/black_scholes_residual_heatmap.png}
+  \par\vspace{1pt}{\footnotesize\textbf{(a)} Black--Scholes\par}
+\end{minipage}\hfill%
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/heston_residual_heatmap.png}
+  \par\vspace{1pt}{\footnotesize\textbf{(b)} Heston\par}
+\end{minipage}
+
+\vspace{2pt}
+
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/bates_residual_heatmap.png}
+  \par\vspace{1pt}{\footnotesize\textbf{(c)} Bates--Poisson\par}
+\end{minipage}\hfill%
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/bates_hawkes_residual_heatmap.png}
+  \par\vspace{1pt}{\footnotesize\textbf{(d)} Full Bates--Hawkes\par}
+\end{minipage}
+\captionof{figure}{Current implied-volatility residual maps for Black--Scholes, Heston, Bates--Poisson and Full Bates--Hawkes. Blue denotes model IV above market IV and red underpricing. Model richness progressively flattens the residual field; the lowest in-sample IV RMSE belongs to Full Bates--Hawkes.}
+\label{fig:residual_maps}
+}
+\vspace{4pt}
+
+\begin{multicols}{2}
+\raggedcolumns

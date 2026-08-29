@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "team": 3,
+  "benchmark_class": "synthetic_methodological",
+  "acquired_utc": "2026-08-14T19:17:34.029Z",
+  "original_root": "Team 3 - Monte Carlo Risk/Github-Branch",
+  "frozen_root": "UNIFICATO/Github-Branch/parity/sources/team-3",
+  "copy_policy": "byte_identical_only",
+  "license": {
+    "status": "GAP",
+    "evidence": "No license declaration was found in the distributed README or file set inspected for this freeze.",
+    "redistribution_approval": "not_established"
+  },
+  "files": [
+    {
+      "path": "examples/run_reproducibility.py",
+      "role": "benchmark_runner",
+      "bytes": 8342,
+      "sha256": "4510088AC3DBE2397625A8F0B8EABCB70F065AEB8B0497E62ECA9C3D05092B9F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "requirements.txt",
+      "role": "declared_dependencies",
+      "bytes": 40,
+      "sha256": "25412683EB8F0B0049E66B26009838E23BC6CB4D4979F9DA0F289599B0DAB630",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/monte_carlo_risk/__init__.py",
+      "role": "package_interface",
+      "bytes": 1971,
+      "sha256": "DACDF3C1B15F54B7C1DEE1601BA7E583755EDFCFD6159E85D06ACE4FDAA3260D",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/monte_carlo_risk/option_pricing.py",
+      "role": "pricing_implementation",
+      "bytes": 4724,
+      "sha256": "6EEEEAB7E749312BFE9A01DF3792C8D65EF13AE28EB6233707A1E2D22C6C5CAB",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/monte_carlo_risk/random_generators.py",
+      "role": "random_number_implementation",
+      "bytes": 4774,
+      "sha256": "E6E845654C983AEF099594D547465B3AF39BB335F35450A2AE6BC0FA80CF7478",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/monte_carlo_risk/returns.py",
+      "role": "return_and_wealth_implementation",
+      "bytes": 3770,
+      "sha256": "E70A1DB205CDBFF1583611F46389160A56A0B7D5CF1732DC09ECF945618B5924",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/monte_carlo_risk/stochastic_processes.py",
+      "role": "stochastic_process_implementation",
+      "bytes": 4468,
+      "sha256": "A27EBCB8D264812D35778470F7097AA95CB4498E245F0EDE8C2191BFF7421B18",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/monte_carlo_risk/variance_reduction.py",
+      "role": "variance_reduction_implementation",
+      "bytes": 6163,
+      "sha256": "7E8683F2EB67322E6BA8BB6476919B7C2D6634551352AD7B162AF278FA268229",
+      "copy_sha256_verified": true
+    }
+  ],
+  "verification": {
+    "file_count": 8,
+    "all_planned_files_present": true,
+    "all_sha256_match_plan": true,
+    "originals_modified": false,
+    "frozen_copies_used_as_run_working_directory": false
+  }
+}

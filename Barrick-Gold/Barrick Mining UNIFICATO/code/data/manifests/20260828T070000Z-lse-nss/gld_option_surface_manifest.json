@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "dataset": "GLD_current_option_surface_audit",
+  "provider": "London Strategic Edge",
+  "lse_data_version": "0.14.0",
+  "pipeline_version": "0.1.0",
+  "pipeline_script_sha256": "BAA68934A8C34697E2748C64B3058CC350FB71DB4DD7D1F36AA5265FE49CE107",
+  "run_id": "20260828T070000Z-lse-nss",
+  "source_run_id": "20260828T070000Z-lse-nss",
+  "cutoff_utc_date": "2026-08-28",
+  "endpoint": {
+    "method": "options",
+    "underlying": "GLD",
+    "type": "call",
+    "max_dte": 1000,
+    "limit": 5000,
+    "historical_cutoff_parameter_available": false,
+    "observed_as_of_must_not_exceed_cutoff": true
+  },
+  "treasury_endpoint": {
+    "method": "bond_yields",
+    "symbols": [
+      "US1M",
+      "US2M",
+      "US3M",
+      "US6M",
+      "US1Y",
+      "US2Y",
+      "US3Y",
+      "US5Y"
+    ],
+    "lookback_days": 120,
+    "order": "asc",
+    "limit_per_tenor": 5000
+  },
+  "raw_snapshot": {
+    "path": "data/raw/lse_local/20260828T070000Z-lse-nss/gld_market_inputs.json",
+    "sha256": "CB5055CEE34B9F4350DAEE422FFBA7EFD7C312A0F0E3D9066F2A5F887D9DF3CE",
+    "bytes": 3575608,
+    "redistribution": "row-level data are local-only and Git-ignored"
+  },
+  "gate": {
+    "status": "PASS_CURRENT_REFRESH_ONLY",
+    "as_of_utc": "2026-08-27T20:15:12.017875+00:00",
+    "raw_call_rows": 5000,
+    "normalized_call_rows": 1912,
+    "eligible_rows": 143,
+    "sampled_nodes": 24,
+    "sampled_maturities": 3,
+    "sampled_strikes": 13,
+    "treasury_curve_date": "2026-07-24",
+    "treasury_tenors": 11,
+    "team8_source_sha256": "F6C1352C43032B8BE6F14B1F2130929E5594B266FE5D1571CA682805C3C1459A"
+  },
+  "historical_G1_5": "NOT_PROVEN; a current endpoint call cannot replace the frozen 2026-08-12 raw snapshot"
+}

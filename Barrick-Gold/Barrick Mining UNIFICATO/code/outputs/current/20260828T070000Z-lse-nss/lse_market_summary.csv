@@ -1,0 +1,3 @@
+symbol,bars,return_observations,start_utc,end_utc,total_simple_return,annualized_mean_log_return,annualized_volatility,annualized_downside_volatility,daily_skewness,daily_excess_kurtosis,historical_var_05_log_return,maximum_drawdown,semantic_role
+B,86,85,2026-04-27T00:00:00+00:00,2026-08-27T00:00:00+00:00,0.1619960669,0.4451187877,0.5122983048,0.2831950133,0.2209646669,0.1865849445,-0.04465130416,-0.2609802673,current Barrick Mining Corporation NYSE equity; USD/share
+GLD,1425,1424,2021-01-04T00:00:00+00:00,2026-08-27T00:00:00+00:00,1.31062476,0.1482124457,0.1820705276,0.1402938407,-0.7309804098,7.570278642,-0.01812313932,-0.2623281013,SPDR Gold Shares ETF proxy; USD/share; never relabelled gold USD/oz or realized gold price

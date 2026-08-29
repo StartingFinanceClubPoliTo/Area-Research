@@ -1,0 +1,64 @@
+\begin{table}[H]
+\centering
+\caption{Primary structural scenario: Full Bates--Hawkes conditional Barrick value quantiles.}
+\label{tab:primary-bates-hawkes-valuation-quantiles}
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{rrrr}
+\toprule
+\textbf{Quantile} & \textbf{EV proxy} & \textbf{Equity proxy} & \textbf{Value/share} \\
+& \textbf{USD mn} & \textbf{USD mn} & \textbf{USD} \\
+\midrule
+P01 & -908 & -908 & -0.54 \\
+P05 & 2,504 & 2,504 & 1.49 \\
+P10 & 5,540 & 5,540 & 3.31 \\
+P25 & 25,392 & 25,392 & 15.15 \\
+P50 & 58,550 & 58,550 & 34.94 \\
+P75 & 109,095 & 109,095 & 65.11 \\
+P90 & 175,614 & 175,614 & 104.81 \\
+P95 & 228,710 & 228,710 & 136.50 \\
+P99 & 365,438 & 365,438 & 218.11 \\
+\bottomrule
+\end{tabular}
+
+\par\smallskip
+\footnotesize The USD~47.27 close on 27 August 2026 is USD~12.33, or 35.27\%,
+above the conditional median and lies at the 62.27th percentile; 37.73\% of
+paths exceed it. EV and equity coincide only because the corporate bridge
+still contains explicit zero placeholders. This is a provisional research
+sensitivity, not a fair value or target price.
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Inputs that determine how the primary distribution must be read.}
+\label{tab:conditional-multimodel-assumptions}
+\scriptsize
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}p{2.65cm}X X@{}}
+\toprule
+\textbf{Block} & \textbf{Run input} & \textbf{Interpretation limit} \\
+\midrule
+Gold-price layer & Team~8 Full Bates--Hawkes recalibrated to 27 August GLD
+calls under $\mathbb Q$; paths share a USD~4,417/oz Barrick Q2 realised-price
+anchor. & Transfers distributional shape only; the anchor is a quarterly
+average, not spot or a physical forecast. \\
+Production and costs & Barrick actuals in 2026Q1--Q2, followed by Team~4
+forecasts from 2026Q3 through 2030. & Actual and forecast quarters are marked
+separately; Team~4 price and illustrative valuation artifacts are excluded. \\
+Cash flow and DCF & Unified tax, growth, ROIC, WACC and perpetual-growth
+methodology. & Identical across models; component margin and FCFF remain
+unreconciled proxies. \\
+Equity bridge & Debt, cash, minorities, non-operating assets and other claims
+set to zero; 1,675.51 million-share proxy. & Neither bridge nor share count is
+filing-reconciled. \\
+Simulation & 8,192 paths, 260 fine steps and 20 quarters; aligned engine seed
+20260827 and one common WACC array. & Only the price engine changes across
+branches. \\
+Date alignment & Barrick anchor quarter ends 30 June; Treasury curve 24 July;
+GLD surface and \texttt{B} close 27 August; valuation run 27 August 2026.
+& Dates are serialized but not fully synchronous. \\
+\bottomrule
+\end{tabularx}
+\end{table}

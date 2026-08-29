@@ -1,0 +1,347 @@
+\pdfminorversion=7
+\documentclass[a4paper,10pt,titlepage,oneside,openany]{book}
+
+\usepackage[skip=6pt]{parskip}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{array,booktabs,tabularx}
+\usepackage{pdfpages}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+\usepackage{comment}
+\usepackage{tikz}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+
+\providecommand{\LILink}{https://www.linkedin.com/company/starting-finance-club-polito}
+\providecommand{\IGLink}{https://www.instagram.com/sfclubpolito}
+\providecommand{\Website}{https://sfclubpolito.it/}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\E}{\mathbb{E}}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\dd}{\,\mathrm{d}}
+\providecommand{\ii}{\mathrm{i}}
+\providecommand{\vega}{\mathcal{V}}
+\providecommand{\Lag}{\mathcal{L}}
+\providecommand{\erf}{\operatorname{erf}}
+\providecommand{\citep}[1]{\cite{#1}}
+\providecommand{\citet}[1]{\cite{#1}}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+
+\AtBeginDocument{\justifying}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\graphicspath{{img/}}
+
+\definecolor{sfblue}{HTML}{123A63}
+\definecolor{sflightblue}{HTML}{EAF2F8}
+\definecolor{sfgap}{HTML}{8A4B08}
+\definecolor{sfgapbg}{HTML}{FFF6E5}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Starting Finance Club PoliTo}}
+\fancyhead[R]{\includegraphics[height=0.65cm,keepaspectratio]{img/Logo_SFClub_Polito.png}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\headheight}{25pt}
+\setlength{\headsep}{24pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Starting Finance Club PoliTo}}
+  \fancyhead[R]{\includegraphics[height=0.65cm,keepaspectratio]{img/Logo_SFClub_Polito.png}}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{notation}{Notation}[chapter]
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[chapter]
+
+\newenvironment{pseudocode}{\par\small\ttfamily\begin{adjustwidth}{1em}{1em}}{\end{adjustwidth}\par}
+
+\newenvironment{tightabstract}{%
+  \begin{tcolorbox}[
+    title={Abstract},width=0.98\textwidth,left=4mm,right=4mm,
+    top=1.5mm,bottom=1.5mm,colback=white,colframe=sfblue,boxrule=0.5pt]
+  \footnotesize\justifying
+}{%
+  \end{tcolorbox}
+}
+
+\newcommand{\chapterstatus}[1]{%
+  \begin{tcolorbox}[colback=sflightblue,colframe=sfblue,boxrule=0.5pt,arc=1mm,left=3mm,right=3mm]
+  \small\textbf{Working-draft status.} #1
+  \end{tcolorbox}
+}
+\newcommand{\sourceassetnote}{%
+  \begin{tcolorbox}[colback=white,colframe=black!35,boxrule=0.35pt,arc=1mm,left=3mm,right=3mm]
+  \small\textbf{Asset gate.} Only figures and result tables accepted by the provenance ledger are rendered. Legacy duplicates, raw-data views and unverified outputs remain omitted; selected frozen or regenerated assets are identified in their captions.
+  \end{tcolorbox}
+}
+\newcommand{\gapbox}[1]{%
+  \begin{tcolorbox}[colback=sfgapbg,colframe=sfgap,boxrule=0.6pt,arc=1mm,left=3mm,right=3mm,title={Open evidence gap}]
+  \small #1
+  \end{tcolorbox}
+}
+\newcommand{\sourcecitation}[1]{\textsuperscript{\textcolor{black!55}{[source audit]}}}
+\newcommand{\sourceref}[1]{\textit{source item}}
+
+\makeatletter
+\newenvironment{references}{%
+  \chapter*{Bibliography}
+  \addcontentsline{toc}{chapter}{Bibliography}
+  \markboth{Bibliography}{Bibliography}
+  \list{\@biblabel{\@arabic\c@enumiv}}{%
+    \settowidth\labelwidth{\@biblabel{99}}
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \@openbib@code
+    \usecounter{enumiv}
+    \let\p@enumiv\@empty
+    \renewcommand\theenumiv{\@arabic\c@enumiv}}
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty\clubpenalty
+  \widowpenalty4000
+  \sfcode`\.\@m
+}{%
+  \def\@noitemerr{\@latex@warning{Empty `references' environment}}
+  \endlist
+}
+
+% Preserve the accepted Research-template vertical fingerprint.
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{-18\p@}}{}{}
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{-18\p@}}{}{}
+\patchcmd{\@makechapterhead}{\huge}{\fontsize{17}{20}\selectfont\bfseries}{}{}
+\patchcmd{\@makechapterhead}{\Huge}{\fontsize{20}{24}\selectfont\bfseries}{}{}
+\patchcmd{\@makeschapterhead}{\Huge}{\fontsize{20}{24}\selectfont\bfseries}{}{}
+\patchcmd{\@makechapterhead}{\vskip 20\p@}{\vskip 6\p@}{}{}
+\patchcmd{\@makechapterhead}{\vskip 40\p@}{\vskip 10\p@}{}{}
+\patchcmd{\@makeschapterhead}{\vskip 40\p@}{\vskip 10\p@}{}{}
+\makeatother
+
+\title{Stochastic Framework for\\Barrick Mining Corporation Valuation}
+\author{%
+\scriptsize
+\begin{tabular}{ll}
+\textbf{Team 1} & Stefano Falcione; Marco Fracca\\
+\textbf{Team 2} & Filippo Triassi; Giorgio Zoccatelli\\
+\textbf{Team 3} & Andrea Rostagno; Francesco Florio\\
+\textbf{Team 4} & Giacomo Scali; Jacopo Foralosso\\
+\textbf{Team 5} & Federico Vesco; Lorenzo Pietra; Bader Moussaif\\
+\textbf{Team 6} & Davide Sisto; Matteo Armando\\
+\textbf{Team 7} & Davide D'Amico; Pietro Weisz\\
+\textbf{Team 8} & Salvatore Gabriele Messina; Alessandro Coco
+\end{tabular}
+}
+\date{Working draft --- 28 August 2026}
+
+\newcommand{\abstracttext}{%
+This study constructs and audits a stochastic valuation architecture for
+Barrick Mining Corporation within Starting Finance Club PoliTo Research. Eight
+teams contribute probability, econometrics, Monte Carlo, historical gold
+dynamics, stochastic volatility and jumps, option calibration, purpose-built
+mine forecasts and discounted cash flow. Unification assigns each variable to
+one source authority and links the layers through explicit date, unit, measure
+and accounting contracts. Its central design choice is separation: Black--Scholes/
+GBM, Heston, Bates--Poisson and Full Bates--Hawkes are four Team 8 engines for
+the \emph{gold-price layer only}. They do not model Barrick's production or
+costs. Barrick's Q1--Q2 2026 actual production and Cost of Sales form the
+current stub; Team~4 forecasts begin at Q3 and remain explicitly labelled.
+The unified tax, growth, ROIC, stochastic WACC, terminal-value and
+equity-bridge adaptation is common. Team~4's legacy NSS, IV, GBM and
+illustrative stochastic EBITDA artifacts are excluded. In their place, the
+current Team~8 build fits an independent Nelson--Siegel--Svensson curve to 11
+same-date LSE US Treasury tenors and uses it consistently for option-maturity
+rates and integral-preserving quarterly forward rates. The NSS fit has a 2.37
+basis-point RMSE; the requested 10Y tenor is unavailable on the common 24 July
+2026 curve date. Team~8 calibrates GLD calls under the risk-neutral measure. On
+the 27 August 2026 surface, Full Bates--Hawkes has the lowest in-sample IV RMSE:
+32.49 basis points, against 56.55 for Bates--Poisson, 86.28 for Heston and
+114.04 for Black--Scholes. Its self-excitation ratio reaches the imposed 0.02
+lower bound, so the richer specification is a primary in-sample structural
+scenario, not evidence of strong Hawkes identification or predictive dominance.
+The accepted comparison uses 8,192 paths over 20 quarters and one common WACC
+shock array. At the latest completed LSE close, \texttt{B} was USD 47.27 per
+share on 27 August 2026. Under Full Bates--Hawkes, the conditional
+P10/P25/P50/P75/P90 values are USD 3.31/15.15/34.94/65.11/104.81; the close is
+USD 12.33, or 35.27\%, above the median, lies near the 62.27th percentile and
+is exceeded by 37.73\% of paths. The four model medians are USD 34.50, 39.48,
+23.99 and 34.94 for Black--Scholes, Heston, Bates--Poisson and Full
+Bates--Hawkes. The comparison places the close above each conditional median,
+but does not establish market mispricing. It transfers only GLD/$\mathbb Q$
+distributional shape to paths restarted at Barrick's Q2 average realised-price
+anchor of USD~4,417/oz: it performs neither a one-for-one GLD level conversion
+nor a validated $\mathbb Q$-to-$\mathbb P$ mapping. Inputs remain asynchronous---
+anchor quarter ending 30 June, Treasury curve 24 July, and calibration surface
+and Barrick close on 27 August 2026.
+Component margin and FCFF remain proxies; debt, cash, minorities,
+non-operating assets and other equity adjustments are zero placeholders, and
+the 1,675.51 million-share input is unreconciled. The 86-bar Barrick window and
+24-node current option-surface calibration are dated diagnostics. Timestamped
+news and an NLP/ML
+filtration for geopolitical and macroeconomic shocks remain absent.
+Accordingly, the reported distributions are controlled research sensitivities,
+not physical forecasts, confidence intervals, fair values, targets or
+investment advice.}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \vspace*{-0.7cm}
+  \includegraphics[width=2.55cm]{img/Logo_SFClub_Polito.png}\\[0.25cm]
+  {\fontsize{23}{26}\selectfont\bfseries \@title\par}
+  \vspace{0.22cm}
+  {\normalsize\textbf{Contributing authors}\par}
+  \vspace{0.10cm}
+  {\@author\par}
+  \vspace{0.12cm}
+  {\small\@date\par}
+  \vspace{0.14cm}
+  {\large\textbf{Starting Finance Club PoliTo}\par}
+  \scriptsize
+  LinkedIn: \url{\LILink}\quad
+  GitHub: \url{https://github.com/StartingFinanceClubPoliTo/Research}\\[-1pt]
+  Instagram: \url{\IGLink}\quad Website: \url{\Website}
+  \vspace{0.18cm}
+  \begin{tightabstract}
+  \abstracttext
+  \end{tightabstract}
+\end{titlepage}
+}
+\makeatother
+
+\hypersetup{
+  pdftitle={Stochastic Framework for Barrick Mining Corporation Valuation},
+  pdfsubject={LSE-refreshed conditional multi-model valuation with explicit evidence gaps},
+  pdfauthor={Starting Finance Club PoliTo --- Research Area}
+}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\includepdf[pages=1,fitpaper=true,pagecommand={\thispagestyle{empty}}]{Copertina_research.pdf}
+\clearpage
+\maketitle
+
+\frontmatter
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\input{chapters/00-discoveries-at-a-glance}
+
+\tableofcontents
+\thispagestyle{plain}
+
+\mainmatter
+\setcounter{page}{1}
+
+\part{Origins of the Research, Gold and Barrick}
+\input{chapters/01-introduction}
+\input{chapters/03-team-study-synthesis}
+\input{chapters/02-gold-regimes-debasement}
+\input{chapters/03-company-perimeter}
+\input{chapters/03-data-and-design}
+\input{chapters/03-current-lse-diagnostics}
+
+\part{Mathematical, Econometric and Numerical Foundations}
+\input{chapters/04-probability-and-pricing}
+\input{chapters/05-econometrics-and-time-series}
+\input{chapters/06-monte-carlo}
+
+\part{From Gold Time Series to Affine Stochastic Models}
+\input{chapters/07-gold-econometrics}
+\input{chapters/08-volatility-jumps-affine}
+\input{chapters/09-option-calibration}
+\input{chapters/09-current-lse-surface}
+
+\part{Operations, Corporate Valuation, Validation and Conclusions}
+\input{chapters/10-operations-ebitda}
+\input{chapters/11-dcf}
+\input{chapters/12-unified-experiment}
+\input{chapters/14-discussion-conclusion}
+
+\begin{references}
+\bibitem{team1}
+Stefano Falcione and Marco Fracca, \emph{Black--Scholes Foundations}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team2}
+Filippo Triassi and Giorgio Zoccatelli, \emph{OLS and Dynamic Correlations}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team3}
+Andrea Rostagno and Francesco Florio, \emph{Monte Carlo Risk}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team4}
+Giacomo Scali and Jacopo Foralosso, \emph{Component-Driven EBITDA}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team5}
+Federico Vesco, Lorenzo Pietra and Bader Moussaif, \emph{Three-Stage DCF}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team6}
+Davide Sisto and Matteo Armando, \emph{Beyond Black--Scholes}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team7}
+Davide D'Amico and Pietro Weisz, \emph{Gold Volatility Dynamics}, Barrick project source article, supplied workspace copy.
+
+\bibitem{team8}
+Salvatore Gabriele Messina and Alessandro Coco, \emph{Gold Options Stochastic Modeling}, Barrick project source article, supplied workspace copy.
+
+\bibitem{lse-2026}
+London Strategic Edge, \emph{Market-data and options datasets}, provider snapshot accessed 28 August 2026. Aggregate statistics and derived figures are reported under the project's non-redistribution boundary.
+
+\bibitem{barrick-name-2025}
+Barrick Mining Corporation, \emph{Barrick Announces Name Change to Barrick Mining Corporation and Election of Directors}, 6 May 2025, \href{https://www.barrick.com/English/news/news-details/2025/barrick-announces-name-change-to-barrick-mining-corporation-and-election-of-directors/default.aspx}{official corporate release}.
+
+\bibitem{barrick-about-2026}
+Barrick Mining Corporation, \emph{About Barrick}, corporate profile accessed 27 August 2026, \href{https://www.barrick.com/English/about/default.aspx}{official company profile}.
+
+\bibitem{imf-war-inflation-2022}
+International Monetary Fund, \emph{War Dims Global Economic Outlook as Inflation Accelerates}, 19 April 2022, \href{https://www.imf.org/en/Blogs/Articles/2022/04/19/blog-weo-war-dims-global-economic-outlook-as-inflation-accelerates}{IMF analysis}.
+
+\bibitem{ecb-gold-risk-2025}
+European Central Bank, \emph{Gold demand: the role of the official sector and geopolitics}, Financial Stability Review, May 2025, \href{https://www.ecb.europa.eu/press/financial-stability-publications/fsr/focus/2025/html/ecb.fsrbox202505_02~7f616fcd3f.en.html}{ECB analysis}.
+
+\bibitem{fed-gold-reserves-2025}
+Board of Governors of the Federal Reserve System, \emph{Exploring Central Bank Gold Purchases and the Dollar's Role in International Reserves}, International Finance Discussion Papers, \href{https://www.federalreserve.gov/econres/ifdp/exploring-central-bank-gold-purchases-and-the-dollars-role-in-international-reserves.htm}{Federal Reserve paper}.
+
+\bibitem{wgc-gdt-q2-2026}
+World Gold Council, \emph{Gold Demand Trends Q2 2026: Central Banks}, accessed 27 August 2026, \href{https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q2-2026/central-banks}{demand report}.
+
+\bibitem{github-placeholder}
+Barrick Gold Research Teams, \emph{Stochastic Valuation of Barrick Mining: unified thesis and supporting code}, Starting Finance Club PoliTo, \href{https://github.com/StartingFinanceClubPoliTo/Research/tree/main/Barrick-Gold/Barrick\%20Mining\%20UNIFICATO}{Barrick Mining UNIFICATO repository}, accessed 29 August 2026.
+\end{references}
+
+\end{document}

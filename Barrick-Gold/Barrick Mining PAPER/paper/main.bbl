@@ -1,0 +1,47 @@
+\begin{thebibliography}{}
+
+\bibitem[Akaike, 1974]{akaike1974}
+Akaike, H. (1974).
+\newblock A new look at the statistical model identification.
+\newblock {\em IEEE Transactions on Automatic Control}, 19(6):716--723.
+
+\bibitem[Bates, 1996]{bates1996}
+Bates, D.~S. (1996).
+\newblock Jumps and stochastic volatility: Exchange rate processes implicit in
+  deutsche mark options.
+\newblock {\em The Review of Financial Studies}, 9(1):69--107.
+
+\bibitem[Damodaran, 2012]{damodaran2012investment}
+Damodaran, A. (2012).
+\newblock {\em Investment Valuation: Tools and Techniques for Determining the
+  Value of Any Asset}.
+\newblock Wiley, 3 edition.
+
+\bibitem[Glasserman, 2004]{glasserman2004monte}
+Glasserman, P. (2004).
+\newblock {\em Monte Carlo Methods in Financial Engineering}.
+\newblock Springer.
+
+\bibitem[Hawkes, 1971]{hawkes1971}
+Hawkes, A.~G. (1971).
+\newblock Spectra of some self-exciting and mutually exciting point processes.
+\newblock {\em Biometrika}, 58(1):83--90.
+
+\bibitem[Heston, 1993]{heston1993}
+Heston, S.~L. (1993).
+\newblock A closed-form solution for options with stochastic volatility with
+  applications to bond and currency options.
+\newblock {\em The Review of Financial Studies}, 6(2):327--343.
+
+\bibitem[Schwarz, 1978]{schwarz1978}
+Schwarz, G. (1978).
+\newblock Estimating the dimension of a model.
+\newblock {\em The Annals of Statistics}, 6(2):461--464.
+
+\bibitem[Barrick Gold Research Teams, 2026]{sfcgithub}
+Barrick Gold Research Teams. (2026).
+\newblock {\em Stochastic valuation of Barrick Mining: supporting code}.
+\newblock Starting Finance Club PoliTo, GitHub repository.
+\newblock \href{https://github.com/StartingFinanceClubPoliTo/Research/tree/main/Barrick-Gold/Barrick\%20Mining\%20UNIFICATO}{Barrick Mining UNIFICATO repository}, accessed 29 August 2026.
+
+\end{thebibliography}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "status": "AUTHORITATIVE_CONDITIONAL_RESEARCH_RUN_NOT_TARGET",
+  "run_id": "20260826T111412Z-conditional-multimodel-v4-final",
+  "manifest_path": "data/manifests/valuation/20260826T111412Z-conditional-multimodel-v4-final/run_manifest.json",
+  "manifest_sha256": "AD50E3060ED64D0905A0DED9718FC22E385BDC241BD4D5DBB5F6784677E683ED",
+  "scope": "GOLD_PRICE_LAYER_ONLY",
+  "bridge_label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+  "supersedes": [
+    {
+      "run_id": "20260826T111004Z-conditional-multimodel-v4",
+      "status": "NON_AUTHORITATIVE_PREFLIGHT"
+    }
+  ],
+  "not_investment_advice": true
+}

@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "method": "Nelson-Siegel-Svensson nonlinear least squares",
+  "source": "London Strategic Edge /ref/bond_yields",
+  "source_run_id": "20260828T070000Z-lse-nss",
+  "source_raw_sha256": "CB5055CEE34B9F4350DAEE422FFBA7EFD7C312A0F0E3D9066F2A5F887D9DF3CE",
+  "curve_date": "2026-07-24",
+  "requested_symbols": [
+    "US1M",
+    "US2M",
+    "US3M",
+    "US6M",
+    "US1Y",
+    "US2Y",
+    "US3Y",
+    "US5Y",
+    "US7Y",
+    "US10Y",
+    "US20Y",
+    "US30Y"
+  ],
+  "available_symbols": [
+    "US1M",
+    "US2M",
+    "US3M",
+    "US6M",
+    "US1Y",
+    "US2Y",
+    "US3Y",
+    "US5Y",
+    "US7Y",
+    "US20Y",
+    "US30Y"
+  ],
+  "missing_symbols_on_curve_date": [
+    "US10Y"
+  ],
+  "observations": 11,
+  "rate_definition": "continuous proxy log(1 + Treasury par yield)",
+  "parameters": {
+    "beta0": 0.017385564545365727,
+    "beta1": 0.0193249198690013,
+    "beta2": 0.02852251877184989,
+    "beta3": 0.1032832428424333,
+    "tau1": 1.41891774985645,
+    "tau2": 15.07963754251128
+  },
+  "rmse_bp": 2.372586683839021,
+  "max_abs_error_bp": 5.281655337103855,
+  "curve_points": [
+    {
+      "symbol": "US1M",
+      "maturity_years": 0.08213552361396304,
+      "par_yield_pct": 3.762,
+      "observed_continuous_rate": 0.03692962908491008,
+      "fitted_continuous_rate": 0.03723641334462473,
+      "residual_bp": 3.0678425971465
+    },
+    {
+      "symbol": "US2M",
+      "maturity_years": 0.16427104722792607,
+      "par_yield_pct": 3.858,
+      "observed_continuous_rate": 0.037854395550968686,
+      "fitted_continuous_rate": 0.03772127252181144,
+      "residual_bp": -1.3312302915724494
+    },
+    {
+      "symbol": "US3M",
+      "maturity_years": 0.2464065708418891,
+      "par_yield_pct": 3.904,
+      "observed_continuous_rate": 0.03829720993234408,
+      "fitted_continuous_rate": 0.038167983425602625,
+      "residual_bp": -1.2922650674145748
+    },
+    {
+      "symbol": "US6M",
+      "maturity_years": 0.4928131416837782,
+      "par_yield_pct": 4.048,
+      "observed_continuous_rate": 0.03968214513870464,
+      "fitted_continuous_rate": 0.03930569164901596,
+      "residual_bp": -3.764534896886773
+    },
+    {
+      "symbol": "US1Y",
+      "maturity_years": 0.999315537303217,
+      "par_yield_pct": 4.12,
+      "observed_continuous_rate": 0.040373894138273254,
+      "fitted_continuous_rate": 0.04090205967198364,
+      "residual_bp": 5.281655337103855
+    },
+    {
+      "symbol": "US2Y",
+      "maturity_years": 1.998631074606434,
+      "par_yield_pct": 4.352,
+      "observed_continuous_rate": 0.04259961361881726,
+      "fitted_continuous_rate": 0.04234447809337515,
+      "residual_bp": -2.5513552544211002
+    },
+    {
+      "symbol": "US3Y",
+      "maturity_years": 2.9979466119096507,
+      "par_yield_pct": 4.375,
+      "observed_continuous_rate": 0.042819997182928185,
+      "fitted_continuous_rate": 0.042847908992005024,
+      "residual_bp": 0.27911809076838767
+    },
+    {
+      "symbol": "US5Y",
+      "maturity_years": 4.996577686516085,
+      "par_yield_pct": 4.439,
+      "observed_continuous_rate": 0.0434329829214707,
+      "fitted_continuous_rate": 0.04349077789279162,
+      "residual_bp": 0.5779497132091943
+    },
+    {
+      "symbol": "US7Y",
+      "maturity_years": 6.995208761122519,
+      "par_yield_pct": 4.554,
+      "observed_continuous_rate": 0.04453349836080793,
+      "fitted_continuous_rate": 0.04450560836757704,
+      "residual_bp": -0.27889993230889587
+    },
+    {
+      "symbol": "US20Y",
+      "maturity_years": 19.98631074606434,
+      "par_yield_pct": 5.186,
+      "observed_continuous_rate": 0.050560025611700705,
+      "fitted_continuous_rate": 0.05056174219286855,
+      "residual_bp": 0.017165811678418463
+    },
+    {
+      "symbol": "US30Y",
+      "maturity_years": 29.97946611909651,
+      "par_yield_pct": 5.163,
+      "observed_continuous_rate": 0.050341341424072907,
+      "fitted_continuous_rate": 0.050340796813361864,
+      "residual_bp": -0.005446107110423926
+    }
+  ],
+  "use": "common risk-free zero curve for Team 8 calibration and unified simulations",
+  "forward_rate_policy": "integral-preserving deterministic forwards",
+  "legacy_team4_nss_used": false,
+  "redistribution": "aggregate curve observations and fitted parameters only; row history remains local-only"
+}

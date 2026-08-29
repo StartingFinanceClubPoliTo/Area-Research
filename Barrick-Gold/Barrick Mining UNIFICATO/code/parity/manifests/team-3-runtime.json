@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "team": 3,
+  "run_id": "20260814T191734Z-py3125",
+  "runtime_status": "candidate_runtime_lock_persisted_original_runtime_unknown",
+  "interpreter": {
+    "executable": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe",
+    "implementation": "CPython",
+    "version": "3.12.5",
+    "architecture": "64bit",
+    "machine": "AMD64"
+  },
+  "operating_system": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "timezone_for_project_logs": "Europe/Rome"
+  },
+  "declared_requirements": [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "matplotlib>=3.8"
+  ],
+  "installed_direct_dependencies": {
+    "numpy": "2.1.0",
+    "scipy": "1.14.1",
+    "matplotlib": "3.9.2"
+  },
+  "installed_render_and_packaging_dependencies": {
+    "contourpy": "1.2.1",
+    "cycler": "0.12.1",
+    "fonttools": "4.53.1",
+    "kiwisolver": "1.4.5",
+    "packaging": "24.1",
+    "pillow": "10.4.0",
+    "pip": "26.1.1",
+    "pyparsing": "3.1.4",
+    "python-dateutil": "2.9.0",
+    "setuptools": "72.2.0",
+    "six": "1.16.0",
+    "wheel": "0.44.0"
+  },
+  "installed_package_inventory": {
+    "command": "python -m pip list --format=json --disable-pip-version-check",
+    "package_count": 185,
+    "captured_compact_json_sha256": "29BC4B599F76F44CA81705437C0EBA12A3A1370C8BD7B0C69904867FB4825978"
+  },
+  "runtime_lock": {
+    "path": "UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/runtime-lock.txt",
+    "command": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe -m pip --disable-pip-version-check freeze --all",
+    "format": "pip_freeze_all_utf8_no_bom",
+    "bytes": 12930,
+    "sha256": "4AB8AC8744334D48FB1B3CFD5C57653F55EADD8470F9EEC8F999C2E501C4BA7A",
+    "package_count": 185,
+    "exit_code": 0,
+    "stderr_path": "UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/runtime-lock.stderr.txt",
+    "stderr_bytes": 0,
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  "declared_minima_satisfied": true,
+  "packages_installed_during_run": [],
+  "network_used": false,
+  "environment": {
+    "PYTHONHASHSEED": null,
+    "MPLCONFIGDIR": "UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/mplconfig",
+    "matplotlib_backend": "Agg (selected by the unchanged runner)"
+  },
+  "known_runtime_gaps": [
+    "The source does not declare a Python version.",
+    "The source requirements have no upper bounds.",
+    "The interpreter and dependency versions used to generate the original benchmark are unknown.",
+    "The Microsoft Store python alias was not executable; the existing JupyterLab Desktop interpreter was used without installation or modification."
+  ]
+}

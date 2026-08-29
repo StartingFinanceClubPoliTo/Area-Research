@@ -1,0 +1,68 @@
+{
+  "schema_version": "2.0",
+  "experiment": "CONDITIONAL_GOLD_PRICE_LAYER_COMPARISON_WITH_CURRENT_MARKET_OVERLAY",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "base_valuation_config": "config/provisional_valuation_20260826_lse_overlay.json",
+  "simulation": {
+    "n_simulations": 8192,
+    "wacc_seed": 20260826,
+    "engine_seeds": {
+      "black_scholes": 20260811,
+      "heston": 20260811,
+      "bates_poisson": 20260811,
+      "full_bates_hawkes": 20260811
+    },
+    "common_random_numbers_note": "All engines use the same base seed; WACC shocks are independent and reused exactly across models."
+  },
+  "gold_price_layer": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "team8_source_dir": "parity/sources/team-8",
+    "parameter_files": {
+      "black_scholes": "parity/sources/team-8/Data/black_scholes_calibrated_params.json",
+      "heston": "parity/sources/team-8/Data/heston_calibrated_params.json",
+      "bates_poisson": "parity/sources/team-8/Data/bates_calibrated_params.json",
+      "full_bates_hawkes": "parity/sources/team-8/Data/bates_hawkes_calibrated_params.json"
+    },
+    "path_grid": {"horizon_years": 5.0, "fine_steps": 260, "resampling": "every 13th fine step to 20 Team 4 quarters"},
+    "common_scenario_start": {"price": 4677.0, "unit": "USD/troy oz", "source_team": "Team 4", "source_date": "2026-04-02"},
+    "common_scenario_drift": {"method": "Team 4 NSS curve repeated over the 13 fine steps inside each quarter", "measure": "common conditional scenario drift; not estimated physical expected return"},
+    "conditional_bridge": {
+      "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+      "source_instrument": "GLD call options",
+      "destination_variable": "gold USD/troy oz scenario paths",
+      "validated_physical_forecast": false,
+      "q_to_p_mapping": "NOT_VALIDATED",
+      "gld_to_gold_level_conversion": "NOT_PERFORMED; all engines restart at the common Team 4 gold USD/oz scenario value",
+      "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+    },
+    "calibration_snapshot": {
+      "surface_as_of_utc": "2026-08-12T20:15:07.826914+00:00",
+      "treasury_curve_date": "2026-07-24",
+      "instrument": "GLD calls",
+      "measure": "option-implied risk-neutral calibration",
+      "current_surface_audit_run": "20260826T210000Z-code012-lse",
+      "current_surface_audit_as_of_utc": "2026-08-26T20:03:43.153371+00:00",
+      "current_surface_used_for_recalibration": false
+    }
+  },
+  "common_non_gold_layers": {
+    "production_and_cost": "IMPORTED_DETERMINISTIC_TEAM4_20_QUARTER_VECTORS",
+    "production_and_cost_note": "Frozen compatibility vectors from Team 4 ad hoc models; not refreshed on 2026-08-26.",
+    "dcf_wacc_equity_bridge": "COMMON_TEAM5_ADAPTATION_IDENTICAL_ACROSS_MODELS",
+    "temporary_v3_gold_driver": "The Team 4 GBM/NSS block was a temporary gold-price driver only, never a production or cost model."
+  },
+  "asynchronous_dates": {
+    "team4_gold_start": "2026-04-02",
+    "team8_surface": "2026-08-12T20:15:07.826914+00:00",
+    "team8_treasury_curve": "2026-07-24",
+    "b_close": "2026-08-25T00:00:00Z",
+    "valuation_as_of": "2026-08-26T20:04:40Z"
+  },
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "basis": "lowest in-sample IV RMSE on the frozen 2026-08-12 surface and richest jump/variance structure",
+    "in_sample_iv_rmse_bp": {"black_scholes": 117.9272170902997, "heston": 94.43909634351468, "bates_poisson": 78.12538979659097, "full_bates_hawkes": 61.01730453112376},
+    "oos_caveat": "Full Bates-Hawkes is not the one-step-ahead OOS winner; Black-Scholes has the slightly lower OOS RMSE in frozen Team 8 validation.",
+    "current_surface_caveat": "The 2026-08-26 LSE option audit is contextual evidence only and does not update the frozen model calibration."
+  }
+}

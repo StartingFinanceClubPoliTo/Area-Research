@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "team": 7,
+  "run_id": "20260815T050733Z-py3125",
+  "runtime_status": "candidate_runtime_persisted_original_runtime_unknown",
+  "execution_isolation": "dedicated run working directory, Python bytecode prefix, Matplotlib cache, and a system-site virtual environment containing arch only",
+  "interpreter": {
+    "executable": "C:/Users/salvm/Desktop/SF/Research projects/Barrick gold/UNIFICATO/Github-Branch/parity/runs/team-7/20260815T050733Z-py3125/.venv-base/Scripts/python.exe",
+    "implementation": "CPython",
+    "version": "3.12.5",
+    "architecture": "64bit",
+    "machine": "AMD64"
+  },
+  "operating_system": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "timezone_for_project_logs": "Europe/Rome"
+  },
+  "declared_requirements": [
+    "arch",
+    "jinja2",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scipy",
+    "seaborn",
+    "statsmodels",
+    "yfinance"
+  ],
+  "observed_direct_dependencies": {
+    "arch": "8.0.0",
+    "matplotlib": "3.9.2",
+    "numpy": "2.1.0",
+    "pandas": "2.3.3",
+    "scipy": "1.14.1",
+    "statsmodels": "0.14.6"
+  },
+  "runtime_locks": {
+    "shared_environment_before_arch": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-7/20260815T050733Z-py3125/runtime-lock.txt",
+      "format": "utf-16le_with_bom_native_powershell_redirection",
+      "bytes": 25862,
+      "sha256": "676AB4706F695DDA9081F3A6DEB60435E734E0290461A62EB85C0DD8B976476E",
+      "package_count": 185,
+      "exit_code": 0,
+      "stderr_bytes": 0
+    },
+    "authoritative_stage_07_environment": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-7/20260815T050733Z-py3125/runtime-lock-with-arch.txt",
+      "format": "utf-16le_with_bom_native_powershell_redirection",
+      "bytes": 25888,
+      "sha256": "FE0C8FC5A7E3830F8B480C883882C8C07BA366521573A8A710123F0FC8F77FB6",
+      "package_count": 186,
+      "exit_code": 0,
+      "stderr_bytes": 0
+    }
+  },
+  "runtime_preparation": {
+    "authoritative_environment": ".venv-base; system-site packages plus arch 8.0.0 installed locally with --no-deps",
+    "network_used_for_market_data": false,
+    "network_used_during_stage_execution": false,
+    "network_used_during_dependency_acquisition": true,
+    "disclosure": "The arch wheel was first acquired while testing a rejected candidate environment, then installed from the local cache into .venv-base; no market data was downloaded.",
+    "rejected_candidates": [
+      ".venv with independently upgraded numerical stack (numpy 2.5.2, pandas 3.0.5, scipy 1.18.0); not used",
+      "temporary uv Python 3.14.4 environment; not used for recorded outputs"
+    ]
+  },
+  "environment": {
+    "python_bytecode_prefix": "UNIFICATO/Github-Branch/parity/runs/team-7/20260815T050733Z-py3125/pycache",
+    "MPLCONFIGDIR": "UNIFICATO/Github-Branch/parity/runs/team-7/20260815T050733Z-py3125/mplconfig",
+    "matplotlib_backend": "Agg"
+  },
+  "known_runtime_gaps": [
+    "The distributed requirements have no version pins and the original Python/package lock is absent.",
+    "The system-site virtual environment shares the base numerical stack with the existing interpreter.",
+    "Raw numerical and raster output differences cannot be assigned to a specific historical package or rendering version."
+  ]
+}

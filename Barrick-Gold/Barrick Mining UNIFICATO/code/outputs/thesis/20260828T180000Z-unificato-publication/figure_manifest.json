@@ -1,0 +1,418 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260828T180000Z-unificato-publication",
+  "status": "FIGURE_OUTPUT_CANDIDATE",
+  "figure_specs": [
+    {
+      "figure_id": "fig_val_primary",
+      "score": 10,
+      "chapter": "Discoveries",
+      "title": "Full Bates--Hawkes conditional Barrick value"
+    },
+    {
+      "figure_id": "fig_gold_bands",
+      "score": 10,
+      "chapter": "Chapter 9",
+      "title": "Conditional gold path bands by model"
+    },
+    {
+      "figure_id": "fig_dcf_drivers",
+      "score": 10,
+      "chapter": "Chapter 11",
+      "title": "Growth, ROIC and reinvestment assumptions"
+    },
+    {
+      "figure_id": "fig_wacc_assumptions",
+      "score": 10,
+      "chapter": "Chapter 11",
+      "title": "Common mean-reverting WACC contract"
+    },
+    {
+      "figure_id": "fig_terminal_value",
+      "score": 10,
+      "chapter": "Chapter 11",
+      "title": "Terminal-value mechanics and contribution"
+    },
+    {
+      "figure_id": "fig_val_multi",
+      "score": 10,
+      "chapter": "Chapter 12",
+      "title": "Conditional Barrick value by gold-price model"
+    }
+  ],
+  "model_boundary": {
+    "gold_models_only": [
+      "black_scholes",
+      "heston",
+      "bates_poisson",
+      "full_bates_hawkes"
+    ],
+    "operations": "BARRICK_2026Q1_Q2_ACTUAL_PLUS_TEAM4_FORECAST_FROM_2026Q3",
+    "dcf_and_bridge": "UNIFIED_CONDITIONAL_WITH_UNRESOLVED_CORPORATE_PROXIES",
+    "team4_price_demonstrator": "EXCLUDED",
+    "conditional_bridge": {
+      "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+      "source_instrument": "GLD call options",
+      "destination_variable": "gold USD/troy oz scenario paths",
+      "validated_physical_forecast": false,
+      "q_to_p_mapping": "NOT_VALIDATED",
+      "gld_to_gold_level_conversion": "NOT_PERFORMED; engines share an independently sourced Barrick realized-price level anchor",
+      "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+    }
+  },
+  "market_overlay": {
+    "provider": "London Strategic Edge",
+    "ticker": "B",
+    "close_usd": 47.27,
+    "timestamp_utc": "2026-08-27T00:00:00Z"
+  },
+  "calibration_snapshot": {
+    "surface_as_of_utc": "2026-08-27T20:15:12.017875+00:00",
+    "treasury_curve_date": "2026-07-24",
+    "instrument": "GLD calls",
+    "measure": "option-implied risk-neutral calibration",
+    "current_surface_used_for_recalibration": true
+  },
+  "asynchronous_dates": {
+    "gold_anchor": "2026-06-30",
+    "team8_surface": "2026-08-27T20:15:12.017875+00:00",
+    "team8_treasury_curve": "2026-07-24",
+    "b_close": "2026-08-27T00:00:00Z",
+    "valuation_as_of": "2026-08-27T20:16:00Z"
+  },
+  "runtime": {
+    "python": "3.14.4",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.1",
+    "platform": "win32"
+  },
+  "inputs": [
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\config\\multimodel_valuation_20260827_team4_separated.json",
+      "bytes": 4112,
+      "sha256": "700DB495481221B6551B496E3CD63320CC15778F8D1E08E789503A84C5EF80F2"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\config\\provisional_valuation_20260827_team4_separated.json",
+      "bytes": 6011,
+      "sha256": "00C43CF8DB8600711BA43C64B9D2BF93E8A9F54A32B5AFBB8B7570DF735B2F28"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\data\\manifests\\20260828T070000Z-lse-nss\\run_manifest.json",
+      "bytes": 5869,
+      "sha256": "B62AE29334CC77FAC48A71274D22B4F3A8C801CF9797B46E19D151E5A93CE909"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\outputs\\thesis\\20260828T180000Z-unificato-publication\\team8_empirical\\lse_publication_manifest.json",
+      "bytes": 1455,
+      "sha256": "A216B6D4A7D5E32D40C312ADA51D034A9D753B84E6A3200A964786B6C031BE52"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\outputs\\thesis\\20260828T180000Z-unificato-publication\\team8_empirical\\usd_treasury_nss_fit.json",
+      "bytes": 1092,
+      "sha256": "0B031207E919D3FCD599B7F0EAD7FC0560C4ACDF180E60CE9A5360BC5FAAAB34"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\data\\manifests\\rates\\lse_us10y_retry_20260828T143000Z-us10y-retry.json",
+      "bytes": 1724,
+      "sha256": "B28B049215D451DEC5015771A8CC0413A788518168EE97F994CE33FF7072C0C8"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\data\\manifests\\team4\\barrick_operating_q1_q2_2026_manifest.json",
+      "bytes": 2626,
+      "sha256": "71A8B159C8C309210C6123EEDA676981B6DCBFB1934F53E3630427255F282FDF"
+    }
+  ],
+  "code": [
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\__init__.py",
+      "bytes": 350,
+      "sha256": "F24AE7101E7DF6FFEF9EDB00434AAB904D314920E635E6D00309411F56F40142"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\application\\__init__.py",
+      "bytes": 152,
+      "sha256": "B0F75553E51D9C9569EEBF9E8FD401D9365E1B9CA49D80E427A2B6C0964953AA"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\application\\pipeline.py",
+      "bytes": 6571,
+      "sha256": "75464985DBAC47786CDD1B2AAD5D6A82044D027C3DC6FC8CA0AB3DC7F49CA086"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\domain\\__init__.py",
+      "bytes": 443,
+      "sha256": "D8640BF0D9DD7742B6DB7CE993C57B2C61007C29607F12B17A5BF160C353BCEB"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\domain\\policy.py",
+      "bytes": 2747,
+      "sha256": "48D30E01FABEC2195DB333ACE4DF366179B3AEB9814A1CAF16DDFFF04F26E6AC"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\domain\\provenance.py",
+      "bytes": 2270,
+      "sha256": "6F2758025F7FDF7E34490858C38088C7F941BCB5D25A879E780954E8518B3A9D"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\domain\\time.py",
+      "bytes": 2251,
+      "sha256": "3B015D29C00B596754CD0ED1DCA9C5C3F56AE837FA13A8838248E6D80C13D792"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\domain\\units.py",
+      "bytes": 1364,
+      "sha256": "F6C151D070CB62F180F595C6F736577EF8152A7933DFEEDBC106F34D7C0E092A"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\__init__.py",
+      "bytes": 365,
+      "sha256": "871392C8AABB2FE6C2F1E2930F68BBF627A8E9A6EE0B943A8354368D7864817C"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\base.py",
+      "bytes": 2960,
+      "sha256": "6E3067851B36ED3E03381B83E4DFB5C59258ED44919E26933B6C914570847246"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\bates_hawkes.py",
+      "bytes": 636,
+      "sha256": "B5207E26528FDDB544250049AD77D027E10E357E212E4AC1AC746D4E7BBEA512"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\bates_poisson.py",
+      "bytes": 925,
+      "sha256": "388CC7CE8D1106EFB76A57281B04E05A696B7252F4AD65F920BCB4A243692B26"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\black_scholes.py",
+      "bytes": 636,
+      "sha256": "7EF648E4E85AE5B70DC09474C3AF9C0F6A7243B50BB2EA0D88C7B5CD7705FF48"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\heston.py",
+      "bytes": 722,
+      "sha256": "DC6216D8A03AEB416E7FAE899434D4FB385C8635CAF9E168C8E3D4781EEA7F4E"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\gold\\registry.py",
+      "bytes": 1346,
+      "sha256": "DF7D810AA7D34881FEE6DCEA419AF7A1EC3636070C837EDB0F120A443D681E7A"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\operations\\__init__.py",
+      "bytes": 497,
+      "sha256": "599D81BBBDB3C1EC7008EBC0A458EBB0A196B049455F6CEBFEF6CB91E790BE50"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\operations\\costs.py",
+      "bytes": 1272,
+      "sha256": "CAB057EE7DB9175B9D9AF6E17380E19C7E97FCA2C5782BA819240C57EB5BFC9F"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\operations\\margin.py",
+      "bytes": 1448,
+      "sha256": "A0027AC927EC0A1430480226149D57C9FE408E8EFE70B157BCE481E50185E242"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\operations\\production.py",
+      "bytes": 1292,
+      "sha256": "B13867939F55380E0C35B2746B504A67D2BC7D1163BE4D5C19BE3129A7B3B880"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\operations\\projection.py",
+      "bytes": 1552,
+      "sha256": "CD111528565FDC012951560C0D90227ABCAAAA625C11BE4738AA99C14BC4C1C7"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\reporting\\__init__.py",
+      "bytes": 135,
+      "sha256": "B86C531B6C2DA0A955C7AB7B3D65E3333B794A730A87388B7991AE16443588F4"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\reporting\\figures.py",
+      "bytes": 25964,
+      "sha256": "57D92BD8810C20B9B77E7503B5790BDA58E43F9BDF78B0BFD4A0276F6E8B6F21"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\simulation\\__init__.py",
+      "bytes": 197,
+      "sha256": "83A4C5A754CFB46149CC39C30760D409C1D2EE34EE3EFA9F9662BCA45FBEDD8A"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\simulation\\engine.py",
+      "bytes": 1886,
+      "sha256": "2B2A5A67522197CC7790FF54EF43E19CCE102A649AC3D39FC1807088B5EDD82F"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\simulation\\randomness.py",
+      "bytes": 735,
+      "sha256": "1C76E6BA49B2C994DFA81470C396ABD38537D8A481E589E6777B9B2E8FBF3154"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\valuation\\__init__.py",
+      "bytes": 267,
+      "sha256": "B52F98DC49152EA3590D7016ED6EAB2D37B059765E821F04B1DE9E6D636271AC"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\valuation\\dcf.py",
+      "bytes": 2672,
+      "sha256": "BC93CCA7FD05BDEAEECD08C0BCC552ECAD02487E12AAB6FA28CCC6983E64D281"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\valuation\\equity_bridge.py",
+      "bytes": 1547,
+      "sha256": "52F209F98CA9DE69225F582BA2C28E1E9BEAAAF7BCE147B1264C1FA3E3EBC5F1"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\src\\barrick_unified\\refactored\\valuation\\wacc.py",
+      "bytes": 1571,
+      "sha256": "916210597E354B817E534FF9BE7E46A779CD29425867F621D2EF017972C6F825"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\run_refactored_thesis_figures.py",
+      "bytes": 3711,
+      "sha256": "160EA2EEA1EDD8706764FE3B9863BB126B6AB1602B14A25E56940A35DAA9D37D"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "figures/fig_val_primary.png",
+      "bytes": 114267,
+      "sha256": "42A1D0EDE6784DB35095CCDD0BC2BE19CD112484A9842F0ACEFDCC1C601F79B3"
+    },
+    {
+      "path": "figures/fig_val_primary.pdf",
+      "bytes": 23115,
+      "sha256": "3106664D63FB0606B72E1E5F56549DF5479C5D71669EA8767619ACE14D1AE33A"
+    },
+    {
+      "path": "figures/fig_val_primary.csv",
+      "bytes": 198703,
+      "sha256": "21FDB31AA5082D18FB998F728516D9B45843A2624FE87AFB097E38C0A24ADEB0"
+    },
+    {
+      "path": "figures/fig_val_primary.json",
+      "bytes": 1118,
+      "sha256": "BA503F2EF41BCF8D74660D8C4C884AC111033EE736BB16738BFADD8864C90DD7"
+    },
+    {
+      "path": "figures/fig_gold_bands.png",
+      "bytes": 265842,
+      "sha256": "FED5BBD9AEEC921BE1AFF8C72962D9ED0A3569E141344581788F3595413E724A"
+    },
+    {
+      "path": "figures/fig_gold_bands.pdf",
+      "bytes": 25204,
+      "sha256": "D67C9E632BB0538A95BC005457995870A5001F51D927650859F8B1FAB04DA4AB"
+    },
+    {
+      "path": "figures/fig_gold_bands.csv",
+      "bytes": 5795,
+      "sha256": "59E95F43A548063A75841DA18C5DF1A2E69A4404B955ACB163627085707DB63F"
+    },
+    {
+      "path": "figures/fig_gold_bands.json",
+      "bytes": 640,
+      "sha256": "A88CDE45D16844232A913116F71467240A0114537F6DD2406289CF5ED574563C"
+    },
+    {
+      "path": "figures/fig_dcf_drivers.png",
+      "bytes": 192655,
+      "sha256": "A6D80008228502CE442FE2B750DEE3717C3936B8A1DBAC5F9459DD687DD0C311"
+    },
+    {
+      "path": "figures/fig_dcf_drivers.pdf",
+      "bytes": 23347,
+      "sha256": "9D0C2FF3E7B38004EE629550A3CF9B25E7ED921A885AEF6FEF79E01CABB8882B"
+    },
+    {
+      "path": "figures/fig_dcf_drivers.csv",
+      "bytes": 313,
+      "sha256": "DF28DB2B7F85892EB668EFFBF505B79616B2E529513BDFF331CC9E74CBD04FE4"
+    },
+    {
+      "path": "figures/fig_dcf_drivers.json",
+      "bytes": 567,
+      "sha256": "88DC8A3AAD4E2F34F8364237261CFFEA79CCE5D336A44466A207F5C9F2D65CCF"
+    },
+    {
+      "path": "figures/fig_wacc_assumptions.png",
+      "bytes": 152796,
+      "sha256": "23DF2023B1BD378FB988F75B661655217DA95BE38C69A57E44325C885AE4A0C7"
+    },
+    {
+      "path": "figures/fig_wacc_assumptions.pdf",
+      "bytes": 22517,
+      "sha256": "0C83D83A80CC0FBB43050E77ECE729D9912C0EA52DD245563C311887333D8D3A"
+    },
+    {
+      "path": "figures/fig_wacc_assumptions.csv",
+      "bytes": 630,
+      "sha256": "5BAEDC7178FF909207363F0EC9D0C68C7FAD1F251EDEF211DB76F39BF9B83A0A"
+    },
+    {
+      "path": "figures/fig_wacc_assumptions.json",
+      "bytes": 695,
+      "sha256": "86B4C731D7D7606DD204C946FA4EE25059DCB2E23410F57A114CAC2EDA49CC5E"
+    },
+    {
+      "path": "figures/fig_terminal_value.png",
+      "bytes": 188092,
+      "sha256": "A9517770F930A794C1860E58CD34D75E78FC06B5D0852A255793C0C0009C8497"
+    },
+    {
+      "path": "figures/fig_terminal_value.pdf",
+      "bytes": 44400,
+      "sha256": "B5DDC795038CE65DA4DA09D146B768E1291DF061DCE470FD8EB9800ECEE042F8"
+    },
+    {
+      "path": "figures/fig_terminal_value.csv",
+      "bytes": 505,
+      "sha256": "09A8977CE98D0618FDB0C3484C6F688BBBB9415DFF902BA365953104B2C5D77B"
+    },
+    {
+      "path": "figures/fig_terminal_value.json",
+      "bytes": 1966,
+      "sha256": "1C3C98FC40BD1E36A9134472F2ADA665F57E90DD0B3BEE2876A4F9E3A99F986B"
+    },
+    {
+      "path": "figures/fig_val_multi.png",
+      "bytes": 224067,
+      "sha256": "5B70F5469BD33A359B4F8403E856B80F9998389FE7CA5352F6054F00955B1713"
+    },
+    {
+      "path": "figures/fig_val_multi.pdf",
+      "bytes": 25379,
+      "sha256": "157159CA874094F83D60A24068857F55DF7922449F829A7CB27A95722554E515"
+    },
+    {
+      "path": "figures/fig_val_multi.csv",
+      "bytes": 1230082,
+      "sha256": "F670DB5039BBD6C3B649B3F3611CEA9067F4B0AA09FADD30A87C2DCE9BC1B28C"
+    },
+    {
+      "path": "figures/fig_val_multi.json",
+      "bytes": 2630,
+      "sha256": "F8886A9803409FF2F34253FB147175550ED74CD869E91FD948F7CD3DDDE92182"
+    }
+  ],
+  "publication_gate": {
+    "raw_lse_included": false,
+    "updated_figures": [
+      "fig_val_primary",
+      "fig_gold_bands",
+      "fig_dcf_drivers",
+      "fig_wacc_assumptions",
+      "fig_terminal_value",
+      "fig_val_multi"
+    ],
+    "excluded_not_current": [
+      "team4_price_iv_gbm_and_illustrative_ebitda_demonstrator",
+      "fig_bh_residuals",
+      "fig_bh_smile",
+      "fig_bh_vs_bates"
+    ]
+  }
+}

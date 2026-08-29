@@ -1,0 +1,31 @@
+model,parameter,value
+Black-Scholes,sigma,0.2437132735438299
+Heston,v0,0.06665815170984547
+Heston,kappa,2.055582848061303
+Heston,theta,0.04805336270610143
+Heston,xi,0.18453221295337383
+Heston,rho,0.06950608060314545
+Heston,feller_gap,0.16350319872319227
+Bates,v0,0.05899314610025435
+Bates,kappa,4.680044130429284
+Bates,theta,0.04787257619582935
+Bates,sigma,0.5183493545593094
+Bates,rho,0.05881842362686902
+Bates,lambd,1.2028693957501433
+Bates,mu_J,0.05061769819201898
+Bates,sigma_J,0.059867087015202984
+Bates,feller_gap,0.17940548509558701
+Full Bates-Hawkes,v0,0.047860995462793
+Full Bates-Hawkes,kappa,4.669576250860899
+Full Bates-Hawkes,theta,0.043561124660496324
+Full Bates-Hawkes,xi,0.6375524544241362
+Full Bates-Hawkes,rho,-0.12790945619885694
+Full Bates-Hawkes,lambda0,2.145506235728764
+Full Bates-Hawkes,lambda_bar,1.136986799380438
+Full Bates-Hawkes,stationary_mean_intensity,1.9394359355791424
+Full Bates-Hawkes,branching_ratio,0.413753876308929
+Full Bates-Hawkes,alpha,3.570880498726505
+Full Bates-Hawkes,beta,8.630446028885805
+Full Bates-Hawkes,mu_J,0.056079654327072286
+Full Bates-Hawkes,sigma_J,0.06440354028648038
+Full Bates-Hawkes,feller_gap,0.00035085420864910954

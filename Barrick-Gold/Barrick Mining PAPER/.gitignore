@@ -1,0 +1,14 @@
+# LaTeX build products
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Local editors and operating systems
+**/.vscode/
+**/.idea/
+**/.DS_Store
+**/Thumbs.db

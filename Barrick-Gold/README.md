@@ -18,6 +18,8 @@ This folder collects the publication-facing GitHub material for the Barrick Gold
 | Article 6 | [Beyond Black-Scholes Synthetic Examples](./JumpSVFourier/) | [Davide Sisto](https://github.com/sistox5), Matteo Armando | June 12, 2026 | Synthetic simulations, article figures, CSV paths, compact reproducibility notes, and the published PDF linked in the article README. |
 | Article 7 | [Gold, Monetary Regimes, and Volatility Dynamics](./Gold-Volatility-Research/) | [Davide D'Amico](https://github.com/0fmate), Pietro Weisz | June 19, 2026 | Data pipeline, descriptive statistics, OLS regressions, AR/ARMA/ARIMA diagnostics, rolling correlations, GARCH/ARFIMA outputs, and generated tables. |
 | Article 8 | [Advanced Stochastic Modeling for Gold Options](./Gold-Options-Stochastic-Modeling/) | [0c0c](https://github.com/0c0c), [SalvatoreMessina11](https://github.com/SalvatoreMessina11) | July 3, 2026 | Black-Scholes, Heston, and Bates notebooks, model modules, GLD option datasets, and calibration diagnostics. |
+| Unified thesis | [Barrick Mining UNIFICATO](./Barrick%20Mining%20UNIFICATO/) | Barrick Gold Research Teams | August 28, 2026 | Unified thesis sources and PDF, class-based Python package, deterministic tests, figures, tables, and provenance manifests. |
+| Research paper | [Barrick Mining PAPER](./Barrick%20Mining%20PAPER/) | Barrick Gold Research Teams | August 28, 2026 | Compact two-column paper sources and PDF linked to the unified reproducibility companion. |
 
 ## 🗂️ Folder Structure
 
@@ -31,7 +33,9 @@ Barrick-Gold/
 |-- Three-Stage-DCF/
 |-- JumpSVFourier/
 |-- Gold-Volatility-Research/
-`-- Gold-Options-Stochastic-Modeling/
+|-- Gold-Options-Stochastic-Modeling/
+|-- Barrick Mining UNIFICATO/
+`-- Barrick Mining PAPER/
 ```
 
 ## 🧪 Reproducibility Notes

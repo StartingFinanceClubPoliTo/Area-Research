@@ -1,0 +1,56 @@
+\section{Out-of-Sample Evidence and Model Risk}
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/online_oos_r2_by_benchmark.png}
+  \captionof{figure}{One-step-ahead out-of-sample $R^2$. All four models improve on the expanding mean but fail to beat the previous-day IV surface. The test covers 124 target dates and 3,052 common node-date observations.}
+  \label{fig:oos_r2}
+\par}
+
+\subsection{Predictive interpretation}
+The OOS evidence prevents the in-sample ranking from being read as predictive dominance. Relative to an expanding mean, the four models explain a large share of one-step-ahead variation. Against the stronger same-node previous-day IV benchmark, every $R^2_{OOS}$ is negative; Black--Scholes also posts a slightly lower pooled RMSE than Full Bates--Hawkes. Structural flexibility therefore improves current-surface fit more clearly than short-horizon forecasting.
+
+\begin{findingbox}[Model-risk conclusion]
+Full Bates--Hawkes is primary for structural richness and current-surface calibration quality, but the valuation conclusion is reported across all four engines because the OOS evidence does not identify a dominant forecasting model.
+\end{findingbox}
+
+\subsection{Interpretive limitations}
+The economic reading remains conditional: calibration is under $\mathbb Q$ without a validated $\mathbb Q\rightarrow\mathbb P$ map; GLD distributional shape is transferred without a one-for-one conversion to physical gold; market inputs are asynchronous; and the FCFF/equity bridge is not fully filing-reconciled. Debt, cash, minorities, non-operating assets and related bridge adjustments remain unresolved rather than silently inferred. The distributions are therefore research sensitivities, not fair values, confidence intervals or price targets.
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_vs_mean.png}
+  \captionof{figure}{Rolling Welch--Goyal cumulative loss difference against the node-specific prevailing mean. Upward movement favours the named model; all four specifications dominate this benchmark.}
+  \label{fig:welch_goyal}
+\par}
+
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_vs_previous_iv.png}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:welch_goyal} (continued).} Cumulative loss difference against the previous-day observed IV surface. Negative paths show that this stronger short-horizon benchmark remains superior.}
+\par}
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_added_structure.png}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:welch_goyal} (continued).} Added stochastic-volatility and jump structure relative to Black--Scholes. Negative paths indicate that the simpler benchmark retains lower cumulative loss over this test.}
+\par}
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_self_excitation.png}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:welch_goyal} (continued).} Full Bates--Hawkes relative to Heston and Bates. Positive paths favour the self-exciting specification within this pairwise comparison.}
+\par}
+
+\subsection{Jump-layer interpretation}
+The self-exciting extension is motivated by clustered option-implied jump activity. Relative to the constant Poisson baseline, the Hawkes specification permits bursts of intensity followed by endogenous decay. In the current calibration the branching ratio is 0.02, so this channel is present but economically mild.
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/hawkes_intensity_comparison.png}
+  \captionof{figure}{Current Poisson and Hawkes intensity comparison. Hawkes allows clustered arrivals and decay, but the low fitted branching ratio keeps it close to the constant-intensity benchmark in this snapshot.}
+  \label{fig:intensity_compare}
+\par}
+
+\input{sections/06_conclusion}
+
+\begingroup
+\setlength{\bibsep}{0.6pt}
+\fontsize{6.75}{7.75}\selectfont
+\input{main.bbl}
+\endgroup

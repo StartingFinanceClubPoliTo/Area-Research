@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "status": "CURRENT_DIAGNOSTIC_ONLY_NOT_VALUATION_DATE",
+  "authoritative_run_id": "20260826T210000Z-code012-lse",
+  "source_run_id": "20260826T210000Z-code012-lse",
+  "cutoff_utc_date": "2026-08-26",
+  "last_complete_market_date": "2026-08-25",
+  "run_manifest": "data/manifests/20260826T210000Z-code012-lse/run_manifest.json",
+  "run_manifest_sha256": "D3A1AF16445ABE3A926A8E92BCF11B293F56DF132F7BFBAAD70D4CA99EDE6BD3",
+  "cleanup": {
+    "date": "2026-08-27",
+    "policy": "Only the latest admitted current-data run is retained; prior acquisition, replay and excluded ticker-reuse runs were removed as obsolete intermediates."
+  },
+  "historical_team8_G1_5": "NOT_PROVEN",
+  "not_investment_advice": true
+}

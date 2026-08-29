@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "valuation_as_of_utc": "2026-08-26T20:04:40Z",
+  "reporting_currency": "USD",
+  "reporting_scale": "millions",
+  "allow_unresolved_corporate_proxies": true,
+  "market_price": {
+    "price_usd": 48.90,
+    "timestamp_utc": "2026-08-25T00:00:00Z",
+    "source": "London Strategic Edge B daily unadjusted close; versioned refresh 20260826T210000Z-code012-lse"
+  },
+  "simulation": {"n_simulations": 50000, "seed": 42},
+  "model": {
+    "quarters": 20,
+    "dt_years": 0.25,
+    "gold_price_0_usd_per_oz": 4677.0,
+    "production_koz": [704, 741, 752, 751, 720, 743, 748, 814, 783, 787, 789, 811, 805, 821, 842, 814, 802, 782, 769, 779],
+    "cost_usd_per_oz": [1685.07, 1698.87, 1727.07, 1783.58, 1820.64, 1856.45, 1899.48, 1945.25, 1986.89, 2031.28, 2077.64, 2124.60, 2171.84, 2220.87, 2270.94, 2321.98, 2374.12, 2427.60, 2482.20, 2538.02],
+    "gold_volatility_annual": [0.357, 0.330, 0.307, 0.311, 0.304, 0.301, 0.301, 0.301, 0.297, 0.297, 0.293, 0.290, 0.290, 0.290, 0.290, 0.290, 0.290, 0.290, 0.290, 0.290],
+    "gold_drift_nss": {
+      "beta0": 0.0557186309095699,
+      "beta1": -0.01857773468290351,
+      "beta2": -0.010955973627381332,
+      "beta3": -0.019216770175974365,
+      "tau1": 2.0,
+      "tau2": 5.0
+    },
+    "tax_rate": 0.25,
+    "high_growth": 0.085,
+    "stable_growth": 0.025,
+    "roic_high": 0.145,
+    "roic_stable": 0.105,
+    "wacc_0": 0.091,
+    "wacc_long_run": 0.083,
+    "wacc_reversion": 0.45,
+    "wacc_volatility": 0.009,
+    "terminal_spread_floor": 0.01
+  },
+  "equity_bridge": {
+    "debt_usd_mn": 0.0,
+    "cash_usd_mn": 0.0,
+    "minority_interest_usd_mn": 0.0,
+    "non_operating_assets_usd_mn": 0.0,
+    "other_claims_usd_mn": 0.0,
+    "diluted_shares_mn": 1675.51
+  },
+  "unresolved_corporate_inputs": [
+    "Legal valuation perimeter and treatment of the announced North American gold-assets transaction",
+    "Team 4 2026-2030 production and cost vectors are frozen compatibility inputs and were not refreshed on 2026-08-26",
+    "Gold spot and operating assumptions are the Team 4 2026-04-02 baseline, not an approved 2026-08-26 physical forecast",
+    "The 2026-08-26 LSE GLD surface audit was not used to overwrite or recalibrate the frozen 2026-08-12 Team 8 parameters",
+    "GLD-to-gold, gold-to-realized-price and Q-to-P/scenario bridges are not approved",
+    "Cost of Sales includes depreciation; component margin is not reconciled audited EBITDA, EBIT, NOPAT or FCFF",
+    "Debt, cash, minority interests, non-operating assets and other claims are explicit zero placeholders",
+    "Diluted shares are an unreconciled proxy inferred from the 2026-08-13 LSE market-cap/price snapshot",
+    "WACC, terminal growth, ROIC and tax are Team 5 synthetic-methodology assumptions, not filing-calibrated Barrick inputs",
+    "Finite reserve life and mine-level closure/reclamation policy are not represented"
+  ],
+  "assumptions": [
+    {
+      "id": "A-T4-OPERATIONS",
+      "classification": "FROZEN_IMPORTED_TEAM_ASSUMPTION",
+      "value": "20 quarterly production and unit-cost values for 2026-2030",
+      "source": "Team 4 ebitda_mc.ipynb",
+      "caveat": "Compatibility vectors; not refreshed or independently reconciled to filings"
+    },
+    {
+      "id": "A-T4-GOLD",
+      "classification": "FROZEN_IMPORTED_TEAM_ASSUMPTION",
+      "value": "USD 4,677/oz start and NSS drift",
+      "source": "Team 4 ebitda_mc.ipynb",
+      "caveat": "2026-04-02 baseline used only as a common conditional scenario start/drift"
+    },
+    {
+      "id": "A-T5-DCF",
+      "classification": "FROZEN_IMPORTED_TEAM_ASSUMPTION",
+      "value": "25% tax; growth 8.5%-2.5%; ROIC 14.5%-10.5%; WACC 9.1%-8.3%",
+      "source": "Frozen Team 5 current synthetic runner",
+      "caveat": "Methodology inputs adapted from seven to five years; not Barrick calibration"
+    },
+    {
+      "id": "A-LSE-MARKET",
+      "classification": "OBSERVED_MARKET_INPUT_CURRENT_REFRESH",
+      "value": "B close USD 48.90 on 2026-08-25",
+      "source": "London Strategic Edge run 20260826T210000Z-code012-lse",
+      "caveat": "Latest completed unadjusted daily close available at the 2026-08-26 extraction"
+    },
+    {
+      "id": "A-LSE-GLD-AUDIT",
+      "classification": "CURRENT_CONTEXT_NOT_RECALIBRATION",
+      "value": "32 eligible sampled nodes, 4 maturities and 20 strikes; option as-of 2026-08-26T20:03:43Z",
+      "source": "London Strategic Edge run 20260826T210000Z-code012-lse",
+      "caveat": "Current surface audit only; frozen Team 8 model parameters remain as-of 2026-08-12"
+    },
+    {
+      "id": "A-LSE-SHARES",
+      "classification": "UNRECONCILED_CORPORATE_PROXY",
+      "value": "1,675.51 million diluted-share proxy",
+      "source": "2026-08-13 LSE market capitalization divided by LSE price",
+      "caveat": "Not a filing-derived diluted weighted-average or period-end share count"
+    },
+    {
+      "id": "A-EQUITY-BRIDGE",
+      "classification": "EXPLICIT_UNRESOLVED_ZERO_PLACEHOLDERS",
+      "value": "Debt, cash, NCI, non-operating assets and other claims set to zero",
+      "source": "User-authorized provisional research sensitivity",
+      "caveat": "Must be replaced and reconciled before any target or recommendation"
+    }
+  ],
+  "reference_files": [
+    {"path": "parity/sources/team-4/ebitda_montecarlo/ebitda_mc.ipynb", "sha256": "AE85933E6B0F0F915933A24C7A3212433C76C6E8099D57B5746FAA757FF65C31"},
+    {"path": "parity/sources/team-4/production/production_forecast.ipynb", "sha256": "2A8608B0D1A3C1C40DE42C84C4FE843149F778050430FB13758F9E3123E7E798"},
+    {"path": "parity/sources/team-4/cost_of_sales/cost_of_sales.R", "sha256": "3D47A394477A11A3E711C0E716292F5F61AD9BDE7B2E376017E86862A255F451"},
+    {"path": "parity/sources/team-5/current/src/generate_three_stage_dcf.py", "sha256": "DEF6AA639195B7F530AC5B969DD4F54D700FE8EB0E636248EF954E5E5054EE34"},
+    {"path": "parity/sources/team-8/path_simulation.py", "sha256": "DE6AA684EB0937BFB808173B2A2518D9C5C1C2A3BE3533736F6A12FC6F4232BC"},
+    {"path": "data/manifests/20260826T210000Z-code012-lse/run_manifest.json", "sha256": "D3A1AF16445ABE3A926A8E92BCF11B293F56DF132F7BFBAAD70D4CA99EDE6BD3"}
+  ]
+}

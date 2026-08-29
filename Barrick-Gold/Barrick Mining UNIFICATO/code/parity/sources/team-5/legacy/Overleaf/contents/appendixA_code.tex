@@ -1,0 +1,455 @@
+\appendix
+\chapter{Python Implementation}
+\label{appendix:code}
+
+This appendix reproduces the complete Python implementation of the
+Monte Carlo simulation engine described in Sections~8--10. The code
+is structured in seven modules, each corresponding to a distinct
+layer of the framework. All results reported in the paper are fully
+reproducible by running \texttt{main()} with the default
+\texttt{ModelParams} instance and \texttt{seed = 42}.
+
+The implementation requires Python 3.10 or later and the following
+standard scientific libraries: \texttt{numpy}, \texttt{scipy}, and
+\texttt{matplotlib}. No proprietary or non-standard packages are used.
+
+\section*{Module 0 — Dependencies and Style}
+
+Global imports and \texttt{matplotlib} configuration. The colour
+palette uses Barrick Gold's corporate navy and gold tones for
+consistency with the figures in the main text.
+
+\begin{lstlisting}[style=python, caption={Dependencies and global style configuration}]
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from scipy import stats
+from dataclasses import dataclass
+from typing import Tuple
+import warnings
+warnings.filterwarnings("ignore")
+
+plt.rcParams.update({
+    "font.family": "serif",
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": True,
+    "grid.alpha": 0.3,
+    "figure.dpi": 150,
+})
+
+COLORS = {
+    "primary":   "#1B3A6B",   # deep navy
+    "secondary": "#C9A84C",   # gold (Barrick reference)
+    "accent":    "#8B1A1A",   # deep red
+    "light":     "#D6E4F0",
+    "mid":       "#7FB3D3",
+}
+\end{lstlisting}
+
+\section*{Module 1 — Parameter Dataclass}
+
+All model inputs are collected in a single \texttt{ModelParams}
+dataclass. This design makes the framework portable: switching from
+the Base scenario to the Bear or Bull scenario (Section~10) requires
+only overriding the relevant fields, leaving the simulation
+architecture unchanged. Default values correspond to the Base
+scenario calibrated in Section~8.6.
+
+\begin{lstlisting}[style=python, caption={ModelParams dataclass — all calibrated inputs}]
+@dataclass
+class ModelParams:
+    """
+    All model parameters in one place.
+    Sources: Barrick Gold Annual Report 2023, Damodaran (2024),
+             LBMA gold price series 2000-2024.
+    """
+    # Simulation
+    N_sim:      int   = 20_000    # number of Monte Carlo draws
+    seed:       int   = 42        # reproducibility
+
+    # Projection horizon
+    T_high:     int   = 5         # years in high-growth phase
+    T_trans:    int   = 5         # years in transition phase
+
+    # Gold price GBM
+    P0:         float = 2_050.0   # USD/oz  (spot, end-2023)
+    mu_P:       float = 0.03      # annual drift
+    sigma_P:    float = 0.155     # annual volatility (hist. 2000-2024)
+
+    # Production volumes
+    Q0:         float = 4.05      # Moz  (Barrick 2023 production)
+    Q_mature:   float = 3.80      # Moz  (conservative long-run)
+    sigma_Q:    float = 0.06      # annual vol around guidance
+
+    # Operating economics
+    aisc_start: float = 0.62      # AISC / Revenue  (2023 actual ~62%)
+    aisc_mature:float = 0.65      # slight cost pressure at maturity
+    da_pct:     float = 0.08      # D&A as % of revenue
+    capex_pct_high:  float = 0.12 # net capex / revenue  high-growth
+    capex_pct_stable:float = 0.09 # net capex / revenue  stable
+    tax_rate:   float = 0.30      # effective corporate tax rate
+
+    # ROIC and growth (used for TV identity)
+    ROIC_high:  float = 0.12
+    ROIC_stable:float = 0.10
+    g_high:     float = 0.05
+    g_trans:    float = 0.025
+    g_stable:   float = 0.025     # terminal growth rate (<= risk-free)
+
+    # WACC -- Ornstein-Uhlenbeck process
+    r0:         float = 0.086     # starting WACC
+    r_bar:      float = 0.090     # long-run equilibrium WACC
+    kappa:      float = 0.40      # mean-reversion speed
+    sigma_r:    float = 0.012     # WACC volatility
+
+    # Correlation structure
+    rho:        float = -0.25     # corr(dW^P, dW^r)
+
+    # Balance sheet (equity bridge)
+    net_debt:   float = 4_900.0   # USD million
+    shares:     float = 1_690.0   # million shares outstanding
+\end{lstlisting}
+
+\section*{Module 2 — Stochastic Path Generation}
+
+\texttt{StochasticPaths} generates $N$ joint realisations of the
+three stochastic drivers. The price and WACC Brownian motions are
+correlated via a Cholesky decomposition of the $2\times 2$
+correlation matrix (Section~8.5). Both the GBM and the
+Ornstein-Uhlenbeck discretisations are \emph{exact}: no Euler
+approximation error is introduced at any step size $\Delta t$.
+
+\begin{lstlisting}[style=python, caption={StochasticPaths — exact GBM and OU discretisations}]
+class StochasticPaths:
+    """
+    Generates N_sim joint realisations of:
+      - Gold price path {P_t}  via exact GBM discretisation  (eq. 79)
+      - WACC path       {r_t}  via exact OU discretisation   (eq. 80)
+      - Volume shocks   {Q_t}  via log-normal perturbation   (eq. 70)
+    All arrays have shape (N_sim, T).
+    """
+
+    def __init__(self, p: ModelParams):
+        self.p = p
+        self.T = p.T_high + p.T_trans
+        rng = np.random.default_rng(p.seed)
+
+        # Cholesky decomposition for correlated Brownians
+        corr_matrix = np.array([[1.0, p.rho],
+                                 [p.rho, 1.0]])
+        L   = np.linalg.cholesky(corr_matrix)
+        raw = rng.standard_normal((p.N_sim, self.T, 2))
+        Z   = raw @ L.T                          # shape (N, T, 2)
+        Z_Q = rng.standard_normal((p.N_sim, self.T))
+
+        self.P = self._gbm_paths(Z[:, :, 0], p)
+        self.r = self._ou_paths(Z[:, :, 1], p)
+        self.Q = self._volume_paths(Z_Q, p)
+
+    @staticmethod
+    def _gbm_paths(Z: np.ndarray, p: ModelParams) -> np.ndarray:
+        """Exact GBM discretisation -- eq. (79)."""
+        dt = 1.0
+        log_increments = (p.mu_P - 0.5 * p.sigma_P**2) * dt \
+                         + p.sigma_P * np.sqrt(dt) * Z
+        log_P = np.cumsum(log_increments, axis=1)
+        return p.P0 * np.exp(log_P)
+
+    @staticmethod
+    def _ou_paths(Z: np.ndarray, p: ModelParams) -> np.ndarray:
+        """Exact OU discretisation -- eq. (80)."""
+        dt      = 1.0
+        T       = p.T_high + p.T_trans
+        e_kdt   = np.exp(-p.kappa * dt)
+        std_cond = p.sigma_r * np.sqrt(
+            (1 - np.exp(-2 * p.kappa * dt)) / (2 * p.kappa))
+        r = np.empty((p.N_sim, T + 1))
+        r[:, 0] = p.r0
+        for t in range(T):
+            r[:, t+1] = (p.r_bar
+                         + (r[:, t] - p.r_bar) * e_kdt
+                         + std_cond * Z[:, t])
+        return r[:, 1:]
+
+    @staticmethod
+    def _volume_paths(Z_Q: np.ndarray, p: ModelParams) -> np.ndarray:
+        """
+        Log-normal volume shock around deterministic guidance -- eq. (70).
+        E[Q_t] = Q_bar_t by construction.
+        """
+        T     = p.T_high + p.T_trans
+        t_idx = np.arange(1, T + 1)
+        Q_bar = p.Q0 + (p.Q_mature - p.Q0) * (t_idx / T)
+        shocks = np.exp(-0.5 * p.sigma_Q**2 + p.sigma_Q * Z_Q)
+        return Q_bar[np.newaxis, :] * shocks
+\end{lstlisting}
+
+\section*{Module 3 — DCF Engine}
+
+\texttt{DCFEngine} computes FCFF and enterprise value for all $N$
+simulation draws simultaneously using vectorised NumPy operations —
+no explicit Python loop over simulations. The terminal value uses
+the ROIC--growth identity of equation~(48); the denominator is
+floored at 50 basis points to prevent numerical instability in draws
+where $r_T \approx g_s$.
+
+\begin{lstlisting}[style=python, caption={DCFEngine — vectorised FCFF computation and terminal value}]
+class DCFEngine:
+    """
+    Computes FCFF and Enterprise Value for each simulation draw.
+    Fully vectorised over all N_sim paths.
+    """
+
+    def __init__(self, paths: StochasticPaths, p: ModelParams):
+        self.paths = paths
+        self.p     = p
+        self.T     = p.T_high + p.T_trans
+        self.N     = p.N_sim
+
+    def _revenue(self) -> np.ndarray:
+        return self.paths.P * self.paths.Q             # (N, T)
+
+    def _aisc_ratio(self) -> np.ndarray:
+        t = np.arange(1, self.T + 1)
+        return (self.p.aisc_start
+                + (self.p.aisc_mature - self.p.aisc_start) * (t / self.T))
+
+    def _capex_ratio(self) -> np.ndarray:
+        t = np.arange(1, self.T + 1)
+        return (self.p.capex_pct_high
+                + (self.p.capex_pct_stable - self.p.capex_pct_high)
+                * (t / self.T))
+
+    def compute_fcff(self) -> np.ndarray:
+        """FCFF = NOPAT - net capex  (eq. 73)."""
+        Rev   = self._revenue()
+        EBIT  = Rev * (1 - self._aisc_ratio() - self.p.da_pct)
+        NOPAT = EBIT * (1 - self.p.tax_rate)
+        capex = Rev * self._capex_ratio()
+        return NOPAT - capex                           # (N, T)
+
+    def compute_discount_factors(self) -> np.ndarray:
+        """DF_t = 1 / prod_{s=1}^{t}(1+r_s)  (eq. 75)."""
+        return 1.0 / np.cumprod(1 + self.paths.r, axis=1)
+
+    def compute_terminal_value(self, df: np.ndarray) -> np.ndarray:
+        """TV using ROIC-growth identity (eq. 48), discounted to t=0."""
+        p        = self.p
+        Rev_T    = self._revenue()[:, -1]
+        EBIT_T   = Rev_T * (1 - p.aisc_mature - p.da_pct)
+        NOPAT_T1 = EBIT_T * (1 - p.tax_rate) * (1 + p.g_stable)
+        fcff_T1  = NOPAT_T1 * (1 - p.g_stable / p.ROIC_stable)
+        r_T      = self.paths.r[:, -1]
+        denom    = np.maximum(r_T - p.g_stable, 0.005)  # floor at 50 bps
+        return (fcff_T1 / denom) * df[:, -1]
+
+    def compute_ev(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Returns ev, pv_fcff, pv_tv -- all shape (N,)."""
+        fcff    = self.compute_fcff()
+        df      = self.compute_discount_factors()
+        pv_fcff = np.sum(fcff * df, axis=1)
+        pv_tv   = self.compute_terminal_value(df)
+        ev      = pv_fcff + pv_tv
+        return ev, pv_fcff, pv_tv
+\end{lstlisting}
+
+\section*{Module 4 — Monte Carlo Simulator}
+
+\texttt{MonteCarloSimulator} orchestrates path generation, DCF
+computation, and the equity bridge from enterprise value to implied
+share price. The \texttt{summary()} method returns the full set of
+distributional statistics reported in Tables~9--13.
+
+\begin{lstlisting}[style=python, caption={MonteCarloSimulator — orchestration and equity bridge}]
+class MonteCarloSimulator:
+    """Orchestrates path generation, DCF computation, output collection."""
+
+    def __init__(self, params: ModelParams = None):
+        self.p = params or ModelParams()
+        paths  = StochasticPaths(self.p)
+        engine = DCFEngine(paths, self.p)
+        self.ev, self.pv_fcff, self.pv_tv = engine.compute_ev()
+        self.paths = paths
+        # equity bridge
+        self.equity_value    = self.ev - self.p.net_debt
+        self.price_per_share = self.equity_value / self.p.shares
+
+    def summary(self) -> dict:
+        ev = self.ev
+        ps = self.price_per_share
+        return {
+            "EV_mean":    np.mean(ev),
+            "EV_median":  np.median(ev),
+            "EV_std":     np.std(ev),
+            "EV_p5":      np.percentile(ev,  5),
+            "EV_p25":     np.percentile(ev, 25),
+            "EV_p75":     np.percentile(ev, 75),
+            "EV_p95":     np.percentile(ev, 95),
+            "SE":         np.std(ev) / np.sqrt(self.p.N_sim),
+            "TV_share":   np.mean(self.pv_tv / ev),
+            "Price_mean": np.mean(ps),
+            "Price_p5":   np.percentile(ps,  5),
+            "Price_p95":  np.percentile(ps, 95),
+        }
+\end{lstlisting}
+
+\section*{Module 5 — Sensitivity Analysis}
+
+Spearman rank correlations between each stochastic driver and the
+resulting enterprise value, as reported in Table~10. Rank
+correlations are preferred over Pearson correlations because they are
+robust to the non-linear, non-Gaussian relationship between gold
+prices and EV.
+
+\begin{lstlisting}[style=python, caption={Sensitivity analysis via Spearman rank correlations}]
+def sensitivity_analysis(sim: MonteCarloSimulator) -> dict:
+    """
+    Spearman rank correlation between each driver and EV.
+    Higher |rho| -> greater influence on enterprise value.
+    """
+    ev       = sim.ev
+    drivers  = {
+        "Gold Price (terminal)": sim.paths.P[:, -1],
+        "Gold Price (average)":  sim.paths.P.mean(axis=1),
+        "Production Volume":     sim.paths.Q[:, -1],
+        "WACC (terminal)":       sim.paths.r[:, -1],
+        "WACC (average)":        sim.paths.r.mean(axis=1),
+    }
+    results = {}
+    for name, driver in drivers.items():
+        rho, pval = stats.spearmanr(driver, ev)
+        results[name] = {"rho": rho, "pval": pval}
+    return results
+\end{lstlisting}
+
+\section*{Module 6 — Visualisation}
+
+Four plot functions produce the figures embedded in the paper.
+Each function accepts an optional \texttt{ax} argument for embedding
+in multi-panel layouts.
+
+\begin{lstlisting}[style=python, caption={Visualisation functions — EV distribution, fan charts, tornado}]
+def plot_ev_distribution(sim: MonteCarloSimulator, ax=None):
+    """Histogram + KDE of the EV distribution with percentile bands."""
+    s  = sim.summary()
+    ev = sim.ev / 1_000
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.hist(ev, bins=120, density=True, color=COLORS["light"],
+            edgecolor="white", linewidth=0.3)
+    kde     = stats.gaussian_kde(ev)
+    x_range = np.linspace(ev.min(), ev.max(), 500)
+    ax.plot(x_range, kde(x_range), color=COLORS["primary"], linewidth=2)
+    p5, p25, p75, p95 = (np.percentile(ev, q) for q in [5, 25, 75, 95])
+    ax.axvspan(p5,  p95,  alpha=0.10, color=COLORS["primary"], label="P5-P95")
+    ax.axvspan(p25, p75,  alpha=0.18, color=COLORS["primary"], label="P25-P75")
+    ax.axvline(s["EV_mean"]   / 1_000, color=COLORS["primary"],
+               linestyle="--", linewidth=1.5,
+               label=f'Mean: ${s["EV_mean"]/1000:.1f}B')
+    ax.axvline(s["EV_median"] / 1_000, color=COLORS["secondary"],
+               linestyle="-",  linewidth=1.5,
+               label=f'Median: ${s["EV_median"]/1000:.1f}B')
+    ax.set_xlabel("Enterprise Value (USD billion)")
+    ax.set_ylabel("Density")
+    ax.legend(fontsize=9)
+    return ax
+
+
+def plot_price_fan_chart(sim: MonteCarloSimulator, ax=None):
+    """Fan chart of gold price paths -- GBM percentile bands."""
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+    T     = sim.p.T_high + sim.p.T_trans
+    years = np.arange(0, T + 1)
+    P_all = np.hstack([np.full((sim.p.N_sim, 1), sim.p.P0), sim.paths.P])
+    P_pct = np.percentile(P_all, [5, 25, 50, 75, 95], axis=0)
+    ax.fill_between(years, P_pct[0], P_pct[4], alpha=0.15,
+                    color=COLORS["secondary"], label="P5-P95")
+    ax.fill_between(years, P_pct[1], P_pct[3], alpha=0.30,
+                    color=COLORS["secondary"], label="P25-P75")
+    ax.plot(years, P_pct[2], color=COLORS["secondary"],
+            linewidth=2, label="Median")
+    ax.set_xlabel("Year"); ax.set_ylabel("Gold Price (USD/oz)")
+    ax.legend(fontsize=9); ax.set_xticks(years)
+    return ax
+
+
+def plot_wacc_fan_chart(sim: MonteCarloSimulator, ax=None):
+    """Fan chart of WACC paths -- OU percentile bands."""
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+    T     = sim.p.T_high + sim.p.T_trans
+    years = np.arange(1, T + 1)
+    r_pct = np.percentile(sim.paths.r * 100, [5, 25, 50, 75, 95], axis=0)
+    ax.fill_between(years, r_pct[0], r_pct[4], alpha=0.15,
+                    color=COLORS["primary"], label="P5-P95")
+    ax.fill_between(years, r_pct[1], r_pct[3], alpha=0.30,
+                    color=COLORS["primary"], label="P25-P75")
+    ax.plot(years, r_pct[2], color=COLORS["primary"],
+            linewidth=2, label="Median WACC")
+    ax.axhline(sim.p.r_bar * 100, color="grey", linewidth=0.8,
+               linestyle=":",
+               label=f"Equilibrium ({sim.p.r_bar*100:.1f}%)")
+    ax.set_xlabel("Year"); ax.set_ylabel("WACC (%)")
+    ax.legend(fontsize=9); ax.set_xticks(years)
+    return ax
+
+
+def plot_tornado(sens: dict, ax=None):
+    """Tornado chart of Spearman rank correlations."""
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(7, 4))
+    names = list(sens.keys())
+    rhos  = [sens[n]["rho"] for n in names]
+    order = np.argsort(np.abs(rhos))
+    ns    = [names[i] for i in order]
+    rs    = [rhos[i]  for i in order]
+    cols  = [COLORS["primary"] if r > 0 else COLORS["accent"] for r in rs]
+    ax.barh(ns, rs, color=cols, edgecolor="white", height=0.55)
+    ax.axvline(0, color="black", linewidth=0.8)
+    ax.set_xlabel("Spearman Rank Correlation with EV")
+    pos = mpatches.Patch(color=COLORS["primary"], label="Positive impact")
+    neg = mpatches.Patch(color=COLORS["accent"],  label="Negative impact")
+    ax.legend(handles=[pos, neg], fontsize=9)
+    return ax
+\end{lstlisting}
+
+\section*{Module 7 — Main Entry Point}
+
+The \texttt{main()} function runs the full pipeline: simulation,
+summary statistics, sensitivity analysis, and figure generation. All
+output files are written to the working directory.
+
+\begin{lstlisting}[style=python, caption={Main entry point — full pipeline execution}]
+def main():
+    params = ModelParams()
+    sim    = MonteCarloSimulator(params)
+    s      = sim.summary()
+    sens   = sensitivity_analysis(sim)
+
+    # Print summary
+    print(f"Mean EV:    ${s['EV_mean']:,.0f}M")
+    print(f"Median EV:  ${s['EV_median']:,.0f}M")
+    print(f"P5 / P95:   ${s['EV_p5']:,.0f}M  /  ${s['EV_p95']:,.0f}M")
+    print(f"TV share:   {s['TV_share']*100:.1f}%")
+    print(f"Std Error:  ${s['SE']:,.0f}M")
+
+    # Four-panel figure
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    fig.suptitle("Three-Stage Stochastic DCF -- Barrick Gold",
+                 fontsize=14, fontweight="bold")
+    plot_ev_distribution(sim, ax=axes[0, 0])
+    plot_price_fan_chart(sim, ax=axes[0, 1])
+    plot_wacc_fan_chart(sim,  ax=axes[1, 0])
+    plot_tornado(sens,        ax=axes[1, 1])
+    plt.tight_layout()
+    plt.savefig("mc_dcf_results.png", dpi=180, bbox_inches="tight")
+    plt.close()
+
+    return sim, s, sens
+
+
+if __name__ == "__main__":
+    sim, s, sens = main()
+\end{lstlisting}

@@ -1,0 +1,24 @@
+{
+  "figure_spec": {
+    "figure_id": "fig_gold_bands",
+    "score": 10,
+    "chapter": "Chapter 9",
+    "title": "Conditional gold path bands by model"
+  },
+  "n_paths": 8192,
+  "quarters": 20,
+  "start_gold_usd_per_oz": 4417.0,
+  "calibration_snapshot": {
+    "surface_as_of_utc": "2026-08-27T20:15:12.017875+00:00",
+    "treasury_curve_date": "2026-07-24",
+    "instrument": "GLD calls",
+    "measure": "option-implied risk-neutral calibration",
+    "current_surface_used_for_recalibration": true
+  },
+  "measure": "conditional risk-neutral shape; Q-to-P NOT_VALIDATED",
+  "bands": [
+    10,
+    50,
+    90
+  ]
+}

@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: barrick-unified-research
+Version: 0.1.0
+Summary: LSE-backed research snapshots and provenance-safe analytics for the Barrick unified article.
+Requires-Python: >=3.11
+Requires-Dist: lse-data<1,>=0.14
+Requires-Dist: matplotlib<4,>=3.8
+Requires-Dist: numpy<3,>=1.26
+Requires-Dist: pandas<4,>=2.1
+Requires-Dist: scipy<2,>=1.11
+Provides-Extra: test
+Requires-Dist: pytest<10,>=8; extra == "test"

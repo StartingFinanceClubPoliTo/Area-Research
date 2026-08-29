@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "valuation_as_of_utc": "2026-08-27T20:16:00Z",
+  "reporting_currency": "USD",
+  "reporting_scale": "millions",
+  "allow_unresolved_corporate_proxies": true,
+  "market_price": {
+    "price_usd": 47.27,
+    "timestamp_utc": "2026-08-27T00:00:00Z",
+    "source": "London Strategic Edge B daily unadjusted close; versioned refresh 20260828T070000Z-lse-nss"
+  },
+  "simulation": {
+    "n_simulations": 50000,
+    "seed": 42
+  },
+  "model": {
+    "quarters": 20,
+    "dt_years": 0.25,
+    "gold_price_0_usd_per_oz": 4417.0,
+    "gold_price_anchor": {
+      "definition": "Barrick Q2 2026 average realized gold price; level anchor only, not spot and not a Team 4 simulated price",
+      "source_authority": "Barrick Mining Corporation",
+      "source_date": "2026-06-30",
+      "source_manifest": "data/manifests/team4/barrick_operating_q1_q2_2026_manifest.json"
+    },
+    "production_koz": [719, 796, 752, 751, 720, 743, 748, 814, 783, 787, 789, 811, 805, 821, 842, 814, 802, 782, 769, 779],
+    "cost_usd_per_oz": [1922, 1993, 1727.07, 1783.58, 1820.64, 1856.45, 1899.48, 1945.25, 1986.89, 2031.28, 2077.64, 2124.60, 2171.84, 2220.87, 2270.94, 2321.98, 2374.12, 2427.60, 2482.20, 2538.02],
+    "operating_vector_status": ["ACTUAL_BARRICK_Q1_2026", "ACTUAL_BARRICK_Q2_2026", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST", "TEAM4_FORECAST"],
+    "gold_volatility_annual": [0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303, 0.2653406303],
+    "gold_drift_nss": {
+      "beta0": 0.017385564545365727,
+      "beta1": 0.0193249198690013,
+      "beta2": 0.02852251877184989,
+      "beta3": 0.1032832428424333,
+      "tau1": 1.41891774985645,
+      "tau2": 15.07963754251128
+    },
+    "gold_drift_source": "Current London Strategic Edge US Treasury NSS curve dated 2026-07-24; 11 same-date tenors and integral-preserving forward rates",
+    "tax_rate": 0.25,
+    "high_growth": 0.085,
+    "stable_growth": 0.025,
+    "roic_high": 0.145,
+    "roic_stable": 0.105,
+    "wacc_0": 0.091,
+    "wacc_long_run": 0.083,
+    "wacc_reversion": 0.45,
+    "wacc_volatility": 0.009,
+    "terminal_spread_floor": 0.01
+  },
+  "equity_bridge": {
+    "debt_usd_mn": 0.0,
+    "cash_usd_mn": 0.0,
+    "minority_interest_usd_mn": 0.0,
+    "non_operating_assets_usd_mn": 0.0,
+    "other_claims_usd_mn": 0.0,
+    "diluted_shares_mn": 1675.51
+  },
+  "unresolved_corporate_inputs": [
+    "Legal valuation perimeter and treatment of the announced North American gold-assets transaction",
+    "Production and cost are current Barrick actuals only for 2026Q1-Q2; 2026Q3-2030 remain Team 4 forecasts",
+    "The USD 4,417/oz price anchor is Barrick's Q2 average realized price, not a point-in-time spot quote or a physical-price forecast",
+    "GLD-to-gold, gold-to-realized-price and Q-to-P/scenario bridges are not validated",
+    "Cost of Sales includes depreciation; component margin is not reconciled audited EBITDA, EBIT, NOPAT or FCFF",
+    "Debt, cash, minority interests, non-operating assets and other claims are explicit zero placeholders",
+    "Diluted shares are an unreconciled proxy inferred from the LSE market-cap/price snapshot",
+    "WACC, terminal growth, ROIC and tax remain methodological assumptions, not filing-calibrated Barrick inputs",
+    "Finite reserve life and mine-level closure/reclamation policy are not represented"
+  ],
+  "assumptions": [
+    {
+      "id": "A-OPS-ACTUAL",
+      "classification": "CURRENT_PUBLIC_OPERATING_DATA",
+      "value": "2026Q1-Q2 Barrick attributable production and Cost of Sales",
+      "source": "Barrick Q1 and Q2 2026 Mine Statistics",
+      "caveat": "Company totals; the eight-mine plots form a documented analytical subset"
+    },
+    {
+      "id": "A-OPS-FORECAST",
+      "classification": "TEAM4_FORECAST",
+      "value": "2026Q3-2030 quarterly production and unit-cost forecast",
+      "source": "Team 4 production and cost methodology retained in this branch",
+      "caveat": "Forecast continuation, visually and programmatically separated from actual quarters"
+    },
+    {
+      "id": "A-GOLD-ANCHOR",
+      "classification": "CURRENT_PUBLIC_LEVEL_ANCHOR",
+      "value": "USD 4,417/oz",
+      "source": "Barrick Q2 2026 realized gold price",
+      "caveat": "Quarterly average level anchor only; Team 4 price simulations are excluded"
+    },
+    {
+      "id": "A-GOLD-DRIFT",
+      "classification": "CURRENT_MARKET_CURVE",
+      "value": "Quarterly forward rates derived from the updated 2026-07-24 LSE Nelson-Siegel-Svensson curve",
+      "source": "London Strategic Edge current Team 8 calibration input",
+      "caveat": "11 same-date tenors; spaced API retries and the live LSE catalogue confirm that US10Y ends on 2026-07-01 and is unavailable on 2026-07-24; risk-neutral scenario drift, not an estimated physical expected return"
+    },
+    {
+      "id": "A-DCF",
+      "classification": "METHODOLOGICAL_ASSUMPTION",
+      "value": "25% tax; growth 8.5%-2.5%; ROIC 14.5%-10.5%; WACC 9.1%-8.3%",
+      "source": "Unified DCF methodology",
+      "caveat": "Not a filing-calibrated target-price model"
+    }
+  ],
+  "reference_files": [
+    {
+      "path": "data/manifests/team4/barrick_operating_q1_q2_2026_manifest.json"
+    },
+    {
+      "path": "data/processed/team4/barrick_total_gold_q1_q2_2026.csv"
+    },
+    {
+      "path": "data/manifests/20260828T070000Z-lse-nss/run_manifest.json"
+    },
+    {
+      "path": "data/manifests/rates/lse_us10y_retry_20260828T143000Z-us10y-retry.json"
+    }
+  ]
+}

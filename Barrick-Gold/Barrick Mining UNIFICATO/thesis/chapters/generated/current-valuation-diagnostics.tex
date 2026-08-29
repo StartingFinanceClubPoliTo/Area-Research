@@ -1,0 +1,21 @@
+\paragraph{Run diagnostics and falsification gates.}
+
+The autonomous figure run regenerates all 47 analytical images without using
+standalone-article PNGs as inputs. The complete branch suite passes 57 tests.
+The figure-provenance audit passes 47/47 byte-identity checks and classifies
+38 figures as current, two as frozen legacy validation, one as a mixed
+actual/forecast operating contract and six as provisional valuation output.
+
+The valuation tests preserve monotone empirical quantiles and verify the
+enterprise-to-equity and equity-to-per-share identities path by path. The
+operating arrays, unified DCF assumptions and single WACC shock array have
+identical hashes in all four model branches. Additional assertions require the
+current configuration to declare that Team~4 price artifacts and its legacy NSS
+drift are not used, while the current LSE NSS is required. Higher gold raises the proxy value, while higher costs or
+discount rates lower it under otherwise fixed inputs.
+
+These software gates do not validate the GLD-to-gold basis, a physical-measure
+forecast, corporate accounting, zero equity-bridge placeholders or the share
+proxy. The 28 August extraction supplies both the current calibration and the
+market-context audit: 143 eligible calls, 24 retained nodes, three maturities
+and an 11-node NSS Treasury fit dated 24 July 2026.

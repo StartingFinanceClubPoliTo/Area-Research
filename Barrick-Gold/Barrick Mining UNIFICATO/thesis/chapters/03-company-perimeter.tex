@@ -1,0 +1,107 @@
+\chapter{Barrick Mining Corporation and Valuation Perimeter}
+\chapterstatus{Legal identity and listing continuity are verified from Barrick's
+official releases. The source corpus supports the operating variables and
+valuation interfaces below, but asset ownership, financial perimeter and
+structural events remain controlled inputs that must be reconciled before a
+final valuation is reported.}
+
+\section{Corporate identity and the choice of case study}
+
+The project retained its historical working name, ``Barrick Gold'', but the
+legal issuer is now \emph{Barrick Mining Corporation}. Shareholders approved
+the change from Barrick Gold Corporation on 6 May 2025. Trading under the new
+name began on 9 May 2025; the New York Stock Exchange ticker changed from
+\texttt{GOLD} to \texttt{B}, while the Toronto Stock Exchange ticker remained
+\texttt{ABX} \cite{barrick-name-2025}. The distinction matters whenever a
+market-price series is stitched across the corporate action.
+
+Barrick describes itself as a global gold and copper exploration, development
+and mining company \cite{barrick-about-2026}. Gold remains central, while the
+copper portfolio means that Barrick is not a one-factor claim on the gold
+price. It is nevertheless a useful case study for this project because gold,
+production and cost uncertainty can be connected to operating margin, free
+cash flow and a DCF. That connection brings the team's corporate-valuation
+interests into the same framework as its stochastic modelling work.
+
+\section{The company perimeter is a model input}
+
+% Sources: GAP-COMPANY-01--04, GAP-DATA-01/03/04; Team 4 MAP-T4-01--12.
+A mining-company valuation cannot define the corporate perimeter implicitly.
+The perimeter determines which production volumes, costs, taxes, royalties,
+cash flows, debt claims and shares belong in the numerator and denominator of
+the valuation. It must therefore be frozen at the valuation date and identify,
+for every admitted operating asset, the ownership basis, reporting basis,
+status and currency. The current Team material supplies a component-driven
+method, not an approved current portfolio table.
+
+\gapbox{Populate the dated Barrick corporate and operating perimeter from
+approved primary corporate evidence. Legal name and listing continuity are
+closed; ownership shares, operating status, structural events and the choice
+between consolidated and attributable measures remain open.}
+
+\section{Operating quantities supplied by the source programme}
+
+% Sources: Team 4 MAP-T4-01--12; CONTENT-LEDGER BG-U-10; GAP-VAL-01/02/07.
+Team 4 establishes that the operating layer is component-driven rather than a
+single revenue-growth extrapolation. Production and cost forecasts are
+estimated separately, while a stochastic commodity-price engine supplies the
+price input used in the operating distribution. This is sufficient to define
+the required contract even though it is insufficient to populate the contract
+with current Barrick figures.
+
+\begin{table}[H]
+\centering
+\caption{Corporate operating contract implied by the Team 4 source module.}
+\label{tab:company-operating-contract}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{2.70cm}X X@{}}
+\toprule
+\textbf{Dimension} & \textbf{Required dated input} &
+\textbf{Reason it cannot remain implicit} \\
+\midrule
+Production & Ounces produced and sold by asset, ownership basis, grade,
+recovery and forecast frequency. & Volumes determine revenue exposure and
+must reconcile consolidated versus attributable reporting. \\
+Costs & CoS, cash cost, AISC components, royalties, sustaining and growth
+capital with explicit units. & Mixing cash and accrual measures can double
+count D\&A, sustaining investment or royalties. \\
+Commodity price & Physical-gold and realised-price paths in currency per troy
+ounce, including basis, hedging and royalty treatment. & GLD is quoted in USD
+per share and cannot enter revenue with an implicit one-to-one conversion. \\
+Operating output & Revenue, component margin and the precise EBITDA/EBIT
+definition by year and scenario. & The DCF requires a reconciled accounting
+quantity, not a label carried over from an operating model. \\
+Dependence & Joint or explicitly deterministic relations among price,
+production and costs. & Independent broadcasts and untested correlations can
+materially change the tails of the cash-flow distribution. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Financial and structural perimeter}
+
+% Sources: Team 5 T5-02/T5-04/T5-10--13; GAP-DATA-03--05;
+% GAP-VAL-03/04/06.
+The financial perimeter is distinct from the operating perimeter. It fixes the
+reporting statements and scale used to derive taxes, reinvestment and capital
+cost; it also identifies net debt, lease or debt-equivalent claims, minority
+interests, non-operating assets and diluted shares for the equity bridge.
+Listing continuity and foreign-exchange treatment matter because a market
+comparison is meaningful only when model value and quoted price refer to the
+same security, currency and share basis.
+
+\gapbox{Freeze the reporting date, currency and scale; reconcile debt, cash,
+minorities, non-operating assets, other claims and diluted shares; document the
+security and corporate-action policy used for the contemporaneous market-price
+comparison.}
+
+\section{Risk boundary and permitted use}
+
+% Sources: GAP-COMPANY-04; GAP-VAL-02/06; CL-009/013.
+Geography, reserve life, execution risk and structural events affect the
+operating horizon, the dependence of production and costs, and the credibility
+of any terminal assumption. Those facts require current corporate evidence and
+cannot be inferred from a market-price series. Until that evidence is admitted,
+this chapter defines a valuation contract and its failure conditions; it is not
+a substitute company profile and does not support a final target value.

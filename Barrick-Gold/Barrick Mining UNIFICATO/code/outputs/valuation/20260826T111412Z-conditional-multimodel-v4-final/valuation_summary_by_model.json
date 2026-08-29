@@ -1,0 +1,118 @@
+{
+  "schema_version": "2.0",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "run_id": "20260826T111412Z-conditional-multimodel-v4-final",
+  "valuation_as_of_utc": "2026-08-25T00:00:00Z",
+  "observed_market_price": {
+    "ticker": "B",
+    "price_usd": 48.39,
+    "timestamp_utc": "2026-08-24T00:00:00Z",
+    "source": "London Strategic Edge B daily unadjusted close; authoritative refresh 20260825T130645Z-replay-20260825T131013Z"
+  },
+  "primary_structural_scenario": "full_bates_hawkes",
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "basis": "lowest in-sample IV RMSE on the frozen current surface and richest jump/variance structure",
+    "in_sample_iv_rmse_bp": {
+      "black_scholes": 117.9272170902997,
+      "heston": 94.43909634351468,
+      "bates_poisson": 78.12538979659097,
+      "full_bates_hawkes": 61.01730453112376
+    },
+    "oos_caveat": "Full Bates-Hawkes is not the one-step-ahead OOS winner; Black-Scholes has the slightly lower OOS RMSE in the frozen Team 8 validation."
+  },
+  "models": [
+    {
+      "model_id": "black_scholes",
+      "model": "Black–Scholes / GBM",
+      "median_value_per_share_usd": 39.29253939271167,
+      "p10_value_per_share_usd": 4.879962099445989,
+      "p90_value_per_share_usd": 107.80550145566411,
+      "observed_close_usd": 48.39,
+      "observed_close_percentile": 59.53369140625,
+      "probability_model_value_exceeds_observed": 0.4046630859375,
+      "observed_minus_median_usd": 9.097460607288333,
+      "observed_vs_median_pct": 23.153150058241877,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "heston",
+      "model": "Heston",
+      "median_value_per_share_usd": 39.9995018685577,
+      "p10_value_per_share_usd": 7.679494113882358,
+      "p90_value_per_share_usd": 101.17842854051565,
+      "observed_close_usd": 48.39,
+      "observed_close_percentile": 59.3505859375,
+      "probability_model_value_exceeds_observed": 0.406494140625,
+      "observed_minus_median_usd": 8.3904981314423,
+      "observed_vs_median_pct": 20.976506555042373,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "bates_poisson",
+      "model": "Bates–Poisson",
+      "median_value_per_share_usd": 38.735284185898365,
+      "p10_value_per_share_usd": 6.16212136348265,
+      "p90_value_per_share_usd": 103.52611141087992,
+      "observed_close_usd": 48.39,
+      "observed_close_percentile": 59.912109375,
+      "probability_model_value_exceeds_observed": 0.40087890625,
+      "observed_minus_median_usd": 9.654715814101635,
+      "observed_vs_median_pct": 24.92486118797199,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "full_bates_hawkes",
+      "model": "Full Bates–Hawkes",
+      "median_value_per_share_usd": 38.894106312846915,
+      "p10_value_per_share_usd": 5.170741314169727,
+      "p90_value_per_share_usd": 104.19684160749979,
+      "observed_close_usd": 48.39,
+      "observed_close_percentile": 59.94873046875,
+      "probability_model_value_exceeds_observed": 0.4005126953125,
+      "observed_minus_median_usd": 9.495893687153085,
+      "observed_vs_median_pct": 24.414736800409642,
+      "conditional_median_reading": "observed close above conditional median"
+    }
+  ],
+  "common_contract": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "production_and_cost": "20 deterministic quarterly output vectors imported from Team 4 ad hoc production and cost models; the source models are not rerun; vectors are identical across all four valuations",
+    "temporary_v3_gold_driver": "Team 4 GBM/NSS was temporary and is not a production/cost model",
+    "dcf_wacc_equity_bridge": "Team 5 adaptation; identical across all four valuations",
+    "common_input_hashes": {
+      "team4_production_koz": "D11E5B9A43775607E874F25540E52DF425901804451D2DAF44727C65A6A22DEE",
+      "team4_cost_usd_per_oz": "6767D930EA47866C79D7CD1A0FE4642AC947C7BDC93B5BCEEC22C1409F4BB7D0",
+      "team5_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+      "team5_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+      "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+      "common_gold_scenario": "36A6B5F053685107A3E4ABDA8B129ACE57DDE8D4C8528685EC38ECB75273E322"
+    },
+    "wacc_shocks_sha256": "334D7A778ACF2B1DA6069F7A579819581AD654D2D05FD5E88A284FDA396C5EB2",
+    "wacc_identical_across_models": true,
+    "gold_engine_base_seed_alignment": "All engines use the same base seed. Heston, Bates-Poisson and Full Bates-Hawkes share the frozen two-factor Sobol diffusion construction; BS uses the frozen one-factor Sobol construction, so it is seed-aligned but not column-identical. Jump streams use the frozen internal offsets. WACC shocks are generated independently once and reused exactly."
+  },
+  "conditional_bridge": {
+    "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+    "source_instrument": "GLD call options",
+    "destination_variable": "gold USD/troy oz scenario paths",
+    "validated_physical_forecast": false,
+    "q_to_p_mapping": "NOT_VALIDATED",
+    "gld_to_gold_level_conversion": "NOT_PERFORMED; all engines restart at the common Team 4 gold USD/oz scenario value",
+    "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+  },
+  "calibration_snapshot": {
+    "surface_as_of_utc": "2026-08-12T20:15:07.826914+00:00",
+    "treasury_curve_date": "2026-07-24",
+    "instrument": "GLD calls",
+    "measure": "option-implied risk-neutral calibration"
+  },
+  "asynchronous_dates": {
+    "team4_gold_start": "2026-04-02",
+    "team8_surface": "2026-08-12T20:15:07.826914+00:00",
+    "team8_treasury_curve": "2026-07-24",
+    "b_close": "2026-08-24T00:00:00Z",
+    "valuation_as_of": "2026-08-25T00:00:00Z"
+  },
+  "interpretation": "conditional transfer of GLD/Q distributional shape to gold USD/oz; research sensitivity only, not a validated physical forecast, fair value, target price or investment recommendation"
+}

@@ -1,0 +1,12 @@
+Revisione/
+!workflow.md
+# *.ipynb
+.ipynb_checkpoints/
+.jupyter/
+.jupyter_runtime/
+__pycache__/
+*.pyc
+Data/lse_local/
+Data/*option_diagnostics.csv
+.env
+.env.*

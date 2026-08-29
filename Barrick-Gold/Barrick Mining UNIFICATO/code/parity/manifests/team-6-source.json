@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "team": 6,
+  "benchmark_class": "synthetic_illustrative",
+  "acquired_utc": "2026-08-14T19:30:30.4598897Z",
+  "original_root": "Team 6 - Beyond Black-Scholes/Github-Branch",
+  "frozen_root": "UNIFICATO/Github-Branch/parity/sources/team-6",
+  "copy_policy": "byte_identical_only",
+  "license": {
+    "status": "GAP",
+    "evidence": "No source-code license declaration was established for this freeze.",
+    "redistribution_approval": "not_established"
+  },
+  "files": [
+    {
+      "path": "1 Simulations/simulate_examples.py",
+      "role": "synthetic_illustration_runner",
+      "bytes": 4345,
+      "sha256": "D0779EC08609F6A16D87A83252564B57E3F2CC8F0FB023EEFF65C062EA9F9E51",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "requirements.txt",
+      "role": "declared_dependencies",
+      "bytes": 27,
+      "sha256": "71D512A848035FE8DEE8E8356B6C9743AAE4C59B2F60017CEBFF4B21B5B5EAA8",
+      "copy_sha256_verified": true
+    }
+  ],
+  "verification": {
+    "file_count": 2,
+    "only_authorized_files_frozen": true,
+    "all_planned_files_present": true,
+    "all_sha256_match_plan": true,
+    "originals_modified": false,
+    "frozen_copies_used_as_run_working_directory": false
+  }
+}

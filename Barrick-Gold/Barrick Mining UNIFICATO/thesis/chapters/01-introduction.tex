@@ -1,0 +1,149 @@
+\chapter{From SF Research to the Integrated Barrick Project}
+\chapterstatus{The project history in this chapter follows the mandate supplied
+by SF Research. The methodological map is a source-grounded synthesis of Teams
+1--8 and the accepted current evidence; it does not promote the conditional
+corporate proxy to a filing-reconciled valuation.}
+
+\section{Research question, community and valuation object}
+
+% Sources: CONTENT-LEDGER BG-U-01, BG-U-10--14; CL-001/002/011/013;
+% Team 8 T8-17--19; Team 4 MAP-T4-08--12; Team 5 T5-02--19;
+% SF Research complete guide, project organisation and unification workflow.
+SF Research did not begin as a preassembled quantitative-finance laboratory.
+It originated as a comparatively vertical group, strongly represented by
+management-engineering students and initially centred on events and financial
+education. Research activity first appeared through short studies developed by
+small groups over roughly monthly horizons. As contributors with different
+academic paths entered the area, those isolated exercises gradually revealed a
+larger opportunity: to build a common annual project in which every member
+could contribute while learning how separate disciplines meet in a real
+valuation problem.
+
+That evolution matters because the project's main advantage is
+interdisciplinarity. A mathematics curriculum can reasonably treat probability,
+analysis or numerical foundations as prerequisites; a management curriculum
+can do the same with accounting and valuation; a computing curriculum can
+assume familiarity with implementation. The team deliberately avoided those
+silent assumptions. The project was designed from the bottom up so that it
+could extend, rather than merely repeat, the contributors' university
+programmes and introduce models and techniques that many of them had not met
+in formal courses.
+
+The resulting chain joins economics and corporate finance with mathematics,
+econometrics, statistics and probability, stochastic methods, numerical
+methods, optimisation, operations research and computing. At university these
+subjects are often taught as distinct modules. In the Barrick project they are
+forced to interact: probability supplies the language of uncertainty;
+econometrics tests the historical series; stochastic calculus defines the
+continuous-time models; numerical methods make calibration and simulation
+possible; optimisation estimates parameters; operational modelling converts
+gold, production and costs into margins; and corporate finance closes the DCF.
+The thesis is therefore both a valuation study and a record of how theoretical
+ideas become mutually dependent when applied to one object.
+
+The integrated research question is: \emph{how can uncertainty in commodity
+prices, production, costs and corporate assumptions be propagated into a
+distribution of Barrick free cash flow and value without confusing
+risk-neutral option information with a physical operating forecast?} The
+object is not a point price produced by an isolated option model. It is a
+conditional distribution of enterprise value and, after a separately verified
+capital bridge, equity value and value per diluted share. The comparison with
+the observed market price is therefore a dated diagnostic inside a declared
+assumption set, not a target price or a recommendation.
+
+This project was developed within Research, the Starting Finance Club PoliTo
+area dedicated to collaborative quantitative, economic, financial and
+methodological projects. Its members bring heterogeneous backgrounds---from
+management engineering and mathematics to data science, computational methods
+and quantitative finance---so the research process is organised around
+knowledge sharing rather than an assumed common starting point. The practical
+objective is to establish enough shared language and method for contributors
+with different training to make a verifiable contribution, while keeping
+technical depth accessible to readers who did not participate in the project.
+This description concerns how the work was organised; it is not presented as a
+formal institutional mission or organisational chart.
+
+That collaborative setting is material to the valuation design. The commodity
+block must state whether paths are risk-neutral, physical or explicit
+scenarios; the operating block must state production, cost and realised-price
+units; the accounting block must reconcile operating margin, depreciation,
+taxes and reinvestment; and the valuation block must state discounting,
+terminal closure and every enterprise-to-equity adjustment. A result becomes
+economically interpretable only when contributors working on different modules
+use the same date, perimeter, currency, notation and manifest. The research
+question is therefore also an integration question: whether heterogeneous
+analytical work can be connected without hiding disagreements in definitions
+or silently filling missing data.
+
+\section{From eight autonomous studies to one chain of evidence}
+
+% Sources: CONTENT-LEDGER authority table; MAP-T1--T4; T5-01--T8-20;
+% SF Research complete guide, unification and review workflow.
+The eight source studies divide the problem into complementary modules. Team 1
+provides probability, measure and Black--Scholes foundations; Team 2 provides
+regression and linear time-series methods; Team 3 provides Monte Carlo and
+simulation diagnostics; Team 4 maps production, cost and price scenarios into
+an operating layer; Team 5 supplies DCF, FCFF, WACC and stochastic-valuation
+concepts; Team 6 develops stochastic variance, jumps and Fourier pricing; Team
+7 supplies historical gold, dependence and volatility evidence; and Team 8
+compares option-surface models and produces risk-neutral GLD paths. These were
+autonomous studies with different immediate questions, conventions and
+validation states, not chapters originally written as a single sequential
+paper.
+
+Unification was consequently treated as a separate research phase rather than
+as copy-and-paste assembly. Before drafting the integrated argument, the work
+froze the admissible sources and material claims, assigned an authority to each
+concept, and classified outputs as theoretical, synthetic, legacy empirical,
+current empirical or newly generated. Data and notation contracts then made
+dates, currencies, units, measures and interfaces explicit. Source-model
+implementations were preserved and subjected to parity tests before being
+connected to the unified runner, while the current LSE refresh was recorded as
+a separate evidence layer so that a new market observation could not be
+mistaken for a re-estimation of every legacy study.
+
+The execution itself followed two connected workstreams. The code stream built
+and tested the valuation pipeline, generated tables and figures from accepted
+manifests, and exposed unresolved inputs instead of replacing them with silent
+assumptions. The writing and LaTeX stream harmonised notation, removed
+duplication, created transitions and kept claims tied to their evidence status.
+Technical review checked models, calculations and reproducibility; editorial
+review checked scope, language and reader navigation; final quality assurance
+tested both the compiled artifact and the consistency between prose, tables,
+figures and generated outputs. Section~\ref{sec:team-study-synthesis} makes the
+resulting roles and validation states directly comparable.
+
+\section{Contribution, falsifiable boundaries and roadmap}
+
+% Sources: VAL-001 gate sequence in GAP-REGISTER; CL-001/005/012/013.
+The first contribution is an auditable handoff from option-implied dynamics to
+corporate quantities. The second is an evidence hierarchy that separates
+source-model parity, market-data validity, statistical fit, predictive tests,
+numerical convergence and accounting reconciliation. The third is a reporting
+contract: a stochastic valuation must expose its median and tails, the
+contemporaneous market-price reference and the assumptions that move the
+distribution, rather than presenting a single estimate with false precision.
+Together, these contributions make disagreement inspectable: a reader can see
+whether a result changes because of market evidence, model form, operating
+assumptions, accounting treatment or the equity bridge.
+
+The same structure creates falsifiable boundaries. Better option fit does not
+prove better out-of-sample forecasts; better forecasts do not prove a valid
+GLD-to-realised-gold bridge; a valid commodity bridge does not prove the mine
+or accounting perimeter; and a coherent enterprise value does not determine
+equity value until net debt, minorities, non-operating assets and diluted
+shares are reconciled. Each boundary has a corresponding validation gate in
+Chapter 12. Failure at a later gate does not erase an earlier technical
+result, but it narrows the conclusion that the integrated study may draw from
+that result.
+
+The thesis follows the same chain. Part I reconstructs the genesis of the
+research, the monetary and macroeconomic role of gold, and the Barrick
+valuation perimeter. Part II consolidates the mathematical, econometric and
+numerical prerequisites from the bottom up. Part III first tests the legacy
+gold series with discrete-time methods, then introduces the affine
+stochastic-volatility and jump model ladder, and finally calibrates and
+compares the models on the option surface. Part IV carries the admitted gold,
+production and cost paths through EBITDA and DCF, validates the integrated
+experiment and closes with limitations and future research. No part of the
+study provides a buy, sell or hold recommendation.

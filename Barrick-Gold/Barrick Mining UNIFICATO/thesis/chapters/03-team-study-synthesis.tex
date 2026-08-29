@@ -1,0 +1,148 @@
+\section{Comparative synthesis of the eight source studies}
+\label{sec:team-study-synthesis}
+
+% Sources: CONTENT-LEDGER authority table and BG-U-01--14; accepted child
+% ledgers FINDINGS-TEAMS-1-4.md (MAP-T1/T4) and FINDINGS-TEAMS-5-8.md
+% (T5-01--19, T6-01--14, T7-01--17, T8-01--20).
+The preceding design sections separate data domains, measures and validation
+questions. Against those boundaries, the source articles answer different
+questions and should be read as a modular research programme, not as eight
+replications of one experiment. Table
+\ref{tab:team-question-model-output} identifies what each study contributes;
+Table \ref{tab:team-validation-role} records what has actually been validated
+and what remains inadmissible in the unified valuation.
+
+\begin{table}[H]
+\centering
+\caption{Questions, inputs, methods and outputs in the Team 1--8 corpus.}
+\label{tab:team-question-model-output}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}p{0.85cm}p{2.32cm}X X X@{}}
+\toprule
+\textbf{Study} & \textbf{Question} & \textbf{Admitted input} &
+\textbf{Core method} & \textbf{Source output} \\
+\midrule
+% Team 1: MAP-T1-01--07; BG-U-04.
+T1 & What mathematical structure supports continuous-time derivative pricing?
+& Definitions and analytical assumptions; no empirical dataset or executable
+code. & Measure and probability, filtration, Brownian motion, It\^o calculus,
+GBM and Black--Scholes--Merton. & Canonical theoretical foundation for the
+pricing and measure conventions used downstream. \\
+% Team 2: MAP-T2-01--09; BG-U-05.
+T2 & How should conditional means, dependence and linear time-series dynamics
+be specified and interpreted? & Methodological examples; no frozen Barrick
+dataset or executable implementation. & OLS and robust inference, returns and
+stationarity, AR/MA/ARIMA, rolling correlation and DCC. & Econometric vocabulary,
+diagnostics and causal caveats for later empirical studies. \\
+% Team 3: MAP-T3-01--09; BG-U-06.
+T3 & How can simulation error and non-Gaussian risk be represented and reduced?
+& Synthetic numerical examples and selected risk-series inputs. & RNG and
+distribution transforms, path discretisation, variance reduction, mixtures,
+copulas and Monte Carlo risk. & Estimator diagnostics, pricing benchmarks and
+candidate dependence/risk simulations; final copula results remain incomplete. \\
+% Team 4: MAP-T4-01--12; BG-U-10.
+T4 & How do production, cost and commodity-price uncertainty propagate to an
+operating margin or EBITDA layer? & Source production and cost series plus GLD
+option inputs, subject to unresolved dates, units and basis. & SARIMA/log-space
+cost forecasts, production aggregation, Black--Scholes IV inversion and GBM
+gold-price scenarios. & Production, cost and operating-distribution baseline
+that establishes the price-to-operations bridge conceptually. \\
+% Team 5: T5-01--19; BG-U-11.
+T5 & How can operating forecasts be translated into a three-stage corporate
+valuation under uncertainty? & Reclassified-statement concepts and a synthetic
+simulation case; no accepted Barrick corporate input set. & FCFF/FCFE, WACC,
+ROIC--growth consistency, terminal closure, scenarios and Monte Carlo DCF. &
+Methodological DCF engine and synthetic EV distributions, not Barrick values. \\
+% Team 6: T6-01--14; BG-U-08.
+T6 & Which dynamics address constant volatility and continuous-path limits?
+& Theoretical and synthetic inputs only. & Poisson and compound-Poisson jumps,
+L\'evy processes, characteristic functions, Fourier pricing, CIR, Heston,
+Merton and Bates. & Model mechanisms and synthetic illustrations for the
+advanced option stack. \\
+% Team 7: T7-01--17; BG-U-07/BG-U-08.
+T7 & How have gold and silver returns, dependence and volatility behaved in a
+long historical sample? & A frozen legacy Yahoo sample whose provider, window
+and scale remain separate from LSE. & Static and rolling dependence, OLS,
+AR/ARIMA, stylised facts, GARCH and GPH diagnostics. & Historical empirical
+tables and volatility evidence; no causal or Barrick-specific result. \\
+% Team 8: T8-01--20; BG-U-09.
+T8 & How do increasingly rich stochastic models fit and forecast a GLD option
+surface? & LSE GLD returns, option IV maps and rates; IV-mapped prices are not
+raw trades. & Constrained calibration of Black--Scholes, Heston, Bates and
+affine Bates--Hawkes; rolling OOS tests and path simulation. & Surface-fit,
+residual, OOS and risk-neutral GLD-path outputs, ending before corporate value. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Validation status, unified role and binding limitation by source study.}
+\label{tab:team-validation-role}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\textwidth}{@{}p{0.85cm}p{2.97cm}X X X@{}}
+\toprule
+\textbf{Study} & \textbf{Validation status} & \textbf{Role in unified work} &
+\textbf{Binding limitation} & \textbf{Provenance rule} \\
+\midrule
+% Team 1: MAP-T1 coverage and GAP-BIB-01/GAP-MATH-01.
+T1 & Source mapped; no code parity. Formula and citation audit remains open. &
+Single authority for probability, measure and Black--Scholes foundations. &
+No computational evidence; figures lack generators. & Reuse definitions and
+derivations only after notation, mathematics and source-to-claim review. \\
+% Team 2: MAP-T2 coverage and GAP-CODE-01/GAP-SCOPE-01.
+T2 & Source mapped; no code or empirical parity. & Single authority for OLS and
+linear time-series method; Team 7 supplies applications. & Quantile regression
+and unused tests are outside the current main experiment. & Methodological
+claims only; do not manufacture a Barrick application. \\
+% Team 3: TEAM3-PARITY-FINDING; GAP-MODEL-02.
+T3 & Limited parity: source and primary CSV freeze accepted; figures, licence
+and historical runtime remain open. & Monte Carlo estimator, path and
+variance-reduction layer. & Copula/portfolio result chapters are placeholders
+and supporting modules are incomplete. & Synthetic outputs retain an explicit
+non-Barrick label. \\
+% Team 4: MAP-T4 and GAP-CODE-02/GAP-VAL-07.
+T4 & Source architecture mapped; environment, raw inputs and runner parity are
+open. & Operations and component-margin baseline between price and DCF. &
+GLD-to-gold basis, measure semantics and CoS/AISC/D\&A reconciliation are not
+approved. & Preserve the existing bridge, but do not promote its legacy output
+to a current Barrick forecast. \\
+% Team 5: TEAM5-PARITY-FINDING; GAP-DCF-01/GAP-VAL-05/06.
+T5 & Limited parity: three frozen sources and three synthetic CSV outputs
+accepted. & Accounting, FCFF, discounting and stochastic DCF layer. & Selected
+working-capital, NOPAT/FCFE and terminal formulas require correction; corporate
+inputs are absent. & Synthetic values are teaching benchmarks only. \\
+% Team 6: TEAM6-PARITY-FINDING; GAP-MATH-01.
+T6 & Limited synthetic parity: two CSV outputs accepted; figures, licence,
+historical runtime and formula parity remain open. & Mathematical authority for
+stochastic variance, jumps and Fourier pricing. & Illustrations are not market
+calibrations and do not select a model. & Reuse mechanisms; source all empirical
+claims from Team 8 or an accepted current run. \\
+% Team 7: TEAM7-PARITY-FINDING; GAP-DATA-06/GAP-MODEL-01.
+T7 & Limited offline parity: 11 stages pass; 8 CSV and 13 TeX outputs accepted,
+while 16 CSV and 15 figures are excluded. & Long-sample gold evidence and
+realised-volatility context. & GARCH is full-sample rather than scored OOS;
+GPH estimates do not establish stationary long memory. & Keep Yahoo and LSE
+samples separate and exclude the source recommendation. \\
+% Team 8: TEAM8 G1.4, CL-005/011/012; GAP-PRED-01.
+T8 & Unit parity accepted on 109 unchanged files and 56 tests; G1.5 historical
+market parity is unproven. & Candidate option-implied price engine and model
+comparison. & Richer in-sample fit does not beat the previous-day IV surface
+OOS; GLD risk-neutral paths are not physical gold forecasts. & Keep the legacy
+freeze, current refresh and future valuation as three distinct experiments. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The integration rule that follows from these tables is conservative but
+constructive: preserve each study where it is authoritative, remove duplicated
+derivations, and permit a numerical result to cross a module boundary only when
+its date, unit, measure and transformation are explicit. This makes the Team
+work usable immediately as a research architecture while preventing an
+unverified source output from becoming a corporate conclusion through editing
+alone. The current LSE diagnostic section that follows applies the same rule to
+the latest market snapshot before the article turns to the model foundations.

@@ -1,0 +1,89 @@
+{
+  "Black-Scholes": {
+    "parameters": {
+      "sigma": 0.2559078957937783
+    },
+    "success": true
+  },
+  "Heston": {
+    "model": "Heston",
+    "parameters": {
+      "v0": 0.07308164018900871,
+      "kappa": 4.720224075392168,
+      "theta": 0.0642904073253808,
+      "xi": 0.7197193880113901,
+      "rho": 0.2931029024031457,
+      "feller_gap": 0.08893425946857292
+    },
+    "objective": 4.881228706506743e-05,
+    "global_objective": 5.719824383152273e-05,
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "evaluations": 25,
+    "iterations": 4,
+    "elapsed_seconds": 0.9146432999987155,
+    "seed": 20260811,
+    "pricing": "Heston characteristic function with batched COS inversion"
+  },
+  "Bates": {
+    "model": "Bates",
+    "parameter_names": [
+      "v0",
+      "kappa",
+      "theta",
+      "sigma",
+      "rho",
+      "lambd",
+      "mu_J",
+      "sigma_J"
+    ],
+    "values": [
+      0.06540049709113196,
+      8.178995904120164,
+      0.05312561816940145,
+      0.6351407858308008,
+      0.45550383865834193,
+      1.4979090862597906,
+      0.0066371248320350375,
+      0.0808437471123226
+    ],
+    "objective": 5.5453612295725426e-05,
+    "global_objective": 6.732489397018177e-05,
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "evaluations": 37,
+    "iterations": 4,
+    "elapsed_seconds": 1.8025259999994887,
+    "parameters": {
+      "v0": 0.06540049709113196,
+      "kappa": 8.178995904120164,
+      "theta": 0.05312561816940145,
+      "sigma": 0.6351407858308008,
+      "rho": 0.45550383865834193,
+      "lambd": 1.4979090862597906,
+      "mu_J": 0.0066371248320350375,
+      "sigma_J": 0.0808437471123226
+    }
+  },
+  "Full Bates-Hawkes": {
+    "parameters": {
+      "v0": 0.05328940460467871,
+      "kappa": 8.178700224039979,
+      "theta": 0.04264924014647288,
+      "xi": 0.6393118869389711,
+      "rho": 0.45416618752345483,
+      "lambda0": 1.15311411985726,
+      "lambda_bar": 0.920823135648215,
+      "stationary_mean_intensity": 1.050100198669662,
+      "branching_ratio": 0.12310926441612323,
+      "alpha": 0.8645152220520195,
+      "beta": 7.0223408949131585,
+      "mu_J": -0.01599264777553588,
+      "sigma_J": 0.14439990555024923,
+      "feller_gap": 0.2889110111007174
+    },
+    "objective": 4.1115342172947374e-05,
+    "success": true,
+    "message": "Optimization terminated successfully"
+  }
+}

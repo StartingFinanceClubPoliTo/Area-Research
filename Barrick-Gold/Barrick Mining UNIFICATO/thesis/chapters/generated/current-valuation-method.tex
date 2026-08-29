@@ -1,0 +1,32 @@
+\paragraph{Current conditional multi-model adapter.}
+
+The controlled experiment varies only the gold-price engine. Black--Scholes/
+GBM, Heston, Bates--Poisson and Full Bates--Hawkes use the Team~8 parameters
+recalibrated to the 27 August 2026 GLD surface. All engines start from the same
+USD~4,417/oz level anchor, defined as Barrick's Q2 2026 average realised gold
+price. It is neither a point-in-time spot observation nor a Team~4 simulated
+price. Eleven same-date LSE Treasury observations from 24 July 2026 are fitted
+with the current Nelson--Siegel--Svensson curve (RMSE 2.37 basis points); the
+missing requested 10Y node is disclosed. Option calibration uses the fitted
+zero rate at each maturity, while the quarterly paths use integral-preserving
+forward rates from that same curve. The conditional bridge transfers option-implied shape under
+$\mathbb Q$; it does not establish a one-for-one GLD conversion or a validated
+$\mathbb Q$-to-$\mathbb P$ transformation.
+
+This current NSS is independent of the legacy Team~4 demonstrator. The
+operating contract is separate. Barrick's reported production and Cost of
+Sales replace the first two quarters of 2026; the Team~4 production and cost
+forecasts begin at 2026Q3. The legacy Team~4 NSS fit, implied-volatility inversion,
+GBM paths and illustrative stochastic EBITDA valuation are explicitly
+excluded. For model $j$, quarter $t$ and path $m$, the adapter forms
+\begin{equation}
+M_{t,j}^{(m)}=\frac{\bigl(P_{t,j}^{Au,(m)}-C_t\bigr)Q_t}{1000},
+\end{equation}
+where $Q_t$ is in thousand troy ounces and $C_t$ is in USD/oz. One common DCF,
+WACC stream and equity bridge then maps every price branch to per-share value.
+
+The run uses 8,192 paths, 260 fine steps aggregated to 20 quarters, aligned
+price-engine seed 20260827 and independent WACC seed 20260827. The WACC shock
+array is generated once and reused byte-identically. Therefore cross-model
+differences arise from the Team~8 price law, while the actual/forecast
+operating boundary and all corporate assumptions remain common.

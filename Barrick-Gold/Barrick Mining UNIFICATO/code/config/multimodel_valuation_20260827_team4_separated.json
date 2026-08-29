@@ -1,0 +1,83 @@
+{
+  "schema_version": "3.0",
+  "experiment": "CONDITIONAL_GOLD_PRICE_MODELS_WITH_SEPARATED_OPERATING_LAYER",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "base_valuation_config": "config/provisional_valuation_20260827_team4_separated.json",
+  "simulation": {
+    "n_simulations": 8192,
+    "wacc_seed": 20260827,
+    "engine_seeds": {
+      "black_scholes": 20260827,
+      "heston": 20260827,
+      "bates_poisson": 20260827,
+      "full_bates_hawkes": 20260827
+    },
+    "common_random_numbers_note": "All four price engines use the same aligned base seed; WACC shocks are independent and reused exactly across models."
+  },
+  "gold_price_layer": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "team8_source_dir": "parity/sources/team-8",
+    "calibration_manifest": "data/processed/team8/calibration_20260827/lse_publication_manifest.json",
+    "nss_curve_file": "data/manifests/rates/lse_us_treasury_nss_20260724.json",
+    "parameter_files": {
+      "black_scholes": "data/processed/team8/calibration_20260827/black_scholes_calibrated_params.json",
+      "heston": "data/processed/team8/calibration_20260827/heston_calibrated_params.json",
+      "bates_poisson": "data/processed/team8/calibration_20260827/bates_calibrated_params.json",
+      "full_bates_hawkes": "data/processed/team8/calibration_20260827/bates_hawkes_calibrated_params.json"
+    },
+    "path_grid": {
+      "horizon_years": 5.0,
+      "fine_steps": 260,
+      "resampling": "every 13th fine step to 20 operating quarters"
+    },
+    "common_scenario_start": {
+      "price": 4417.0,
+      "unit": "USD/troy oz",
+      "source_authority": "Barrick Mining Corporation",
+      "source_definition": "Q2 2026 average realized gold price used only as the shared level anchor",
+      "source_date": "2026-06-30",
+      "team4_price_artifact": false
+    },
+    "common_scenario_drift": {
+      "method": "Current LSE US Treasury Nelson-Siegel-Svensson zero curve converted to integral-preserving forward rates",
+      "measure": "common conditional risk-neutral scenario drift; not estimated physical expected return",
+      "team4_nss_used": false,
+      "legacy_team4_nss_used": false,
+      "current_lse_nss_used": true
+    },
+    "conditional_bridge": {
+      "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+      "source_instrument": "GLD call options",
+      "destination_variable": "gold USD/troy oz scenario paths",
+      "validated_physical_forecast": false,
+      "q_to_p_mapping": "NOT_VALIDATED",
+      "gld_to_gold_level_conversion": "NOT_PERFORMED; engines share an independently sourced Barrick realized-price level anchor",
+      "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+    },
+    "calibration_snapshot": {
+      "surface_as_of_utc": "2026-08-27T20:15:12.017875+00:00",
+      "treasury_curve_date": "2026-07-24",
+      "instrument": "GLD calls",
+      "measure": "option-implied risk-neutral calibration",
+      "current_surface_used_for_recalibration": true
+    }
+  },
+  "common_non_gold_layers": {
+    "production_and_cost": "CURRENT_Q1_Q2_PLUS_TEAM4_FORECAST_Q3_ONWARD",
+    "production_and_cost_note": "Barrick actuals replace 2026Q1-Q2; Team 4 forecasts begin at 2026Q3 and remain explicitly labelled.",
+    "dcf_wacc_equity_bridge": "COMMON_UNIFIED_DCF_METHODOLOGY_IDENTICAL_ACROSS_MODELS",
+    "team4_demonstrator_excluded": "Team 4 NSS, IV, GBM, simulated gold prices and illustrative EBITDA valuation are not inputs to this experiment."
+  },
+  "asynchronous_dates": {
+    "gold_anchor": "2026-06-30",
+    "team8_surface": "2026-08-27T20:15:12.017875+00:00",
+    "team8_treasury_curve": "2026-07-24",
+    "b_close": "2026-08-27T00:00:00Z",
+    "valuation_as_of": "2026-08-27T20:16:00Z"
+  },
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "basis": "richest variance/jump structure; reported alongside all simpler models",
+    "caveat": "Model comparison is conditional and does not validate a physical gold forecast or a target price."
+  }
+}

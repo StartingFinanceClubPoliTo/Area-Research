@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "team": 7,
+  "run_id": "20260815T050733Z-py3125",
+  "input_class": "frozen_legacy_yahoo_finance_sample_no_refresh",
+  "provider": "Yahoo Finance via the distributed yfinance downloader",
+  "provider_refresh_performed": false,
+  "tickers": {
+    "gold": "GLD",
+    "silver": "SLV",
+    "sp500": "^GSPC",
+    "ust10y": "^TNX",
+    "dxy": "DX-Y.NYB"
+  },
+  "declared_download_window": {
+    "start": "2000-01-01",
+    "end_exclusive": "2024-12-31"
+  },
+  "effective_aligned_levels_window": {
+    "start": "2006-05-01",
+    "end": "2024-12-30",
+    "rows": 4695
+  },
+  "effective_returns_window": {
+    "start": "2006-05-02",
+    "end": "2024-12-30",
+    "rows": 4694
+  },
+  "cutoff_test": {
+    "status": "PASS",
+    "maximum_date": "2024-12-30",
+    "required_maximum": "2024-12-31"
+  },
+  "scale_and_transform": {
+    "gold_silver_sp500_dxy": "daily log returns in decimal units in asset_returns.csv",
+    "ust10y": "first difference of the distributed ^TNX close/yield series",
+    "garch_input": "gold and silver decimal log returns multiplied by 100 to percentage points",
+    "rolling_window": "252 trailing observations, center not enabled"
+  },
+  "files": [
+    {
+      "path": "data/raw/yahoo_raw_download.csv",
+      "role": "frozen_yahoo_finance_download_consumed_by_stage_02",
+      "bytes": 2880359,
+      "original_sha256": "032EF3D6F68626BC6144BD4D73227FF64B3C1E6E1E2C5EEB2333F309D0396251",
+      "frozen_sha256": "032EF3D6F68626BC6144BD4D73227FF64B3C1E6E1E2C5EEB2333F309D0396251",
+      "work_after_run_sha256": "032EF3D6F68626BC6144BD4D73227FF64B3C1E6E1E2C5EEB2333F309D0396251",
+      "original_frozen_work_match": true
+    },
+    {
+      "path": "data/raw/asset_levels_with_nans.csv",
+      "role": "distributed_raw_alignment_reference_regenerated_by_stage_02",
+      "bytes": 587894,
+      "original_sha256": "C6F02748B3489867558609DDB590EAD7499700FD47BFE208DE8BACAD339634C7",
+      "frozen_sha256": "C6F02748B3489867558609DDB590EAD7499700FD47BFE208DE8BACAD339634C7",
+      "work_after_run_sha256": "C6F02748B3489867558609DDB590EAD7499700FD47BFE208DE8BACAD339634C7",
+      "original_frozen_work_match": true
+    },
+    {
+      "path": "data/processed/asset_levels.csv",
+      "role": "distributed_processed_levels_reference_regenerated_by_stage_02",
+      "bytes": 473387,
+      "original_sha256": "F17F647560AECA1EC272E4981A3161255936E63644919E8E0F1103019EEEE77B",
+      "frozen_sha256": "F17F647560AECA1EC272E4981A3161255936E63644919E8E0F1103019EEEE77B",
+      "work_after_run_sha256": "F17F647560AECA1EC272E4981A3161255936E63644919E8E0F1103019EEEE77B",
+      "original_frozen_work_match": true
+    },
+    {
+      "path": "data/processed/asset_returns.csv",
+      "role": "distributed_processed_returns_reference_regenerated_by_stage_02",
+      "bytes": 557995,
+      "original_sha256": "800C60FE0AFC4A4B7620A3C8C5A52DB9540B4F669F6EEF185FC4A911DE2826D1",
+      "frozen_sha256": "800C60FE0AFC4A4B7620A3C8C5A52DB9540B4F669F6EEF185FC4A911DE2826D1",
+      "work_after_run_sha256": "800C60FE0AFC4A4B7620A3C8C5A52DB9540B4F669F6EEF185FC4A911DE2826D1",
+      "original_frozen_work_match": true
+    }
+  ],
+  "verification": {
+    "file_count": 4,
+    "all_original_frozen_work_sha256_match": true,
+    "processed_levels_regenerated_byte_identical": true,
+    "processed_returns_regenerated_byte_identical": true,
+    "team_8_inputs_consumed": false
+  },
+  "licensing_and_redistribution": {
+    "source_code_license": "MIT",
+    "market_data_redistribution_terms": "NOT_ESTABLISHED; frozen files retained as internal parity evidence only"
+  }
+}

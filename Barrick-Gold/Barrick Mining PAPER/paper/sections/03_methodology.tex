@@ -1,0 +1,117 @@
+\section{Methodology}
+
+\subsection{Gold-price engines}
+The four Team 8 specifications relax one restriction at a time. Under $\mathbb Q$, Black--Scholes/GBM uses constant volatility,
+\begin{equation}
+\frac{\dd S_t}{S_t}=(r_t-q_t)\dd t+\sigma\dd W_t.
+\label{eq:gbm}
+\end{equation}
+This constant-volatility specification also corresponds to the earlier internal working-paper draft that paired Team 4 operating forecasts with a provisional market-implied gold-price bridge based on GLD volatilities and a Nelson--Siegel--Svensson Treasury curve. In the present paper it is retained as the simplest benchmark inside the broader four-engine comparison.
+Heston introduces mean-reverting stochastic variance \citep{heston1993},
+\begin{align}
+\frac{\dd S_t}{S_t}&=(r_t-q_t)\dd t+\sqrt{v_t}\dd W_t^{S},\\
+\dd v_t&=\kappa(\theta-v_t)\dd t+\xi\sqrt{v_t}\dd W_t^{v},
+\qquad \dd W_t^S\dd W_t^v=\rho\dd t.
+\label{eq:heston}
+\end{align}
+Bates adds compensated compound-Poisson jumps \citep{bates1996},
+\begin{equation}
+\frac{\dd S_t}{S_{t^-}}=(r_t-q_t-\lambda k)\dd t+\sqrt{v_t}\dd W_t^S+(e^J-1)\dd N_t,
+\label{eq:bates}
+\end{equation}
+where $k=\E^{\mathbb Q}[e^J-1]$.
+
+\subsection{Full Bates--Hawkes: implemented affine engine}
+The full engine preserves Heston variance but replaces the constant Poisson arrival rate with an exponential Hawkes state \citep{hawkes1971}:
+\begin{align}
+\frac{\dd S_t}{S_{t^-}}&=(r_t-q_t-\lambda_t k)\dd t+\sqrt{v_t}\dd W_t^S+(e^J-1)\dd N_t,\\
+\dd v_t&=\kappa(\theta_v-v_t)\dd t+\xi\sqrt{v_t}\dd W_t^v,\\
+\dd\lambda_t&=\beta(\bar\lambda-\lambda_t)\dd t+\alpha\dd N_t,
+\qquad n=\alpha/\beta<1.
+\label{eq:full_bh_sde}
+\end{align}
+Under the implemented exponential-kernel specification, pricing exploits the affine Markov structure rather than a standalone finite-difference PIDE. Writing $X_t=\log S_t$, the characteristic function factorizes into Heston diffusion and Hawkes jump blocks,
+\begin{equation}
+\phi_{X_T}(u)=\phi_{\mathrm{diff}}(u)\exp\!\left(A(u,T)+B(u,T)\lambda_0\right),
+\label{eq:bh_cf}
+\end{equation}
+with the jump block determined by the Riccati system
+\begin{align}
+\frac{\dd B}{\dd\tau}&=\psi_J(u)e^{\alpha B}-\beta B-iuk-1,\\
+\frac{\dd A}{\dd\tau}&=\beta\bar\lambda B,
+\qquad A(0)=B(0)=0,
+\label{eq:bh_riccati}
+\end{align}
+where $\psi_J(u)=\exp(iu\mu_J-\tfrac12\sigma_J^2u^2)$. European option prices are recovered by Fourier-COS inversion. The identities $\phi(0)=1$, the martingale condition at $u=-i$, and the limit $\alpha\to0$ back to Bates are used as implementation checks.
+
+\begin{methodbox}[Model-role constraint]
+These four processes govern only the gold-price layer. They never generate Barrick production or costs in the integrated valuation.
+\end{methodbox}
+
+\subsection{Option-surface calibration and predictive test}
+Every model is fitted to the same structured GLD surface by minimizing a vega-scaled price loss,
+\begin{equation}
+F(\theta)=\frac{1}{N}\sum_{i=1}^{N}
+\left[\frac{C_i^{model}(\theta)-C_i^{mkt}}
+{\max(\mathrm{Vega}_i,\varepsilon)}\right]^2,
+\label{eq:calibration_loss}
+\end{equation}
+which approximates an implied-volatility error without solving an IV inversion inside every optimizer step. Richer models use global Differential Evolution for initialization and constrained SLSQP for local refinement. Feller admissibility is imposed on the square-root variance process, while Hawkes stability requires $n<1$.
+
+Calibration fit and forecasting are evaluated separately. One-step-ahead performance is summarized by
+\begin{equation}
+R^2_{OOS,m\mid b}=1-\frac{\sum e_{m,t,j}^2}{\sum e_{b,t,j}^2},
+\label{eq:oos_r2}
+\end{equation}
+against both a node-specific expanding mean and the previous-day IV surface. This design prevents the lowest in-sample IV error from being interpreted automatically as predictive dominance.
+
+\subsection{Team 4 cost and production models}
+For costs, Team 4 first builds a log-space global master chain from mine-level series and then selects an \textbf{ARIMA(3,1,0) with drift} by automated information-criterion search. The admitted specification is
+\begin{equation}
+(1+0.9501B+0.6128B^2+0.3003B^3)(1-B)y_t
+=0.0222+\varepsilon_t.
+\label{eq:cost_arima}
+\end{equation}
+The selected model minimizes both $AIC=-94.64$ and $BIC=-86.87$ \citep{akaike1974,schwarz1978}, where
+\begin{equation}
+AIC=2k-2\log\widehat L,\qquad BIC=k\log n-2\log\widehat L.
+\label{eq:aicbic}
+\end{equation}
+Residual diagnostics do not reject white noise or normality in the reported tests, and a 12-period hold-out yields a MAPE of $0.603\%$ with RMSE approximately one third of the naive random-walk benchmark.
+
+The production specifications are not reported as AIC/BIC-selected in the underlying Team 4 study. Instead, production is decomposed physically as
+\begin{equation}
+Q_t=\mathrm{Ore}_t\,\mathrm{Grade}_t\,\mathrm{Recovery}_t\times0.91/31.11,
+\label{eq:production_formula}
+\end{equation}
+with ore processed modelled as $SARIMA(1,0,1)(1,0,0)_4$, average grade as $SARIMA(1,0,0)(0,0,0)_4$, and recovery sampled from bounded historical ranges. The source study also develops Goodman variance propagation, but those operating distributions are not carried into the unified four-engine valuation; only the frozen point vectors are.
+
+\subsection{Valuation mapping}
+Team 5 makes growth internally consistent with reinvestment through
+\begin{equation}
+b_t=\frac{g_t}{ROIC_t},\qquad
+FCFF_t=M_t^{AT}-\max(M_t^{AT},0)b_t,
+\label{eq:reinvestment}
+\end{equation}
+where $M_t^{AT}$ is the after-tax component margin. Over the five explicit years, $g_t$ declines linearly from 8.50\% to 2.50\%, $ROIC_t$ from 14.50\% to 10.50\%, and the implied reinvestment rate from 58.62\% to 23.81\%.
+
+The common discount-rate process is mean reverting,
+\begin{equation}
+w_{t+1}=\bar w+(w_t-\bar w)e^{-\kappa_w}+\sigma_w^*\varepsilon_{t+1},
+\label{eq:wacc_process}
+\end{equation}
+with $w_0=9.10\%$, $\bar w=8.30\%$, $\kappa_w=0.45$ and annual volatility 0.90\%. It is clipped to $[g_\infty+1.00\%,25.00\%]=[3.50\%,25.00\%]$; every gold engine receives the same 8,192-path shock array.
+
+For simulated path $i$, the common operating contract and discount rates determine enterprise value,
+\begin{equation}
+EV^{(i)}=\sum_{t=1}^{T}\frac{FCFF_t^{(i)}}{\prod_{s=1}^{t}(1+WACC_s^{(i)})}
++\frac{TV_T^{(i)}}{\prod_{s=1}^{T}(1+WACC_s^{(i)})}.
+\label{eq:stochvalue}
+\end{equation}
+The terminal block uses $g_\infty=2.50\%$, $ROIC_\infty=10.50\%$ and therefore $b_\infty=23.81\%$:
+\begin{equation}
+TV_T^{(i)}=\frac{\max(M_T^{AT,(i)},0)(1+g_\infty)(1-g_\infty/ROIC_\infty)}{WACC_T^{(i)}-g_\infty},
+\label{eq:terminal_value}
+\end{equation}
+admitted only when $WACC_T^{(i)}>g_\infty$.
+The present component margin, FCFF and equity bridge remain unreconciled proxies; the final distributions are therefore conditional research sensitivities rather than filing-reconciled fair values.

@@ -1,0 +1,24 @@
+{
+  "full_bates_hawkes": {
+    "price_mae": 0.10788932066005286,
+    "price_rmse": 0.13765922568044026,
+    "iv_mae_bp": 22.735954600425025,
+    "iv_rmse_bp": 32.49383793337791,
+    "max_abs_price_error": 0.33101686074721215,
+    "max_abs_iv_error_bp": 101.21524962689755
+  },
+  "bates": {
+    "price_mae": 0.24482348941013385,
+    "price_rmse": 0.32069519845247535,
+    "iv_mae_bp": 44.18330002226862,
+    "iv_rmse_bp": 56.55291766004782,
+    "max_abs_price_error": 0.8141969692067086,
+    "max_abs_iv_error_bp": 132.17421425413323
+  },
+  "calibration_objective": 1.0900072793476785e-05,
+  "bates_objective": 3.244008343122035e-05,
+  "branching_ratio": 0.02,
+  "minimum_branching_ratio": 0.02,
+  "observations": 24,
+  "status": "lse_feller_constrained_restructured_workflow"
+}

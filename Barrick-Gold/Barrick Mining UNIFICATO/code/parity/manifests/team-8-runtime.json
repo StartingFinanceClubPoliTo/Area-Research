@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "team": 8,
+  "run_id": "20260825T130328Z-py3125",
+  "runtime_status": "candidate_runtime_original_runtime_unknown",
+  "interpreter": {
+    "executable": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe",
+    "version": "3.12.5",
+    "implementation": "CPython",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "direct_dependency_versions": {
+    "numpy": "2.1.0",
+    "pandas": "2.3.3",
+    "scipy": "1.14.1",
+    "matplotlib": "3.9.2",
+    "jupyter": null,
+    "nelson-siegel-svensson": "0.5.0",
+    "lse-data": "0.14.0",
+    "pyarrow": "25.0.1",
+    "pytest": "9.0.3"
+  },
+  "runtime_lock": {
+    "path": "parity/runs/team-8/20260825T130328Z-py3125/runtime-lock.txt",
+    "bytes": 12930,
+    "sha256": "4AB8AC8744334D48FB1B3CFD5C57653F55EADD8470F9EEC8F999C2E501C4BA7A",
+    "exit_code": 0
+  },
+  "known_gap": "The historical Team 8 Python/dependency lock was not distributed; this is a candidate runtime."
+}

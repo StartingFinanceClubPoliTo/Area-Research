@@ -1,0 +1,30 @@
+{
+  "figure_spec": {
+    "figure_id": "fig_val_primary",
+    "score": 10,
+    "chapter": "Discoveries",
+    "title": "Full Bates--Hawkes conditional Barrick value"
+  },
+  "facts": {
+    "model_id": "full_bates_hawkes",
+    "model": "Full Bates–Hawkes",
+    "p10_usd_per_share": 3.3066418501329182,
+    "median_usd_per_share": 34.94486674060628,
+    "p90_usd_per_share": 104.81201829655772,
+    "observed_close_usd_per_share": 47.27,
+    "observed_close_timestamp_utc": "2026-08-27T00:00:00Z",
+    "observed_close_percentile": 62.26806640625,
+    "probability_value_above_close": 0.3773193359375,
+    "observed_minus_median_usd": 12.325133259393724,
+    "observed_vs_median_pct": 35.27022538355196
+  },
+  "display_range_usd_per_share": [
+    -1.2648726922667066,
+    252.51482972671567
+  ],
+  "n_paths": 8192,
+  "operations_status": "CURRENT_Q1_Q2_PLUS_TEAM4_FORECAST_Q3_ONWARD",
+  "team4_price_demonstrator": "EXCLUDED",
+  "corporate_bridge_status": "UNRESOLVED",
+  "interpretation": "conditional sensitivity; observed close above conditional median does not establish overvaluation"
+}

@@ -1,0 +1,196 @@
+{
+  "schema_version": "1.0",
+  "status": "CURRENT_LSE_EMPIRICAL_FIGURE_INPUTS",
+  "run_id": "20260827T173500Z-codefig-v11-lse",
+  "generated_at_utc": "2026-08-27T18:14:31.891593+00:00",
+  "provider": "London Strategic Edge",
+  "lse_data_version": "0.14.0",
+  "pipeline_version": "1.0.0",
+  "pipeline_script": "tools/fetch_empirical_figure_inputs.py",
+  "pipeline_script_sha256": "624FFBF87F28C4D757E2CDB31E0AAB0BA0B45B83B2AB4CC8440DC8B5502A5E5F",
+  "requested_window": {
+    "start": "2021-01-01",
+    "end_inclusive": "2026-08-27"
+  },
+  "market_series": {
+    "GLD": {
+      "rows": 1424,
+      "date_span": {
+        "first": "2021-01-04T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "SLV": {
+      "rows": 1423,
+      "date_span": {
+        "first": "2021-01-04T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "SPY": {
+      "rows": 1424,
+      "date_span": {
+        "first": "2021-01-04T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    }
+  },
+  "fx_series": {
+    "EUR/USD": {
+      "rows": 1839,
+      "date_span": {
+        "first": "2021-01-03T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "USD/JPY": {
+      "rows": 1834,
+      "date_span": {
+        "first": "2021-01-03T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "GBP/USD": {
+      "rows": 1834,
+      "date_span": {
+        "first": "2021-01-03T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "USD/CAD": {
+      "rows": 1834,
+      "date_span": {
+        "first": "2021-01-03T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "USD/SEK": {
+      "rows": 1837,
+      "date_span": {
+        "first": "2021-01-03T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    },
+    "USD/CHF": {
+      "rows": 1891,
+      "date_span": {
+        "first": "2021-01-03T00:00:00.000000Z",
+        "last": "2026-08-26T00:00:00.000000Z"
+      },
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "symbol",
+        "timestamp",
+        "volume"
+      ]
+    }
+  },
+  "yield_series": {
+    "US10Y": {
+      "rows": 1386,
+      "date_span": {
+        "first": "2021-01-04",
+        "last": "2026-07-01"
+      },
+      "fields": [
+        "close",
+        "country_iso2",
+        "country_name",
+        "currency",
+        "date",
+        "fetched_at",
+        "high",
+        "id",
+        "low",
+        "maturity",
+        "maturity_days",
+        "open",
+        "symbol"
+      ]
+    }
+  },
+  "dxy_proxy": {
+    "formula": "100*C*(EURUSD^-0.576)*(USDJPY^0.136)*(GBPUSD^-0.119)*(USDCAD^0.091)*(USDSEK^0.042)*(USDCHF^0.036)",
+    "normalisation": "C chosen so the first aligned observation equals 100",
+    "status": "TRANSPARENT_LSE_FX_PROXY_NOT_OFFICIAL_ICE_DXY"
+  },
+  "raw_storage": "data/raw/lse_local/20260827T173500Z-codefig-v11-lse/empirical_figure_inputs.json",
+  "raw_sha256": "3B0E37DB06E71F325911F31200296A80ACD7AB7B16380143CF177986BE498DD8",
+  "redistribution": "Row-level LSE data remain local and Git-ignored.",
+  "not_investment_advice": true
+}

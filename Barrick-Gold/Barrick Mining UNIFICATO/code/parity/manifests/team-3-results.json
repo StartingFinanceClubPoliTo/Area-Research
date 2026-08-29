@@ -1,0 +1,194 @@
+{
+  "schema_version": "1.0",
+  "team": 3,
+  "benchmark_class": "synthetic_methodological",
+  "run_id": "20260814T191734Z-py3125",
+  "gate": "G1.1_synthetic_smoke",
+  "gate_status": "REVIEW",
+  "source_parity_passed": true,
+  "source_parity_scope": "Frozen source set and primary monte_carlo_summary.csv benchmark only.",
+  "full_historical_environment_parity_proven": false,
+  "source_manifest": {
+    "path": "UNIFICATO/Github-Branch/parity/manifests/team-3-source.json",
+    "sha256": "AE1875C746923658687638FC88A3712B47764F43BE36C884AE791530D3F05F4B"
+  },
+  "runtime_manifest": {
+    "path": "UNIFICATO/Github-Branch/parity/manifests/team-3-runtime.json",
+    "sha256": "EBA51944ECDCB8334CA4B33EC92302B253E236B555B75537C73ECEB022809847"
+  },
+  "inputs_manifest": {
+    "path": "UNIFICATO/Github-Branch/parity/manifests/team-3-inputs.json",
+    "sha256": "2655B50A5AFF6CDC4478D9E783D05B7DA4A9E3DD1F5B0C8B90032741F4F6332F"
+  },
+  "source_hashes": {
+    "examples/run_reproducibility.py": "4510088AC3DBE2397625A8F0B8EABCB70F065AEB8B0497E62ECA9C3D05092B9F",
+    "requirements.txt": "25412683EB8F0B0049E66B26009838E23BC6CB4D4979F9DA0F289599B0DAB630",
+    "src/monte_carlo_risk/__init__.py": "DACDF3C1B15F54B7C1DEE1601BA7E583755EDFCFD6159E85D06ACE4FDAA3260D",
+    "src/monte_carlo_risk/option_pricing.py": "6EEEEAB7E749312BFE9A01DF3792C8D65EF13AE28EB6233707A1E2D22C6C5CAB",
+    "src/monte_carlo_risk/random_generators.py": "E6E845654C983AEF099594D547465B3AF39BB335F35450A2AE6BC0FA80CF7478",
+    "src/monte_carlo_risk/returns.py": "E70A1DB205CDBFF1583611F46389160A56A0B7D5CF1732DC09ECF945618B5924",
+    "src/monte_carlo_risk/stochastic_processes.py": "A27EBCB8D264812D35778470F7097AA95CB4498E245F0EDE8C2191BFF7421B18",
+    "src/monte_carlo_risk/variance_reduction.py": "7E8683F2EB67322E6BA8BB6476919B7C2D6634551352AD7B162AF278FA268229"
+  },
+  "runtime_hash": "EBA51944ECDCB8334CA4B33EC92302B253E236B555B75537C73ECEB022809847",
+  "runtime_lock": {
+    "path": "UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/runtime-lock.txt",
+    "command": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe -m pip --disable-pip-version-check freeze --all",
+    "bytes": 12930,
+    "sha256": "4AB8AC8744334D48FB1B3CFD5C57653F55EADD8470F9EEC8F999C2E501C4BA7A",
+    "package_count": 185,
+    "exit_code": 0
+  },
+  "input_hashes": {
+    "inputs_manifest": "2655B50A5AFF6CDC4478D9E783D05B7DA4A9E3DD1F5B0C8B90032741F4F6332F",
+    "embedded_configuration_source": "4510088AC3DBE2397625A8F0B8EABCB70F065AEB8B0497E62ECA9C3D05092B9F"
+  },
+  "execution": {
+    "command": "C:/Users/salvm/AppData/Roaming/jupyterlab-desktop/jlab_server/python.exe examples\\run_reproducibility.py",
+    "cwd": "C:/Users/salvm/Desktop/SF/Research projects/Barrick gold/UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/work",
+    "started_utc": "2026-08-14T19:18:49.608Z",
+    "completed_utc": "2026-08-14T19:18:57.438Z",
+    "exit_code": 0,
+    "network_used": false,
+    "packages_installed": [],
+    "stdout": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/stdout.txt",
+      "bytes": 682,
+      "sha256": "B8EB2CDB874F2CC5045947F9469D2536ADF556CE6F0968608C708C600AEEB7E4"
+    },
+    "stderr": {
+      "path": "UNIFICATO/Github-Branch/parity/runs/team-3/20260814T191734Z-py3125/stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  },
+  "seed": {
+    "source": "team-3-inputs.json#configuration_and_seeds",
+    "values": [42, 7, 11, 12, 21, 22, 23],
+    "dynamic_rule": "European-call seed is 100 + n_paths."
+  },
+  "artifact_hashes": {
+    "monte_carlo_summary.csv": {
+      "bytes": 858,
+      "sha256": "BC2870681ED15651D5AA1DA9A8DCCC867BC687A338BD2BF0211212D905B7C2B4",
+      "primary": true
+    },
+    "asian_call_mc_vs_qmc.png": {
+      "bytes": 43419,
+      "sha256": "A4505E3FCB372625C027FEB14661FAA43063B656118D010C6630D3231BCA6269",
+      "primary": false
+    },
+    "box_muller_qq_plot.png": {
+      "bytes": 125278,
+      "sha256": "D4A30E6B4AB34B71852C37868BC8924CE83497DEE6923A365C7E71033A12A812",
+      "primary": false
+    },
+    "european_call_convergence.png": {
+      "bytes": 122402,
+      "sha256": "F40326CF492B7D788AAD43A869EC4778A3D267BDB0D9EEC72CC8797FFA21213B",
+      "primary": false
+    },
+    "lcg_uniform_histogram.png": {
+      "bytes": 50659,
+      "sha256": "53DA4ED911A6620191A250583EC24594AB946014D3F6DEC8D053036292FB46E8",
+      "primary": false
+    },
+    "terminal_wealth_distribution.png": {
+      "bytes": 74517,
+      "sha256": "B91159B1DDA78569A6EDC14A61C1F5B79626217F5A9923750BF5AF61154ED167",
+      "primary": false
+    }
+  },
+  "test_results": {
+    "planned_source_file_count": {
+      "status": "PASS",
+      "expected": 8,
+      "actual": 8
+    },
+    "frozen_source_sha256": {
+      "status": "PASS",
+      "matched": 8,
+      "total": 8
+    },
+    "working_source_sha256_after_run": {
+      "status": "PASS",
+      "matched": 8,
+      "total": 8
+    },
+    "process_exit_code": {
+      "status": "PASS",
+      "expected": 0,
+      "actual": 0
+    },
+    "stderr_empty": {
+      "status": "PASS",
+      "bytes": 0
+    },
+    "primary_csv_tol_byte_0": {
+      "status": "PASS",
+      "tolerance_id": "TOL-BYTE-0",
+      "expected_sha256": "BC2870681ED15651D5AA1DA9A8DCCC867BC687A338BD2BF0211212D905B7C2B4",
+      "actual_sha256": "BC2870681ED15651D5AA1DA9A8DCCC867BC687A338BD2BF0211212D905B7C2B4",
+      "bytes_equal": true
+    },
+    "secondary_figures_tol_image": {
+      "status": "NOT_PASSED",
+      "tolerance_id": "TOL-IMAGE",
+      "reason": "All five PNG hashes, decoded pixels, and dimensions differ; no source-backed cross-runtime image tolerance or visual acceptance is available."
+    },
+    "separate_test_suite": {
+      "status": "NOT_AVAILABLE",
+      "reason": "The Team 3 source set has no separate test suite."
+    }
+  },
+  "secondary_figure_comparison": [
+    {
+      "name": "lcg_uniform_histogram.png",
+      "original_sha256": "552E87B0ED4D3ECFFF7D14490EB57D5C7A846A35888CA9D27DE3B71A5B32065C",
+      "actual_sha256": "53DA4ED911A6620191A250583EC24594AB946014D3F6DEC8D053036292FB46E8",
+      "original_dimensions": [1830, 1225],
+      "actual_dimensions": [1827, 1227],
+      "decoded_pixels_equal": false
+    },
+    {
+      "name": "box_muller_qq_plot.png",
+      "original_sha256": "A613F6CD33ED2D93E431D76C16E58C8FED6AA19057F7FA97989C4797511DC734",
+      "actual_sha256": "D4A30E6B4AB34B71852C37868BC8924CE83497DEE6923A365C7E71033A12A812",
+      "original_dimensions": [1649, 1525],
+      "actual_dimensions": [1647, 1527],
+      "decoded_pixels_equal": false
+    },
+    {
+      "name": "european_call_convergence.png",
+      "original_sha256": "09235621BFA0785527A8CE3777860EC302BB85C9440B64BC4F584347CC330F06",
+      "actual_sha256": "F40326CF492B7D788AAD43A869EC4778A3D267BDB0D9EEC72CC8797FFA21213B",
+      "original_dimensions": [2130, 1332],
+      "actual_dimensions": [2127, 1335],
+      "decoded_pixels_equal": false
+    },
+    {
+      "name": "asian_call_mc_vs_qmc.png",
+      "original_sha256": "3BA9FB9B6D795D8525FF8A8E9959140C251D5E55B8C0B2556C54EA8029358158",
+      "actual_sha256": "A4505E3FCB372625C027FEB14661FAA43063B656118D010C6630D3231BCA6269",
+      "original_dimensions": [1710, 1285],
+      "actual_dimensions": [1707, 1289],
+      "decoded_pixels_equal": false
+    },
+    {
+      "name": "terminal_wealth_distribution.png",
+      "original_sha256": "68F8B14E8633A5D760E2370DB7887A32D5576E073F2CF9A6D03DD347B611B4E2",
+      "actual_sha256": "B91159B1DDA78569A6EDC14A61C1F5B79626217F5A9923750BF5AF61154ED167",
+      "original_dimensions": [1950, 1286],
+      "actual_dimensions": [1947, 1288],
+      "decoded_pixels_equal": false
+    }
+  ],
+  "tolerance_id": "TOL-BYTE-0",
+  "article_reference": "Team 3 - Monte Carlo Risk/Overleaf/Articolo.tex",
+  "known_divergences": [
+    "The Python and package versions of the original benchmark environment are not distributed.",
+    "The five secondary PNG artifacts are not byte-identical and do not have equal decoded dimensions or pixels in this candidate runtime; they are not accepted under TOL-IMAGE.",
+    "No separate unit/regression test suite is present.",
+    "This benchmark is synthetic and cannot be treated as a Barrick valuation or as FCFF/EV evidence."
+  ]
+}

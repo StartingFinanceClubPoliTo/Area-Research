@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "team": 8,
+  "run_id": "20260825T130328Z-py3125",
+  "scope": "G1.4_unit_and_pricing_benchmark_only",
+  "market_data_network_used": false,
+  "api_key_present_in_child_process": false,
+  "raw_lse_inputs_consumed": false,
+  "committed_public_aggregates_rebuilt": false,
+  "G1_5_historical_market_parity": "NOT_PROVEN"
+}

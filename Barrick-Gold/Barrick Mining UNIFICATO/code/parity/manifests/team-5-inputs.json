@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "team": 5,
+  "run_id": "20260814T194100Z-py3125",
+  "input_class": "synthetic_constants_embedded_in_current_runner",
+  "external_input_files": [],
+  "network_inputs": [],
+  "input_hashes": {
+    "embedded_configuration_source": {
+      "path": "src/generate_three_stage_dcf.py",
+      "sha256": "DEF6AA639195B7F530AC5B969DD4F54D700FE8EB0E636248EF954E5E5054EE34"
+    }
+  },
+  "configuration_and_seeds": {
+    "n_sim": 20000,
+    "rng": "numpy.random.default_rng",
+    "projection_years": 7,
+    "high_growth_years": 3,
+    "transition_years": 4,
+    "scenario_seeds": {
+      "Conservative": 100,
+      "Base": 42,
+      "Expansion": 300
+    },
+    "base_case": {
+      "revenue_0": 1000.0,
+      "high_growth": 0.085,
+      "stable_growth": 0.025,
+      "revenue_volatility": 0.115,
+      "margin_start": 0.205,
+      "margin_stable": 0.170,
+      "margin_volatility": 0.015,
+      "roic_high": 0.145,
+      "roic_stable": 0.105,
+      "tax_rate": 0.25,
+      "wacc_0": 0.091,
+      "wacc_long_run": 0.083,
+      "wacc_reversion": 0.45,
+      "wacc_volatility": 0.009,
+      "corr_growth_wacc": -0.30
+    },
+    "measure": "not_declared",
+    "reported_units": "simulated value units, millions"
+  },
+  "benchmark_references_not_consumed_by_runner": [
+    {
+      "path": "Team 5 - Three-Stage DCF/Github-Branch/output/base_summary.csv",
+      "bytes": 217,
+      "sha256": "13B686E1E63A2A373461281754114DD363B19AD0FB2025B4AE5FF91229CC37F0"
+    },
+    {
+      "path": "Team 5 - Three-Stage DCF/Github-Branch/output/scenario_summary.csv",
+      "bytes": 288,
+      "sha256": "CCA73C6727CD06CD8AB4431FA3A18A4BFCE8A5E925D1B292D28CD951FB6CDDFC"
+    },
+    {
+      "path": "Team 5 - Three-Stage DCF/Github-Branch/output/sensitivity.csv",
+      "bytes": 189,
+      "sha256": "2A077BEC4E5A4985DF420F44E89CF0E4B32E6226A6BAFAE9C82888282D599238"
+    },
+    {
+      "path": "Team 5 - Three-Stage DCF/Github-Branch/img/mc_dcf_results.png",
+      "bytes": 218157,
+      "sha256": "F3E2EC40F75BD1500F46B698080E8FA27619F84F6C825BF519DA01DECBF1356E"
+    },
+    {
+      "path": "Team 5 - Three-Stage DCF/Github-Branch/img/mc_scenarios.png",
+      "bytes": 89843,
+      "sha256": "A5FEB4A8FFD9E274F12D73EB8D9FBA15D5ADEFAFDA9B8D7C9E1BFC3469BAB42F"
+    }
+  ],
+  "legacy_reference_not_consumed_by_runner": {
+    "path": "Team 5 - Three-Stage DCF/Overleaf/contents/appendixA_code.tex",
+    "classification": "legacy_historical_ten_year_implementation",
+    "sha256": "0A03EC567ABCF8265DD7BBA64D4548744AAFE3A47DC888D502968153F409569F"
+  },
+  "licensing_and_redistribution": {
+    "external_data": "not_applicable",
+    "source_code_license": "GAP"
+  }
+}

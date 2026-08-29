@@ -1,0 +1,9 @@
+table_id,description,authoritative_path,status
+primary_valuation,Full Bates-Hawkes conditional value distribution,outputs/thesis/20260828T180000Z-unificato-publication/figures/fig_val_primary.csv,CURRENT
+multimodel_valuation,Four-engine conditional value comparison,outputs/thesis/20260828T180000Z-unificato-publication/figures/fig_val_multi.csv,CURRENT
+dcf_drivers,Growth ROIC and reinvestment schedule,outputs/thesis/20260828T180000Z-unificato-publication/figures/fig_dcf_drivers.csv,CURRENT
+wacc_assumptions,Common WACC transition assumptions,outputs/thesis/20260828T180000Z-unificato-publication/figures/fig_wacc_assumptions.csv,CURRENT
+terminal_value,Terminal multiple and contribution summary,outputs/thesis/20260828T180000Z-unificato-publication/figures/fig_terminal_value.csv,CURRENT
+calibration_rmse,Current option-surface calibration metrics,outputs/thesis/20260828T180000Z-unificato-publication/team8_empirical/baseline_calibration_metrics.csv,CURRENT
+welch_goyal,Rolling cumulative loss differences,outputs/thesis/20260828T180000Z-unificato-publication/team8_empirical/online_welch_goyal_cumulative.csv,CURRENT
+

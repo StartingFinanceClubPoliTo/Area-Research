@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "team": 8,
+  "run_id": "20260825T130328Z-py3125",
+  "gate": "G1.4_team_8_unit_parity_offline",
+  "gate_status": "ACCEPTED",
+  "accepted_at_utc": "2026-08-25T13:03:57.755391+00:00",
+  "source_parity_passed": true,
+  "historical_market_parity_passed": false,
+  "source_manifest": {
+    "path": "parity/manifests/team-8-source.json",
+    "sha256": "092DAD3719B93A636A4177BCAEB22E9A8039C9EF95EE7BC3BAB91EFEAD0050CF"
+  },
+  "runtime_manifest": {
+    "path": "parity/manifests/team-8-runtime.json",
+    "sha256": "FFB0502642973BAB587AC4B36701D44F36FB9403494D255D9C5FFD1097DAE666"
+  },
+  "inputs_manifest": {
+    "path": "parity/manifests/team-8-inputs.json",
+    "sha256": "B5C3579596F854E71237061DAB68EAA19B883E6CC2C138931408CAE727A452E5"
+  },
+  "execution": {
+    "cwd": "parity/sources/team-8",
+    "started_utc": "2026-08-25T13:03:28.568211+00:00",
+    "completed_utc": "2026-08-25T13:03:57.755391+00:00",
+    "network_used": false,
+    "lse_api_key_removed_from_child_environment": true,
+    "pytest": {
+      "command": "python -m pytest tests -q -p no:cacheprovider",
+      "exit_code": 0,
+      "passed": 56,
+      "stdout": {
+        "bytes": 102,
+        "sha256": "338FACC0966C0D66F1CE30CEF6227C3AAD7D5F1C4B4366DD50EBA6DD4FCF3EEA"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+      }
+    },
+    "benchmark": {
+      "command": "python benchmarks/benchmark_pricing.py",
+      "exit_code": 0,
+      "metrics": {
+        "strikes": "61",
+        "max_abs_error": "1.16102087944e-08",
+        "scalar_seconds": "0.088654900",
+        "cos_seconds": "0.000416890",
+        "speedup": "212.66x",
+        "proxy_atm": "6.914920319261",
+        "bates_atm": "6.914920319261"
+      },
+      "stdout": {
+        "bytes": 167,
+        "sha256": "30C27AD5956E48482B4FF044FA8575536571F8060590C87A8395A695CE8F8E24"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+      }
+    }
+  },
+  "tolerance": "TOL-T8-TESTS; existing test thresholds unchanged",
+  "acceptance_scope": "Pure unit/regression suite and deterministic pricing benchmark only.",
+  "excluded": [
+    "G1.5 historical LSE market parity",
+    "current LSE refresh as a substitute for the 2026-08-12 raw snapshot",
+    "GLD-to-gold or realized-price conversion",
+    "Barrick valuation, EBITDA, FCFF, enterprise value or value per share"
+  ]
+}

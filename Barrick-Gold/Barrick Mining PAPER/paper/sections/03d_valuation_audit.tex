@@ -1,0 +1,68 @@
+\section{DCF Driver and Terminal-Value Audit}
+
+The corporate layer is common to every gold engine, but it is not a black box. Growth, return on invested capital, reinvestment, discount rates and terminal closure are explicit configuration fields. Showing them separately prevents the stochastic gold model from being mistaken for the source of every valuation assumption.
+
+\subsection{Growth, ROIC and reinvestment}
+Growth declines linearly from 8.50\% in year 1 to the 2.50\% stable rate in year 5. ROIC converges from 14.50\% to 10.50\% over the same horizon. Because reinvestment is defined as $b_t=g_t/ROIC_t$, the corresponding annual rates are 58.62\%, 51.85\%, 44.00\%, 34.78\% and 23.81\%. This declining schedule converts the high-growth phase into a stable-growth terminal regime rather than applying the same reinvestment intensity indefinitely.
+
+\noindent\begin{minipage}{\linewidth}
+{\centering
+  \includegraphics[width=0.90\linewidth]{figures/fig_dcf_growth_roic.png}
+  \captionof{figure}{Common explicit-period DCF schedule: growth and ROIC converge linearly over the five-year horizon.}
+  \label{fig:dcf_driver_schedule}
+\par}
+
+{\centering
+  \includegraphics[width=0.90\linewidth]{figures/fig_dcf_reinvestment.png}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:dcf_driver_schedule} (continued).} The implied reinvestment rate, defined as growth divided by ROIC, falls from 58.62\% to 23.81\%.}
+\par}
+\end{minipage}
+
+\subsection{Common stochastic WACC}
+The WACC starts at 9.10\% and mean reverts toward 8.30\% with reversion speed 0.45 and annual volatility 0.90\%. The annual conditional standard deviation used by the transition is 0.7308 percentage points. In the absence of shocks, the year-1 to year-5 path is 8.810\%, 8.625\%, 8.507\%, 8.432\% and 8.384\%. Simulated values are clipped between 3.50\%---the 2.50\% stable growth rate plus a 1.00\% spread floor---and 25.00\%. The same 8,192-path shock array is reused in every valuation branch.
+
+{\centering
+  \includegraphics[width=0.95\columnwidth]{figures/fig_wacc_assumptions.png}
+  \captionof{figure}{Common mean-reverting WACC. The band is the P10--P90 range from the shared 8,192-path shock array; the orange line is the zero-shock path and the dotted lines show the long-run level and admissibility floor.}
+  \label{fig:wacc_assumptions}
+\par}
+
+\subsection{Terminal closure and sensitivity}
+The terminal block uses $g_\infty=2.50\%$, $ROIC_\infty=10.50\%$ and terminal reinvestment of 23.81\%. At the current median terminal WACC of 8.384\%, the normalized terminal multiple is 13.27$\times$ final after-tax margin. The denominator is admitted only when $WACC_T>g_\infty$; the spread floor prevents a mechanically explosive closure in the simulated paths.
+
+\noindent\begin{minipage}{\linewidth}
+{\centering
+  \includegraphics[width=0.90\linewidth]{figures/fig_terminal_multiple.png}
+  \captionof{figure}{Terminal-value multiple sensitivity to stable growth and terminal WACC. The cross marks the configured stable-growth rate and current median terminal WACC.}
+  \label{fig:terminal_value_mechanics}
+\par}
+
+{\centering
+  \includegraphics[width=0.90\linewidth]{figures/fig_terminal_share.png}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:terminal_value_mechanics} (continued).} Present-value terminal share on positive-EV paths. Medians are 77.81\% for Black--Scholes, 79.12\% for Heston, 74.68\% for Bates and 78.06\% for Full Bates--Hawkes; bars show the P10--P90 range.}
+\par}
+\end{minipage}
+
+\begin{table}[H]
+\centering
+\caption{Editable common DCF inputs.}
+\label{tab:dcf_inputs}
+\begin{tabularx}{\columnwidth}{@{}Xr@{}}
+\toprule
+Parameter & Value \\
+\midrule
+Tax rate & 25.00\% \\
+$g_1\rightarrow g_\infty$ & 8.50--2.50\% \\
+$ROIC_1\rightarrow ROIC_\infty$ & 14.50--10.50\% \\
+$WACC_0\rightarrow\bar w$ & 9.10--8.30\% \\
+WACC reversion & 0.45 \\
+WACC volatility & 0.90\% \\
+WACC floor/cap & 3.50/25.00\% \\
+Terminal reinvestment & 23.81\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{methodbox}[Interpretation]
+These are transparent methodological assumptions, not filing-calibrated Barrick estimates. Their materiality is visible: the terminal block supplies roughly three quarters of positive enterprise value. They should therefore be changed centrally and sensitivity-tested rather than hidden inside a single headline valuation.
+\end{methodbox}

@@ -1,0 +1,5 @@
+model_id,model,median_value_per_share_usd,p10_value_per_share_usd,p90_value_per_share_usd,observed_close_usd,observed_close_percentile,probability_model_value_exceeds_observed,observed_minus_median_usd,observed_vs_median_pct,conditional_median_reading
+black_scholes,Black–Scholes / GBM,39.29253939271167,4.879962099445989,107.80550145566411,48.39,59.53369140625,0.4046630859375,9.097460607288333,23.153150058241877,observed close above conditional median
+heston,Heston,39.9995018685577,7.679494113882358,101.17842854051565,48.39,59.3505859375,0.406494140625,8.3904981314423,20.976506555042373,observed close above conditional median
+bates_poisson,Bates–Poisson,38.735284185898365,6.16212136348265,103.52611141087992,48.39,59.912109375,0.40087890625,9.654715814101635,24.92486118797199,observed close above conditional median
+full_bates_hawkes,Full Bates–Hawkes,38.894106312846915,5.170741314169727,104.19684160749979,48.39,59.94873046875,0.4005126953125,9.495893687153085,24.414736800409642,observed close above conditional median

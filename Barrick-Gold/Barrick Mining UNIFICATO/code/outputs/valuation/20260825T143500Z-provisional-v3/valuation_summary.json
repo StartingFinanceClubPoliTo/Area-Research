@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "run_id": "20260825T143500Z-provisional-v3",
+  "valuation_as_of_utc": "2026-08-25T00:00:00Z",
+  "observed_market_price": {
+    "ticker": "B",
+    "price_usd": 48.39,
+    "timestamp_utc": "2026-08-24T00:00:00Z",
+    "source": "London Strategic Edge B daily unadjusted close; authoritative refresh 20260825T130645Z-replay-20260825T131013Z"
+  },
+  "median": {
+    "quantile_pct": 50,
+    "enterprise_value_proxy_usd_mn": 56981.9925911621,
+    "equity_value_proxy_usd_mn": 56981.9925911621,
+    "value_per_share_proxy_usd": 34.00874515291589
+  },
+  "probability_model_value_exceeds_observed_price": 0.37948,
+  "simulation": {
+    "paths": 50000,
+    "seed": 42
+  },
+  "interpretation": "provisional research sensitivity; not a target price or investment recommendation",
+  "unresolved_corporate_inputs": [
+    "Legal valuation perimeter and treatment of the announced North American gold-assets transaction",
+    "2026 Team 4 full-year operating arrays are not stub-period aligned to the 2026-08-25 valuation as-of",
+    "Gold spot and volatility assumptions are the Team 4 2026-04-02 baseline, not an approved 2026-08-25 physical forecast",
+    "GLD-to-gold, gold-to-realized-price and Q-to-P/scenario bridges are not approved",
+    "Cost of Sales includes depreciation; component margin is not reconciled audited EBITDA, EBIT, NOPAT or FCFF",
+    "Debt, cash, minority interests, non-operating assets and other claims are explicit zero placeholders",
+    "Diluted shares are an unreconciled proxy inferred from the 2026-08-13 LSE market-cap/price snapshot",
+    "WACC, terminal growth, ROIC and tax are Team 5 synthetic-methodology assumptions, not filing-calibrated Barrick inputs",
+    "Finite reserve life and mine-level closure/reclamation policy are not represented"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "model": "Heston",
+  "parameters": {
+    "v0": 0.08706483759428091,
+    "kappa": 2.578884434527631,
+    "theta": 0.032982291456413154,
+    "xi": 0.27933637415937396,
+    "rho": 0.1221563396492172,
+    "feller_gap": 0.09208622617548935
+  },
+  "objective": 7.169431801993394e-05,
+  "global_objective": 7.293115287573599e-05,
+  "success": true,
+  "message": "Optimization terminated successfully",
+  "evaluations": 13,
+  "iterations": 2,
+  "elapsed_seconds": 0.2364244999771472,
+  "seed": 20260811,
+  "pricing": "Heston characteristic function with batched COS inversion"
+}

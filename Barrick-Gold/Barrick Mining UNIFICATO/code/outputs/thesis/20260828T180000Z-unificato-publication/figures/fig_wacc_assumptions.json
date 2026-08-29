@@ -1,0 +1,22 @@
+{
+  "figure_spec": {
+    "figure_id": "fig_wacc_assumptions",
+    "score": 10,
+    "chapter": "Chapter 11",
+    "title": "Common mean-reverting WACC contract"
+  },
+  "config_fields": {
+    "model.wacc_0": 0.091,
+    "model.wacc_long_run": 0.083,
+    "model.wacc_reversion": 0.45,
+    "model.wacc_volatility": 0.009,
+    "model.terminal_spread_floor": 0.01
+  },
+  "annual_transition": "WACC[t+1] = long_run + (WACC[t] - long_run) * exp(-reversion) + conditional_std * shock[t]",
+  "conditional_std": 0.007308127709841014,
+  "clip": {
+    "minimum": 0.035,
+    "maximum": 0.25
+  },
+  "wacc_shocks_sha256": "4D2FCE502B40F09DC48134D8ACC076E017FBA5344375E378211FCF030207FEF2"
+}

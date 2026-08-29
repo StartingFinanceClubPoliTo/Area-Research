@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260828T180000Z-unificato-publication",
+  "generated_at_utc": "2026-08-28T14:48:27.335424+00:00",
+  "status": "MIXED_CURRENT_AND_EXPLICITLY_FROZEN_TEAM8_FIGURES",
+  "raw_input": "data/raw/lse_local/20260828T070000Z-lse-nss/gld_market_inputs.json",
+  "raw_input_sha256": "CB5055CEE34B9F4350DAEE422FFBA7EFD7C312A0F0E3D9066F2A5F887D9DF3CE",
+  "row_level_data_committed": false,
+  "team8_source": "parity/sources/team-8",
+  "team8_source_files": {
+    "parity/sources/team-8/Bates.py": "CCF5145EE1497BBB01891D6CB0C95803D7D9FD0F61ECA537BE81AFEA61F463C2",
+    "parity/sources/team-8/BatesHawkes.py": "606810CA162AF2B682788B88349B07119117BB3A2EC90E6243E4A344004B5790",
+    "parity/sources/team-8/BatesHawkesExact.py": "59F1207C9230E6522C2A0CFA5A66B638B05AB745B8D1C1BE7643E1DE169F8153",
+    "parity/sources/team-8/benchmarks/benchmark_pricing.py": "3AD7D76B0CE58C8C240090E8B87F683E8E5D0BD32EE32DB2DFEA38255D661BF3",
+    "parity/sources/team-8/BnS.py": "07465D4C9CCAAC9EA6A4CA28744875747685C88C5A5BB5BEB733C6C361A2EF04",
+    "parity/sources/team-8/calibration_core.py": "280C2603E19E0096200BB50C772E0F3D52C8929256CBE252BE5A28055E10BD8D",
+    "parity/sources/team-8/calibration_workflow.py": "CDAAA3F5CDDE86C84D1CF7FFCBD051C54D78B9B3419A7ABB23A9017E148C7C81",
+    "parity/sources/team-8/fourier_pricing.py": "3E212417D9B1A937F21EBB32E04C41C1883B26C4F5978F2CA3A3F16541A87F38",
+    "parity/sources/team-8/Hawkes.py": "AFB1B48D86F7A0E00AADA1091583F73C21BF3BB1CF6ADD7CC552BD1178658BBB",
+    "parity/sources/team-8/Heston.py": "9D145E9F5A0DDF60FEC99BE4CCA39A2A48CA73CDE7089A83C0B8C53F67163794",
+    "parity/sources/team-8/historical_validation.py": "4A1E73623748BA917871DAFED9D2B0AC5DC2FD9E1E811088E452590111FFE162",
+    "parity/sources/team-8/lse_dataset.py": "F6C1352C43032B8BE6F14B1F2130929E5594B266FE5D1571CA682805C3C1459A",
+    "parity/sources/team-8/main.py": "F69BBDF4D17C70B07F7A0F786C88D40A89A71553E80C80B92FC8A165CBCAA427",
+    "parity/sources/team-8/nss_curve.py": "A765706C7ED23F07D2CB8DF64750E885C77972ABF2A6D5FE7AA9B0FEF52E94A4",
+    "parity/sources/team-8/online_validation.py": "C3240B12A174535D5F963D387EC799D7EAD12DDE5BF85EC337923155E7DDF86F",
+    "parity/sources/team-8/path_simulation.py": "DE6AA684EB0937BFB808173B2A2518D9C5C1C2A3BE3533736F6A12FC6F4232BC",
+    "parity/sources/team-8/Sampling.py": "CC5F0BFFA5CC10DA35574204FC8B2FE5E283BA39CB1C9B5CEBF4E39E617E8FF7",
+    "parity/sources/team-8/tests/test_bates_refactor.py": "6CC512DD8CF5434AA67AEC4C04E756B6EA6D922B9F4EB9F8C46D3DE20FEEEA49",
+    "parity/sources/team-8/tests/test_hawkes_calibration.py": "458CE6D74FEF84B37859B2AACB51649B20849A0BBE99091B16BC6AE8C86C9E97",
+    "parity/sources/team-8/tests/test_hawkes_exact.py": "4EBB3ACC30BC088893F9702792F9C4DE1F077D050D0EA882229922A357CCE5B5",
+    "parity/sources/team-8/tests/test_historical_validation.py": "25DF4D77D35B9A1587E90493FFF069DE971E3351A0EBBB67999B03C4A2DBD62B",
+    "parity/sources/team-8/tests/test_lse_dataset.py": "32CE11603B0A1E14F4AEB97CAA84CF23482485AEFAF5B3ADBBEDB760AC28E689",
+    "parity/sources/team-8/tests/test_path_simulation.py": "7046AAC113AACF5965CAFDAF55085EB29B3B1DBBDB2E309DAEE557489FCD4A10",
+    "parity/sources/team-8/tools/rebuild_bates_notebooks.py": "F0F3EF1A97A54E32828C08B254DFCE8B56DE7FC34797991536ECF39262C176D6",
+    "parity/sources/team-8/tools/rebuild_exact_hawkes_outputs.py": "31FB4136D34EB39B150C5A88C126D86F5F1B72ACA8425AE2319C6304479BE39E",
+    "parity/sources/team-8/tools/rebuild_lse_benchmarks.py": "370C7DE5A199DEAFD00BAF7BECF1108A246E2F1F7C88D21D17023FB4D3E593FA",
+    "parity/sources/team-8/tools/rebuild_online_validation.py": "0AFF2294B2AB8465E30C4552EB44E8BADB5119F3EEFC94E6B42A3C7BC9135194",
+    "parity/sources/team-8/tools/rebuild_oos_validation.py": "EE017B7F60B217C264941915478E7C207E5143C5BF9D2AEA3F2473D90C8FB743",
+    "parity/sources/team-8/tools/rebuild_path_outputs.py": "B2B54F54192D73C430904DC3491A1625F4ACAFDEEB9C4CE22580F8E0FC593312"
+  },
+  "dataset_metadata": {
+    "success": true,
+    "schema_matches_lse_chain": true,
+    "schema_matches_calibration": true,
+    "files": [
+      "gld_lse_chain.csv",
+      "gld_lse_calibration_full.csv",
+      "gld_lse_calibration_chebyshev.csv",
+      "usd_treasury_curve.csv",
+      "usd_treasury_nss_fit.json",
+      "gld_daily_history.csv",
+      "gld_lse_meta.json"
+    ],
+    "underlying_symbol": "GLD",
+    "S0": 422.57,
+    "as_of_utc": "2026-08-27T20:15:12.017875+00:00",
+    "source": "London Strategic Edge /options/chain, /ref/bond_yields, /candles",
+    "snapshot_kind": "current_lse_option_chain",
+    "risk_free_rate_source": "LSE US Treasury par-yield curve",
+    "risk_free_rate_curve_date": "2026-07-24",
+    "risk_free_rate_conversion": "continuous proxy log(1 + par_yield_decimal)",
+    "risk_free_rate_interpolation": "current LSE Nelson-Siegel-Svensson fit",
+    "risk_free_rate_model": "Nelson-Siegel-Svensson",
+    "risk_free_rate_nss_parameters": {
+      "beta0": 0.017385564545365727,
+      "beta1": 0.0193249198690013,
+      "beta2": 0.02852251877184989,
+      "beta3": 0.1032832428424333,
+      "tau1": 1.41891774985645,
+      "tau2": 15.07963754251128
+    },
+    "risk_free_rate_nss_rmse_bp": 2.372586683839021,
+    "risk_free_rate_missing_requested_tenors": [
+      "US10Y"
+    ],
+    "risk_free_rate_min": 0.03723641334462473,
+    "risk_free_rate_max": 0.05056174219286855,
+    "dividend_yield_assumption": 0.0,
+    "calibration_price_method": "Black-Scholes price implied by LSE IV",
+    "maximum_source_age_days": 7,
+    "n_rows_total": 1912,
+    "n_rows_calibration_eligible": 143,
+    "n_rows_chebyshev": 24,
+    "n_treasury_tenors": 11,
+    "history_start": "2021-01-04T00:00:00Z",
+    "history_end": "2026-08-27T00:00:00Z",
+    "history_observations": 1424,
+    "redistribution": "prohibited; local-only outputs ignored by Git"
+  },
+  "figures": [
+    {
+      "name": "usd_treasury_curve.png",
+      "classification": "CURRENT",
+      "bytes": 104572,
+      "sha256": "5200CF24A47E932F9445B1434BD2312B1147AFF6FB3F460BD02299D88C97A52A"
+    },
+    {
+      "name": "sampling_comparison.png",
+      "classification": "CURRENT",
+      "bytes": 122845,
+      "sha256": "47F12E23EAEE8086B2D14CEAB6CD28F7BA5398CCA4DD704D1219E4AE805CE13D"
+    },
+    {
+      "name": "gld_return_normality.png",
+      "classification": "CURRENT",
+      "bytes": 146723,
+      "sha256": "C011553EAC7F680D0887DE0C0FD2561256544A79AFDF16823070A53FCA067066"
+    },
+    {
+      "name": "black_scholes_residual_heatmap.png",
+      "classification": "CURRENT",
+      "bytes": 161726,
+      "sha256": "B1D1AE0979A8CB1595D0207C57309D3D6DC876F276639292200856D9217DAD43"
+    },
+    {
+      "name": "heston_residual_heatmap.png",
+      "classification": "CURRENT",
+      "bytes": 170741,
+      "sha256": "49CE3E283DB9CCDCBB936A8A53B7B75ACF1231BAD486E2B6914BFAA1114FCEA2"
+    },
+    {
+      "name": "bates_residual_heatmap.png",
+      "classification": "CURRENT",
+      "bytes": 219763,
+      "sha256": "D07BF110092F7B635B6FA55F1E8F8B8240ED586C410CAC050F72862C22955F39"
+    },
+    {
+      "name": "bates_hawkes_residual_heatmap.png",
+      "classification": "CURRENT",
+      "bytes": 185421,
+      "sha256": "C27DF2872B775664FD5E19B26784518C4D173C20DA4369FB4F2A287AD068B49F"
+    },
+    {
+      "name": "bates_hawkes_volatility_smile.png",
+      "classification": "CURRENT",
+      "bytes": 191028,
+      "sha256": "3CECB4D874D1929FAAB7DAA1CE3EAEDE98898C5E5A9313A84998544F4AB9FE09"
+    },
+    {
+      "name": "bates_hawkes_vs_bates.png",
+      "classification": "CURRENT",
+      "bytes": 128936,
+      "sha256": "E241EEA742943F9E360B12C88D266E6F0E8CF2B81EC8F7B9EE7B45E4F86D3D68"
+    },
+    {
+      "name": "terminal_return_percentiles.png",
+      "classification": "CURRENT",
+      "bytes": 147332,
+      "sha256": "C44BE1A710FA8A122358D8885A4D237FDD5E484F727D9D30C81B6CE408DB55B8"
+    },
+    {
+      "name": "volatility_state_paths.png",
+      "classification": "CURRENT",
+      "bytes": 335809,
+      "sha256": "CCA44C611A29D3988C6DDDFA8A52611BBCEDD2323E8FA92DF881C21140769E6E"
+    },
+    {
+      "name": "bates_poisson_jump_paths.png",
+      "classification": "CURRENT",
+      "bytes": 68178,
+      "sha256": "63AC017734DB0BD91BFD7ED6924287339DD5B8BFBA17AD2D60C28B25134566F1"
+    },
+    {
+      "name": "hawkes_jump_paths.png",
+      "classification": "CURRENT",
+      "bytes": 248223,
+      "sha256": "B01D0A1EAEBA84D5062679C3A12699439B3F61AEE1063B3DD4B32B36FBA5A2AF"
+    },
+    {
+      "name": "hawkes_intensity_comparison.png",
+      "classification": "CURRENT",
+      "bytes": 111239,
+      "sha256": "85FB87C52858789B037F643973C66960F15DB643BCD29887C7535C9382BABF3E"
+    },
+    {
+      "name": "online_welch_goyal_cumulative.png",
+      "classification": "FROZEN_LEGACY",
+      "bytes": 456876,
+      "sha256": "5A78A18CA0376C3003B73B5464269A0E1E9647D4A70347EA5AAFAE12AB3DA910"
+    }
+  ],
+  "figure_count": 15,
+  "frozen_boundary": "online_welch_goyal_cumulative.png is freshly rendered from frozen aggregate loss data because historical LSE option bars are not distributable in this branch",
+  "not_investment_advice": true
+}

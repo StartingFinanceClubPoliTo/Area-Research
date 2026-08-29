@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260828T180000Z-unificato-publication",
+  "status": "CURRENT_OPERATIONS_WITH_EXPLICIT_FORECAST_HANDOFF",
+  "separation_policy": {
+    "team4_operating_method_used": true,
+    "team4_price_simulation_used": false,
+    "team4_illustrative_valuation_used": false,
+    "valuation_price_layer": "current Team 8 calibration"
+  },
+  "upstream_method_code": {
+    "repository": "StartingFinanceClubPoliTo/Research",
+    "commit": "f0c77feff23944819f8bd63abe7b6244b348cc77",
+    "path": "Barrick-Gold/Component-Driven-EBITDA-Barrick",
+    "note": "The upstream notebooks/R script informed the retained operating decomposition; this module is the autonomous current-data renderer."
+  },
+  "inputs": [
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\data\\processed\\team4\\barrick_mine_operating_q1_q2_2026.csv",
+      "sha256": "9CB616059846D22C095083C7AC29D775895D04DB9AE5FD394867DA8E091D94DA"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\data\\processed\\team4\\barrick_total_gold_q1_q2_2026.csv",
+      "sha256": "D47EF91562F9D2ECD1432DF712D6A52EFB2ED9B9ECE97077B55B75D5B53EE912"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\data\\manifests\\team4\\barrick_operating_q1_q2_2026_manifest.json",
+      "sha256": "71A8B159C8C309210C6123EEDA676981B6DCBFB1934F53E3630427255F282FDF"
+    },
+    {
+      "path": "C:\\Users\\salvm\\Desktop\\SF\\Research projects\\Barrick gold\\UNIFICATO\\Github-Branch\\config\\provisional_valuation_20260827_team4_separated.json",
+      "sha256": "00C43CF8DB8600711BA43C64B9D2BF93E8A9F54A32B5AFBB8B7570DF735B2F28"
+    }
+  ],
+  "runtime": {
+    "python": "3.14.4",
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1"
+  },
+  "artifacts": [
+    {
+      "path": "team4_mine_production_qoq.png",
+      "bytes": 132753,
+      "sha256": "50B961F87C5F443EC499B88D22590F7DF10CE7A145B2BD5580DC5FD561DBB2F0"
+    },
+    {
+      "path": "team4_mine_production_qoq.pdf",
+      "bytes": 21014,
+      "sha256": "6FF3BF702E7D802029E1FA6B26D62D9BD6649B78744D987AA8CF4ED55B0C7A06"
+    },
+    {
+      "path": "team4_mine_cost_qoq.png",
+      "bytes": 138441,
+      "sha256": "CE40D43C378D1FA20BCD757AA0E9ED5908EA2AF83C5A033AC3B9ADDF61F82294"
+    },
+    {
+      "path": "team4_mine_cost_qoq.pdf",
+      "bytes": 21499,
+      "sha256": "17D0652A47314DB9587672D351E816B0B5A63A36B6DFDD242225CD70EBD5AE46"
+    },
+    {
+      "path": "team4_process_components_qoq.png",
+      "bytes": 160904,
+      "sha256": "1DDC31B9D77B0AB4AF2CB886C93C598343F30CB64AC5F920AEBFE34D9952CB08"
+    },
+    {
+      "path": "team4_process_components_qoq.pdf",
+      "bytes": 23425,
+      "sha256": "89D62A7313AD94C65F120C6165D619FFC168B975D4D5BC19075A7E251A7DCCCB"
+    },
+    {
+      "path": "team4_operating_contract.png",
+      "bytes": 297235,
+      "sha256": "A5190673372D95DD02D7A2E1CB6B791B1A5FA642D8F5C3885F0BB01A123E7290"
+    },
+    {
+      "path": "team4_operating_contract.pdf",
+      "bytes": 23905,
+      "sha256": "7275622C08664D2E63363EE32B634EBB0764C043304BFC114163DEDB5781BE9D"
+    }
+  ]
+}

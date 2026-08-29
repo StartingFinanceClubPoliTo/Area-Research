@@ -1,0 +1,55 @@
+{
+  "figure_spec": {
+    "figure_id": "fig_terminal_value",
+    "score": 10,
+    "chapter": "Chapter 11",
+    "title": "Terminal-value mechanics and contribution"
+  },
+  "config_fields": {
+    "model.stable_growth": 0.025,
+    "model.roic_stable": 0.105,
+    "model.terminal_spread_floor": 0.01
+  },
+  "median_terminal_wacc": 0.08383968535594889,
+  "current_normalized_terminal_multiple": 13.272545157711724,
+  "formula": "terminal_fcff = max(final_after_tax_margin, 0) * (1 + stable_growth) * (1 - stable_growth / roic_stable); terminal_value = terminal_fcff / (terminal_wacc - stable_growth)",
+  "contribution_summary": [
+    {
+      "model_id": "black_scholes",
+      "label": "Black–Scholes / GBM",
+      "eligible_paths": 8026,
+      "eligible_fraction": 0.979736328125,
+      "p10_terminal_share": 0.0,
+      "p50_terminal_share": 0.7781237073094043,
+      "p90_terminal_share": 0.8643022513645509
+    },
+    {
+      "model_id": "heston",
+      "label": "Heston",
+      "eligible_paths": 8168,
+      "eligible_fraction": 0.9970703125,
+      "p10_terminal_share": 0.6074969488759977,
+      "p50_terminal_share": 0.7912399400187939,
+      "p90_terminal_share": 0.8548332442174006
+    },
+    {
+      "model_id": "bates_poisson",
+      "label": "Bates–Poisson",
+      "eligible_paths": 7506,
+      "eligible_fraction": 0.916259765625,
+      "p10_terminal_share": 0.0,
+      "p50_terminal_share": 0.7467787835219358,
+      "p90_terminal_share": 0.8804482360829343
+    },
+    {
+      "model_id": "full_bates_hawkes",
+      "label": "Full Bates–Hawkes",
+      "eligible_paths": 8046,
+      "eligible_fraction": 0.982177734375,
+      "p10_terminal_share": 0.11456522142462669,
+      "p50_terminal_share": 0.7806301563878579,
+      "p90_terminal_share": 0.8618395854862133
+    }
+  ],
+  "interpretation": "methodological sensitivity and actual-run decomposition; not a filing-reconciled Barrick fair value"
+}

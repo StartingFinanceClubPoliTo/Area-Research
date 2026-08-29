@@ -1,0 +1,26 @@
+{
+  "Black-Scholes": {
+    "price_mae": 0.5648647066900027,
+    "price_rmse": 0.6681167515349307,
+    "iv_mae_bp": 98.26808207707168,
+    "iv_rmse_bp": 114.03984535540604,
+    "max_abs_price_error": 1.2222238186016696,
+    "max_abs_iv_error_bp": 244.78301507514067
+  },
+  "Heston": {
+    "price_mae": 0.41532029823232336,
+    "price_rmse": 0.5227750258476483,
+    "iv_mae_bp": 72.59404711052808,
+    "iv_rmse_bp": 86.27595375476858,
+    "max_abs_price_error": 1.319499053282641,
+    "max_abs_iv_error_bp": 181.44609903357923
+  },
+  "Bates": {
+    "price_mae": 0.24482348941013385,
+    "price_rmse": 0.32069519845247535,
+    "iv_mae_bp": 44.18330002226862,
+    "iv_rmse_bp": 56.55291766004782,
+    "max_abs_price_error": 0.8141969692067086,
+    "max_abs_iv_error_bp": 132.17421425413323
+  }
+}

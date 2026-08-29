@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0",
+  "team": 7,
+  "benchmark_class": "legacy_empirical_gold_silver_macro_volatility",
+  "acquired_utc": "2026-08-15T05:07:08Z",
+  "original_root": "Team 7 - Gold Volatility Dynamics/Github-Branch",
+  "frozen_root": "UNIFICATO/Github-Branch/parity/sources/team-7",
+  "copy_policy": "byte_identical_only",
+  "license": {
+    "status": "PRESENT",
+    "identifier": "MIT",
+    "path": "LICENSE",
+    "sha256": "32EA5988A9F2D8CDAB0D78E95D3B760F75334C651407F12C800880EAD817B3B5",
+    "citation_path": "CITATION.cff",
+    "citation_sha256": "AFAB20F72CF7973F0831124477909C606608CC3E665B9115F5794AF22F9CBFFE"
+  },
+  "files": [
+    {
+      "path": "CITATION.cff",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/CITATION.cff",
+      "role": "citation_metadata",
+      "bytes": 960,
+      "sha256": "AFAB20F72CF7973F0831124477909C606608CC3E665B9115F5794AF22F9CBFFE",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "LICENSE",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/LICENSE",
+      "role": "mit_license_metadata",
+      "bytes": 1107,
+      "sha256": "32EA5988A9F2D8CDAB0D78E95D3B760F75334C651407F12C800880EAD817B3B5",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "requirements.txt",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/requirements.txt",
+      "role": "declared_dependencies",
+      "bytes": 71,
+      "sha256": "ECC27FAEE3ED50B21EE4D5237ACD324EA0704F3778C0633EF547755778F82490",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/01_data_download.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/01_data_download.py",
+      "role": "network_downloader_excluded_from_offline_run",
+      "bytes": 513,
+      "sha256": "F295EEE7D6463C9112BF03E966BC0F15B4E6574C3E960A9565519A057F777727",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/02_data_preparation.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/02_data_preparation.py",
+      "role": "offline_stage_executed",
+      "bytes": 2070,
+      "sha256": "B5D0269016F0FA64E80F90CEDE39D38BC3425EDD3B3924D9D71183F18A5FC021",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/03_descriptive_analysis.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/03_descriptive_analysis.py",
+      "role": "offline_stage_executed",
+      "bytes": 2395,
+      "sha256": "43C3907816B56163753DD5CF89B3A960F55A6DDA52C6B81F95FB9A384175F61C",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/04_gold_regressions.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/04_gold_regressions.py",
+      "role": "offline_stage_executed",
+      "bytes": 2410,
+      "sha256": "0ACFDBF808E6DB57BF3C5488904F8A10890DC1D1FB3EB79F828F1A4BECA35FFD",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/05_silver_regressions.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/05_silver_regressions.py",
+      "role": "offline_stage_executed",
+      "bytes": 2446,
+      "sha256": "8F25917DCDFF1BC0FCC8EE5AA7FA56667DC3D8DAFDF39472FD196A093ADB9258",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/06_stylized_facts.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/06_stylized_facts.py",
+      "role": "offline_stage_executed",
+      "bytes": 2804,
+      "sha256": "2A1E06A1F66AF7B8A8B57A91206721C06228A0599B28A74BCCE9262F1BB86C3F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/06b_ar_mean_models.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/06b_ar_mean_models.py",
+      "role": "offline_stage_executed",
+      "bytes": 4189,
+      "sha256": "7FAEB26F6C043CC6A8F8A6B655440421AAA48DCD0A4DA4BBE4810FB4254D8DC6",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/06c_arma_mean_models.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/06c_arma_mean_models.py",
+      "role": "offline_stage_executed",
+      "bytes": 3482,
+      "sha256": "E06E06B6D76A66CFAD71AD68F92DD5DBD0D6E2126CA3E8EE72CC908BFCC7119F",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/06d_arima_mean_models.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/06d_arima_mean_models.py",
+      "role": "offline_stage_executed",
+      "bytes": 3783,
+      "sha256": "D020874C610745FD90227E1EABEF73D42827D0B6C030E680A4D33A37D28B4299",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/07_garch_estimation.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/07_garch_estimation.py",
+      "role": "offline_stage_executed",
+      "bytes": 6024,
+      "sha256": "1DE5C63F2CB5D0C57A94668DF9200D25007D0702C6A4D7C1EA36A59D57279006",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/08_arfima_analysis.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/08_arfima_analysis.py",
+      "role": "offline_stage_executed",
+      "bytes": 7771,
+      "sha256": "3E1AB631BD02017F613328FBA82F4032BD888E1F721A1F4B888B157A111DD635",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/09_regression_tables.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/09_regression_tables.py",
+      "role": "offline_stage_executed",
+      "bytes": 6050,
+      "sha256": "08686D1AC50B42B1006628042DBE7F4E226B7888552FE6F99B25B9B64E4BD717",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/config.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/config.py",
+      "role": "shared_configuration",
+      "bytes": 841,
+      "sha256": "2FE6F1F96329159AFF4F2C7C8B76FBA39796D1C9CCEFD23AE4D042E15701C6EC",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/main.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/main.py",
+      "role": "full_orchestrator_excluded_to_prevent_downloader_execution",
+      "bytes": 704,
+      "sha256": "FA2209C95D3F5F7D5DEA2F475984D37918BA573C9C70D71C13C311E3F73ACBD8",
+      "copy_sha256_verified": true
+    },
+    {
+      "path": "src/utils.py",
+      "original_path": "Team 7 - Gold Volatility Dynamics/Github-Branch/src/utils.py",
+      "role": "shared_output_helpers",
+      "bytes": 2001,
+      "sha256": "5BDF36E1AE0DDA1D9F998C7BFBA7B5769B908A3BB2A299908B4D6E98E014B7D7",
+      "copy_sha256_verified": true
+    }
+  ],
+  "verification": {
+    "planned_executable_and_dependency_file_count": 16,
+    "metadata_file_count": 2,
+    "total_frozen_file_count": 18,
+    "all_originals_present": true,
+    "all_sha256_copies_verified": true,
+    "downloader_executed": false,
+    "main_orchestrator_executed": false,
+    "originals_modified": false
+  }
+}

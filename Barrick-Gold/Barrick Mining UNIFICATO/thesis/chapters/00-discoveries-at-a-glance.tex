@@ -1,0 +1,164 @@
+\chapter*{Discoveries at a Glance}
+\addcontentsline{toc}{chapter}{Discoveries at a Glance}
+\markboth{Discoveries at a Glance}{Discoveries at a Glance}
+
+% Sources: CL-001--CL-006, CL-009, CL-011--CL-024; CONTENT-LEDGER BG-U-01--14;
+% authoritative conditional multi-model manifest and current LSE run.
+\begin{tcolorbox}[
+  title={Discovery 1: current market reference and primary conditional signal},
+  colback=sflightblue,
+  colframe=sfblue,
+  boxrule=0.7pt,
+  arc=1mm,
+  left=3mm,
+  right=3mm
+]
+\small
+The latest completed LSE close available to the study is \textbf{USD 47.27 per
+\texttt{B} share on 27 August 2026}, verified in the 28 August extraction. In
+the primary Full Bates--Hawkes scenario, the conditional Barrick distribution
+has a \textbf{median of USD 34.94 per share}. The observed close is therefore
+\textbf{USD 12.33, or 35.27\%, above the model median}; it lies at the
+\textbf{62.27th percentile}, with \textbf{37.73\% of simulated values above
+it}.
+
+\medskip
+\textbf{Directional reading.} If the median is used as the central benchmark,
+the observed close is \textbf{above this conditional model median}. This does
+not establish market mispricing:
+USD 47.27 remains inside a wide scenario distribution, while the commodity
+bridge, accounting reconciliation, equity bridge and diluted-share input are
+not yet sufficient for a fair-value claim. The comparison is not a target
+price and does not constitute investment advice.
+\end{tcolorbox}
+
+The two numbers answer different questions. USD 47.27 is the freshest verified
+completed close in the versioned Barrick dataset, not a live quotation. USD 34.94
+is the centre of a model-conditional distribution. The market observation lies
+between P50 and P75: the central scenario is below the close, but a material
+right tail remains above it. The sign of the gap answers the narrow
+directional gap only relative to this specification;
+the width of the distribution describes how strongly the unresolved
+assumptions qualify that answer.
+
+\noindent\textbf{Why Full Bates--Hawkes is shown here.} The model is the primary
+structural scenario because it combines stochastic variance with
+self-exciting jumps and delivers the lowest in-sample IV RMSE on the current
+27 August GLD surface: 32.49 basis points, against 56.55 for Bates--Poisson,
+86.28 for Heston and 114.04 for Black--Scholes. Its branching ratio equals the
+0.02 lower bound, so the current surface weakly identifies self-excitation.
+``Primary'' does not mean
+predictively dominant. In Team 8's one-step-ahead study, Black--Scholes has a
+slightly lower pooled OOS RMSE, and none of the four candidates beats the
+previous-day implied-volatility surface. For that reason, Discoveries shows one
+Full Bates--Hawkes distribution, while Chapter 12 reports all four on equal
+terms.
+
+\noindent\textbf{What the four models do---and do not do.} Black--Scholes/GBM,
+Heston, Bates--Poisson and Full Bates--Hawkes govern only the \emph{gold-price
+layer}. They do not generate mine production or costs. Those inputs come from
+Team~4's separate operating work. Barrick actuals replace 2026Q1--Q2, while
+Team~4 forecasts begin at 2026Q3; this mixed operating contract is identical
+in every valuation. The unified DCF, stochastic WACC and equity bridge are
+common as well. Team~4's legacy NSS, implied-volatility, GBM and illustrative
+EBITDA artifacts are excluded. A separate NSS curve fitted to the current LSE
+Treasury cross-section is used consistently by Team~8 and the valuation.
+
+% Generated input from the authoritative accepted run.
+\IfFileExists{chapters/generated/current-valuation-summary.tex}{%
+  \input{chapters/generated/current-valuation-summary}%
+}{%
+  \gapbox{The accepted Full Bates--Hawkes summary is unavailable. No
+  replacement number is supplied editorially.}%
+}
+
+% Figure copied byte-identically from the authoritative accepted run.
+\IfFileExists{img/valuation/full_bates_hawkes_value_distribution.png}{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth]{img/valuation/full_bates_hawkes_value_distribution.png}
+    \caption{Conditional Barrick value-per-share distribution under the
+    primary Full Bates--Hawkes gold-price scenario. The vertical market
+    reference is the completed \texttt{B} close of USD 47.27 on 27 August
+    2026. Across 8,192 paths, P10/P50/P90 are USD 3.31/34.94/104.81 and the
+    close lies at the 62.27th percentile. Operations combine Barrick actuals
+    with explicitly labelled Team~4 forecasts; this is not a target-price
+    distribution.}
+    \label{fig:primary-bates-hawkes-value-distribution}
+  \end{figure}
+}{%
+  \gapbox{The primary Full Bates--Hawkes distribution is unavailable until it
+  is copied from the same accepted manifest as the summary table.}%
+}
+
+\noindent\textbf{How the evidence was assembled.} The front-page comparison
+is the endpoint of an integrated chain rather than the output of an isolated
+gold model. Team 8 supplies option-implied gold-price dynamics; Team 4 supplies
+the ad hoc production and unit-cost layer; Team 5 maps the resulting component
+margin through cash-flow, discounting and per-share identities; Team 3
+supplies simulation diagnostics. The remaining teams provide probability,
+econometric, historical-volatility and stochastic-process foundations. Their
+unification required explicit ownership of each variable, common units and
+dates, deterministic handoff contracts, source and claim freezes, and separate
+code, factual, editorial and visual-review gates.
+
+That chain also separates calibration from forecasting. Team 8 calibrates GLD
+calls under the risk-neutral measure. The conditional run restarts every model
+at Barrick's Q2 2026 average realised price of USD~4,417/oz and transfers only
+the option-implied distributional shape. It performs neither a one-for-one GLD
+level conversion nor a validated $\mathbb Q$-to-$\mathbb P$ transformation.
+Moreover, its inputs are asynchronous: the anchor quarter ends 30 June, the
+  Treasury curve is dated 24 July, and the GLD calibration surface and Barrick
+  close are dated 27 August 2026. These choices make the experiment useful
+for controlled model comparison, not a synchronous physical-gold forecast.
+
+\begin{table}[H]
+\centering
+\caption{Evidence supporting the conditional valuation layer.}
+\label{tab:discoveries-evidence}
+\small
+\renewcommand{\arraystretch}{1.13}
+\begin{tabularx}{\textwidth}{@{}p{2.65cm}X X@{}}
+\toprule
+\textbf{Evidence block} & \textbf{Accepted current observation} &
+\textbf{Permitted interpretation} \\
+\midrule
+Barrick equity, \texttt{B} & 86 valid daily unadjusted-close bars from
+27 April to 27 August 2026; cumulative change 16.20\%, annualised log-return
+volatility 51.23\%, maximum drawdown $-26.10\%$. & Short-window market
+diagnostic only; not a long-run return or volatility estimate. \\
+GLD reference series & 1,425 daily bars from 4 January 2021 to 27 August 2026;
+total return 131.06\%, annualised volatility 18.21\%, maximum drawdown
+$-26.23\%$. & ETF price in USD/share; neither physical gold in USD/oz nor
+Barrick's realised selling price. \\
+Current GLD surface & 24 admitted call nodes across three maturities and 13
+strikes at the 27 August calibration; Treasury curve 24 July. & Current
+option-implied calibration input; IV-mapped prices do not identify physical
+drift. \\
+Model engineering & Team 8 source freeze unchanged, 56/56 source tests and a
+61-strike deterministic benchmark with maximum absolute error
+$1.1611\times10^{-8}$. & Unit parity for the frozen implementation; not
+historical market parity or predictive dominance. \\
+Integrated experiment & 8,192 paths; four gold engines; identical separated
+operating contract, unified DCF and WACC shocks; branch suite 54/54 PASS and
+figure-provenance audit 47/47 PASS. & A controlled attribution of Barrick distributional differences
+to the gold-price engine, subject to the declared bridge limitations. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\noindent\textbf{Who produced the study.} Research is the Starting Finance
+Club PoliTo area in which members collaborate on quantitative, economic,
+financial and methodological projects. The Barrick programme joined eight
+autonomous teams with backgrounds spanning management engineering,
+mathematics, data science, computation and quantitative finance. Knowledge
+sharing was part of the research design: common foundations and coordination
+rules allowed specialised work to remain deep while still being reviewed and
+reused across teams. The unified article preserves their authorship and source
+evidence, while treating integration as a distinct phase with its own code,
+writing, technical-review, editorial-review and visual-QA responsibilities.
+
+The chapters that follow reconstruct the company and data perimeter, the
+mathematical and empirical model layers, the common operating and DCF
+contracts, the four-model experiment and the validation boundaries that keep a
+conditional signal from becoming an unsupported investment conclusion.

@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "team": 6,
+  "run_id": "20260814T193022Z-py3125",
+  "input_class": "synthetic_constants_embedded_in_runner",
+  "external_input_files": [],
+  "network_inputs": [],
+  "input_hashes": {
+    "embedded_configuration_source": {
+      "path": "1 Simulations/simulate_examples.py",
+      "sha256": "D0779EC08609F6A16D87A83252564B57E3F2CC8F0FB023EEFF65C062EA9F9E51"
+    }
+  },
+  "configuration_and_seed": {
+    "seed": 18062026,
+    "rng": "numpy.random.default_rng",
+    "draw_order": "one RNG instance; jump-path draws precede stochastic-variance draws",
+    "time_grid": {
+      "steps": 252,
+      "horizon_years": 1.0,
+      "dt_years": "1/252",
+      "points_including_t0": 253
+    },
+    "jump_diffusion": {
+      "spot_index": 100.0,
+      "drift": 0.03,
+      "volatility": 0.18,
+      "jump_intensity_per_year": 2.2,
+      "jump_mean_log_return": -0.09,
+      "jump_std_log_return": 0.05
+    },
+    "stochastic_variance": {
+      "kappa": 3.0,
+      "theta": 0.045,
+      "vol_of_vol": 0.32,
+      "initial_paths": [0.03, 0.045, 0.07],
+      "nonnegativity_rule": "maximum with zero at each Euler step"
+    }
+  },
+  "benchmark_references_not_consumed_by_runner": [
+    {
+      "path": "Team 6 - Beyond Black-Scholes/Github-Branch/1 Simulations/output/jump_diffusion_paths.csv",
+      "bytes": 14572,
+      "sha256": "864039DB15C5F2402A27F482B5BA580EEA796D623293638054F0AB3E43194B73"
+    },
+    {
+      "path": "Team 6 - Beyond Black-Scholes/Github-Branch/1 Simulations/output/stochastic_variance_examples.csv",
+      "bytes": 20318,
+      "sha256": "B298ED76C8057F5529D43AB52929BD6AC1E3B26DCEF5318CEB10F21594082FE1"
+    }
+  ],
+  "licensing_and_redistribution": {
+    "external_data": "not_applicable",
+    "source_code_license": "GAP"
+  }
+}

@@ -1,31 +1,31 @@
 model,parameter,value
-Black-Scholes,sigma,0.2437132735438299
-Heston,v0,0.06665815170984547
-Heston,kappa,2.055582848061303
-Heston,theta,0.04805336270610143
-Heston,xi,0.18453221295337383
-Heston,rho,0.06950608060314545
-Heston,feller_gap,0.16350319872319227
-Bates,v0,0.05899314610025435
-Bates,kappa,4.680044130429284
-Bates,theta,0.04787257619582935
-Bates,sigma,0.5183493545593094
-Bates,rho,0.05881842362686902
-Bates,lambd,1.2028693957501433
-Bates,mu_J,0.05061769819201898
-Bates,sigma_J,0.059867087015202984
-Bates,feller_gap,0.17940548509558701
-Full Bates-Hawkes,v0,0.047860995462793
-Full Bates-Hawkes,kappa,4.669576250860899
-Full Bates-Hawkes,theta,0.043561124660496324
-Full Bates-Hawkes,xi,0.6375524544241362
-Full Bates-Hawkes,rho,-0.12790945619885694
-Full Bates-Hawkes,lambda0,2.145506235728764
-Full Bates-Hawkes,lambda_bar,1.136986799380438
-Full Bates-Hawkes,stationary_mean_intensity,1.9394359355791424
-Full Bates-Hawkes,branching_ratio,0.413753876308929
-Full Bates-Hawkes,alpha,3.570880498726505
-Full Bates-Hawkes,beta,8.630446028885805
-Full Bates-Hawkes,mu_J,0.056079654327072286
-Full Bates-Hawkes,sigma_J,0.06440354028648038
-Full Bates-Hawkes,feller_gap,0.00035085420864910954
+Black-Scholes,sigma,0.24779487861257363
+Heston,v0,0.06212077221326063
+Heston,kappa,2.4677072163139138
+Heston,theta,0.06404878316257909
+Heston,xi,0.5291243802035709
+Heston,rho,0.040961994595133736
+Heston,feller_gap,0.03613467908702994
+Bates,v0,0.03902223049210439
+Bates,kappa,6.444633206261661
+Bates,theta,0.03909786178827916
+Bates,sigma,0.23990530268500812
+Bates,rho,-0.22420384586457695
+Bates,lambd,0.2317369106368714
+Bates,mu_J,-0.015078926818551528
+Bates,sigma_J,0.35607215004246767
+Bates,feller_gap,0.44638820249276023
+Full Bates-Hawkes,v0,0.03454005807346128
+Full Bates-Hawkes,kappa,6.444620345313116
+Full Bates-Hawkes,theta,0.03957131128995578
+Full Bates-Hawkes,xi,0.24020284166515202
+Full Bates-Hawkes,rho,-0.22413790748380996
+Full Bates-Hawkes,lambda0,0.766790600392742
+Full Bates-Hawkes,lambda_bar,0.39756162554257135
+Full Bates-Hawkes,stationary_mean_intensity,0.6130181397475754
+Full Bates-Hawkes,branching_ratio,0.35146841542686363
+Full Bates-Hawkes,alpha,2.679356540891002
+Full Bates-Hawkes,beta,7.623320967936432
+Full Bates-Hawkes,mu_J,0.015600102189888682
+Full Bates-Hawkes,sigma_J,0.19988334982467315
+Full Bates-Hawkes,feller_gap,0.4523467505159211

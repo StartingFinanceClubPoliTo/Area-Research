@@ -146,7 +146,7 @@ Website: \url{https://sfclubpolito.it/}
 
 \vspace{1cm}
 \begin{tightabstract}
-This article develops the affine option-pricing layer of the Barrick Gold research track using London Strategic Edge (LSE) as the sole source for current and historical GLD options, a maturity-specific US Treasury curve, and GLD returns. The analysis proceeds model by model---Black--Scholes, Heston, Bates, and full affine Bates--Hawkes---combining theory, calibration choices, residual maps, smile slices, and transition tests in each chapter. On the current 64-option surface, IV RMSE falls from 117.93 basis points for Black--Scholes to 94.44 for Heston, 78.13 for Bates, and 61.02 for full Bates--Hawkes. Normality tests diagnose heavy-tailed returns and residuals but do not rank predictive performance. The primary test therefore recalibrates every model on date $t$, forecasts a fixed normalized IV grid at the next trading date, and rolls forward without look-ahead. Across 124 transitions and 3,052 common observations, every model beats the prevailing mean, while none beats the previous day's IV surface; Black--Scholes records the lowest OOS RMSE and full Bates--Hawkes remains close while outperforming Heston. A fixed six-month holdout is retained as a secondary stability stress test. The final appendix reports parameters, errors, residual tests, simulation methods, and all integer percentiles from 0 to 100 of five-year simulated GLD returns.
+This article develops the affine option-pricing layer of the Barrick Gold research track using London Strategic Edge (LSE) as the sole source for current and historical GLD options, a maturity-specific US Treasury curve, and GLD returns. The analysis proceeds model by model---Black--Scholes, Heston, Bates, and full affine Bates--Hawkes---combining theory, calibration choices, residual maps, smile slices, and transition tests in each chapter. On the current 64-option surface, IV RMSE falls from 121.84 basis points for Black--Scholes to 88.44 for Heston, 73.52 for Bates, and 69.33 for full Bates--Hawkes. Normality tests diagnose heavy-tailed returns and residuals but do not rank predictive performance. The primary test therefore recalibrates every model on date $t$, forecasts a fixed normalized IV grid at the next trading date, and rolls forward without look-ahead. Across 125 forecast origins and 3,075 common observations, every model beats the prevailing mean numerically, while none beats the previous day's IV surface; full Bates--Hawkes records the lowest OOS RMSE, followed closely by Bates and Black--Scholes, while Heston is materially weaker. A fixed six-month holdout is retained as a secondary stability stress test. The final appendix reports parameters, errors, residual tests, simulation methods, and all integer percentiles from 0 to 100 of five-year simulated GLD returns.
 \end{tightabstract}
 \end{center}
 \end{titlepage}
@@ -241,7 +241,7 @@ The introduction defined the modelling objective; this chapter builds the empiri
 
 \section{From Option Chain to Calibration Dataset}
 
-After the introduction has fixed the role of the present article inside the broader Barrick project, the first concrete object is the market surface. London Strategic Edge (LSE) is the sole market-data source used by the reproducible pipeline \cite{LondonStrategicEdge2026}. The current-chain extraction records \(S_0=404.77\) for GLD at 20:15:07 UTC on 12 August 2026. It returns 2,477 call records; 445 pass the freshness, maturity, moneyness, and numerical filters, and 64 enter the structured Chebyshev sample across eight expiries.
+After the introduction has fixed the role of the present article inside the broader Barrick project, the first concrete object is the market surface. London Strategic Edge (LSE) is the sole market-data source used by the reproducible pipeline \cite{LondonStrategicEdge2026}. The current-chain extraction records \(S_0=406.66\) for GLD at 16:31:50 UTC on 31 August 2026. It returns 2,479 active call records; 328 pass the freshness, maturity, moneyness, and numerical filters, and 64 enter the structured Chebyshev sample across eight expiries.
 
 An important timing issue must be handled explicitly. An option's LSE \texttt{last\_price} can come from a trade older than the current underlying snapshot and may therefore be inconsistent with the current spot. The workflow keeps that field only in the local audit. It treats LSE implied volatility as the observed surface and reconstructs a coherent call price and vega with the Black--Scholes implementation, one snapshot spot, one maturity clock, \(q=0\), and the maturity-specific LSE Treasury rate. Only contracts updated within seven days are eligible. Raw and row-level LSE data remain in a Git-ignored local directory under the provider's redistribution terms; the public repository contains the code, a hashed aggregate manifest, calibrated parameters, aggregate errors, and research figures.
 
@@ -330,7 +330,7 @@ The option surface is a risk-neutral cross-section, whereas the daily GLD series
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.96\textwidth]{img/diagnostics/gld_return_normality.png}
-    \caption{LSE GLD daily log returns from 5 January 2021 to 13 August 2026: empirical density against a matched normal law and normal Q--Q plot.}
+    \caption{LSE GLD daily log returns from 5 January 2021 to 31 August 2026: empirical density against a matched normal law and normal Q--Q plot.}
     \label{fig:return-normality}
 \end{figure}
 }{}
@@ -342,12 +342,12 @@ The option surface is a risk-neutral cross-section, whereas the daily GLD series
 \toprule
 Test & Statistic & \(p\)-value & Decision at 5\% \\
 \midrule
-Shapiro--Wilk & 0.9427 & \(5.61\cdot10^{-23}\) & Reject normality \\
-Jarque--Bera & 3603.49 & \(<10^{-300}\) & Reject normality \\
-D'Agostino \(K^2\) & 331.19 & \(1.21\cdot10^{-72}\) & Reject normality \\
+Shapiro--Wilk & 0.9435 & \(6.52\cdot10^{-23}\) & Reject normality \\
+Jarque--Bera & 3448.19 & \(<10^{-300}\) & Reject normality \\
+D'Agostino \(K^2\) & 322.29 & \(1.04\cdot10^{-70}\) & Reject normality \\
 \bottomrule
 \end{tabular}
-\caption{Normality tests for 1,414 daily LSE GLD log returns. Sample skewness is \(-0.765\) and excess kurtosis is \(7.701\).}
+\caption{Normality tests for 1,426 daily LSE GLD log returns. Sample skewness is \(-0.732\) and excess kurtosis is \(7.507\).}
 \label{tab:return-normality}
 \end{table}
 
@@ -629,7 +629,7 @@ In this article, Black--Scholes has three roles. First, it gives a transparent r
 
 \section{Calibration Choice and Error Tests}
 
-The baseline estimates one constant volatility by minimizing the same vega-weighted loss used for the richer models. The deterministic fit gives \(\widehat\sigma=0.243713\). Price MAE and RMSE are \(0.6375\) and \(0.8156\); IV MAE and RMSE are \(87.78\) and \(117.93\) basis points. Applying normality tests to the 64 market-minus-model IV residuals rejects normality with Shapiro \(p=6.10\cdot10^{-5}\), Jarque--Bera \(p=8.32\cdot10^{-6}\), and D'Agostino \(p=8.24\cdot10^{-5}\). The rejection is secondary to the geometry: a constant volatility leaves a structured smile error.
+The baseline estimates one constant volatility by minimizing the same vega-weighted loss used for the richer models. The deterministic fit gives \(\widehat\sigma=0.247795\). Price MAE and RMSE are \(0.6409\) and \(0.8098\); IV MAE and RMSE are \(91.88\) and \(121.84\) basis points. Applying normality tests to the 64 market-minus-model IV residuals rejects normality with Shapiro \(p=0.00832\), Jarque--Bera \(p=0.00462\), and D'Agostino \(p=0.00449\). The rejection is secondary to the geometry: a constant volatility leaves a structured smile error.
 
 \section{Residual Heatmaps}
 
@@ -728,7 +728,7 @@ The calibration code also imposes the Feller condition
 \end{equation}
 which ensures that the CIR variance process stays strictly positive under the classical boundary classification. This is deliberately stricter than many unconstrained implied-volatility calibrations. In the code, parameter proposals with \(2\kappa\theta_v-\xi^2<0\) receive a large objective penalty, so the reported Heston, Bates, and Bates--Hawkes calibrations must satisfy the same variance-admissibility rule. The residual heatmaps and smile plots are not shown here; they are diagnostic evidence and are collected in Chapter~7.
 
-The refreshed LSE fit is \(v_0=0.06666\), \(\kappa=2.05558\), \(\theta_v=0.04805\), \(\xi=0.18453\), and \(\rho=0.06951\). The Feller gap is \(0.16350>0\). Price RMSE falls to \(0.6317\), and IV RMSE falls to \(94.44\) bp. Residual normality is still rejected (Shapiro \(p=0.0128\), Jarque--Bera \(p=0.0146\), D'Agostino \(p=0.0112\)), so the additional variance state improves scale without eliminating systematic distributional misspecification.
+The refreshed LSE fit is \(v_0=0.06212\), \(\kappa=2.46771\), \(\theta_v=0.06405\), \(\xi=0.52912\), and \(\rho=0.04096\). The Feller gap is \(0.03613>0\). Price RMSE falls to \(0.5785\), and IV RMSE falls to \(88.44\) bp. Shapiro--Wilk does not reject residual normality at 5\% (\(p=0.0935\)), whereas Jarque--Bera and D'Agostino do (\(p=0.0457\) and \(p=0.0332\)); the additional variance state improves scale without eliminating all distributional diagnostics.
 
 \IfFileExists{img/diagnostics/heston_residual_heatmap.png}{%
 \begin{figure}[H]
@@ -824,7 +824,7 @@ The working bounds for the jump layer are:
 \]
 The jump component gives the model additional flexibility, especially at short maturities and in skewed regions of the surface. This flexibility is useful but creates identification risk. For example, high volatility of volatility and high jump volatility can both help explain fat tails. The calibration should therefore be read together with residual plots, parameter plausibility, and robustness checks.
 
-The refreshed fit is \(v_0=0.05899\), \(\kappa=4.68004\), \(\theta_v=0.04787\), \(\xi=0.51835\), \(\rho=0.05882\), \(\lambda=1.20287\), \(\mu_J=0.05062\), and \(\sigma_J=0.05987\), with Feller gap \(0.17941\). Price RMSE is \(0.5364\) and IV RMSE is \(78.13\) bp. Residual normality remains rejected (Shapiro \(p=0.0116\), Jarque--Bera \(p=1.28\cdot10^{-4}\), D'Agostino \(p=6.59\cdot10^{-4}\)).
+The refreshed fit is \(v_0=0.03902\), \(\kappa=6.44463\), \(\theta_v=0.03910\), \(\xi=0.23991\), \(\rho=-0.22420\), \(\lambda=0.23174\), \(\mu_J=-0.01508\), and \(\sigma_J=0.35607\), with Feller gap \(0.44639\). Price RMSE is \(0.5120\) and IV RMSE is \(73.52\) bp. Residual normality remains rejected (Shapiro \(p=0.00160\), Jarque--Bera \(p=5.79\cdot10^{-8}\), D'Agostino \(p=5.15\cdot10^{-5}\)).
 
 \section{Smile Slices}
 
@@ -1006,9 +1006,9 @@ with \(J\sim\mathcal{N}(\mu_J,\sigma_J^2)\), \(k=\E^\Q[e^J-1]\), and \(N_t\) now
 This specification changes the interpretation of the jump layer. In Bates, \(\lambda\) measures the average arrival rate of independent jumps. In Bates--Hawkes, \(\bar{\lambda}\) is the exogenous mean-reversion baseline, \(\lambda_0\) is the intensity observed at the calibration origin, \(\alpha\) is the upward intensity jump after an event, and \(\beta\) controls the decay speed. The branching ratio \(n=\alpha/\beta\) measures endogenous clustering and the stationary mean is \(\bar{\lambda}/(1-n)\) when \(n<1\).
 
 \paragraph{Hawkes calibration routes and comparison rule.}
-The code now exposes four distinct calibration routes, collected here because they should not be interpreted as interchangeable estimates. \emph{Exponential point-process likelihood} estimates a baseline, excitation size, and decay rate from observed event times. \emph{Rough power-law likelihood} uses the regularized kernel \(\mu(\tau)=\alpha(\tau+c)^{-(1+\gamma)}\), with \(0<\gamma<1\), to diagnose longer-lived event memory. \emph{Exact constant-volatility option calibration} uses the affine exponential-Hawkes transform but replaces Heston variance by one diffusion volatility; on the current LSE sample it returns \(\sigma=0.22448\) and a branching ratio of approximately \(0.00460\), so it is useful for validation rather than as the final model. Finally, \emph{full affine Heston--Hawkes calibration} combines stochastic variance and the exact exponential-Hawkes jump transform on the same LSE GLD option sample used by Heston and Bates. Only this fourth route enters the cross-model tables and figures. The likelihood fits require event times rather than option prices, while the constant-volatility benchmark has a different diffusion block; comparing either of them directly with Heston and Bates would therefore confound model fit with a change of target or state variables.
+The code now exposes four distinct calibration routes, collected here because they should not be interpreted as interchangeable estimates. \emph{Exponential point-process likelihood} estimates a baseline, excitation size, and decay rate from observed event times. \emph{Rough power-law likelihood} uses the regularized kernel \(\mu(\tau)=\alpha(\tau+c)^{-(1+\gamma)}\), with \(0<\gamma<1\), to diagnose longer-lived event memory. \emph{Exact constant-volatility option calibration} uses the affine exponential-Hawkes transform but replaces Heston variance by one diffusion volatility; on the current LSE sample it returns \(\sigma=0.21878\) and a branching ratio of approximately \(0.01662\), so it is useful for validation rather than as the final model. Finally, \emph{full affine Heston--Hawkes calibration} combines stochastic variance and the exact exponential-Hawkes jump transform on the same LSE GLD option sample used by Heston and Bates. Only this fourth route enters the cross-model tables and figures. The likelihood fits require event times rather than option prices, while the constant-volatility benchmark has a different diffusion block; comparing either of them directly with Heston and Bates would therefore confound model fit with a change of target or state variables.
 
-This comparison rule also determines the empirical interpretation. The current LSE constrained run estimates a branching ratio of \(0.41375\), above the imposed 0.02 floor and below the instability boundary, and the full affine model improves the in-sample price and implied-volatility errors relative to Bates. This is evidence that the self-exciting layer is useful for this cross-section; it is not, by itself, an out-of-sample or time-series proof of persistent clustering.
+This comparison rule also determines the empirical interpretation. The current LSE constrained run estimates a branching ratio of \(0.35147\), above the imposed 0.02 floor and below the instability boundary, and the full affine model improves the in-sample price and implied-volatility errors relative to Bates. This is evidence that the self-exciting layer is useful for this cross-section; it is not, by itself, an out-of-sample or time-series proof of persistent clustering.
 
 \section{Exact Affine Pricing of the Self-Exciting Jump Layer}
 
@@ -1095,7 +1095,7 @@ so it has a simple stationarity condition and can be embedded in the affine Bate
 \toprule
 \textbf{Route} & \textbf{Target} & \textbf{Parameters and error} & \textbf{Interpretation} \\
 \midrule
-Exact constant-volatility Hawkes & LSE GLD option surface, COS pricing, no CIR variance block. & \(\sigma=0.22448\), \(\lambda_0=\bar{\lambda}=0.30218\), \(n=0.00460\), \(\mu_J=0.05436\), \(\sigma_J=0.16465\). Vega-weighted objective \(=8.674\cdot10^{-5}\). & Validates the exact Hawkes option-pricing transform, but it is not the final model because it removes stochastic variance. \\
+Exact constant-volatility Hawkes & LSE GLD option surface, COS pricing, no CIR variance block. & \(\sigma=0.21878\), \(\lambda_0=\bar{\lambda}=1.12118\), \(n=0.01662\), \(\mu_J=-0.00452\), \(\sigma_J=0.11104\). Vega-weighted objective \(=1.027\cdot10^{-4}\). & Validates the exact Hawkes option-pricing transform, but it is not the final model because it removes stochastic variance. \\
 Exponential kernel & Event-time self-excitation benchmark with Markovian decay. & \(\lambda_0=0.3976\), \(\alpha=0.5631\), \(\beta=1.4497\), \(n=0.3884\). Log-likelihood \(=-67.75\), AIC \(=141.51\), BIC \(=147.36\). & Preferred kernel form for the final Bates--Hawkes model because it is stable, finite-dimensional, and compatible with affine pricing. \\
 Rough power-law kernel & Event-time long-memory benchmark. & \(\lambda_0=0.3868\), \(\alpha=0.1740\), tail index \(=0.9797\), cutoff \(=0.4237\), \(n=0.4119\). Log-likelihood \(=-68.03\), AIC \(=144.05\), BIC \(=151.86\). & Useful as a clustering diagnostic, but it does not improve the benchmark information criteria and would require a different pricing construction. \\
 \bottomrule
@@ -1121,7 +1121,7 @@ where parameter bounds enforce positivity and \(0\leq n<1\). The engine reproduc
 The selected full model should not be interpreted as a mechanical claim that Hawkes always improves option-surface fit. Its role is narrower: it is the only Hawkes route that is both option-calibrated and structurally comparable with Heston and Bates after Feller and stationarity restrictions are imposed. Chapter~7 therefore checks whether the lower scalar error is accompanied by a credible residual geometry rather than treating additional parameters as sufficient evidence.
 
 \paragraph{Parameter reallocation after adding jumps.}
-The comparison with standalone Heston makes the two-channel interpretation in \eqref{eq:quadratic-variation-split} visible. Once a jump channel is added, the optimizer can explain part of the short-maturity tail and skew through jump arrivals and jump sizes rather than through the continuous variance process alone. The relevant interpretation is therefore not that volatility mechanically falls when jumps are introduced. It is that the fitted model reallocates variation between a continuous stochastic-variance channel and a discontinuous jump channel, while the Feller guard prevents the variance block from reaching an inadmissible square-root diffusion region. In the current full Bates--Hawkes specification, the estimated branching ratio \(n=0.41375\) couples this reallocation with a stationary self-exciting arrival mechanism.
+The comparison with standalone Heston makes the two-channel interpretation in \eqref{eq:quadratic-variation-split} visible. Once a jump channel is added, the optimizer can explain part of the short-maturity tail and skew through jump arrivals and jump sizes rather than through the continuous variance process alone. The relevant interpretation is therefore not that volatility mechanically falls when jumps are introduced. It is that the fitted model reallocates variation between a continuous stochastic-variance channel and a discontinuous jump channel, while the Feller guard prevents the variance block from reaching an inadmissible square-root diffusion region. In the current full Bates--Hawkes specification, the estimated branching ratio \(n=0.35147\) couples this reallocation with a stationary self-exciting arrival mechanism.
 
 \begin{table}[H]
 \centering
@@ -1140,7 +1140,7 @@ Full Bates--Hawkes & Bates-style diffusion admissibility plus \(\lambda_0,\bar{\
 \label{tab:calibration-statistics}
 \end{table}
 
-The selected full fit has \(v_0=0.04786\), \(\kappa=4.66958\), \(\theta_v=0.04356\), \(\xi=0.63755\), \(\rho=-0.12791\), \(\lambda_0=2.14551\), \(\bar\lambda=1.13699\), \(n=0.41375\), \(\alpha=3.57088\), \(\beta=8.63045\), \(\mu_J=0.05608\), and \(\sigma_J=0.06440\). The Feller gap \(0.000351\) and \(n<1\) satisfy the imposed admissibility rules. Price RMSE is \(0.4076\), and IV RMSE is \(61.02\) bp. All three residual-normality tests still reject; in particular, Jarque--Bera \(p=1.51\cdot10^{-11}\). The scalar improvement is therefore real in sample, but the remaining heavy-tailed residual law prevents an overstatement of adequacy.
+The selected full fit has \(v_0=0.03454\), \(\kappa=6.44462\), \(\theta_v=0.03957\), \(\xi=0.24020\), \(\rho=-0.22414\), \(\lambda_0=0.76679\), \(\bar\lambda=0.39756\), \(n=0.35147\), \(\alpha=2.67936\), \(\beta=7.62332\), \(\mu_J=0.01560\), and \(\sigma_J=0.19988\). The Feller gap \(0.45235\) and \(n<1\) satisfy the imposed admissibility rules. Price RMSE is \(0.5077\), and IV RMSE is \(69.33\) bp. Shapiro--Wilk and Jarque--Bera reject residual normality (\(p=0.0106\) and \(p=0.0420\)), while D'Agostino does not (\(p=0.0887\)). The scalar improvement is therefore real in sample, but the mixed residual diagnostics prevent an overstatement of adequacy.
 
 \IfFileExists{img/diagnostics/bates_hawkes_residual_heatmap.png}{%
 \begin{figure}[H]
@@ -1224,10 +1224,10 @@ The model comparison belongs in the calibration chapter because it uses the same
 \toprule
 \textbf{Model} & \textbf{Calibrated parameters used in the comparison} & \textbf{Admissibility note} \\
 \midrule
-Black--Scholes & \(\sigma=0.24371\). & Positive volatility. \\
-Heston & \(v_0=0.06666\), \(\kappa=2.05558\), \(\theta_v=0.04805\), \(\xi=0.18453\), \(\rho=0.06951\). & Feller gap \(=0.16350\). \\
-Bates, Poisson jumps & \(v_0=0.05899\), \(\kappa=4.68004\), \(\theta_v=0.04787\), \(\xi=0.51835\), \(\rho=0.05882\), \(\lambda=1.20287\), \(\mu_J=0.05062\), \(\sigma_J=0.05987\). & Feller gap \(=0.17941\). \\
-Selected Bates--Hawkes & \(v_0=0.04786\), \(\kappa=4.66958\), \(\theta_v=0.04356\), \(\xi=0.63755\), \(\rho=-0.12791\), \(\lambda_0=2.14551\), \(\bar{\lambda}=1.13699\), \(n=0.41375\), \(\beta=8.63045\), \(\mu_J=0.05608\), \(\sigma_J=0.06440\). & Feller gap \(=0.00035\), \(n<1\). \\
+Black--Scholes & \(\sigma=0.24779\). & Positive volatility. \\
+Heston & \(v_0=0.06212\), \(\kappa=2.46771\), \(\theta_v=0.06405\), \(\xi=0.52912\), \(\rho=0.04096\). & Feller gap \(=0.03613\). \\
+Bates, Poisson jumps & \(v_0=0.03902\), \(\kappa=6.44463\), \(\theta_v=0.03910\), \(\xi=0.23991\), \(\rho=-0.22420\), \(\lambda=0.23174\), \(\mu_J=-0.01508\), \(\sigma_J=0.35607\). & Feller gap \(=0.44639\). \\
+Selected Bates--Hawkes & \(v_0=0.03454\), \(\kappa=6.44462\), \(\theta_v=0.03957\), \(\xi=0.24020\), \(\rho=-0.22414\), \(\lambda_0=0.76679\), \(\bar{\lambda}=0.39756\), \(n=0.35147\), \(\beta=7.62332\), \(\mu_J=0.01560\), \(\sigma_J=0.19988\). & Feller gap \(=0.45235\), \(n<1\). \\
 \bottomrule
 \end{tabularx}
 \caption{Model parameters in the Feller-constrained comparison on the 64-point Chebyshev GLD option sample.}
@@ -1242,24 +1242,24 @@ Selected Bates--Hawkes & \(v_0=0.04786\), \(\kappa=4.66958\), \(\theta_v=0.04356
 \toprule
 \textbf{Model} & \textbf{Price MAE} & \textbf{Price RMSE} & \textbf{IV MAE bp} & \textbf{IV RMSE bp} & \textbf{Interpretation} \\
 \midrule
-Black--Scholes & 0.637 & 0.816 & 87.78 & 117.93 & Baseline fit is too rigid for the observed smile. \\
-Heston & 0.510 & 0.632 & 73.35 & 94.44 & Stochastic variance improves on the constant-volatility baseline. \\
-Bates, Poisson jumps & 0.433 & 0.536 & 60.78 & 78.13 & Independent jumps improve tail-sensitive regions. \\
-Selected Bates--Hawkes & 0.294 & 0.408 & 42.26 & 61.02 & Lowest current in-sample error; predictive ranking is tested separately. \\
+Black--Scholes & 0.641 & 0.810 & 91.88 & 121.84 & Baseline fit is too rigid for the observed smile. \\
+Heston & 0.476 & 0.578 & 67.01 & 88.44 & Stochastic variance improves on the constant-volatility baseline. \\
+Bates, Poisson jumps & 0.422 & 0.512 & 56.63 & 73.52 & Independent jumps improve tail-sensitive regions. \\
+Selected Bates--Hawkes & 0.398 & 0.508 & 52.57 & 69.33 & Lowest current in-sample error; predictive ranking is tested separately. \\
 \bottomrule
 \end{tabularx}
 \caption{Calibration errors for the main model stack on the same GLD Chebyshev sample. Errors are computed after converting model prices back into implied volatility where possible.}
 \label{tab:model-errors}
 \end{table}
 
-These numbers explain the current-snapshot modelling choice. Full Bates--Hawkes is the in-sample scalar-error winner while preserving a positive Feller gap and a stationary branching ratio. Its stationary mean intensity is \(1.9394\), versus the Bates constant intensity \(1.2029\), while the timing of arrivals becomes state dependent. Within the Hawkes family, the exponential-kernel route is preferred because it is option-calibrated, Feller-admissible, Hawkes-stable, and usable as a self-exciting path generator. Parameter count alone is not evidence of predictive superiority; the next section therefore separates current fit from true one-step-ahead performance.
+These numbers explain the current-snapshot modelling choice. Full Bates--Hawkes is the in-sample scalar-error winner while preserving a positive Feller gap and a stationary branching ratio. Its stationary mean intensity is \(0.6130\), versus the Bates constant intensity \(0.2317\), while the timing of arrivals becomes state dependent. Within the Hawkes family, the exponential-kernel route is preferred because it is option-calibrated, Feller-admissible, Hawkes-stable, and usable as a self-exciting path generator. Parameter count alone is not evidence of predictive superiority; the next section therefore separates current fit from true one-step-ahead performance.
 
 
 \section{Primary Online Test: Recalibrate at \texorpdfstring{\(t\)}{t}, Forecast \texorpdfstring{\(t+1\)}{t+1}}
 
-Residual normality cannot answer whether one model predicts better than another. The primary historical exercise therefore reproduces the information set of a daily production run. The last six months of available LSE option history contain 125 trading dates, giving 124 transitions from 10 February to 10 August 2026. At each origin \(t\), the model is calibrated only to traded GLD calls and the latest complete Treasury curve dated no later than \(t\). It then forecasts the next available trading date, whose calendar gap is one to four days. The target is fixed ex ante at 25 nodes spanning moneyness \(0.95\)--\(1.05\) and 90--270 days to maturity. This normalized target prevents the next day's spot from entering the forecast: \(S_{t+1}\) is used only ex post to construct the realized surface.
+Residual normality cannot answer whether one model predicts better than another. The primary historical exercise therefore reproduces the information set of a daily production run. The evaluation contains 125 forecast origins from 2 March through 27 August 2026 and 125 next-trading-day targets from 3 March through 28 August. At each origin \(t\), the model is calibrated only to traded GLD calls and the latest complete Treasury curve dated no later than \(t\). It then forecasts the next available trading date, whose calendar gap is one to four days. The target is fixed ex ante at 25 nodes spanning moneyness \(0.95\)--\(1.05\) and 90--270 days to maturity. This normalized target prevents the next day's spot from entering the forecast: \(S_{t+1}\) is used only ex post to construct the realized surface.
 
-The first date uses global initialization followed by local refinement. Thereafter SLSQP starts from the same model's parameter vector at \(t-1\). This warm start is computational, not Bayesian: no prior density or intertemporal penalty enters the objective. Black--Scholes, Heston, Bates, and full Bates--Hawkes form four independent chronological chains and therefore run in parallel Python processes; dates remain sequential inside each chain. Current variance is projected one step through its mean-reversion law. Full Bates--Hawkes also projects expected intensity toward \(\bar\lambda/(1-n)\). All 496 daily model calibrations produced an admissible non-worsening update, with no fallback.
+The first date uses global initialization followed by local refinement. Thereafter SLSQP starts from the same model's parameter vector at \(t-1\). This warm start is computational, not Bayesian: no prior density or intertemporal penalty enters the objective. Black--Scholes, Heston, Bates, and full Bates--Hawkes form four independent chronological chains and therefore run in parallel Python processes; dates remain sequential inside each chain. Current variance is projected one step through its mean-reversion law. Full Bates--Hawkes also projects expected intensity toward \(\bar\lambda/(1-n)\). All 500 daily model calibrations produced an admissible non-worsening update, with no fallback.
 
 For model \(m\) and common node-date observations, the Campbell--Thompson statistic is
 \begin{equation}
@@ -1279,13 +1279,13 @@ so an upward segment favors the named model \cite{WelchGoyal2008,CampbellThompso
 \toprule
 Model & MAE bp & RMSE bp & \(R^2_{OOS}\) vs mean & \(R^2_{OOS}\) vs random walk \\
 \midrule
-Black--Scholes & 111.71 & 148.09 & 91.33\% & -3.76\% \\
-Heston & 122.99 & 165.93 & 89.12\% & -30.26\% \\
-Bates & 116.62 & 159.85 & 89.90\% & -20.88\% \\
-Full Bates--Hawkes & 110.90 & 150.96 & 91.00\% & -7.82\% \\
+Black--Scholes & 116.84 & 156.39 & 85.53\% & -13.88\% \\
+Heston & 260.13 & 333.56 & 34.15\% & -418.11\% \\
+Bates & 115.49 & 153.54 & 86.05\% & -9.78\% \\
+Full Bates--Hawkes & 113.64 & 151.50 & 86.42\% & -6.88\% \\
 \bottomrule
 \end{tabular}
-\caption{Rolling one-step-ahead IV forecasts on 3,052 common node-date observations. The random walk is the previous observed normalized IV surface.}
+\caption{Rolling one-step-ahead IV forecasts on 3,075 common node-date observations. The random walk is the previous observed normalized IV surface.}
 \label{tab:online-oos}
 \end{table}
 
@@ -1298,13 +1298,13 @@ Full Bates--Hawkes & 110.90 & 150.96 & 91.00\% & -7.82\% \\
 \end{figure}
 }{}
 
-All four models beat the expanding mean, and the HAC differences are significant. The stronger random-walk benchmark reverses the conclusion: no model has positive \(R^2_{OOS}\) against yesterday's surface. Black--Scholes has the lowest pooled RMSE, while full Bates--Hawkes is close; their pairwise \(R^2\) favors Black--Scholes by 3.77\%, but the HAC difference is not significant (\(p=0.421\)). Full Bates--Hawkes beats Heston by 17.23\% pairwise and the difference is systematic (\(p=1.06\times10^{-4}\)); its 10.81\% advantage over Bates is not significant (\(p=0.126\)). Thus added structure helps some comparisons, but daily IV persistence remains the hardest benchmark.
+All four models beat the expanding mean numerically; HAC differences are significant for Black--Scholes, Bates, and full Bates--Hawkes, but not for Heston. The stronger random-walk benchmark reverses the conclusion: no model has positive \(R^2_{OOS}\) against yesterday's surface. Full Bates--Hawkes has the lowest pooled RMSE. Its pairwise \(R^2\) advantage is 6.15\% over Black--Scholes and 2.64\% over Bates, but neither HAC difference is significant (\(p=0.482\) and \(p=0.191\)). Its 79.37\% advantage over Heston is systematic (\(p=1.03\times10^{-4}\)). Thus added structure helps some comparisons, but daily IV persistence remains the hardest benchmark.
 
-Rolling parameters also expose identification pressure. The full model's branching ratio has a median of 0.0203, close to the imposed 0.02 floor, and some jump-size parameters approach lower bounds. The current cross-section estimates stronger self-excitation, but the online history does not support presenting that current estimate as a stable law.
+Rolling parameters also expose identification pressure. The full model's branching ratio has a median of \(0.7044\), above the current cross-sectional estimate of \(0.3515\), while initial intensity and jump-size volatility approach lower bounds on some dates. The online history therefore does not support presenting any one current estimate as a stable law.
 
 \subsection{Fixed-Cutoff Six-Month Stress Test}
 
-The earlier frozen-parameter design is retained as a deliberately harsher robustness check, not as the primary online test. Parameters are estimated once on 10 February 2026 and never refitted during 27 weekly holdout surfaces through 10 August. Against the prevailing mean, \(R^2_{OOS}\) is 46.48\% for Black--Scholes, 44.60\% for Heston, 45.08\% for Bates, and 52.41\% for full Bates--Hawkes. The full model has the lowest frozen-parameter RMSE and significantly lower weekly loss than Heston and Bates, but not Black--Scholes. This stress result measures six-month parameter stability; it never replaces the current LSE calibration used for today's Barrick/GLD scenario layer.
+The earlier frozen-parameter design is retained as a deliberately harsher robustness check, not as the primary online test. Parameters are estimated once at the 27 February 2026 cutoff and never refitted during 26 weekly holdout surfaces from 6 March through 28 August. Against the prevailing mean, \(R^2_{OOS}\) is 10.44\% for Black--Scholes, \(-24.65\%\) for Heston, \(-14.61\%\) for Bates, and \(-19.63\%\) for full Bates--Hawkes. Black--Scholes has the lowest frozen-parameter RMSE; its weekly loss is significantly lower than Heston and full Bates--Hawkes, but not distinguishable from Bates at 5\% (\(p=0.071\)). This stress result measures six-month parameter stability; it never replaces the current LSE calibration used for today's Barrick/GLD scenario layer.
 
 
 % ===============================
@@ -1421,10 +1421,10 @@ Before the path figures, Table~\ref{tab:terminal-path-stats} records the termina
 \toprule
 Model & Mean price & Std price & P05 price & P50 price & P95 price & Return skew & Return ex. kurt. & Mean jumps \\
 \midrule
-GBM / BS & 502.938 & 292.955 & 171.604 & 437.799 & 1050.782 & 1.783 & 5.161 & 0.000 \\
-Heston & 503.999 & 272.618 & 195.528 & 434.366 & 1018.872 & 1.798 & 5.914 & 0.000 \\
-Bates & 501.438 & 298.424 & 187.214 & 433.237 & 1049.763 & 2.594 & 14.894 & 6.014 \\
-Full Bates--Hawkes & 500.715 & 306.304 & 172.737 & 432.400 & 1065.299 & 2.417 & 12.152 & 9.760 \\
+GBM / BS & 505.277 & 299.924 & 168.901 & 437.715 & 1066.097 & 1.820 & 5.375 & 0.000 \\
+Heston & 506.288 & 324.722 & 167.347 & 424.935 & 1083.069 & 2.686 & 15.744 & 0.000 \\
+Bates & 504.517 & 343.297 & 156.446 & 427.453 & 1078.764 & 3.090 & 18.556 & 1.156 \\
+Full Bates--Hawkes & 499.656 & 308.136 & 166.960 & 427.123 & 1066.649 & 2.152 & 8.482 & 3.095 \\
 \bottomrule
 \end{tabular}
 \caption{Terminal price statistics and simple-return shape from 4,096 five-year paths with 260 time steps, a fixed seed, current parameters, and LSE forward rates.}
@@ -1547,7 +1547,7 @@ From an operational-research perspective, the key object is the calibration prob
 \]
 The KKT conditions explain what it means for a constrained optimum to be locally coherent, while SLSQP provides a practical algorithmic route to such a point through sequential quadratic approximations. The toy example shows the mechanism in a two-dimensional setting; the Heston and Bates calibrations apply the same logic to expensive pricing functions and financially meaningful parameter bounds.
 
-From a modelling perspective, the pipeline shows why diagnostics are indispensable. A scalar objective value is not enough. In the current LSE run, full Bates--Hawkes reduces price RMSE from 0.5364 for Bates to 0.4076 and IV RMSE from 78.13 to 61.02 basis points; its Feller gap is 0.000351 and its branching ratio is 0.41375. That is current cross-sectional evidence, not a predictive verdict. In the primary online test, Black--Scholes has the lowest OOS RMSE at 148.09 bp, full Bates--Hawkes follows at 150.96 bp, and neither beats the previous day's IV surface. The full model nevertheless improves significantly on Heston, while its advantage over Bates and its difference from Black--Scholes are not statistically decisive. The fixed six-month test favors full Bates--Hawkes under frozen parameters, showing that rankings depend on the operational question. This separation between fit, one-step prediction, and long-horizon stability is the article's central empirical safeguard.
+From a modelling perspective, the pipeline shows why diagnostics are indispensable. A scalar objective value is not enough. In the current LSE run, full Bates--Hawkes reduces price RMSE from 0.5120 for Bates to 0.5077 and IV RMSE from 73.52 to 69.33 basis points; its Feller gap is 0.45235 and its branching ratio is 0.35147. That is current cross-sectional evidence, not a predictive verdict. In the primary online test, full Bates--Hawkes has the lowest OOS RMSE at 151.50 bp, followed by Bates at 153.54 bp and Black--Scholes at 156.39 bp, while none beats the previous day's IV surface. The full model improves significantly on Heston, whereas its advantages over Bates and Black--Scholes are not statistically decisive. In the fixed six-month test, Black--Scholes is the most stable frozen-parameter specification, showing that rankings depend on the operational question. This separation between fit, one-step prediction, and long-horizon stability is the article's central empirical safeguard.
 
 The final purpose of the article is therefore to propose and test gold-price models for the Barrick research pipeline. Previous work supplies the Monte Carlo, quasi-Monte Carlo, and variance-reduction framework, and earlier company-level modelling explains why future valuation work will need gold-price scenarios \cite{BarrickArticle3,BarrickArticle4,BarrickArticle5}. The present article uses those numerical tools as inputs for an applied path generator and makes the model-specific random blocks explicit. LSE options, Treasury yields, and GLD candles are the sole empirical inputs; their raw rows remain local, while the reproducible transformation and aggregate outputs are published. The revenue, EBITDA, and equity-valuation model is not built here: it belongs to a later unified article. The principal extension is the full affine Bates--Hawkes model; proxy, constant-volatility, event-likelihood, and rough-kernel approaches are retained as clearly separated alternatives rather than presented as the article's objective.
 
@@ -1568,10 +1568,10 @@ This appendix is generated from the aggregate outputs of the same deterministic 
 \toprule
 Model & Current LSE parameter estimates \\
 \midrule
-Black--Scholes & $\sigma=0.24371$ \\
-Heston & $v_0=0.06666$, $\kappa=2.05558$, $\theta_v=0.04805$, $\xi=0.18453$, $\rho=0.06951$, $Feller gap=0.16350$ \\
-Bates & $v_0=0.05899$, $\kappa=4.68004$, $\theta_v=0.04787$, $\sigma=0.51835$, $\rho=0.05882$, $\lambda=1.20287$, $\mu_J=0.05062$, $\sigma_J=0.05987$, $Feller gap=0.17941$ \\
-Full Bates--Hawkes & $v_0=0.04786$, $\kappa=4.66958$, $\theta_v=0.04356$, $\xi=0.63755$, $\rho=-0.12791$, $\lambda_0=2.14551$, $\bar\lambda=1.13699$, $\lambda_\infty=1.93944$, $n=0.41375$, $\alpha=3.57088$, $\beta=8.63045$, $\mu_J=0.05608$, $\sigma_J=0.06440$, $Feller gap=0.00035$ \\
+Black--Scholes & $\sigma=0.24779$ \\
+Heston & $v_0=0.06212$, $\kappa=2.46771$, $\theta_v=0.06405$, $\xi=0.52912$, $\rho=0.04096$, $Feller gap=0.03613$ \\
+Bates & $v_0=0.03902$, $\kappa=6.44463$, $\theta_v=0.03910$, $\sigma=0.23991$, $\rho=-0.22420$, $\lambda=0.23174$, $\mu_J=-0.01508$, $\sigma_J=0.35607$, $Feller gap=0.44639$ \\
+Full Bates--Hawkes & $v_0=0.03454$, $\kappa=6.44462$, $\theta_v=0.03957$, $\xi=0.24020$, $\rho=-0.22414$, $\lambda_0=0.76679$, $\bar\lambda=0.39756$, $\lambda_\infty=0.61302$, $n=0.35147$, $\alpha=2.67936$, $\beta=7.62332$, $\mu_J=0.01560$, $\sigma_J=0.19988$, $Feller gap=0.45235$ \\
 \bottomrule
 \end{tabularx}
 \caption{Current-snapshot parameters used by the point-in-time comparison and five-year simulations.}
@@ -1587,10 +1587,10 @@ Full Bates--Hawkes & $v_0=0.04786$, $\kappa=4.66958$, $\theta_v=0.04356$, $\xi=0
 \toprule
 Model & Price RMSE & IV RMSE bp & Shapiro $p$ & JB $p$ & D'Agostino $p$ \\
 \midrule
-Black--Scholes & 0.8156 & 117.93 & $6.10\times10^{-5}$ & $8.32\times10^{-6}$ & $8.24\times10^{-5}$ \\
-Heston & 0.6317 & 94.44 & $0.0128$ & $0.0146$ & $0.0112$ \\
-Bates & 0.5364 & 78.13 & $0.0116$ & $1.28\times10^{-4}$ & $6.59\times10^{-4}$ \\
-Full Bates--Hawkes & 0.4076 & 61.02 & $6.21\times10^{-4}$ & $1.51\times10^{-11}$ & $0.0013$ \\
+Black--Scholes & 0.8098 & 121.84 & $0.00832$ & $0.00462$ & $0.00449$ \\
+Heston & 0.5785 & 88.44 & $0.0935$ & $0.0457$ & $0.0332$ \\
+Bates & 0.5120 & 73.52 & $0.00160$ & $5.79\times10^{-8}$ & $5.15\times10^{-5}$ \\
+Full Bates--Hawkes & 0.5077 & 69.33 & $0.0106$ & $0.0420$ & $0.0887$ \\
 \bottomrule
 \end{tabular}
 \caption{Current calibration errors and normality tests on the 64 market-minus-model IV residuals. Rejection diagnoses residual shape; it is not a predictive ranking.}
@@ -1605,13 +1605,13 @@ Full Bates--Hawkes & 0.4076 & 61.02 & $6.21\times10^{-4}$ & $1.51\times10^{-11}$
 \toprule
 Model & OOS MAE bp & OOS RMSE bp & $R^2_{OOS}$ vs mean (\%) & $R^2_{OOS}$ vs RW (\%) \\
 \midrule
-Black--Scholes & 111.71 & 148.09 & 91.33 & -3.76 \\
-Heston & 122.99 & 165.93 & 89.12 & -30.26 \\
-Bates & 116.62 & 159.85 & 89.90 & -20.88 \\
-Full Bates--Hawkes & 110.90 & 150.96 & 91.00 & -7.82 \\
+Black--Scholes & 116.84 & 156.39 & 85.53 & -13.88 \\
+Heston & 260.13 & 333.56 & 34.15 & -418.11 \\
+Bates & 115.49 & 153.54 & 86.05 & -9.78 \\
+Full Bates--Hawkes & 113.64 & 151.50 & 86.42 & -6.88 \\
 \bottomrule
 \end{tabular}
-\caption{Rolling one-step-ahead results on 3,052 common node-date observations from 11 February to 10 August 2026. RW is the previous observed IV surface.}
+\caption{Rolling one-step-ahead results on 3,075 common node-date observations from 3 March to 28 August 2026. RW is the previous observed IV surface.}
 \label{tab:appendix-online}
 \end{table}
 
@@ -1624,10 +1624,10 @@ Full Bates--Hawkes & 110.90 & 150.96 & 91.00 & -7.82 \\
 \toprule
 Model & Monte Carlo method & Mean \% & Std \% & Skew & Ex. kurt. & P00 \% & P50 \% & P100 \% \\
 \midrule
-Black--Scholes & exact GBM log step; scrambled Sobol normals; LSE forward-rate curve & 24.25 & 72.38 & 1.783 & 5.161 & -82.23 & 8.16 & 533.74 \\
-Heston & full-truncation Euler; correlated scrambled Sobol normals; LSE forward-rate curve & 24.51 & 67.35 & 1.798 & 5.914 & -80.03 & 7.31 & 550.87 \\
-Bates & full-truncation Euler; inverse-Poisson lognormal jumps; scrambled Sobol draws & 23.88 & 73.73 & 2.594 & 14.894 & -88.83 & 7.03 & 871.65 \\
-Full Bates--Hawkes & full-truncation Euler; event-driven exponential Hawkes jumps; Sobol diffusion & 23.70 & 75.67 & 2.417 & 12.152 & -92.18 & 6.83 & 966.51 \\
+Black--Scholes & exact GBM log step; scrambled Sobol normals; LSE forward-rate curve & 24.25 & 73.75 & 1.820 & 5.375 & -82.85 & 7.64 & 549.63 \\
+Heston & full-truncation Euler; correlated scrambled Sobol normals; LSE forward-rate curve & 24.50 & 79.85 & 2.686 & 15.744 & -91.14 & 4.49 & 970.45 \\
+Bates & full-truncation Euler; inverse-Poisson lognormal jumps; scrambled Sobol draws & 24.06 & 84.42 & 3.090 & 18.556 & -94.80 & 5.11 & 967.53 \\
+Full Bates--Hawkes & full-truncation Euler; event-driven exponential Hawkes jumps; Sobol diffusion & 22.87 & 75.77 & 2.152 & 8.482 & -91.06 & 5.03 & 644.34 \\
 \bottomrule
 \end{tabularx}
 \caption{Five-year simple-return distribution from 4,096 paths and 260 steps, using current LSE calibrations and the LSE forward-rate curve.}
@@ -1643,32 +1643,32 @@ Full Bates--Hawkes & full-truncation Euler; event-driven exponential Hawkes jump
 \toprule
 p & BS & H & B & BH & p & BS & H & B & BH \\
 \midrule
-0 & -82.2 & -80.0 & -88.8 & -92.2 & 26 & -24.0 & -20.6 & -24.1 & -24.7 \\
-1 & -69.6 & -65.8 & -68.0 & -71.8 & 27 & -22.6 & -19.3 & -22.9 & -23.5 \\
-2 & -65.3 & -60.8 & -62.9 & -65.9 & 28 & -21.2 & -18.1 & -21.6 & -22.1 \\
-3 & -62.3 & -57.1 & -59.8 & -63.0 & 29 & -19.9 & -17.0 & -20.0 & -20.9 \\
-4 & -59.6 & -54.2 & -57.0 & -59.3 & 30 & -18.3 & -15.9 & -18.8 & -19.7 \\
-5 & -57.6 & -51.7 & -53.7 & -57.3 & 31 & -17.2 & -14.8 & -17.5 & -18.3 \\
-6 & -55.2 & -49.5 & -50.7 & -55.0 & 32 & -15.9 & -13.7 & -16.5 & -16.7 \\
-7 & -52.9 & -46.9 & -48.7 & -52.4 & 33 & -14.8 & -12.5 & -15.4 & -15.6 \\
-8 & -50.8 & -45.3 & -47.3 & -50.3 & 34 & -13.5 & -11.3 & -14.3 & -14.1 \\
-9 & -49.0 & -43.7 & -45.6 & -48.2 & 35 & -12.2 & -10.2 & -13.1 & -13.0 \\
-10 & -47.5 & -41.7 & -43.8 & -46.2 & 36 & -11.1 & -9.2 & -12.2 & -11.7 \\
-11 & -45.6 & -39.7 & -42.6 & -44.9 & 37 & -9.8 & -7.9 & -10.5 & -10.3 \\
-12 & -43.8 & -38.2 & -41.3 & -43.4 & 38 & -8.3 & -6.9 & -9.2 & -9.0 \\
-13 & -42.7 & -36.9 & -40.3 & -42.1 & 39 & -7.1 & -6.1 & -8.1 & -7.8 \\
-14 & -41.1 & -35.3 & -39.4 & -40.9 & 40 & -5.5 & -4.8 & -6.7 & -6.5 \\
-15 & -39.8 & -33.9 & -37.5 & -39.6 & 41 & -4.3 & -3.6 & -5.4 & -5.1 \\
-16 & -38.5 & -32.6 & -36.0 & -38.1 & 42 & -2.9 & -2.1 & -4.2 & -3.9 \\
-17 & -37.2 & -31.4 & -34.7 & -36.6 & 43 & -1.9 & -1.3 & -3.1 & -2.6 \\
-18 & -35.7 & -30.1 & -33.2 & -34.8 & 44 & -0.9 & -0.2 & -1.5 & -1.5 \\
-19 & -33.8 & -28.6 & -32.5 & -33.2 & 45 & 0.1 & 0.8 & -0.3 & -0.2 \\
-20 & -32.5 & -27.2 & -31.4 & -32.1 & 46 & 1.7 & 2.1 & 1.6 & 1.2 \\
-21 & -30.9 & -26.1 & -30.1 & -31.1 & 47 & 3.4 & 3.2 & 3.0 & 2.4 \\
-22 & -29.5 & -25.1 & -28.9 & -29.9 & 48 & 4.7 & 4.4 & 4.3 & 4.2 \\
-23 & -28.1 & -24.1 & -27.8 & -28.5 & 49 & 6.6 & 5.6 & 5.5 & 5.2 \\
-24 & -27.0 & -22.7 & -26.7 & -26.9 & 50 & 8.2 & 7.3 & 7.0 & 6.8 \\
-25 & -25.8 & -21.7 & -25.6 & -25.6 & 51 & 9.4 & 8.6 & 8.4 & 8.1 \\
+0 & -82.8 & -91.1 & -94.8 & -91.1 & 26 & -24.8 & -26.9 & -27.1 & -26.3 \\
+1 & -70.4 & -72.6 & -77.3 & -74.0 & 27 & -23.4 & -25.7 & -25.7 & -25.3 \\
+2 & -66.1 & -68.3 & -72.2 & -69.2 & 28 & -22.0 & -24.0 & -24.5 & -23.9 \\
+3 & -63.1 & -64.5 & -68.0 & -65.2 & 29 & -20.7 & -23.0 & -23.4 & -22.2 \\
+4 & -60.4 & -61.7 & -64.5 & -62.1 & 30 & -19.1 & -21.8 & -22.2 & -21.0 \\
+5 & -58.5 & -58.8 & -61.5 & -58.9 & 31 & -18.0 & -20.1 & -20.6 & -19.8 \\
+6 & -56.1 & -57.0 & -58.2 & -56.1 & 32 & -16.7 & -18.5 & -19.6 & -18.4 \\
+7 & -53.8 & -54.9 & -55.8 & -54.4 & 33 & -15.5 & -17.4 & -18.6 & -17.4 \\
+8 & -51.7 & -52.6 & -53.9 & -52.7 & 34 & -14.3 & -16.2 & -17.5 & -15.9 \\
+9 & -49.9 & -50.2 & -51.9 & -50.6 & 35 & -12.9 & -15.1 & -16.4 & -15.0 \\
+10 & -48.4 & -48.5 & -50.4 & -48.9 & 36 & -11.8 & -13.9 & -15.1 & -13.8 \\
+11 & -46.5 & -46.8 & -48.7 & -47.4 & 37 & -10.5 & -12.5 & -13.7 & -12.9 \\
+12 & -44.7 & -45.0 & -47.1 & -46.3 & 38 & -9.0 & -11.2 & -12.2 & -11.7 \\
+13 & -43.6 & -43.3 & -45.2 & -44.6 & 39 & -7.8 & -10.0 & -11.0 & -10.5 \\
+14 & -42.0 & -41.7 & -43.5 & -43.2 & 40 & -6.2 & -8.5 & -9.8 & -9.2 \\
+15 & -40.7 & -40.1 & -42.0 & -41.5 & 41 & -5.0 & -7.3 & -8.7 & -8.0 \\
+16 & -39.4 & -38.7 & -40.8 & -39.8 & 42 & -3.5 & -6.0 & -7.7 & -6.6 \\
+17 & -38.1 & -37.6 & -39.3 & -38.6 & 43 & -2.5 & -4.7 & -6.1 & -5.4 \\
+18 & -36.5 & -36.3 & -37.8 & -37.1 & 44 & -1.5 & -3.5 & -4.2 & -4.0 \\
+19 & -34.6 & -35.2 & -36.8 & -35.6 & 45 & -0.5 & -2.3 & -2.9 & -2.3 \\
+20 & -33.3 & -34.3 & -35.3 & -34.2 & 46 & 1.1 & -0.7 & -0.9 & -1.2 \\
+21 & -31.7 & -33.3 & -33.9 & -32.9 & 47 & 2.9 & 0.5 & 0.5 & 0.4 \\
+22 & -30.3 & -32.0 & -32.2 & -31.7 & 48 & 4.2 & 1.7 & 2.0 & 2.1 \\
+23 & -29.0 & -30.6 & -30.9 & -30.2 & 49 & 6.1 & 3.1 & 3.5 & 3.4 \\
+24 & -27.9 & -29.5 & -29.6 & -29.1 & 50 & 7.6 & 4.5 & 5.1 & 5.0 \\
+25 & -26.6 & -28.3 & -28.3 & -27.5 & 51 & 8.9 & 6.6 & 6.4 & 6.6 \\
 \bottomrule
 \end{tabular}
 \caption{Integer percentiles 0--51 of five-year simulated simple GLD percentage returns. BS denotes GBM/Black--Scholes, H denotes Heston, B denotes Bates, and BH denotes full Bates--Hawkes. Values are generated directly from the published aggregate CSV.}
@@ -1683,32 +1683,32 @@ p & BS & H & B & BH & p & BS & H & B & BH \\
 \toprule
 p & BS & H & B & BH & p & BS & H & B & BH \\
 \midrule
-52 & 10.8 & 10.5 & 9.7 & 9.4 & 78 & 63.3 & 62.5 & 60.0 & 58.3 \\
-53 & 12.1 & 11.9 & 11.5 & 10.6 & 79 & 67.0 & 65.0 & 63.1 & 61.4 \\
-54 & 13.5 & 13.4 & 12.9 & 11.8 & 80 & 70.6 & 67.3 & 65.9 & 63.9 \\
-55 & 15.1 & 15.3 & 14.7 & 13.3 & 81 & 73.4 & 70.6 & 69.3 & 67.6 \\
-56 & 16.5 & 17.1 & 16.2 & 15.3 & 82 & 76.4 & 73.4 & 72.2 & 72.7 \\
-57 & 18.2 & 18.5 & 17.5 & 16.5 & 83 & 80.9 & 77.1 & 75.0 & 76.2 \\
-58 & 19.6 & 20.2 & 19.2 & 18.0 & 84 & 85.5 & 81.7 & 78.4 & 80.5 \\
-59 & 21.3 & 21.8 & 21.1 & 19.8 & 85 & 89.3 & 85.4 & 84.6 & 85.7 \\
-60 & 22.8 & 23.9 & 22.7 & 21.1 & 86 & 94.2 & 89.1 & 88.8 & 90.3 \\
-61 & 24.3 & 25.9 & 24.3 & 22.9 & 87 & 99.1 & 94.7 & 93.0 & 95.1 \\
-62 & 26.6 & 27.5 & 25.7 & 24.6 & 88 & 105.2 & 99.5 & 97.5 & 99.5 \\
-63 & 28.3 & 29.2 & 27.5 & 26.3 & 89 & 110.7 & 104.5 & 103.6 & 105.0 \\
-64 & 30.6 & 31.0 & 29.1 & 28.5 & 90 & 115.6 & 112.6 & 110.6 & 110.0 \\
-65 & 32.3 & 33.4 & 31.2 & 30.9 & 91 & 120.1 & 118.9 & 117.9 & 119.1 \\
-66 & 34.1 & 35.2 & 32.9 & 32.3 & 92 & 127.6 & 127.2 & 126.6 & 128.1 \\
-67 & 35.6 & 37.3 & 35.0 & 34.1 & 93 & 136.5 & 136.6 & 135.1 & 137.9 \\
-68 & 37.4 & 39.1 & 37.3 & 35.7 & 94 & 145.9 & 142.8 & 146.6 & 148.7 \\
-69 & 40.0 & 41.4 & 39.1 & 37.9 & 95 & 159.6 & 151.7 & 159.3 & 163.2 \\
-70 & 41.9 & 43.3 & 41.3 & 40.2 & 96 & 175.1 & 167.6 & 175.0 & 181.2 \\
-71 & 44.2 & 45.3 & 43.6 & 42.2 & 97 & 201.9 & 179.0 & 191.4 & 204.6 \\
-72 & 46.3 & 47.1 & 45.5 & 44.2 & 98 & 227.6 & 206.2 & 222.9 & 239.3 \\
-73 & 48.8 & 49.3 & 47.4 & 46.2 & 99 & 279.9 & 247.5 & 285.8 & 301.6 \\
-74 & 51.4 & 52.0 & 49.3 & 47.8 & 100 & 533.7 & 550.9 & 871.6 & 966.5 \\
-75 & 53.5 & 54.3 & 52.0 & 50.5 &  &  &  &  &  \\
-76 & 57.1 & 56.8 & 54.7 & 53.0 &  &  &  &  &  \\
-77 & 60.3 & 59.1 & 57.7 & 55.4 &  &  &  &  &  \\
+52 & 10.3 & 8.2 & 8.1 & 8.3 & 78 & 63.6 & 63.9 & 61.5 & 61.6 \\
+53 & 11.6 & 9.7 & 10.0 & 9.9 & 79 & 67.4 & 67.0 & 64.0 & 64.5 \\
+54 & 13.0 & 11.1 & 11.7 & 11.4 & 80 & 71.1 & 70.6 & 67.4 & 67.8 \\
+55 & 14.7 & 13.0 & 13.3 & 12.6 & 81 & 73.9 & 74.0 & 70.8 & 70.7 \\
+56 & 16.1 & 14.6 & 15.0 & 14.3 & 82 & 76.9 & 77.9 & 75.8 & 74.1 \\
+57 & 17.8 & 16.3 & 16.7 & 16.1 & 83 & 81.6 & 81.3 & 80.2 & 77.6 \\
+58 & 19.2 & 18.0 & 18.1 & 17.6 & 84 & 86.3 & 85.2 & 84.2 & 83.0 \\
+59 & 21.0 & 19.8 & 19.8 & 18.9 & 85 & 90.1 & 89.8 & 89.1 & 87.3 \\
+60 & 22.4 & 21.9 & 21.4 & 20.2 & 86 & 95.1 & 96.2 & 93.6 & 92.4 \\
+61 & 24.0 & 23.5 & 23.2 & 22.0 & 87 & 100.1 & 101.2 & 98.3 & 97.3 \\
+62 & 26.4 & 25.0 & 25.1 & 24.2 & 88 & 106.4 & 107.5 & 104.1 & 103.7 \\
+63 & 28.0 & 26.9 & 26.6 & 26.0 & 89 & 112.1 & 112.8 & 109.1 & 107.9 \\
+64 & 30.4 & 28.7 & 28.4 & 28.0 & 90 & 117.1 & 118.8 & 114.7 & 113.5 \\
+65 & 32.1 & 30.4 & 30.5 & 30.8 & 91 & 121.6 & 125.3 & 123.1 & 121.2 \\
+66 & 34.0 & 32.5 & 32.1 & 32.8 & 92 & 129.3 & 132.5 & 131.9 & 130.7 \\
+67 & 35.4 & 35.2 & 33.5 & 34.9 & 93 & 138.5 & 140.9 & 143.5 & 140.9 \\
+68 & 37.3 & 38.1 & 35.2 & 36.8 & 94 & 148.1 & 154.3 & 155.0 & 148.6 \\
+69 & 40.0 & 40.7 & 37.6 & 39.3 & 95 & 162.2 & 166.3 & 165.3 & 162.3 \\
+70 & 41.8 & 43.0 & 39.6 & 41.6 & 96 & 178.1 & 185.8 & 183.6 & 176.4 \\
+71 & 44.2 & 44.7 & 41.5 & 44.4 & 97 & 205.7 & 209.4 & 204.9 & 198.1 \\
+72 & 46.4 & 47.6 & 43.3 & 46.5 & 98 & 232.1 & 237.0 & 247.7 & 227.7 \\
+73 & 48.9 & 50.1 & 45.8 & 48.1 & 99 & 286.1 & 293.5 & 324.8 & 291.4 \\
+74 & 51.5 & 52.8 & 48.7 & 50.4 & 100 & 549.6 & 970.4 & 967.5 & 644.3 \\
+75 & 53.7 & 55.7 & 52.1 & 52.8 &  &  &  &  &  \\
+76 & 57.3 & 58.5 & 55.4 & 55.9 &  &  &  &  &  \\
+77 & 60.6 & 61.0 & 58.6 & 58.6 &  &  &  &  &  \\
 \bottomrule
 \end{tabular}
 \caption{Integer percentiles 52--100 of five-year simulated simple GLD percentage returns. BS denotes GBM/Black--Scholes, H denotes Heston, B denotes Bates, and BH denotes full Bates--Hawkes. Values are generated directly from the published aggregate CSV.}

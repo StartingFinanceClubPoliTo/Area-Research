@@ -311,10 +311,19 @@ def _lse_client():
     return LSE()
 
 
-def fetch_lse_calls(max_dte=1000, limit=5000):
-    """Fetch the current GLD call chain from LSE."""
+def fetch_lse_calls(min_dte=1, max_dte=1000, limit=5000):
+    """Fetch the active current GLD call chain from LSE.
+
+    The endpoint caps responses at 5,000 rows.  Passing ``min_dte`` explicitly
+    prevents expired contracts from consuming that budget before the live
+    maturities needed by the two-dimensional calibration surface.
+    """
     return _lse_client().options(
-        "GLD", type="call", max_dte=int(max_dte), limit=int(limit)
+        "GLD",
+        type="call",
+        min_dte=int(min_dte),
+        max_dte=int(max_dte),
+        limit=int(limit),
     )
 
 

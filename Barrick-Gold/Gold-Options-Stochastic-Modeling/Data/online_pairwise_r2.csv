@@ -1,13 +1,13 @@
 model,comparator,r2_oos_pairwise,interpretation,first_target,last_target
-Black-Scholes,Heston,0.20344786838598572,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Black-Scholes,Bates,0.14167385878340266,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Black-Scholes,Full Bates-Hawkes,0.03765805120313881,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Heston,Black-Scholes,-0.2554106132058793,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Heston,Bates,-0.07755174727536462,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Heston,Full Bates-Hawkes,-0.2081342960528083,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Bates,Black-Scholes,-0.16505830590525084,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Bates,Heston,0.07197032297656003,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Bates,Full Bates-Hawkes,-0.12118448056682873,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Full Bates-Hawkes,Black-Scholes,-0.03913167377793281,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Full Bates-Hawkes,Heston,0.1722774502245491,positive means model has lower OOS SSE,2026-02-11,2026-08-10
-Full Bates-Hawkes,Bates,0.108086120230243,positive means model has lower OOS SSE,2026-02-11,2026-08-10
+Black-Scholes,Heston,0.7801957871289411,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Black-Scholes,Bates,-0.037386629986917,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Black-Scholes,Full Bates-Hawkes,-0.06556341053359782,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Heston,Black-Scholes,-3.549503337256861,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Heston,Bates,-3.719593935151127,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Heston,Full Bates-Hawkes,-3.847784292281406,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Bates,Black-Scholes,0.03603924410264314,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Bates,Heston,0.7881173648113906,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Bates,Full Bates-Hawkes,-0.027161310674532535,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Full Bates-Hawkes,Black-Scholes,0.06152933733034793,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Full Bates-Hawkes,Heston,0.7937201946893161,positive means model has lower OOS SSE,2026-03-03,2026-08-28
+Full Bates-Hawkes,Bates,0.02644308191154099,positive means model has lower OOS SSE,2026-03-03,2026-08-28

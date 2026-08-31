@@ -1,17 +1,17 @@
 weeks,mean_loss_difference,hac_lags,hac_standard_error,hac_t,hac_pvalue_two_sided,model,comparator,loss_difference,positive_mean_favors,decision_5pct_two_sided
-27,12.348308850033206,4,7.556061464625819,1.6342255694772463,0.10221149549421722,Black-Scholes,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,not distinguishable
-27,0.49802528901508286,4,1.4471269604854569,0.3441476129005392,0.7307352773930611,Black-Scholes,Heston,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,not distinguishable
-27,0.3698652879571448,4,1.5401754034435884,0.24014491280031128,0.8102179173400507,Black-Scholes,Bates,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,not distinguishable
-27,-1.5764989257031081,4,1.4059431272361715,-1.121310595829163,0.2621556768728427,Black-Scholes,Full Bates-Hawkes,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,not distinguishable
-27,11.850283561018122,4,8.935430895043657,1.3262128822003747,0.18476919345032672,Heston,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Heston,not distinguishable
-27,-0.49802528901508286,4,1.4471269604854569,-0.3441476129005392,0.7307352773930611,Heston,Black-Scholes,comparator MSE minus model MSE (IV percentage-points squared),Heston,not distinguishable
-27,-0.12816000105793807,4,0.139429038353707,-0.9191772572713198,0.3580028647470539,Heston,Bates,comparator MSE minus model MSE (IV percentage-points squared),Heston,not distinguishable
-27,-2.074524214718191,4,0.5383864460076007,-3.85322518815584,0.00011657208689917035,Heston,Full Bates-Hawkes,comparator MSE minus model MSE (IV percentage-points squared),Heston,different
-27,11.97844356207606,4,9.013546875276957,1.3289378452040284,0.18386847669564355,Bates,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Bates,not distinguishable
-27,-0.3698652879571448,4,1.5401754034435884,-0.24014491280031128,0.8102179173400507,Bates,Black-Scholes,comparator MSE minus model MSE (IV percentage-points squared),Bates,not distinguishable
-27,0.12816000105793807,4,0.139429038353707,0.9191772572713198,0.3580028647470539,Bates,Heston,comparator MSE minus model MSE (IV percentage-points squared),Bates,not distinguishable
-27,-1.9463642136602533,4,0.4825182496066627,-4.0337628996351595,5.489070483369443e-05,Bates,Full Bates-Hawkes,comparator MSE minus model MSE (IV percentage-points squared),Bates,different
-27,13.924807775736312,4,8.798376789697269,1.5826564499990494,0.11349978953731316,Full Bates-Hawkes,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,not distinguishable
-27,1.5764989257031081,4,1.4059431272361715,1.121310595829163,0.2621556768728427,Full Bates-Hawkes,Black-Scholes,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,not distinguishable
-27,2.074524214718191,4,0.5383864460076007,3.85322518815584,0.00011657208689917035,Full Bates-Hawkes,Heston,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,different
-27,1.9463642136602533,4,0.4825182496066627,4.0337628996351595,5.489070483369443e-05,Full Bates-Hawkes,Bates,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,different
+26,2.206988699815338,4,10.872672223649044,0.20298493823946412,0.8391468046940551,Black-Scholes,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,not distinguishable
+26,7.417546134406708,4,3.5182140911266133,2.108327106390344,0.035002704836390675,Black-Scholes,Heston,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,different
+26,5.294286787684287,4,2.931995266517312,1.8056941797088768,0.07096612230521654,Black-Scholes,Bates,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,not distinguishable
+26,6.356307425509993,4,3.081376210866832,2.0628144668261323,0.03913025901170213,Black-Scholes,Full Bates-Hawkes,comparator MSE minus model MSE (IV percentage-points squared),Black-Scholes,different
+26,-5.21055743459137,4,14.16650824895019,-0.367808167194446,0.7130162787407882,Heston,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Heston,not distinguishable
+26,-7.417546134406708,4,3.5182140911266133,-2.108327106390344,0.035002704836390675,Heston,Black-Scholes,comparator MSE minus model MSE (IV percentage-points squared),Heston,different
+26,-2.12325934672242,4,0.5927488209990437,-3.58205579075432,0.0003409009641141905,Heston,Bates,comparator MSE minus model MSE (IV percentage-points squared),Heston,different
+26,-1.0612387088967152,4,0.44536792583392454,-2.382835959526295,0.01717984790513902,Heston,Full Bates-Hawkes,comparator MSE minus model MSE (IV percentage-points squared),Heston,different
+26,-3.087298087868949,4,13.596215217874935,-0.22707040440269585,0.820368996844695,Bates,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Bates,not distinguishable
+26,-5.294286787684287,4,2.931995266517312,-1.8056941797088768,0.07096612230521654,Bates,Black-Scholes,comparator MSE minus model MSE (IV percentage-points squared),Bates,not distinguishable
+26,2.12325934672242,4,0.5927488209990437,3.58205579075432,0.0003409009641141905,Bates,Heston,comparator MSE minus model MSE (IV percentage-points squared),Bates,different
+26,1.062020637825705,4,0.16397081462091817,6.476888221120178,9.363350341403262e-11,Bates,Full Bates-Hawkes,comparator MSE minus model MSE (IV percentage-points squared),Bates,different
+26,-4.149318725694654,4,13.743052959914676,-0.3019211770337539,0.7627121517197262,Full Bates-Hawkes,Prevailing mean,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,not distinguishable
+26,-6.356307425509993,4,3.081376210866832,-2.0628144668261323,0.03913025901170213,Full Bates-Hawkes,Black-Scholes,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,different
+26,1.0612387088967152,4,0.44536792583392454,2.382835959526295,0.01717984790513902,Full Bates-Hawkes,Heston,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,different
+26,-1.062020637825705,4,0.16397081462091817,-6.476888221120178,9.363350341403262e-11,Full Bates-Hawkes,Bates,comparator MSE minus model MSE (IV percentage-points squared),Full Bates-Hawkes,different

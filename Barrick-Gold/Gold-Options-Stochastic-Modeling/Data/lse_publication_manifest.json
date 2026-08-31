@@ -1,7 +1,7 @@
 {
   "source": "London Strategic Edge /options/chain, /ref/bond_yields, /candles",
-  "as_of_utc": "2026-08-12T20:15:07.826914+00:00",
-  "spot": 404.77,
+  "as_of_utc": "2026-08-31T16:31:50.251828+00:00",
+  "spot": 406.66,
   "risk_free_rate_source": "LSE US Treasury par-yield curve",
   "risk_free_rate_curve_date": "2026-07-24",
   "risk_free_rate_conversion": "continuous proxy log(1 + par_yield_decimal)",
@@ -13,14 +13,14 @@
   "dividend_yield_assumption": 0.0,
   "calibration_price_method": "Black-Scholes price implied by LSE IV",
   "maximum_source_age_days": 7,
-  "chain_rows": 2477,
-  "eligible_rows": 445,
+  "chain_rows": 2479,
+  "eligible_rows": 328,
   "sample_rows": 64,
   "maturities": 8,
-  "sample_sha256": "92b5971a6282f51542260dc5615a6bdca455b583fadb203aaad717965518ab42",
+  "sample_sha256": "862d6de470d6d30a06f45030bda6afecd931d06629b1c365fe5f93f1118247b7",
   "history_start": "2021-01-04T00:00:00Z",
-  "history_end": "2026-08-13T00:00:00Z",
-  "history_observations": 1414,
+  "history_end": "2026-08-31T00:00:00Z",
+  "history_observations": 1426,
   "raw_data_committed": false,
-  "black_scholes_constant_volatility": 0.2437132735438299
+  "black_scholes_constant_volatility": 0.24779487861257363
 }

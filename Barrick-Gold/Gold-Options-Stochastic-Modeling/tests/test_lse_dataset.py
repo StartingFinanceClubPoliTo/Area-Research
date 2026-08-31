@@ -2,6 +2,8 @@
 
 import pandas as pd
 
+import lse_dataset
+
 from BnS import BnS
 from lse_dataset import (
     CALIBRATION_COLUMNS,
@@ -65,6 +67,26 @@ def test_lse_mapping_uses_source_native_schema():
     assert set(chain["option_type"]) == {"C"}
     assert chain.attrs["as_of_utc"].startswith("2026-08-11")
     assert chain["T"].min() > 0.0
+
+
+def test_lse_fetch_excludes_expired_contracts(monkeypatch):
+    captured = {}
+
+    class FakeClient:
+        def options(self, underlying, **kwargs):
+            captured["underlying"] = underlying
+            captured.update(kwargs)
+            return []
+
+    monkeypatch.setattr(lse_dataset, "_lse_client", lambda: FakeClient())
+    assert lse_dataset.fetch_lse_calls(max_dte=1000, limit=5000) == []
+    assert captured == {
+        "underlying": "GLD",
+        "type": "call",
+        "min_dte": 1,
+        "max_dte": 1000,
+        "limit": 5000,
+    }
 
 
 def test_lse_chebyshev_sample_matches_calibration_contract():

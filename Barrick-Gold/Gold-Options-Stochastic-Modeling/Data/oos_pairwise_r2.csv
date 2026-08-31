@@ -1,13 +1,13 @@
 model,comparator,r2_oos_pairwise,interpretation
-Black-Scholes,Heston,0.03383481072589878,positive means model has lower OOS SSE
-Black-Scholes,Bates,0.025348592969153594,positive means model has lower OOS SSE
-Black-Scholes,Full Bates-Hawkes,-0.12467574679195059,positive means model has lower OOS SSE
-Heston,Black-Scholes,-0.03501969549463846,positive means model has lower OOS SSE
-Heston,Bates,-0.008783402518487637,positive means model has lower OOS SSE
-Heston,Full Bates-Hawkes,-0.16406154897480985,positive means model has lower OOS SSE
-Bates,Black-Scholes,-0.02600785551254159,positive means model has lower OOS SSE
-Bates,Heston,0.008706926082010624,positive means model has lower OOS SSE
-Bates,Full Bates-Hawkes,-0.15392615111297547,positive means model has lower OOS SSE
-Full Bates-Hawkes,Black-Scholes,0.11085483718091937,positive means model has lower OOS SSE
-Full Bates-Hawkes,Heston,0.1409388954727514,positive means model has lower OOS SSE
-Full Bates-Hawkes,Bates,0.13339341600371202,positive means model has lower OOS SSE
+Black-Scholes,Heston,0.28151903564344205,positive means model has lower OOS SSE
+Black-Scholes,Bates,0.21854610347414483,positive means model has lower OOS SSE
+Black-Scholes,Full Bates-Hawkes,0.25136606520705107,positive means model has lower OOS SSE
+Heston,Black-Scholes,-0.39182532260344427,positive means model has lower OOS SSE
+Heston,Bates,-0.08764732163181699,positive means model has lower OOS SSE
+Heston,Full Bates-Hawkes,-0.04196766780508199,positive means model has lower OOS SSE
+Bates,Black-Scholes,-0.27966602309585387,positive means model has lower OOS SSE
+Bates,Heston,0.08058432167176954,positive means model has lower OOS SSE
+Bates,Full Bates-Hawkes,0.04199858990890626,positive means model has lower OOS SSE
+Full Bates-Hawkes,Black-Scholes,-0.33576632520214544,positive means model has lower OOS SSE
+Full Bates-Hawkes,Heston,0.04027732251374694,positive means model has lower OOS SSE
+Full Bates-Hawkes,Bates,-0.04383979967723928,positive means model has lower OOS SSE

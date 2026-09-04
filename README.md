@@ -13,7 +13,7 @@ This repository collects scripts, notebooks, curated outputs, and documentation 
 | Barrick Gold | [Barrick-Gold](./Barrick-Gold/) | Multiple article teams | Gold-mining valuation, mathematical foundations, option modelling, Monte Carlo, volatility, and macro-financial code companions. |
 | Markoviz | [Markoviz](./Markoviz/) | [Antonio Guarini](https://github.com/Anthony27-x) | Markowitz portfolio optimization script, data notice, requirements, and citation text. |
 | Macro | [Macro](./Macro/) | Emanuele Ravello, Valentina Romeo | New Keynesian cost-push shock model with Dynare/MATLAB outputs and article PDF link. |
-| Avellaneda-Stoikov | [Stoikov-Avellonada](./Avellaneda-Stoikov/) | Niccolò Soriano, Salvatore Messina | Avellaneda-Stoikov market-making notebook, video-rendering pipeline, and rough-volatility HJB code companions. |
+| Avellaneda-Stoikov | [Avellaneda-Stoikov](./Avellaneda-Stoikov/) | Niccolò Soriano, Salvatore Messina | Avellaneda-Stoikov market-making notebook, video-rendering pipeline, and rough-volatility HJB code companions. |
 
 ## 🪙 Barrick Gold Article Index
 

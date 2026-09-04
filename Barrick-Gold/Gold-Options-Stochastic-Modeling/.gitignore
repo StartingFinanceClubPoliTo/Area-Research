@@ -1,12 +1,47 @@
-Revisione/
-!workflow.md
-# *.ipynb
+.venv/
+venv/
+__pycache__/
+*.pyc
 .ipynb_checkpoints/
 .jupyter/
 .jupyter_runtime/
-__pycache__/
-*.pyc
-Data/lse_local/
-Data/*option_diagnostics.csv
+.pytest_cache/
+.DS_Store
 .env
 .env.*
+!.env.example
+
+# Local SF workflow and review aids
+workflow.md
+Revisione/
+article_refine/
+
+# Generated data: ignore by default
+data/processed/*
+!data/processed/README.md
+
+# Keep folder placeholder
+!data/processed/.gitkeep
+
+# Keep documentation and publication-safe aggregates only.
+# Row-level option surfaces are generated locally and remain ignored.
+!data/processed/full_surfaces/
+data/processed/full_surfaces/*
+!data/processed/full_surfaces/README.md
+!data/processed/full_surfaces/GLD_2026-09-02_nss_curve.json
+
+!data/processed/sparse_historical_surfaces/
+data/processed/sparse_historical_surfaces/*
+!data/processed/sparse_historical_surfaces/README.md
+!data/processed/sparse_historical_surfaces/historical_surface_summary.csv
+
+# Keep the public Treasury history used by the project
+!data/processed/usd_treasury_history.csv
+
+# Row-level model diagnostics may contain contract identifiers and market quotes
+img/diagnostics_ibkr/diagnostics_*.csv
+
+# Generated results remain local
+outputs/*
+!outputs/.gitkeep
+!outputs/README.md

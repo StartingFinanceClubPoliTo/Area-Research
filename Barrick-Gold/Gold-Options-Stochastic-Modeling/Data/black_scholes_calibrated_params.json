@@ -1,9 +1,0 @@
-{
-  "model": "Black-Scholes / GBM",
-  "parameters": {
-    "sigma": 0.24779487861257363
-  },
-  "objective": 0.00013140823512406986,
-  "rate_input": "maturity-specific LSE USD Treasury curve",
-  "success": true
-}

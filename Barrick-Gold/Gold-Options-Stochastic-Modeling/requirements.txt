@@ -1,8 +1,6 @@
-﻿numpy
+numpy
 pandas
 scipy
-matplotlib
-jupyter
+pyarrow
+ib_insync
 nelson-siegel-svensson
-lse-data>=0.14,<1
-pyarrow>=20,<26

@@ -1,0 +1,511 @@
+{
+  "schema_version": "4.0",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "run_id": "20260904T130000Z-team8-refresh-v4",
+  "valuation_as_of_utc": "2026-09-02T20:00:00Z",
+  "model_boundary": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "production_and_cost": "Barrick actuals for 2026Q1-Q2 followed by the frozen Team 4 forecast for 2026Q3-2030; vectors are identical across all four valuations",
+    "temporary_v3_gold_driver": "Team 4 GBM/NSS was temporary and is not a production/cost model",
+    "dcf_wacc_equity_bridge": "Unified DCF methodology; identical across all four valuations",
+    "common_input_hashes": {
+      "operating_production_koz": "B4F99BFC78C99D819257F05A7CC1F5B12AC84A03FF8C8180DF03E3CB5EB02EE4",
+      "operating_cost_usd_per_oz": "27B60B98E21FB65A3B1F98E91BAE9896FE5AD6A2640BDB090C4FAD72F30424C8",
+      "unified_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+      "unified_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+      "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+      "common_gold_scenario": "4D32D8C75743CAB133D6839366D1927D03560D5C1CCDBEA4C8A26B5170C813C8"
+    },
+    "wacc_shocks_sha256": "82F9F59821DBB2DA513059E2308716A654406E150E119FAD2D6A76CF4A8F76B3",
+    "wacc_identical_across_models": true,
+    "gold_engine_base_seed_alignment": "All four price engines use the same aligned base seed; WACC shocks are independent and reused exactly across models."
+  },
+  "calibration_snapshot": {
+    "surface_as_of_utc": "2026-09-02",
+    "treasury_curve_date": "2026-09-02",
+    "instrument": "GLD calls",
+    "measure": "option-implied risk-neutral calibration",
+    "eligible_surface_points_pre_sampling": 605,
+    "eligible_expiries_pre_sampling": 12,
+    "eligible_unique_strikes_pre_sampling": 146,
+    "eligible_dte_range": [
+      79,
+      653
+    ],
+    "dense_cc64_points": 64,
+    "dense_cc64_expiries": 8,
+    "dense_cc64_unique_strikes": 20,
+    "in_sample_best_iv_rmse_model": "heston",
+    "oos_best_date_equal_iv_rmse_model": "full_bates_hawkes",
+    "current_surface_used_for_recalibration": true
+  },
+  "asynchronous_dates": {
+    "gold_anchor": "2026-06-30",
+    "team8_surface": "2026-09-02",
+    "team8_treasury_curve": "2026-09-02",
+    "b_close": "2026-09-02T00:00:00Z",
+    "valuation_as_of": "2026-09-02T20:00:00Z"
+  },
+  "conditional_bridge": {
+    "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+    "source_instrument": "GLD call options",
+    "destination_variable": "gold USD/troy oz scenario paths",
+    "validated_physical_forecast": false,
+    "q_to_p_mapping": "NOT_VALIDATED",
+    "gld_to_gold_level_conversion": "NOT_PERFORMED; engines share an independently sourced Barrick realized-price level anchor",
+    "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+  },
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "in_sample_result": "Heston has the lowest CC64 implied-volatility RMSE (49.4881 bp).",
+    "out_of_sample_result": "Full Bates-Hawkes has the lowest date-equal rolling OOS implied-volatility RMSE (65.0507 bp) over 30 origins and 4,667 common forecasts.",
+    "basis": "Primary structural sensitivity selected on rolling OOS ranking, with all simpler models reported and the distinct in-sample ranking disclosed.",
+    "caveat": "Model comparison is conditional and does not validate a physical gold forecast or a target price."
+  },
+  "path_grid": {
+    "fine_steps": 260,
+    "steps_per_quarter": 13,
+    "quarters": 20,
+    "horizon_years": 5.0,
+    "fine_dt_years": 0.019230769230769232
+  },
+  "simulation": {
+    "paths": 8192,
+    "engine_seeds": {
+      "black_scholes": 20260902,
+      "heston": 20260902,
+      "bates_poisson": 20260902,
+      "full_bates_hawkes": 20260902
+    },
+    "wacc_seed": 20260902,
+    "wacc_shocks_sha256": "82F9F59821DBB2DA513059E2308716A654406E150E119FAD2D6A76CF4A8F76B3"
+  },
+  "observed_market_price": {
+    "ticker": "B",
+    "price_usd": 44.13,
+    "timestamp_utc": "2026-09-02T00:00:00Z",
+    "source": "NYSE:B historical daily close for 2026-09-02; cross-checked against StockAnalysis/S&P Global, Investing.com and TwelveData"
+  },
+  "model_summaries": [
+    {
+      "model_id": "black_scholes",
+      "model": "Black-Scholes / GBM",
+      "median_value_per_share_usd": 35.867610361367454,
+      "p10_value_per_share_usd": 3.7108012787495137,
+      "p90_value_per_share_usd": 103.48308684669176,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 58.0810546875,
+      "probability_model_value_exceeds_observed": 0.419189453125,
+      "observed_minus_median_usd": 8.262389638632548,
+      "observed_vs_median_pct": 23.035796238970697,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "heston",
+      "model": "Heston",
+      "median_value_per_share_usd": 35.6747383501115,
+      "p10_value_per_share_usd": 3.270309878005244,
+      "p90_value_per_share_usd": 103.63183547594261,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 58.75244140625,
+      "probability_model_value_exceeds_observed": 0.4124755859375,
+      "observed_minus_median_usd": 8.455261649888506,
+      "observed_vs_median_pct": 23.700977332780027,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "bates_poisson",
+      "model": "Bates-Poisson",
+      "median_value_per_share_usd": 35.84358925147075,
+      "p10_value_per_share_usd": 3.579035466353669,
+      "p90_value_per_share_usd": 101.43035207645603,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 58.92333984375,
+      "probability_model_value_exceeds_observed": 0.4107666015625,
+      "observed_minus_median_usd": 8.28641074852925,
+      "observed_vs_median_pct": 23.118250492141314,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "full_bates_hawkes",
+      "model": "Full Bates-Hawkes",
+      "median_value_per_share_usd": 35.14119836608835,
+      "p10_value_per_share_usd": 3.129654797106669,
+      "p90_value_per_share_usd": 104.72084068284522,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 59.24072265625,
+      "probability_model_value_exceeds_observed": 0.4075927734375,
+      "observed_minus_median_usd": 8.988801633911656,
+      "observed_vs_median_pct": 25.579098186321247,
+      "conditional_median_reading": "observed close above conditional median"
+    }
+  ],
+  "model_array_hashes": {
+    "black_scholes": {
+      "quarterly_gold_paths_sha256": "4F92E283CADC319CD49323DF765075D2A83F19D59DC19A4BF299256C16DA651A",
+      "annual_wacc_sha256": "12CD2E231BC7F116C8058D4D084D069FD7B0DE569E54BF4F3FE513D59368DE0E",
+      "value_per_share_sha256": "7D8EC28C03036DD69509358AED865E7DC056CDAC6CECD4C15E29283F28B1BEEA",
+      "common_input_hashes": {
+        "operating_production_koz": "B4F99BFC78C99D819257F05A7CC1F5B12AC84A03FF8C8180DF03E3CB5EB02EE4",
+        "operating_cost_usd_per_oz": "27B60B98E21FB65A3B1F98E91BAE9896FE5AD6A2640BDB090C4FAD72F30424C8",
+        "unified_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+        "unified_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+        "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+        "common_gold_scenario": "4D32D8C75743CAB133D6839366D1927D03560D5C1CCDBEA4C8A26B5170C813C8"
+      }
+    },
+    "heston": {
+      "quarterly_gold_paths_sha256": "93906D7795155590E50952E3A8F05D80FF0D8264D9402938E4915204D7138E79",
+      "annual_wacc_sha256": "12CD2E231BC7F116C8058D4D084D069FD7B0DE569E54BF4F3FE513D59368DE0E",
+      "value_per_share_sha256": "98E0B2B2BD12821CDBEB8A27C226955ED606B77B233D61D4DEEB913A9FFB5C7B",
+      "common_input_hashes": {
+        "operating_production_koz": "B4F99BFC78C99D819257F05A7CC1F5B12AC84A03FF8C8180DF03E3CB5EB02EE4",
+        "operating_cost_usd_per_oz": "27B60B98E21FB65A3B1F98E91BAE9896FE5AD6A2640BDB090C4FAD72F30424C8",
+        "unified_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+        "unified_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+        "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+        "common_gold_scenario": "4D32D8C75743CAB133D6839366D1927D03560D5C1CCDBEA4C8A26B5170C813C8"
+      }
+    },
+    "bates_poisson": {
+      "quarterly_gold_paths_sha256": "1FCCFCA2EEA312AB13E4334FBF2CECFD5F8169F83748A0380F0A0A30533CDFFB",
+      "annual_wacc_sha256": "12CD2E231BC7F116C8058D4D084D069FD7B0DE569E54BF4F3FE513D59368DE0E",
+      "value_per_share_sha256": "1F6BCB1720A2BE0959A98C681276482B75D7A4A016435BF8681BAE35D5810903",
+      "common_input_hashes": {
+        "operating_production_koz": "B4F99BFC78C99D819257F05A7CC1F5B12AC84A03FF8C8180DF03E3CB5EB02EE4",
+        "operating_cost_usd_per_oz": "27B60B98E21FB65A3B1F98E91BAE9896FE5AD6A2640BDB090C4FAD72F30424C8",
+        "unified_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+        "unified_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+        "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+        "common_gold_scenario": "4D32D8C75743CAB133D6839366D1927D03560D5C1CCDBEA4C8A26B5170C813C8"
+      }
+    },
+    "full_bates_hawkes": {
+      "quarterly_gold_paths_sha256": "5DF8EE03106E3B0FA78954D898FAEEE109AFC16E90975512C5A867CFEAA45293",
+      "annual_wacc_sha256": "12CD2E231BC7F116C8058D4D084D069FD7B0DE569E54BF4F3FE513D59368DE0E",
+      "value_per_share_sha256": "A1CC157E017633C9CEEDE9D28E9F531B3A84B9CA857124298259B0A1B61D97DB",
+      "common_input_hashes": {
+        "operating_production_koz": "B4F99BFC78C99D819257F05A7CC1F5B12AC84A03FF8C8180DF03E3CB5EB02EE4",
+        "operating_cost_usd_per_oz": "27B60B98E21FB65A3B1F98E91BAE9896FE5AD6A2640BDB090C4FAD72F30424C8",
+        "unified_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+        "unified_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+        "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+        "common_gold_scenario": "4D32D8C75743CAB133D6839366D1927D03560D5C1CCDBEA4C8A26B5170C813C8"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "role": "experiment_config",
+      "path": "config/multimodel_valuation_20260902_team8_refresh.json",
+      "bytes": 5083,
+      "sha256": "93AB9FF5778508E9E6863EC20FEDFF45B11557DC0721F5E8776ADD8969B86845"
+    },
+    {
+      "role": "base_team4_team5_contract",
+      "path": "config/provisional_valuation_20260902_team8_refresh.json",
+      "bytes": 5770,
+      "sha256": "FF3B4EA43CB2BD4CB40AFBF18217C85FFED1FAECB0ED9ED45BC26577D61119C4"
+    },
+    {
+      "role": "runtime_dependency_contract",
+      "path": "pyproject.toml",
+      "bytes": 765,
+      "sha256": "CD36B6F398BECB78BC2B96FF1F6A42C0795801CDB9145AC9144F56B938663CAB"
+    },
+    {
+      "role": "runtime_dependency_contract",
+      "path": "requirements.txt",
+      "bytes": 148,
+      "sha256": "04FFBFB4B27EE7AD656F16FC1ACBB306ACEC9EFC7A627C6DC9329430782DE31A"
+    },
+    {
+      "role": "team8_20260902_path_adapter",
+      "path": "parity/sources/team-8-current/path_simulation.py",
+      "bytes": 6717,
+      "sha256": "B7C8CAFF3F82E49B777D9111B3AFE9E94983257F9583A9922AAC15EC4A399BB2"
+    },
+    {
+      "role": "team8_calibration_manifest",
+      "path": "data/processed/team8/calibration_20260902/manifest.json",
+      "bytes": 1011,
+      "sha256": "ABD19F9B86F17F1108EBC7B7C1E81C9A0EA2FFBB8C179ED41CBCFCB0C0203858"
+    },
+    {
+      "role": "team8_nss_curve",
+      "path": "data/manifests/rates/team8_us_treasury_nss_20260902.json",
+      "bytes": 870,
+      "sha256": "83F819936CA33C3DFB3568F9E05F115392E3C22A39D4BD004A51F512DDEE158E"
+    },
+    {
+      "role": "team8_calibration_summary",
+      "path": "data/processed/team8/calibration_20260902/calibration_summary.csv",
+      "bytes": 985,
+      "sha256": "59FC60A09BBE211DB197A8DFBAF5F6A845F161CA7DA25999D57DA7627A431E45"
+    },
+    {
+      "role": "team8_surface_diagnostics",
+      "path": "data/processed/team8/calibration_20260902/surface_diagnostics.json",
+      "bytes": 688,
+      "sha256": "79ABE0B9EA2101C6BBAE95EC85824E19E66128F87B4F33ECBDD8240E8415BF8D"
+    },
+    {
+      "role": "team8_oos_manifest",
+      "path": "data/processed/team8/oos_20260902/run_manifest.json",
+      "bytes": 1361,
+      "sha256": "3A5B6BF95FEB24F9AB92E06BBE47249A612A5B5A0A20FF731795F79887464FD7"
+    },
+    {
+      "role": "team8_oos_model_summary",
+      "path": "data/processed/team8/oos_20260902/model_summary.csv",
+      "bytes": 1000,
+      "sha256": "BFDA528ED4625B0F9B02679095A0D5458E8A093725FF2843409C85BB505A9F38"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/audit_market_data.py",
+      "bytes": 13993,
+      "sha256": "CC0DBDACAF0EA0710452E331BEAD7E33A201458B6FDA2C0A153063B2D507C5BB"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/batch_calibrate.py",
+      "bytes": 4308,
+      "sha256": "74FA06BCCAE7244126E57D04E46E14DD8A9C222DC898691D4B19FD24326145CD"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/batch_sampling_offline.py",
+      "bytes": 10305,
+      "sha256": "705F8A1C1E27C5FE7BBA286F6D019A59524915F1D243AB6D224DF22728847907"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/Bates.py",
+      "bytes": 5786,
+      "sha256": "A9CB926366F71CA817A6465F7776052A2014D4EC29B600A9296CDB578FC7F1A5"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/BatesHawkesExact.py",
+      "bytes": 7466,
+      "sha256": "D62B986C4827E0EF82970BB02185C7BDC8866D81ED7EE48C4426BC9D409E4E64"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/BnS.py",
+      "bytes": 2419,
+      "sha256": "9B27E73408BB833CB33B151519BD4BA54ED69E76D5F0D4B5511C3DFCF7C51DB7"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/calibrate_one_day.py",
+      "bytes": 8760,
+      "sha256": "2A67EB16B9A9E57FF0380E446D326FFB3233DCF6DD0FD3DECA923D6F35A10189"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/calibrate_surface.py",
+      "bytes": 30857,
+      "sha256": "C0F030AE1C843B18D8A9F6B2682767C80B0961CA38E3AB13AB21E5B8EF437B73"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/calibration_core.py",
+      "bytes": 6000,
+      "sha256": "4AD0A8364F8319D831EBD13A5E127D8DAB59BA53E8C205E1FA2C82AD8A51D54E"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/compare_sampling_all.py",
+      "bytes": 22873,
+      "sha256": "6D17B8A5CE49EE578857396229247F7EB95C079F6F121ACFCF62DF702F72DA1B"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/fourier_pricing.py",
+      "bytes": 4233,
+      "sha256": "77EC16FF53C7B024F3E50EDAE8521B58A96B7F3E42E352406BACB6B909ADBAAB"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/Hawkes.py",
+      "bytes": 10380,
+      "sha256": "76902C2FFE2274E0E4BD68BA177F9E6105B64589714D26A1F4D1D8C0363D4966"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/Heston.py",
+      "bytes": 5325,
+      "sha256": "90B1B973E6546592E05972DD42239E7DD3AE74DEECE6E44CA6F18536721E4340"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/ibkr_gld_historical_surface.py",
+      "bytes": 40715,
+      "sha256": "ABAE806F5E0135FC0F848CEF898EF0959C523D2CE7F7F5797CA07B9F4C971F7B"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/ibkr_gld_today_surface.py",
+      "bytes": 12486,
+      "sha256": "C87BA35F60713BB298B9C54DEA522F8AD0C17482A9EC6B247A0B77DD907FA733"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/make_missing_ibkr_figures.py",
+      "bytes": 70131,
+      "sha256": "73C6A85CF948DB0F9E4430A7FA0C6EBE71C8235FE62D2A841F1CC66D045D59CF"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/model_smoke_test.py",
+      "bytes": 1731,
+      "sha256": "46B7EFE88CB6C14EB5B579CDDCCC319C5A19434BC46156D80282ADDF338D108E"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/oos_validation.py",
+      "bytes": 53247,
+      "sha256": "3DECA7DF9EE2009A4220FA8F6DD74E84B0366F479F9F6685C5879E4178254A19"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/rates.py",
+      "bytes": 13433,
+      "sha256": "2C69409CD5D5438D2A3979C37F770228C5CC22DCF397A1EDE741FC86B486D229"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/rebuild_full_surface_nss.py",
+      "bytes": 10247,
+      "sha256": "639BA91B47AA0620DA64BF023587F2DFF046A5499A39B94366B863F930336A2F"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/Sampling.py",
+      "bytes": 6510,
+      "sha256": "A81FAAD14E0D0D28E62EF1482EB277FC1DAF9DEDD4991D9AE20B27A95E62DBFB"
+    },
+    {
+      "role": "vendored_team8_source",
+      "path": "parity/sources/team-8-current/src/surface_builder.py",
+      "bytes": 13615,
+      "sha256": "664CDE4C38E53A4597B2990E4ECDC227C8DA2067B2668C45E16532B7D95A2FF6"
+    },
+    {
+      "role": "team8_parameters_black_scholes",
+      "path": "data/processed/team8/calibration_20260902/black_scholes.json",
+      "bytes": 498,
+      "sha256": "253D9AD64BB0C67C5C78AF2AF71841879EC93B30DA205071998861576808B0C1"
+    },
+    {
+      "role": "team8_parameters_heston",
+      "path": "data/processed/team8/calibration_20260902/heston.json",
+      "bytes": 782,
+      "sha256": "3FFDDC65EEF75CB046661F7B4E8B0B96637B4FBE6593EFEC076A0D2F0706E700"
+    },
+    {
+      "role": "team8_parameters_bates_poisson",
+      "path": "data/processed/team8/calibration_20260902/bates.json",
+      "bytes": 933,
+      "sha256": "BB235EE66CA822B4F18971327122E4144C9EFBB45F6BBACBA91E7B3B46F7064D"
+    },
+    {
+      "role": "team8_parameters_full_bates_hawkes",
+      "path": "data/processed/team8/calibration_20260902/full_bates_hawkes.json",
+      "bytes": 1061,
+      "sha256": "48BFB1432CC0FD95A5DF3748C14AFF76005EA7CD5D71E91C4672EE5EF5185203"
+    },
+    {
+      "role": "base_declared_reference",
+      "path": "data/manifests/team4/barrick_operating_q1_q2_2026_manifest.json",
+      "bytes": 2626,
+      "sha256": "71A8B159C8C309210C6123EEDA676981B6DCBFB1934F53E3630427255F282FDF",
+      "declared_sha256": ""
+    },
+    {
+      "role": "base_declared_reference",
+      "path": "data/processed/team4/barrick_total_gold_q1_q2_2026.csv",
+      "bytes": 184,
+      "sha256": "D47EF91562F9D2ECD1432DF712D6A52EFB2ED9B9ECE97077B55B75D5B53EE912",
+      "declared_sha256": ""
+    }
+  ],
+  "code": [
+    {
+      "role": "code",
+      "path": "src/barrick_unified/valuation.py",
+      "bytes": 21424,
+      "sha256": "4D76495780A6672FA3F187A7B02B779991AFF2C3FA2A5595E99D6C818FA72AA5"
+    },
+    {
+      "role": "code",
+      "path": "src/barrick_unified/multimodel_valuation.py",
+      "bytes": 21288,
+      "sha256": "99B38D5C5B5BFB3DE40FAA15AADC793FD889A784DB810BD9CC94752AFE0446B2"
+    },
+    {
+      "role": "code",
+      "path": "src/barrick_unified/multimodel_reporting.py",
+      "bytes": 19913,
+      "sha256": "59013035C610AE49ECC8471FE0045B2CB4921A24F67F74253157AA551838E61F"
+    },
+    {
+      "role": "code",
+      "path": "run_multimodel_valuation.py",
+      "bytes": 3345,
+      "sha256": "8EFFE66CBF9FB98C7C8AA561F78A5FDB6DA3D2F90D1BB035DF620FCFC8D6EFFE"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "outputs/valuation/20260904T130000Z-team8-refresh-v4/valuation_quantiles_by_model.csv",
+      "bytes": 3263,
+      "sha256": "BADBC1AA25953A7B675569997A3447AFA7CC8E216CDF34B28B68404D4D5BACE3"
+    },
+    {
+      "path": "outputs/valuation/20260904T130000Z-team8-refresh-v4/valuation_quantiles_by_model.tex",
+      "bytes": 1142,
+      "sha256": "C38F5E6CB2CAE936EE91FE9791A86BA2DB94BC2CB4D9ABDF0A0B70D751F43EC4"
+    },
+    {
+      "path": "outputs/valuation/20260904T130000Z-team8-refresh-v4/valuation_summary_by_model.csv",
+      "bytes": 1043,
+      "sha256": "B2538518D2190B158413AB1B46A7FAC1E188C8E037A613A65F0715A45CAB959B"
+    },
+    {
+      "path": "outputs/valuation/20260904T130000Z-team8-refresh-v4/valuation_summary_by_model.json",
+      "bytes": 6568,
+      "sha256": "C806656FF681D16696E9BE10FB4E5DBBE7DB7164D19CCF9948A929B403D82BC2"
+    },
+    {
+      "path": "outputs/valuation/20260904T130000Z-team8-refresh-v4/terminal_gold_quantiles_by_model.csv",
+      "bytes": 1864,
+      "sha256": "00E6CBCD02A390CA6973D671E5584B8A90D9106281F506F061561312CD56AE7D"
+    },
+    {
+      "path": "figures/valuation/20260904T130000Z-team8-refresh-v4/full_bates_hawkes_value_distribution.png",
+      "bytes": 103481,
+      "sha256": "3EC1F54F55966CD65D197FA5C6ACD75DA7D394EBB0ABC7CADD0A4D1BB9A991FC"
+    },
+    {
+      "path": "figures/valuation/20260904T130000Z-team8-refresh-v4/multimodel_value_distribution_comparison.png",
+      "bytes": 201164,
+      "sha256": "3CF9768BE1456F9427C176D93AA689C9A6259FA6C54208E6CD95A5EB7703DFA1"
+    }
+  ],
+  "unresolved_corporate_inputs": [
+    "Legal valuation perimeter and treatment of the announced North American gold-assets transaction",
+    "Production and cost are current Barrick actuals only for 2026Q1-Q2; 2026Q3-2030 remain Team 4 forecasts",
+    "The USD 4,417/oz price anchor is Barrick's Q2 average realized price, not a point-in-time spot quote or a physical-price forecast",
+    "GLD-to-gold, gold-to-realized-price and Q-to-P/scenario bridges are not validated",
+    "Cost of Sales includes depreciation; component margin is not reconciled audited EBITDA, EBIT, NOPAT or FCFF",
+    "Debt, cash, minority interests, non-operating assets and other claims are explicit zero placeholders",
+    "Diluted shares are an unreconciled proxy inferred from the LSE market-cap/price snapshot",
+    "WACC, terminal growth, ROIC and tax remain methodological assumptions, not filing-calibrated Barrick inputs",
+    "Finite reserve life and mine-level closure/reclamation policy are not represented"
+  ],
+  "not_investment_advice": true,
+  "validated_physical_gold_forecast": false
+}

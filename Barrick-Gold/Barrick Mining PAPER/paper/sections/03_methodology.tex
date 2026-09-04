@@ -58,12 +58,12 @@ F(\theta)=\frac{1}{N}\sum_{i=1}^{N}
 \end{equation}
 which approximates an implied-volatility error without solving an IV inversion inside every optimizer step. Richer models use global Differential Evolution for initialization and constrained SLSQP for local refinement. Feller admissibility is imposed on the square-root variance process, while Hawkes stability requires $n<1$.
 
-Calibration fit and forecasting are evaluated separately. One-step-ahead performance is summarized by
+Calibration fit and forecasting are evaluated separately. A date is admitted to the rolling test only when at least 64 eligible observations and three expiries survive the common filters. Each origin uses the fixed CC64 geometry and is scored on the next available dense date. Performance is summarized by
 \begin{equation}
 R^2_{OOS,m\mid b}=1-\frac{\sum e_{m,t,j}^2}{\sum e_{b,t,j}^2},
 \label{eq:oos_r2}
 \end{equation}
-against both a node-specific expanding mean and the previous-day IV surface. This design prevents the lowest in-sample IV error from being interpreted automatically as predictive dominance.
+against both the origin cross-sectional mean IV and an origin observed-IV surface interpolated in maturity and log-moneyness inside its convex hull. The target spot and rate curve enter only as scoring-date conditioning variables. This design prevents the lowest in-sample IV error from being interpreted automatically as predictive dominance.
 
 \subsection{Team 4 cost and production models}
 For costs, Team 4 first builds a log-space global master chain from mine-level series and then selects an \textbf{ARIMA(3,1,0) with drift} by automated information-criterion search. The admitted specification is

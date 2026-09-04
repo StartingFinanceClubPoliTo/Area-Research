@@ -1,61 +1,49 @@
 # Barrick Mining UNIFICATO 🪙
 
-📄 Article PDFs are published on the Starting Finance Club PoliTo website: https://sfclubpolito.it/pubblicazioni. This GitHub repository contains code, data notes, and reproducibility assets.
+Unified thesis and executable reproducibility companion for the Starting Finance Club PoliTo Barrick research programme. Release date: **TBD**.
 
-Unified thesis and reproducibility companion for the Starting Finance Club PoliTo Research project on stochastic valuation of Barrick Mining Corporation.
+> Educational and research material only. Outputs are conditional model sensitivities, not fair values, target prices or investment recommendations.
 
-> Educational and research material only. Model outputs are conditional
-> sensitivities, not fair values, target prices or investment recommendations.
+## Current executable companion
 
-## 👥 Authors
+The authoritative code run is `20260904T130000Z-team8-refresh-v4`, based on the Team 8 snapshot of September 2, 2026:
 
-Stefano Falcione, Marco Fracca, Filippo Triassi, Giorgio Zoccatelli, Andrea
-Rostagno, Francesco Florio, Giacomo Scali, Jacopo Foralosso, Federico Vesco,
-Lorenzo Pietra, Bader Moussaif, Davide Sisto, Matteo Armando, Davide D'Amico,
-Pietro Weisz, Salvatore Gabriele Messina and Alessandro Coco.
+- 605 eligible GLD calls, 12 expiries, 146 strikes and DTE 79–653 before sampling;
+- fixed CC64 sample: 64 actual contracts, 8 expiries and 20 strikes;
+- same-date 14-tenor Treasury NSS curve, 2.0608 bp RMSE;
+- Heston best in-sample IV RMSE: 49.4881 bp;
+- Full Bates–Hawkes best date-equal rolling OOS IV RMSE: 65.0507 bp;
+- 31 dense dates, 30 OOS origins and 4,667 common forecasts;
+- 8,192 Barrick valuation paths and a USD 44.13 market reference;
+- conditional model medians between USD 35.14 and USD 35.87.
 
-## 🎯 Purpose
-
-The project connects four stochastic gold-price engines to a common operating
-forecast, DCF contract and equity bridge. It keeps calibration, provenance,
-units, dates and unresolved corporate inputs explicit across the full workflow.
-
-## 🗂️ Structure
+## Structure
 
 | Path | Role |
 | --- | --- |
-| `thesis/` | Complete LaTeX thesis project and compiled `Articolo.pdf`. |
-| `code/` | Class-based Python package, curated notebook, tests, public inputs, figures, tables and manifests. |
+| `thesis/` | Working unified-thesis sources and compiled PDF, dated `TBD`. The prose/figures remain a prior editorial snapshot until the separate thesis merge is completed. |
+| `code/` | Current Team 8 adapter, valuation engine, aggregate evidence, tests, manifests and immutable outputs. |
 
-Licensed LSE row-level snapshots are intentionally excluded. Their manifests,
-scope notes and redistribution-safe processed inputs remain available under
-`code/data/`.
+The current paper-level analysis is in [`../Barrick Mining PAPER/`](../Barrick%20Mining%20PAPER/). Licensed/provider-controlled row-level option data are intentionally excluded.
 
-## ⚙️ Setup
+## Reproduce the current run
 
 ```bash
 cd code
 python -m venv .venv
-python -m pip install -e ".[test]"
+.venv/Scripts/python -m pip install -e ".[test]"
+.venv/Scripts/python run_multimodel_valuation.py \
+  --config config/multimodel_valuation_20260902_team8_refresh.json \
+  --run-id <fresh-run-id>
+.venv/Scripts/python -m pytest -q tests/test_team8_20260902_refresh.py
 ```
 
-## ▶️ Run
+The runner refuses to overwrite an existing run. Use `code/data/manifests/valuation/AUTHORITATIVE_MULTIMODEL.json` to identify the promoted output.
 
-```bash
-python main.py status
-python main.py test -q
-```
+## Interpretation boundary
 
-The status command audits the handoff structure and table links. Established
-figure and valuation runners are documented in `code/README.md`.
+Team 8 governs only the option-implied gold-path shape. Team 4 operating vectors and the unified DCF/WACC/equity bridge are common across the four engines. The GLD calibration is risk-neutral; no one-for-one GLD-to-ounce or validated risk-neutral-to-physical mapping is claimed.
 
-## 📊 Outputs
+## Citation
 
-The authoritative publication run is stored under
-`code/outputs/thesis/20260828T180000Z-unificato-publication/`. Analytical
-figures have PNG/PDF companions and machine-readable CSV/JSON sidecars.
-
-## 📚 Citation
-
-Barrick Gold Research Teams (2026), *Stochastic Valuation of Barrick Mining:
-Unified Thesis and Supporting Code*, Starting Finance Club PoliTo Research.
+Barrick Gold Research Teams (2026), *Stochastic Valuation of Barrick Mining: Unified Thesis and Supporting Code*, Starting Finance Club PoliTo Research, working draft, release date TBD.

@@ -316,16 +316,16 @@ def write_multimodel_outputs(
 
     common_contract = {
         "scope": "GOLD_PRICE_LAYER_ONLY",
-        "production_and_cost": "20 deterministic quarterly output vectors imported from Team 4 ad hoc production and cost models; the source models are not rerun; vectors are identical across all four valuations",
+        "production_and_cost": "Barrick actuals for 2026Q1-Q2 followed by the frozen Team 4 forecast for 2026Q3-2030; vectors are identical across all four valuations",
         "temporary_v3_gold_driver": "Team 4 GBM/NSS was temporary and is not a production/cost model",
-        "dcf_wacc_equity_bridge": "Team 5 adaptation; identical across all four valuations",
+        "dcf_wacc_equity_bridge": "Unified DCF methodology; identical across all four valuations",
         "common_input_hashes": run.common_input_hashes,
         "wacc_shocks_sha256": run.wacc_shocks_sha256,
         "wacc_identical_across_models": True,
         "gold_engine_base_seed_alignment": experiment_config["simulation"]["common_random_numbers_note"],
     }
     summary_payload = {
-        "schema_version": "2.0",
+        "schema_version": str(experiment_config["schema_version"]),
         "status": run.inputs.status,
         "run_id": run_id,
         "valuation_as_of_utc": run.inputs.valuation_as_of_utc,
@@ -379,19 +379,40 @@ def write_multimodel_outputs(
         project_root / "src" / "barrick_unified" / "multimodel_reporting.py",
         project_root / "run_multimodel_valuation.py",
     ]
-    source_dir = project_root / experiment_config["gold_price_layer"]["team8_source_dir"]
+    layer = experiment_config["gold_price_layer"]
+    source_dir = project_root / layer["team8_source_dir"]
     input_entries = [
         _input_entry(experiment_config_path, project_root, "experiment_config"),
         _input_entry(base_config_path, project_root, "base_team4_team5_contract"),
-        _input_entry(source_dir / "path_simulation.py", project_root, "frozen_team8_path_engine"),
-        _input_entry(source_dir / "BatesHawkesExact.py", project_root, "frozen_team8_compensator"),
-        _input_entry(source_dir / "Hawkes.py", project_root, "frozen_team8_hawkes_engine"),
-        _input_entry(source_dir / "Data" / "lse_publication_manifest.json", project_root, "team8_lse_snapshot_manifest"),
-        _input_entry(source_dir / "Data" / "baseline_calibration_metrics.csv", project_root, "team8_fit_metrics"),
-        _input_entry(source_dir / "Data" / "bates_hawkes_calibration_metrics.csv", project_root, "team8_full_fit_metrics"),
         _input_entry(project_root / "pyproject.toml", project_root, "runtime_dependency_contract"),
         _input_entry(project_root / "requirements.txt", project_root, "runtime_dependency_contract"),
     ]
+    if str(experiment_config.get("schema_version")) == "4.0":
+        input_entries.extend(
+            [
+                _input_entry(source_dir / "path_simulation.py", project_root, "team8_20260902_path_adapter"),
+                _input_entry(project_root / layer["calibration_manifest"], project_root, "team8_calibration_manifest"),
+                _input_entry(project_root / layer["nss_curve_file"], project_root, "team8_nss_curve"),
+                _input_entry(project_root / layer["calibration_summary_file"], project_root, "team8_calibration_summary"),
+                _input_entry(project_root / layer["surface_diagnostics_file"], project_root, "team8_surface_diagnostics"),
+                _input_entry(project_root / layer["oos_manifest"], project_root, "team8_oos_manifest"),
+                _input_entry(project_root / layer["oos_model_summary"], project_root, "team8_oos_model_summary"),
+            ]
+        )
+        for path in sorted(source_dir.rglob("*.py")):
+            if path.name != "path_simulation.py":
+                input_entries.append(_input_entry(path, project_root, "vendored_team8_source"))
+    else:
+        input_entries.extend(
+            [
+                _input_entry(source_dir / "path_simulation.py", project_root, "frozen_team8_path_engine"),
+                _input_entry(source_dir / "BatesHawkesExact.py", project_root, "frozen_team8_compensator"),
+                _input_entry(source_dir / "Hawkes.py", project_root, "frozen_team8_hawkes_engine"),
+                _input_entry(source_dir / "Data" / "lse_publication_manifest.json", project_root, "team8_lse_snapshot_manifest"),
+                _input_entry(source_dir / "Data" / "baseline_calibration_metrics.csv", project_root, "team8_fit_metrics"),
+                _input_entry(source_dir / "Data" / "bates_hawkes_calibration_metrics.csv", project_root, "team8_full_fit_metrics"),
+            ]
+        )
     for model_id in MODEL_ORDER:
         input_entries.append(
             _input_entry(
@@ -421,7 +442,7 @@ def write_multimodel_outputs(
         comparison_figure,
     ]
     manifest = {
-        "schema_version": "2.0",
+        "schema_version": str(experiment_config["schema_version"]),
         "status": run.inputs.status,
         "run_id": run_id,
         "valuation_as_of_utc": run.inputs.valuation_as_of_utc,

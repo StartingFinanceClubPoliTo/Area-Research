@@ -1,0 +1,31 @@
+{
+  "model": "Heston",
+  "parameter_names": [
+    "v0",
+    "kappa",
+    "theta",
+    "sigma",
+    "rho"
+  ],
+  "parameters": {
+    "v0": 0.06438993620309191,
+    "kappa": 4.051825867943902,
+    "theta": 0.06548105623130077,
+    "sigma": 0.7281494738652069,
+    "rho": -0.017010343800416942
+  },
+  "objective": 2.362872974491092e-05,
+  "global_objective": 2.363848779728523e-05,
+  "success": true,
+  "message": "Optimization terminated successfully",
+  "evaluations": 8,
+  "iterations": 1,
+  "elapsed_seconds": 1.6806787999812514,
+  "date": "2026-09-02",
+  "strategy": "CC",
+  "source_surface": "outputs\\sampling\\2026-09-02\\sample_CC_64.csv",
+  "profile": "full",
+  "seed": 8,
+  "n_points": 64,
+  "saved_at_utc": "2026-09-03T22:44:00.122859+00:00"
+}

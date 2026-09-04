@@ -2,19 +2,19 @@
 
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/sampling_comparison.png}
-  \captionof{figure}{Chebyshev sampling geometry for the admitted 27 August 2026 GLD calibration: 24 retained nodes from 143 eligible calls across three maturities. Colour represents observed implied volatility.}
+  \captionof{figure}{Final 2 September 2026 GLD surface and fixed CC64 geometry: 64 distinct actual contracts are selected from 605 eligible calls across 12 expiries and 146 strikes. Colour represents observed implied volatility.}
   \label{fig:chebyshev_audit}
 \par}
 
 \subsection{Why structured sampling is retained}
-The option surface is irregular in strike and maturity. Team 8 therefore passes a structured Chebyshev subset to the optimizer rather than allowing densely listed regions to dominate the loss. The figure is the sampling audit for the same 24-node surface used by the current valuation, not a later diagnostic snapshot.
+The option surface is irregular in strike and maturity. Team 8 therefore passes a fixed $8\times8$ Chebyshev--Chebyshev subset to the optimizer rather than allowing densely listed regions to dominate the loss. Every target is mapped to the nearest still-unused actual option: the 64-point calibration set contains no synthetic contracts. The figure audits the same 2 September parameter snapshot used by the refreshed valuation.
 
 \begin{methodbox}[Evidence status]
-The calibrated inputs, residual maps and valuation paths share the same 27 August Team 8 parameter set. The Treasury curve remains dated 24 July and the timing mismatch is retained as an explicit limitation.
+The calibrated inputs, residual maps and valuation paths share the same 2 September Team 8 parameter set. The U.S. Treasury curve is dated 2 September as well; the separate Q2 realized-gold level anchor remains explicit in the valuation contract.
 \end{methodbox}
 
 \subsection{What the residual maps add}
-The residual heatmaps show where each specification systematically over- or under-prices the observed implied-volatility surface. Black--Scholes leaves the strongest smile and term-structure pattern; Heston reduces part of the curvature; jump-based specifications flatten the field further. Full Bates--Hawkes provides the lowest admitted IV RMSE, although its fitted branching ratio of 0.02 implies only mild self-excitation in this snapshot. The four maps are arranged as a two-by-two comparison so their common axes and colour scales remain directly comparable at a readable size.
+The residual heatmaps show where each specification systematically over- or under-prices the observed implied-volatility surface. Black--Scholes leaves the strongest smile and term-structure pattern. On this snapshot Heston provides the lowest IV RMSE at 49.4881 bp; Full Bates--Hawkes follows at 52.9714 bp and Bates at 54.6273 bp. The fitted Hawkes branching ratio is 0.5569, below the stationarity boundary but economically material. The four maps are arranged as a two-by-two comparison so their common axes and colour scales remain directly comparable.
 
 \end{multicols}
 
@@ -43,7 +43,7 @@ The residual heatmaps show where each specification systematically over- or unde
   \includegraphics[width=\linewidth]{figures/bates_hawkes_residual_heatmap.png}
   \par\vspace{1pt}{\footnotesize\textbf{(d)} Full Bates--Hawkes\par}
 \end{minipage}
-\captionof{figure}{Current implied-volatility residual maps for Black--Scholes, Heston, Bates--Poisson and Full Bates--Hawkes. Blue denotes model IV above market IV and red underpricing. Model richness progressively flattens the residual field; the lowest in-sample IV RMSE belongs to Full Bates--Hawkes.}
+\captionof{figure}{Implied-volatility residual maps for the common 2 September CC64 sample. Blue denotes model IV above market IV and red denotes model IV below market; Heston records the lowest in-sample IV RMSE.}
 \label{fig:residual_maps}
 }
 \vspace{4pt}

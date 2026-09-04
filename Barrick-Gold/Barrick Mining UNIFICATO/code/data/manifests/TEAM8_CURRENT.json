@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "status": "CURRENT_TEAM8_PUBLIC_AGGREGATE_SNAPSHOT",
+  "snapshot_date": "2026-09-02",
+  "calibration_manifest": "data/processed/team8/calibration_20260902/manifest.json",
+  "calibration_manifest_sha256": "ABD19F9B86F17F1108EBC7B7C1E81C9A0EA2FFBB8C179ED41CBCFCB0C0203858",
+  "oos_manifest": "data/processed/team8/oos_20260902/run_manifest.json",
+  "oos_manifest_sha256": "3A5B6BF95FEB24F9AB92E06BBE47249A612A5B5A0A20FF731795F79887464FD7",
+  "nss_curve": "data/manifests/rates/team8_us_treasury_nss_20260902.json",
+  "nss_curve_sha256": "83F819936CA33C3DFB3568F9E05F115392E3C22A39D4BD004A51F512DDEE158E",
+  "source_tree": "parity/sources/team-8-current",
+  "row_level_option_data_published": false,
+  "not_investment_advice": true
+}

@@ -43,6 +43,16 @@ MODEL_LABELS = {
     "full_bates_hawkes": "Full Bates–Hawkes",
 }
 
+# ASCII labels keep CSV, console and LaTeX handoffs portable on Windows.
+MODEL_LABELS.update(
+    {
+        "black_scholes": "Black-Scholes / GBM",
+        "heston": "Heston",
+        "bates_poisson": "Bates-Poisson",
+        "full_bates_hawkes": "Full Bates-Hawkes",
+    }
+)
+
 
 def _canonical_hash(value: Any) -> str:
     encoded = json.dumps(
@@ -195,12 +205,21 @@ def load_multimodel_inputs(
             project_root, nss_relative, "gold_price_layer.nss_curve_file"
         )
         nss_payload = json.loads(nss_path.read_text(encoding="utf-8"))
-        if nss_payload.get("method") != "Nelson-Siegel-Svensson nonlinear least squares":
+        method = nss_payload.get("method", nss_payload.get("model"))
+        if method not in {
+            "Nelson-Siegel-Svensson nonlinear least squares",
+            "Nelson-Siegel-Svensson",
+        }:
             raise ValuationInputError("the selected rate artifact is not an approved NSS fit")
-        if nss_payload.get("legacy_team4_nss_used") is not False:
+        if nss_payload.get("legacy_team4_nss_used", False) is not False:
             raise ValuationInputError("legacy Team 4 NSS must remain excluded")
-        parameters = nss_payload.get("parameters", {})
         required = ("beta0", "beta1", "beta2", "beta3", "tau1", "tau2")
+        if "parameters" in nss_payload:
+            parameters = nss_payload["parameters"]
+        else:
+            parameters = {
+                name: nss_payload[name] for name in required if name in nss_payload
+            }
         if tuple(parameters) != required:
             raise ValuationInputError("current NSS parameters must use canonical order")
         payload["model"].pop("gold_drift_rates_annual", None)
@@ -208,7 +227,7 @@ def load_multimodel_inputs(
             name: float(parameters[name]) for name in required
         }
         payload["model"]["gold_drift_source"] = (
-            "Current London Strategic Edge US Treasury Nelson-Siegel-Svensson curve dated "
+            "Team 8 US Treasury Nelson-Siegel-Svensson curve dated "
             f"{nss_payload.get('curve_date')}; integral-preserving forward rates"
         )
     simulation = experiment_config.get("simulation", {})
@@ -252,7 +271,7 @@ def _validate_experiment_contract(
             "declared common gold start must match the base valuation contract"
         )
     schema_version = str(experiment_config.get("schema_version", ""))
-    if schema_version == "3.0":
+    if schema_version in {"3.0", "4.0"}:
         if not str(common_start.get("source_authority", "")).strip():
             raise ValuationInputError("current gold anchor requires a source authority")
         if not str(common_start.get("source_date", "")).strip():
@@ -262,8 +281,13 @@ def _validate_experiment_contract(
         drift = layer.get("common_scenario_drift", {})
         if drift.get("legacy_team4_nss_used") is not False:
             raise ValuationInputError("legacy Team 4 NSS must be explicitly excluded")
-        if drift.get("current_lse_nss_used") is not True:
-            raise ValuationInputError("the current LSE NSS curve must be explicitly enabled")
+        current_curve_enabled = (
+            drift.get("current_team8_nss_used") is True
+            if schema_version == "4.0"
+            else drift.get("current_lse_nss_used") is True
+        )
+        if not current_curve_enabled:
+            raise ValuationInputError("the current Team 8 NSS curve must be explicitly enabled")
     elif common_start.get("source_team") != "Team 4" or common_start.get(
         "source_date"
     ) != "2026-04-02":
@@ -271,7 +295,7 @@ def _validate_experiment_contract(
             "legacy common gold start must retain Team 4 source and 2026-04-02 date"
         )
     common_layers = experiment_config.get("common_non_gold_layers", {})
-    if schema_version == "3.0":
+    if schema_version in {"3.0", "4.0"}:
         if common_layers.get("production_and_cost") != (
             "CURRENT_Q1_Q2_PLUS_TEAM4_FORECAST_Q3_ONWARD"
         ):
@@ -350,23 +374,27 @@ def run_multimodel_valuation(
         snapshot_path = source_dir / "Data" / "lse_publication_manifest.json"
     snapshot_manifest = json.loads(snapshot_path.read_text(encoding="utf-8"))
     calibration_snapshot = dict(layer.get("calibration_snapshot", {}))
-    if calibration_snapshot.get("surface_as_of_utc") != snapshot_manifest.get(
-        "as_of_utc"
-    ):
+    manifest_surface_date = snapshot_manifest.get("as_of_utc", snapshot_manifest.get("date"))
+    curve_dates = snapshot_manifest.get("curve_dates", [])
+    manifest_curve_date = snapshot_manifest.get(
+        "risk_free_rate_curve_date",
+        curve_dates[0] if len(curve_dates) == 1 else snapshot_manifest.get("date"),
+    )
+    if calibration_snapshot.get("surface_as_of_utc") != manifest_surface_date:
         raise ValuationInputError(
-            "Team 8 surface date must match the selected LSE publication manifest"
+            "Team 8 surface date must match the selected calibration manifest"
         )
-    if calibration_snapshot.get("treasury_curve_date") != snapshot_manifest.get(
-        "risk_free_rate_curve_date"
-    ):
+    if calibration_snapshot.get("treasury_curve_date") != manifest_curve_date:
         raise ValuationInputError(
-            "Team 8 curve date must match the selected LSE publication manifest"
+            "Team 8 curve date must match the selected calibration manifest"
         )
-    if (
-        str(experiment_config.get("schema_version")) == "3.0"
-        and snapshot_manifest.get("risk_free_rate_model") != "Nelson-Siegel-Svensson"
+    rate_models = snapshot_manifest.get(
+        "rate_curve_models", [snapshot_manifest.get("risk_free_rate_model")]
+    )
+    if str(experiment_config.get("schema_version")) in {"3.0", "4.0"} and not any(
+        model in {"NSS", "Nelson-Siegel-Svensson"} for model in rate_models
     ):
-        raise ValuationInputError("Team 8 calibration must use the current LSE NSS curve")
+        raise ValuationInputError("Team 8 calibration must use the current NSS curve")
     asynchronous_dates = {
         key: str(value)
         for key, value in experiment_config.get("asynchronous_dates", {}).items()
@@ -374,8 +402,8 @@ def run_multimodel_valuation(
     anchor_key = "gold_anchor" if "gold_anchor" in asynchronous_dates else "team4_gold_start"
     required_dates = {
         anchor_key: str(layer["common_scenario_start"]["source_date"]),
-        "team8_surface": str(snapshot_manifest["as_of_utc"]),
-        "team8_treasury_curve": str(snapshot_manifest["risk_free_rate_curve_date"]),
+        "team8_surface": str(manifest_surface_date),
+        "team8_treasury_curve": str(manifest_curve_date),
         "b_close": inputs.observed_share_price_timestamp_utc,
         "valuation_as_of": inputs.valuation_as_of_utc,
     }
@@ -417,9 +445,13 @@ def run_multimodel_valuation(
         n_paths,
         engine_seeds["black_scholes"],
     )
-    heston_parameters = tuple(
-        float(parameters["heston"][name])
-        for name in ("v0", "kappa", "theta", "xi", "rho")
+    heston = parameters["heston"]
+    heston_parameters = (
+        float(heston["v0"]),
+        float(heston["kappa"]),
+        float(heston["theta"]),
+        float(heston.get("xi", heston.get("sigma"))),
+        float(heston["rho"]),
     )
     generated["heston"] = team8.simulate_heston_paths(
         start,

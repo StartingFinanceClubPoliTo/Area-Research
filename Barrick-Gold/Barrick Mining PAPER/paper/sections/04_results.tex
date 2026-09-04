@@ -8,29 +8,29 @@
 \toprule
 Metric & USD/share or \% \\
 \midrule
-P10 & 3.31 \\
-Median (P50) & 34.94 \\
-P90 & 104.81 \\
-Completed market close & 47.27 \\
-Market vs. median & +35.27\% \\
-Market percentile & 62.27th \\
-Paths above market & 37.73\% \\
+P10 & 3.13 \\
+Median (P50) & 35.14 \\
+P90 & 104.72 \\
+Completed market close & 44.13 \\
+Market vs. median & +25.58\% \\
+Market percentile & 59.24th \\
+Paths above market & 40.76\% \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \begin{findingbox}[Interpretation]
-The completed market close is above the Full Bates--Hawkes conditional median but remains inside a wide right-skewed distribution. The result therefore leans toward overvaluation relative to this model median; it does not establish market mispricing.
+The completed 2 September market close is above the Full Bates--Hawkes conditional median but remains inside a wide right-skewed distribution. The result leans toward overvaluation relative to this model median; it does not establish market mispricing.
 \end{findingbox}
 
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/fig_val_primary.png}
-  \captionof{figure}{Conditional Barrick value-per-share distribution under the Full Bates--Hawkes gold layer. The reference line is the completed 27 August 2026 close. Current Team 4 operating vectors and Team 5 corporate assumptions are common across 8,192 paths; the band is not a target-price or confidence interval.}
+  \captionof{figure}{Conditional Barrick value-per-share distribution under the Full Bates--Hawkes gold layer. The reference line is the 2 September 2026 close. The common operating and corporate layers are reused across 8,192 paths; the interval is neither a target-price range nor a confidence interval.}
   \label{fig:value_distribution}
 \par}
 
 \subsection{Cross-model central tendency}
-The updated run no longer supports a claim that all four conditional medians are tightly clustered. Black--Scholes, Heston and Full Bates--Hawkes lie between USD~34.50 and USD~39.48 per share, whereas Bates--Poisson has a lower median of USD~23.99 and a wider upper tail. Under the fixed operating and corporate contract, model choice therefore changes both central tendency and tail shape.
+The refreshed 2 September run places all four conditional medians in a narrow USD~35.14--35.87 range. Their upper tails nevertheless remain broad: P90 values range from USD~101.43 to USD~104.72. With operations, WACC shocks and the DCF mapping fixed, these differences isolate the distributional effect of the option-implied gold engine.
 
 \begin{table}[H]
 \centering
@@ -38,18 +38,18 @@ The updated run no longer supports a claim that all four conditional medians are
 \label{tab:model_comparison}
 \begin{tabular}{@{}lrr@{}}
 \toprule
-Gold engine & Median & $\Pr(V>47.27)$ \\
+Gold engine & Median & $\Pr(V>44.13)$ \\
 \midrule
-Black--Scholes & 34.50 & 37.72\% \\
-Heston & 39.48 & 40.06\% \\
-Bates--Poisson & 23.99 & 33.89\% \\
-Full Bates--Hawkes & 34.94 & 37.73\% \\
+Black--Scholes & 35.87 & 41.92\% \\
+Heston & 35.67 & 41.25\% \\
+Bates--Poisson & 35.84 & 41.08\% \\
+Full Bates--Hawkes & 35.14 & 40.76\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Why Full Bates--Hawkes is primary}
-Full Bates--Hawkes is displayed as the primary structural scenario because it combines stochastic variance with self-exciting jumps and achieves the lowest in-sample IV RMSE on the current GLD surface. The ranking is monotonic in model richness, but the fitted Hawkes branching ratio is only 0.02. The surface therefore supports the richer specification as an admitted structural fit without implying a large self-excitation contribution or uniquely superior forecasting performance.
+Full Bates--Hawkes is displayed as the primary structural sensitivity because it combines stochastic variance with self-exciting jumps and records the lowest date-equal rolling OOS IV RMSE. This choice is not an in-sample claim: Heston has the lowest current-snapshot IV RMSE. The fitted Hawkes branching ratio of 0.5569 satisfies $n<1$ and indicates a materially persistent, but stationary, self-excitation channel.
 
 \begin{table}[H]
 \centering
@@ -59,16 +59,16 @@ Full Bates--Hawkes is displayed as the primary structural scenario because it co
 \toprule
 Model & RMSE (bp) \\
 \midrule
-Black--Scholes & 114.04 \\
-Heston & 86.28 \\
-Bates--Poisson & 56.55 \\
-Full Bates--Hawkes & 32.49 \\
+Black--Scholes & 97.2107 \\
+Heston & 49.4881 \\
+Bates--Poisson & 54.6273 \\
+Full Bates--Hawkes & 52.9714 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/fig_val_multi.png}
-  \captionof{figure}{Overlay of conditional Barrick value distributions under the four gold-price engines. The USD~47.27 close sits above every conditional median. Operations, WACC and the DCF mapping are common, so the separation of the Bates centre and right tail is attributable to its gold-path distribution rather than to a different company model.}
+  \captionof{figure}{Conditional Barrick value distributions under the four refreshed gold-price engines. The USD~44.13 close is above every median. Operations, WACC and the DCF mapping are common across models.}
   \label{fig:multimodel_value_overlay}
 \par}

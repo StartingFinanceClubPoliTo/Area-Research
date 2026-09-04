@@ -1,49 +1,33 @@
 \section{Out-of-Sample Evidence and Model Risk}
 
 {\centering
-  \includegraphics[width=0.95\columnwidth]{figures/online_oos_r2_by_benchmark.png}
-  \captionof{figure}{One-step-ahead out-of-sample $R^2$. All four models improve on the expanding mean but fail to beat the previous-day IV surface. The test covers 124 target dates and 3,052 common node-date observations.}
+  \includegraphics[width=0.98\columnwidth]{figures/online_oos_r2_by_benchmark.png}
+  \captionof{figure}{Dense-only rolling evidence on 30 forecast origins and 4,667 common target observations. Full Bates--Hawkes has the lowest date-equal IV RMSE. Positive $R^2_{OOS}$ denotes improvement over the stated benchmark.}
   \label{fig:oos_r2}
 \par}
 
 \subsection{Predictive interpretation}
-The OOS evidence prevents the in-sample ranking from being read as predictive dominance. Relative to an expanding mean, the four models explain a large share of one-step-ahead variation. Against the stronger same-node previous-day IV benchmark, every $R^2_{OOS}$ is negative; Black--Scholes also posts a slightly lower pooled RMSE than Full Bates--Hawkes. Structural flexibility therefore improves current-surface fit more clearly than short-horizon forecasting.
+The rolling exercise separates current-snapshot fit from forward performance. Date-equal IV RMSE is 140.6528 bp for Black--Scholes, 80.1964 bp for Heston, 69.3055 bp for Bates and 65.0507 bp for Full Bates--Hawkes. Relative to the origin mean-IV benchmark, the corresponding $R^2_{OOS}$ values are $-2.58\%$, $66.07\%$, $72.97\%$ and $75.81\%$. None beats interpolated IV-surface persistence, but Full Bates--Hawkes is closest at $-3.68\%$, followed by Bates at $-12.92\%$ and Heston at $-27.24\%$.
 
 \begin{findingbox}[Model-risk conclusion]
-Full Bates--Hawkes is primary for structural richness and current-surface calibration quality, but the valuation conclusion is reported across all four engines because the OOS evidence does not identify a dominant forecasting model.
+Heston is the in-sample winner, whereas Full Bates--Hawkes is the rolling OOS winner. The valuation therefore reports all four engines and uses Full Bates--Hawkes only as the primary structural sensitivity, not as a universally dominant forecast.
 \end{findingbox}
 
 \subsection{Interpretive limitations}
-The economic reading remains conditional: calibration is under $\mathbb Q$ without a validated $\mathbb Q\rightarrow\mathbb P$ map; GLD distributional shape is transferred without a one-for-one conversion to physical gold; market inputs are asynchronous; and the FCFF/equity bridge is not fully filing-reconciled. Debt, cash, minorities, non-operating assets and related bridge adjustments remain unresolved rather than silently inferred. The distributions are therefore research sensitivities, not fair values, confidence intervals or price targets.
+The economic reading remains conditional: calibration is under $\mathbb Q$ without a validated $\mathbb Q\rightarrow\mathbb P$ map; GLD distributional shape is transferred without a one-for-one conversion to physical gold; the realized-price anchor predates the option snapshot; and the FCFF/equity bridge is not fully filing-reconciled. Debt, cash, minorities, non-operating assets and related bridge adjustments remain explicit zero placeholders. The distributions are research sensitivities, not fair values, confidence intervals or price targets.
 
 {\centering
-  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_vs_mean.png}
-  \captionof{figure}{Rolling Welch--Goyal cumulative loss difference against the node-specific prevailing mean. Upward movement favours the named model; all four specifications dominate this benchmark.}
+  \includegraphics[width=0.98\columnwidth]{figures/online_welch_goyal_cumulative.png}
+  \captionof{figure}{Cumulative rolling MSE differences against the origin mean IV and interpolated IV-surface persistence. Upward movement favours the option model; the stronger persistence benchmark remains difficult to beat.}
   \label{fig:welch_goyal}
 \par}
 
-
-{\centering
-  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_vs_previous_iv.png}
-  \captionof*{figure}{\textbf{Figure~\ref{fig:welch_goyal} (continued).} Cumulative loss difference against the previous-day observed IV surface. Negative paths show that this stronger short-horizon benchmark remains superior.}
-\par}
-
-{\centering
-  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_added_structure.png}
-  \captionof*{figure}{\textbf{Figure~\ref{fig:welch_goyal} (continued).} Added stochastic-volatility and jump structure relative to Black--Scholes. Negative paths indicate that the simpler benchmark retains lower cumulative loss over this test.}
-\par}
-
-{\centering
-  \includegraphics[width=0.95\columnwidth]{figures/welch_goyal_self_excitation.png}
-  \captionof*{figure}{\textbf{Figure~\ref{fig:welch_goyal} (continued).} Full Bates--Hawkes relative to Heston and Bates. Positive paths favour the self-exciting specification within this pairwise comparison.}
-\par}
-
 \subsection{Jump-layer interpretation}
-The self-exciting extension is motivated by clustered option-implied jump activity. Relative to the constant Poisson baseline, the Hawkes specification permits bursts of intensity followed by endogenous decay. In the current calibration the branching ratio is 0.02, so this channel is present but economically mild.
+The self-exciting extension is motivated by clustered option-implied jump activity. Relative to the constant Poisson baseline, the Hawkes specification permits intensity bursts followed by endogenous decay. The current branching ratio is 0.5569: shocks propagate materially, while the stationarity restriction remains satisfied.
 
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/hawkes_intensity_comparison.png}
-  \captionof{figure}{Current Poisson and Hawkes intensity comparison. Hawkes allows clustered arrivals and decay, but the low fitted branching ratio keeps it close to the constant-intensity benchmark in this snapshot.}
+  \captionof{figure}{Poisson and Hawkes intensity paths under the 2 September parameter set. The Hawkes layer captures clustered arrivals and decay with a stationary branching ratio of 0.5569.}
   \label{fig:intensity_compare}
 \par}
 
@@ -52,5 +36,8 @@ The self-exciting extension is motivated by clustered option-implied jump activi
 \begingroup
 \setlength{\bibsep}{0.6pt}
 \fontsize{6.75}{7.75}\selectfont
-\input{main.bbl}
+% Keep the frozen bibliography in a regular source file.  Overleaf compiles
+% the main document with job name `output`, so depending on a generated .bbl
+% file with a different name is fragile when the project is imported.
+\input{sections/07_references}
 \endgroup

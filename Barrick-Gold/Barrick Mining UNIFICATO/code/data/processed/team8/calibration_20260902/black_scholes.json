@@ -1,0 +1,20 @@
+{
+  "model": "Black-Scholes",
+  "parameter_names": [
+    "sigma"
+  ],
+  "parameters": {
+    "sigma": 0.25087516343143623
+  },
+  "objective": 8.234419938665092e-05,
+  "success": true,
+  "message": "Solution found.",
+  "elapsed_seconds": 0.015401599986944348,
+  "date": "2026-09-02",
+  "strategy": "CC",
+  "source_surface": "outputs\\sampling\\2026-09-02\\sample_CC_64.csv",
+  "profile": "full",
+  "seed": 8,
+  "n_points": 64,
+  "saved_at_utc": "2026-09-03T22:43:58.428504+00:00"
+}

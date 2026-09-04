@@ -1,0 +1,127 @@
+{
+  "schema_version": "4.0",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "run_id": "20260904T130000Z-team8-refresh-v4",
+  "valuation_as_of_utc": "2026-09-02T20:00:00Z",
+  "observed_market_price": {
+    "ticker": "B",
+    "price_usd": 44.13,
+    "timestamp_utc": "2026-09-02T00:00:00Z",
+    "source": "NYSE:B historical daily close for 2026-09-02; cross-checked against StockAnalysis/S&P Global, Investing.com and TwelveData"
+  },
+  "primary_structural_scenario": "full_bates_hawkes",
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "in_sample_result": "Heston has the lowest CC64 implied-volatility RMSE (49.4881 bp).",
+    "out_of_sample_result": "Full Bates-Hawkes has the lowest date-equal rolling OOS implied-volatility RMSE (65.0507 bp) over 30 origins and 4,667 common forecasts.",
+    "basis": "Primary structural sensitivity selected on rolling OOS ranking, with all simpler models reported and the distinct in-sample ranking disclosed.",
+    "caveat": "Model comparison is conditional and does not validate a physical gold forecast or a target price."
+  },
+  "models": [
+    {
+      "model_id": "black_scholes",
+      "model": "Black-Scholes / GBM",
+      "median_value_per_share_usd": 35.867610361367454,
+      "p10_value_per_share_usd": 3.7108012787495137,
+      "p90_value_per_share_usd": 103.48308684669176,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 58.0810546875,
+      "probability_model_value_exceeds_observed": 0.419189453125,
+      "observed_minus_median_usd": 8.262389638632548,
+      "observed_vs_median_pct": 23.035796238970697,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "heston",
+      "model": "Heston",
+      "median_value_per_share_usd": 35.6747383501115,
+      "p10_value_per_share_usd": 3.270309878005244,
+      "p90_value_per_share_usd": 103.63183547594261,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 58.75244140625,
+      "probability_model_value_exceeds_observed": 0.4124755859375,
+      "observed_minus_median_usd": 8.455261649888506,
+      "observed_vs_median_pct": 23.700977332780027,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "bates_poisson",
+      "model": "Bates-Poisson",
+      "median_value_per_share_usd": 35.84358925147075,
+      "p10_value_per_share_usd": 3.579035466353669,
+      "p90_value_per_share_usd": 101.43035207645603,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 58.92333984375,
+      "probability_model_value_exceeds_observed": 0.4107666015625,
+      "observed_minus_median_usd": 8.28641074852925,
+      "observed_vs_median_pct": 23.118250492141314,
+      "conditional_median_reading": "observed close above conditional median"
+    },
+    {
+      "model_id": "full_bates_hawkes",
+      "model": "Full Bates-Hawkes",
+      "median_value_per_share_usd": 35.14119836608835,
+      "p10_value_per_share_usd": 3.129654797106669,
+      "p90_value_per_share_usd": 104.72084068284522,
+      "observed_close_usd": 44.13,
+      "observed_close_percentile": 59.24072265625,
+      "probability_model_value_exceeds_observed": 0.4075927734375,
+      "observed_minus_median_usd": 8.988801633911656,
+      "observed_vs_median_pct": 25.579098186321247,
+      "conditional_median_reading": "observed close above conditional median"
+    }
+  ],
+  "common_contract": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "production_and_cost": "Barrick actuals for 2026Q1-Q2 followed by the frozen Team 4 forecast for 2026Q3-2030; vectors are identical across all four valuations",
+    "temporary_v3_gold_driver": "Team 4 GBM/NSS was temporary and is not a production/cost model",
+    "dcf_wacc_equity_bridge": "Unified DCF methodology; identical across all four valuations",
+    "common_input_hashes": {
+      "operating_production_koz": "B4F99BFC78C99D819257F05A7CC1F5B12AC84A03FF8C8180DF03E3CB5EB02EE4",
+      "operating_cost_usd_per_oz": "27B60B98E21FB65A3B1F98E91BAE9896FE5AD6A2640BDB090C4FAD72F30424C8",
+      "unified_dcf": "69E9B341A3B5ABC0628D7891533249EAD8812B6D6783A08815596BD4B0D0A5C3",
+      "unified_wacc_parameters": "056EAE5FE2D43F252600240268C4D631E8C742D9CDC5AD4AB50C6C0ADC4A38E9",
+      "equity_bridge": "4F28B8DD8E9FCAFB8ACF8CA12B9370C2EB64B7793DEA0EF5D1EA315C8E15F18F",
+      "common_gold_scenario": "4D32D8C75743CAB133D6839366D1927D03560D5C1CCDBEA4C8A26B5170C813C8"
+    },
+    "wacc_shocks_sha256": "82F9F59821DBB2DA513059E2308716A654406E150E119FAD2D6A76CF4A8F76B3",
+    "wacc_identical_across_models": true,
+    "gold_engine_base_seed_alignment": "All four price engines use the same aligned base seed; WACC shocks are independent and reused exactly across models."
+  },
+  "conditional_bridge": {
+    "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+    "source_instrument": "GLD call options",
+    "destination_variable": "gold USD/troy oz scenario paths",
+    "validated_physical_forecast": false,
+    "q_to_p_mapping": "NOT_VALIDATED",
+    "gld_to_gold_level_conversion": "NOT_PERFORMED; engines share an independently sourced Barrick realized-price level anchor",
+    "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+  },
+  "calibration_snapshot": {
+    "surface_as_of_utc": "2026-09-02",
+    "treasury_curve_date": "2026-09-02",
+    "instrument": "GLD calls",
+    "measure": "option-implied risk-neutral calibration",
+    "eligible_surface_points_pre_sampling": 605,
+    "eligible_expiries_pre_sampling": 12,
+    "eligible_unique_strikes_pre_sampling": 146,
+    "eligible_dte_range": [
+      79,
+      653
+    ],
+    "dense_cc64_points": 64,
+    "dense_cc64_expiries": 8,
+    "dense_cc64_unique_strikes": 20,
+    "in_sample_best_iv_rmse_model": "heston",
+    "oos_best_date_equal_iv_rmse_model": "full_bates_hawkes",
+    "current_surface_used_for_recalibration": true
+  },
+  "asynchronous_dates": {
+    "gold_anchor": "2026-06-30",
+    "team8_surface": "2026-09-02",
+    "team8_treasury_curve": "2026-09-02",
+    "b_close": "2026-09-02T00:00:00Z",
+    "valuation_as_of": "2026-09-02T20:00:00Z"
+  },
+  "interpretation": "conditional transfer of GLD/Q distributional shape to gold USD/oz; research sensitivity only, not a validated physical forecast, fair value, target price or investment recommendation"
+}

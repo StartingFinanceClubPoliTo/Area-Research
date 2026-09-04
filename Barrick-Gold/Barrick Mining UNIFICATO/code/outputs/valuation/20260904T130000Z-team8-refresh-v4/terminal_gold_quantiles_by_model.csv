@@ -1,0 +1,37 @@
+model_id,model,quantile_pct,terminal_gold_usd_per_oz
+black_scholes,Black-Scholes / GBM,1,1315.8858847913793
+black_scholes,Black-Scholes / GBM,5,1877.5968768155099
+black_scholes,Black-Scholes / GBM,10,2311.4019137567443
+black_scholes,Black-Scholes / GBM,25,3254.643437218704
+black_scholes,Black-Scholes / GBM,50,4709.224104431847
+black_scholes,Black-Scholes / GBM,75,6793.619659512997
+black_scholes,Black-Scholes / GBM,90,9633.74268180979
+black_scholes,Black-Scholes / GBM,95,11838.890449212171
+black_scholes,Black-Scholes / GBM,99,17654.022783205797
+heston,Heston,1,1156.2160015492125
+heston,Heston,5,1759.3540320970772
+heston,Heston,10,2195.3960858770774
+heston,Heston,25,3222.2019662007315
+heston,Heston,50,4702.6668735828625
+heston,Heston,75,6883.887289809745
+heston,Heston,90,9749.468922801236
+heston,Heston,95,12132.109285348557
+heston,Heston,99,18486.01659165913
+bates_poisson,Bates-Poisson,1,1221.6428244923843
+bates_poisson,Bates-Poisson,5,1853.9074055839076
+bates_poisson,Bates-Poisson,10,2286.991559402243
+bates_poisson,Bates-Poisson,25,3243.9993710588305
+bates_poisson,Bates-Poisson,50,4726.665489937195
+bates_poisson,Bates-Poisson,75,6856.85338037746
+bates_poisson,Bates-Poisson,90,9509.521111634747
+bates_poisson,Bates-Poisson,95,11609.747236315812
+bates_poisson,Bates-Poisson,99,17127.786141081124
+full_bates_hawkes,Full Bates-Hawkes,1,1110.668549452889
+full_bates_hawkes,Full Bates-Hawkes,5,1780.3098533494622
+full_bates_hawkes,Full Bates-Hawkes,10,2227.8571301961515
+full_bates_hawkes,Full Bates-Hawkes,25,3163.0937528689665
+full_bates_hawkes,Full Bates-Hawkes,50,4703.384305331474
+full_bates_hawkes,Full Bates-Hawkes,75,6827.1850567485435
+full_bates_hawkes,Full Bates-Hawkes,90,9825.672114282132
+full_bates_hawkes,Full Bates-Hawkes,95,12141.30744032573
+full_bates_hawkes,Full Bates-Hawkes,99,17745.86299467228

@@ -1,58 +1,33 @@
-# Stochastic Valuation Paper Template — v4
+# Stochastic Valuation of Barrick Mining — Team 8 refresh
 
-Scientific-paper draft for condensing the Barrick Mining Corporation stochastic valuation project into at most 10 A4 pages.
+Main file: `Articolo.tex`
 
-## What is now source-grounded
-- four gold engines: Black-Scholes/GBM, Heston, Bates-Poisson and Full Bates-Hawkes;
-- exact Full Bates-Hawkes SDE plus the affine characteristic-function / Riccati system actually used by the supplied Team 8 implementation;
-- vega-scaled calibration loss, admissibility constraints and separation of in-sample calibration from one-step-ahead OOS validation;
-- frozen 12 August valuation calibration versus the separate 26 August Chebyshev sampling audit;
-- Team 4 cost model: log-space ARIMA(3,1,0) with drift, AIC/BIC selection, residual diagnostics and 12-period hold-out evidence;
-- Team 4 production model: physical decomposition, SARIMA specifications for ore and grade, bounded recovery process, and explicit note that AIC/BIC selection is not documented for these production orders;
-- Team 5 stochastic DCF mapping and the current reconciliation limits;
-- primary valuation distribution, cross-model comparison and OOS option-model evidence.
+Engine: pdfLaTeX
 
-## Scientific compression rule
-The paper is not a compressed chapter-by-chapter thesis. Keep equations that define the implemented models, tests that justify or reject them, one primary valuation distribution, one compact cross-model comparison and the interpretation-changing limitations. Remove duplicated audit tables and descriptive histories first.
+Release date: **TBD**
 
-## Project skill
-Use `skills/stochastic-valuation-paper/SKILL.md` for every new source batch. The skill requires explicit source status (`accepted`, `diagnostic`, `placeholder`, `superseded`, `unverified`) and prevents conflicting snapshots from being silently merged.
+## Frozen evidence
+
+- September 2, 2026 GLD surface: 605 eligible calls, 12 expiries, 146 strikes and DTE 79–653 before sampling.
+- Fixed 8×8 Chebyshev–Chebyshev geometry: 64 distinct actual contracts, 8 expiries and 20 strikes.
+- Same-date U.S. Treasury NSS fit: 14 tenors and 2.0608 bp RMSE.
+- In-sample IV RMSE (bp): Black–Scholes 97.2107; Heston 49.4881; Bates 54.6273; Full Bates–Hawkes 52.9714.
+- Date-equal rolling OOS IV RMSE (bp): 140.6528; 80.1964; 69.3055; 65.0507, respectively.
+- Rolling validation: 31 dense dates, 30 origins and 4,667 common forecasts.
+- Full Bates–Hawkes branching ratio: 0.556903.
+- Barrick valuation run: `20260904T130000Z-team8-refresh-v4`, 8,192 paths, market reference USD 44.13.
+
+## Scientific contract
+
+The paper compares Black–Scholes/GBM, Heston, Bates–Poisson and Full Bates–Hawkes while holding the Team 4 operating layer and unified DCF/WACC/equity bridge fixed. Heston is the current-snapshot calibration winner; Full Bates–Hawkes is the rolling OOS winner and therefore the primary structural scenario. The option calibration is risk-neutral and its transfer to gold USD/oz is conditional.
+
+Row-level option observations are excluded. The public executable companion stores source code, aggregate calibration/OOS evidence, immutable manifests and the authoritative valuation outputs under [`../../Barrick Mining UNIFICATO/code/`](../../Barrick%20Mining%20UNIFICATO/code/).
 
 ## Compile
+
 ```bash
 pdflatex Articolo.tex
 pdflatex Articolo.tex
 ```
 
-The bibliography is frozen in `main.bbl`; `references.bib` remains the editable source ledger.
-
-
-Updated v5: added cover page, compact residual diagnostics, Welch--Goyal figure, jump-intensity comparison, multimodel distribution overlay, and affiliations for Universita di Torino and Universita di Padova.
-
-
-V7 layout pass: three render/inspect/reflow iterations. Keywords removed; JEL moved to the left metadata column and updated to G12, G13, G31, C32, C53, C61, C63. Section headings forced ragged-right, centering leakage removed, operating figures rebalanced, OOS diagnostics condensed, bibliography pulled onto the final page, and the paper reduced to 7 pages including the cover.
-
-
-Updated v8: introduction expanded to describe the thesis-style pedagogical companion, interdisciplinary rationale, and the distinct roles of Teams 1-8 in the integrated Barrick research architecture.
-
-## v9 layout revision (28 August 2026)
-- First research page masthead simplified to date at top-left and SFC PoliTo logo at top-right.
-- Footer simplified globally to centered page number only.
-- Section 5 receives explicit vertical spacing to prevent crowding with the preceding operating-evidence block.
-- Section 7 rebuilt as two equal-width minipage columns for a true half-page / half-page composition.
-
-
-### v10 layout micro-adjustments
-- Added 0.5 cm before the Evidence status box in Section 5.1.
-- Lowered Table 3 to align it horizontally with Table 4.
-- Increased separation between Tables 3/4 and the following multimodel distribution figure.
-
-## v11 handoff revision (29 August 2026)
-
-- Figure 6 is now a readable 2×2 comparison: two residual heatmaps per row.
-- The paper compiles to 9 A4 pages, including cover and references, with no
-  errors, undefined references, overfull boxes or underfull boxes.
-- The final project is packaged in the SF five-folder layout; build products
-  and visual-QA files stay outside this `Overleaf/` source folder.
-- The quantitative companion is `../../../UNIFICATO/Github-Branch/`; its
-  handoff interface reports `READY` and the complete suite passes 60/60 tests.
+The current result is eight A4 pages including cover and references. The full rendered document and the clean Overleaf package were checked on September 4, 2026.

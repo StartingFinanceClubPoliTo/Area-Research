@@ -40,8 +40,8 @@ def parse_args() -> argparse.Namespace:
 def run(args: argparse.Namespace) -> dict:
     config_path = args.config.resolve()
     payload = json.loads(config_path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "2.0":
-        raise ValueError("multimodel config schema_version must be 2.0")
+    if str(payload.get("schema_version")) not in {"2.0", "3.0", "4.0"}:
+        raise ValueError("multimodel config schema_version must be 2.0, 3.0 or 4.0")
     run_id = args.run_id or (
         datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         + "-conditional-multimodel-v4"
@@ -83,10 +83,11 @@ def run(args: argparse.Namespace) -> dict:
 def main() -> None:
     manifest = run(parse_args())
     print(f"Run: {manifest['run_id']}")
+    observed = manifest["observed_market_price"]["price_usd"]
     for row in manifest["model_summaries"]:
         print(
             f"{row['model']}: median ${row['median_value_per_share_usd']:.2f}; "
-            f"P(V > $48.39) {row['probability_model_value_exceeds_observed']:.2%}"
+            f"P(V > ${observed:.2f}) {row['probability_model_value_exceeds_observed']:.2%}"
         )
     print("Scope: GOLD_PRICE_LAYER_ONLY")
     print("Status: PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET")

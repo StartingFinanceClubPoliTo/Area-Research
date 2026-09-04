@@ -1,4 +1,4 @@
-# Stoikov-Avellonada 📉
+# Avellaneda-Stoikov 📉
 
 📄 Article PDFs are published on the Starting Finance Club PoliTo website: https://sfclubpolito.it/pubblicazioni. This GitHub repository contains code, data notes, and reproducibility assets.
 
@@ -19,7 +19,7 @@ Research materials on market making, with a focus on simulation-based explanatio
 ## 🗂️ Structure
 
 ```text
-Stoikov-Avellonada/
+Avellaneda-Stoikov/
 |-- README.md
 |-- Article-1/
 |   |-- README.md

@@ -24,10 +24,12 @@ This repository is research material. It does not provide financial advice or tr
 | `img/diagnostics_ibkr/` | Article-ready diagnostic figures and aggregate supporting tables; row-level diagnostic CSVs stay local. |
 | `outputs/` | Local generated runs; ignored by Git except for the placeholder. |
 | `paper/` | Methodological LaTeX fragments supporting the article revision. |
+| `.gitignore` | Publication boundary for environments, caches, local workflows, row-level market data, and generated runs. |
+| `requirements.txt` | Runtime Python dependencies for the published scripts. |
 | `CALIBRATION_WORKFLOW.md` | Detailed calibration, resume, and output conventions. |
 | `SOURCE_MANIFEST.txt` | Provenance and hashes for the clean source snapshot. |
 
-Folder-level README files document the role and publication policy of each major area.
+Folder-level README files document every published file in the corresponding area, together with its role and publication policy. See `src/README.md` for the complete 22-module source index.
 
 ## ⚙️ Setup
 

@@ -5,3 +5,9 @@ Locally generated dated GLD option surfaces are the primary inputs for structure
 Use `src/audit_market_data.py` before calibration. Duplicate representations of a date are resolved by selecting the richest valid surface after the official filters, and the chosen path must be recorded in the run manifest.
 
 The surface CSV files are intentionally excluded from Git because they contain row-level market observations and contract identifiers. Only this documentation and the public Treasury curve-fit metadata used by the final dense-date exercise are versioned.
+
+## Versioned file
+
+| File | Role |
+| --- | --- |
+| `GLD_2026-09-02_nss_curve.json` | Records the public Treasury NSS parameters, fit target, tenor count, and error diagnostics used for the final dense date. |

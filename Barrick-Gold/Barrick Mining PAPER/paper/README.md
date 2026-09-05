@@ -1,27 +1,32 @@
-# Stochastic Valuation of Barrick Mining — Team 8 refresh
+# Barrick Stochastic Valuation Paper - Team 8 refresh
 
-Main file: `Articolo.tex`
+Scientific paper for the integrated Barrick Mining stochastic-valuation project. The publication date remains **TBD** while the corporate bridge and final editorial review are unfinished.
 
-Engine: pdfLaTeX
+## Current evidence snapshot
 
-Release date: **TBD**
+- Team 8 option and Treasury snapshot: 2 September 2026.
+- Dense GLD surface before sampling: 605 eligible calls, 12 expiries, 146 distinct strikes, DTE 79--653.
+- Official calibration geometry: fixed 8x8 Chebyshev--Chebyshev sample of 64 distinct actual contracts, spanning 8 expiries and 20 strikes.
+- U.S. Treasury input: same-date NSS fit on 14 tenors, RMSE 2.0608 bp against the continuously compounded par-yield proxy.
+- In-sample IV RMSE winner: Heston, 49.4881 bp.
+- Dense-only rolling OOS winner: Full Bates--Hawkes, 65.0507 bp date-equal IV RMSE over 30 origins and 4,667 common forecasts.
+- Hawkes branching ratio: 0.556903, stationary and economically material.
+- Barrick conditional valuation: 8,192 paths; 2 September close USD 44.13; all four medians lie between USD 35.14 and USD 35.87.
 
-## Frozen evidence
+## Implemented model stack
 
-- September 2, 2026 GLD surface: 605 eligible calls, 12 expiries, 146 strikes and DTE 79–653 before sampling.
-- Fixed 8×8 Chebyshev–Chebyshev geometry: 64 distinct actual contracts, 8 expiries and 20 strikes.
-- Same-date U.S. Treasury NSS fit: 14 tenors and 2.0608 bp RMSE.
-- In-sample IV RMSE (bp): Black–Scholes 97.2107; Heston 49.4881; Bates 54.6273; Full Bates–Hawkes 52.9714.
-- Date-equal rolling OOS IV RMSE (bp): 140.6528; 80.1964; 69.3055; 65.0507, respectively.
-- Rolling validation: 31 dense dates, 30 origins and 4,667 common forecasts.
-- Full Bates–Hawkes branching ratio: 0.556903.
-- Barrick valuation run: `20260904T130000Z-team8-refresh-v4`, 8,192 paths, market reference USD 44.13.
+- Black--Scholes/GBM, Heston, Bates--Poisson and Full Bates--Hawkes;
+- vega-scaled option calibration with admissibility constraints;
+- fixed CC64 geometry and dense-only next-available-date rolling validation;
+- Heston variance and Hawkes intensity state projection to the target date;
+- Team 4 Q1--Q2 2026 actuals plus the frozen Q3 2026--2030 operating forecast;
+- one common Team 5-style DCF, WACC shock array and equity bridge across all four gold engines.
 
-## Scientific contract
+The companion implementation and versioned run are maintained in the [Research repository](https://github.com/StartingFinanceClubPoliTo/Research/tree/main/Barrick-Gold/Barrick%20Mining%20UNIFICATO/code). Row-level option observations are intentionally excluded from the publication package.
 
-The paper compares Black–Scholes/GBM, Heston, Bates–Poisson and Full Bates–Hawkes while holding the Team 4 operating layer and unified DCF/WACC/equity bridge fixed. Heston is the current-snapshot calibration winner; Full Bates–Hawkes is the rolling OOS winner and therefore the primary structural scenario. The option calibration is risk-neutral and its transfer to gold USD/oz is conditional.
+## Scientific interpretation
 
-Row-level option observations are excluded. The public executable companion stores source code, aggregate calibration/OOS evidence, immutable manifests and the authoritative valuation outputs under [`../../Barrick Mining UNIFICATO/code/`](../../Barrick%20Mining%20UNIFICATO/code/).
+The paper is a controlled attribution exercise. Heston is the current-snapshot calibration winner, whereas Full Bates--Hawkes is the rolling OOS winner. The GLD risk-neutral distributional shape is transferred to a separately sourced gold level without claiming a validated GLD-to-ounce or risk-neutral-to-physical mapping. Output distributions are research sensitivities, not fair values, confidence intervals, price targets or investment recommendations.
 
 ## Compile
 
@@ -30,4 +35,10 @@ pdflatex Articolo.tex
 pdflatex Articolo.tex
 ```
 
-The current result is eight A4 pages including cover and references. The full rendered document and the clean Overleaf package were checked on September 4, 2026.
+The bibliography is frozen in `sections/07_references.tex`; no BibTeX step is required. For Overleaf, upload the project ZIP, choose `Articolo.tex` as the main document, and select pdfLaTeX.
+
+This clean upload package contains two synchronized LaTeX entry points, ten included sections, the cover and logo, the bibliography ledger, 21 scientific images and five contact icons with their Font Awesome license. Generated `.aux`, `.log`, `.out`, `.synctex`, nested ZIP and obsolete image files are excluded.
+
+## Refresh revision - 5 September 2026
+
+The Team 8 data, sampling, Treasury, calibration, residual, rolling OOS, Hawkes-intensity and Barrick valuation evidence use one synchronized snapshot. The article has seven body pages plus the cover, with unchanged font and margins and continuous two-column flow. The project/collaboration context is separate from the scientific introduction. Clickable institutional contacts appear before JEL classification. Figures 5 and 12 use independent vertical panels; Figure 6 uses two vertical residual-map blocks and Figure 13 stacks both benchmark charts. The calibration RMSE table appears at the first fit discussion. The cost assumption is prudential relative to otherwise identical efficiency-improvement scenarios, not a mathematical valuation lower bound. The article remains a working draft with release date TBD.

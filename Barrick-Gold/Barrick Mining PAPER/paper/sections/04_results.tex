@@ -23,11 +23,13 @@ Paths above market & 40.76\% \\
 The completed 2 September market close is above the Full Bates--Hawkes conditional median but remains inside a wide right-skewed distribution. The result leans toward overvaluation relative to this model median; it does not establish market mispricing.
 \end{findingbox}
 
+\noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/fig_val_primary.png}
   \captionof{figure}{Conditional Barrick value-per-share distribution under the Full Bates--Hawkes gold layer. The reference line is the 2 September 2026 close. The common operating and corporate layers are reused across 8,192 paths; the interval is neither a target-price range nor a confidence interval.}
   \label{fig:value_distribution}
 \par}
+\end{minipage}\par
 
 \subsection{Cross-model central tendency}
 The refreshed 2 September run places all four conditional medians in a narrow USD~35.14--35.87 range. Their upper tails nevertheless remain broad: P90 values range from USD~101.43 to USD~104.72. With operations, WACC shocks and the DCF mapping fixed, these differences isolate the distributional effect of the option-implied gold engine.
@@ -51,24 +53,10 @@ Full Bates--Hawkes & 35.14 & 40.76\% \\
 \subsection{Why Full Bates--Hawkes is primary}
 Full Bates--Hawkes is displayed as the primary structural sensitivity because it combines stochastic variance with self-exciting jumps and records the lowest date-equal rolling OOS IV RMSE. This choice is not an in-sample claim: Heston has the lowest current-snapshot IV RMSE. The fitted Hawkes branching ratio of 0.5569 satisfies $n<1$ and indicates a materially persistent, but stationary, self-excitation channel.
 
-\begin{table}[H]
-\centering
-\caption{Current-surface IV calibration RMSE.}
-\label{tab:iv_rmse}
-\begin{tabular}{@{}lr@{}}
-\toprule
-Model & RMSE (bp) \\
-\midrule
-Black--Scholes & 97.2107 \\
-Heston & 49.4881 \\
-Bates--Poisson & 54.6273 \\
-Full Bates--Hawkes & 52.9714 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
+\noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/fig_val_multi.png}
   \captionof{figure}{Conditional Barrick value distributions under the four refreshed gold-price engines. The USD~44.13 close is above every median. Operations, WACC and the DCF mapping are common across models.}
   \label{fig:multimodel_value_overlay}
 \par}
+\end{minipage}\par

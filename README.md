@@ -26,7 +26,7 @@ This repository collects scripts, notebooks, curated outputs, and documentation 
 | Article 5 | [Three-Stage DCF with Simulated Data](./Barrick-Gold/Three-Stage-DCF/) | Federico Vesco, Lorenzo Pietra, Bader Moussaif | May 30, 2026 | Synthetic three-stage DCF and Monte Carlo simulation, with generated figures, CSV outputs, and the published PDF linked in the article README. |
 | Article 6 | [Beyond Black-Scholes Synthetic Examples](./Barrick-Gold/JumpSVFourier/) | [Davide Sisto](https://github.com/sistox5), Matteo Armando | June 12, 2026 | Synthetic jump, stochastic-volatility, Fourier, and Hawkes examples, with the published PDF linked in the article README. |
 | Article 7 | [Gold, Monetary Regimes, and Volatility Dynamics](./Barrick-Gold/Gold-Volatility-Research/) | [Davide D'Amico](https://github.com/0fmate), Pietro Weisz | June 19, 2026 | Gold, silver, dollar, equity, and Treasury-yield data pipeline with tables and figures. |
-| Article 8 | [Advanced Stochastic Modeling for Gold Options](./Barrick-Gold/Gold-Options-Stochastic-Modeling/) | [0c0c](https://github.com/0c0c), [SalvatoreMessina11](https://github.com/SalvatoreMessina11) | July 3, 2026 | Black-Scholes, Heston, and Bates calibration notebooks for GLD options. |
+| Article 8 | [Advanced Stochastic Modeling for Gold Options](./Barrick-Gold/Gold-Options-Stochastic-Modeling/) | [0c0c](https://github.com/0c0c), [SalvatoreMessina11](https://github.com/SalvatoreMessina11) | September 4, 2026 | Black-Scholes, Heston, Bates-Poisson and Full Bates-Hawkes calibration, diagnostics and rolling validation for GLD options. |
 
 ## 🗂️ Repository Map
 

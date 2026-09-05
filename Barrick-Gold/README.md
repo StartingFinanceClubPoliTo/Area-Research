@@ -15,7 +15,7 @@
 | Article 7 | [Gold, Monetary Regimes, and Volatility Dynamics](./Gold-Volatility-Research/) | Davide D'Amico, Pietro Weisz | June 19, 2026 | Gold/silver econometrics, volatility diagnostics and generated tables. |
 | Article 8 | [Advanced Stochastic Modeling for Gold Options](./Gold-Options-Stochastic-Modeling/) | Alessandro Coco, Salvatore Gabriele Messina | **September 4, 2026** | Public Team 8 source package, same-date Treasury curve, aggregate calibration/OOS evidence and figures. |
 | Unified thesis | [Barrick Mining UNIFICATO](./Barrick%20Mining%20UNIFICATO/) | Barrick Gold Research Teams | **TBD** | Working thesis plus the versioned executable companion. |
-| Research paper | [Barrick Mining PAPER](./Barrick%20Mining%20PAPER/) | Barrick Gold Research Teams | **TBD** | Eight-page working paper refreshed to the Team 8 snapshot of September 2, 2026. |
+| Research paper | [Barrick Mining PAPER](./Barrick%20Mining%20PAPER/) | Barrick Gold Research Teams | **TBD** | Eight-page working paper (seven body pages plus cover) refreshed to the Team 8 snapshot of September 2, 2026. |
 
 ## Repository map
 

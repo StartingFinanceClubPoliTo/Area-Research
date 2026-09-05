@@ -3,6 +3,13 @@
 \subsection{Controlled layer separation}
 The integrated experiment is organized as a controlled handoff across three modules. Team 8 governs only the gold-price process; Team 4 supplies the operating forecasts; and Team 5 maps those inputs through a common tax, WACC, terminal-value and equity-bridge contract. In the four-model valuation comparison, only the gold engine changes. Barrick's Q1--Q2 2026 actuals and the same Team 4 production and unit-cost forecasts from Q3 2026 onward are frozen over 20 quarters; the same Team 5 corporate rules and WACC shocks are then reused across runs.
 
+
+
+\subsection{Calibration snapshot and measure discipline}
+The current Team 8 calibration uses the 2 September 2026 GLD call surface. After the common DTE $\geq75$ and numerical filters, the dense surface contains 605 eligible observations across 12 expiries and 146 distinct strikes, with 79--653 days to expiry. The official $8\times8$ Chebyshev--Chebyshev sample contains 64 distinct actual contracts spanning eight expiries and 20 strikes. The risk-free input is a same-date NSS fit to 14 U.S. Treasury tenors. Its 2.0608 bp RMSE is computed against the continuously compounded par-yield proxy; the curve is not described as a bootstrapped zero curve. The Barrick market reference is the 2 September close of USD~44.13, while the common gold anchor remains Barrick's Q2 2026 average realized price of USD~4,417/oz. Only the level anchor is therefore asynchronous with the option and rate snapshot.
+
+The option layer is estimated under the risk-neutral measure $\mathbb Q$. In the corporate experiment, only the option-implied distributional shape is transferred to the realized-price anchor. No one-for-one GLD-share-to-gold-ounce conversion and no validated $\mathbb Q\rightarrow\mathbb P$ transformation are claimed.
+
 \begin{table}[H]
 \centering
 \caption{Frozen contract used for model attribution.}
@@ -18,11 +25,6 @@ Simulation & 8,192 paths, 260 fine steps, 20 quarters and a common WACC shock ar
 \bottomrule
 \end{tabularx}
 \end{table}
-
-\subsection{Calibration snapshot and measure discipline}
-The current Team 8 calibration uses the 2 September 2026 GLD call surface. After the common DTE$geq75$ and numerical filters, the dense surface contains 605 eligible observations across 12 expiries and 146 distinct strikes, with 79--653 days to expiry. The official $8\times8$ Chebyshev--Chebyshev sample contains 64 distinct actual contracts spanning eight expiries and 20 strikes. The risk-free input is a same-date NSS fit to 14 U.S. Treasury tenors. Its 2.0608 bp RMSE is computed against the continuously compounded par-yield proxy; the curve is not described as a bootstrapped zero curve. The Barrick market reference is the 2 September close of USD~44.13, while the common gold anchor remains Barrick's Q2 2026 average realized price of USD~4,417/oz. Only the level anchor is therefore asynchronous with the option and rate snapshot.
-
-The option layer is estimated under the risk-neutral measure $\mathbb Q$. In the corporate experiment, only the option-implied distributional shape is transferred to the realized-price anchor. No one-for-one GLD-share-to-gold-ounce conversion and no validated $\mathbb Q\rightarrow\mathbb P$ transformation are claimed.
 
 \subsection{Operating-model status}
 Team 4's original operating study is richer than the object ultimately passed downstream. Cost of Sales is forecast from a log-space master chain; production is constructed bottom-up from ore processed, average grade and recovery. The unified valuation refreshes the handoff with 2026 actuals but still freezes the resulting 20-quarter production and cost vectors. Consequently, mine-level operating uncertainty is not propagated jointly with gold-price uncertainty. Team 4's legacy price simulation and illustrative EBITDA/valuation output are explicitly excluded.

@@ -9,7 +9,7 @@ from .base import GoldPriceModel, GoldSimulationContext
 
 class FullBatesHawkesGoldModel(GoldPriceModel):
     model_id = "full_bates_hawkes"
-    label = "Full Bates–Hawkes"
+    label = "Full Bates-Hawkes"
 
     def _simulate_fine(self, context: GoldSimulationContext) -> np.ndarray:
         return context.team8_module.simulate_full_hawkes_paths(

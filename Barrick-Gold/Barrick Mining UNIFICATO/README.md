@@ -21,10 +21,12 @@ The authoritative code run is `20260904T130000Z-team8-refresh-v4`, based on the 
 
 | Path | Role |
 | --- | --- |
-| `thesis/` | Working unified-thesis sources and compiled PDF, dated `TBD`. The prose/figures remain a prior editorial snapshot until the separate thesis merge is completed. |
+| `thesis/` | September-refreshed unified thesis, 198-page PDF and complete build sources, dated `TBD`; historical evidence is explicitly dated. |
 | `code/` | Current Team 8 adapter, valuation engine, aggregate evidence, tests, manifests and immutable outputs. |
 
-The current paper-level analysis is in [`../Barrick Mining PAPER/`](../Barrick%20Mining%20PAPER/). Licensed/provider-controlled row-level option data are intentionally excluded.
+The current paper-level analysis is in [`../Barrick Mining PAPER/`](../Barrick%20Mining%20PAPER/). Licensed/provider-controlled row-level option data are intentionally excluded. The complete 17-student authorship and module inventory are in the [code README](code/README.md).
+
+Persistence comparisons use 4,026 interpolation-domain observations, distinct from the 4,667 model-comparison targets; none of the models beats persistence. The NSS input is a continuously compounded par-yield proxy, not a bootstrapped zero curve.
 
 ## Reproduce the current run
 

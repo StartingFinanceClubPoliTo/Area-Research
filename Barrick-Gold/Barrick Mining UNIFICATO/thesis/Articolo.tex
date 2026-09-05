@@ -181,34 +181,38 @@ current stub; Team~4 forecasts begin at Q3 and remain explicitly labelled.
 The unified tax, growth, ROIC, stochastic WACC, terminal-value and
 equity-bridge adaptation is common. Team~4's legacy NSS, IV, GBM and
 illustrative stochastic EBITDA artifacts are excluded. In their place, the
-current Team~8 build fits an independent Nelson--Siegel--Svensson curve to 11
-same-date LSE US Treasury tenors and uses it consistently for option-maturity
-rates and integral-preserving quarterly forward rates. The NSS fit has a 2.37
-basis-point RMSE; the requested 10Y tenor is unavailable on the common 24 July
-2026 curve date. Team~8 calibrates GLD calls under the risk-neutral measure. On
-the 27 August 2026 surface, Full Bates--Hawkes has the lowest in-sample IV RMSE:
-32.49 basis points, against 56.55 for Bates--Poisson, 86.28 for Heston and
-114.04 for Black--Scholes. Its self-excitation ratio reaches the imposed 0.02
-lower bound, so the richer specification is a primary in-sample structural
-scenario, not evidence of strong Hawkes identification or predictive dominance.
+current Team~8 build fits an independent Nelson--Siegel--Svensson curve to
+14 U.S. Treasury tenors dated 2 September 2026. Its 2.0608 basis-point RMSE
+is measured against a continuously compounded par-yield proxy, not a
+bootstrapped zero curve. The same curve supplies option-maturity rates and
+integral-preserving quarterly forward rates. The dense GLD surface contains
+605 eligible calls across 12 expiries and 146 strikes; a fixed Chebyshev sample
+selects 64 actual contracts across eight expiries and 20 strikes.
+Heston has the lowest current in-sample IV RMSE, 49.4881 basis points, against
+97.2107 for Black--Scholes, 54.6273 for Bates--Poisson and 52.9714 for
+Full Bates--Hawkes. The latter is the primary structural scenario because it
+has the lowest date-equal rolling OOS IV RMSE, 65.0507 basis points across
+30 forecast origins and 4,667 common forecasts. No model beats interpolated
+IV-surface persistence. Its current branching ratio is 0.5569, below unity;
+this snapshot does not establish parameter stability across regimes.
 The accepted comparison uses 8,192 paths over 20 quarters and one common WACC
-shock array. At the latest completed LSE close, \texttt{B} was USD 47.27 per
-share on 27 August 2026. Under Full Bates--Hawkes, the conditional
-P10/P25/P50/P75/P90 values are USD 3.31/15.15/34.94/65.11/104.81; the close is
-USD 12.33, or 35.27\%, above the median, lies near the 62.27th percentile and
-is exceeded by 37.73\% of paths. The four model medians are USD 34.50, 39.48,
-23.99 and 34.94 for Black--Scholes, Heston, Bates--Poisson and Full
-Bates--Hawkes. The comparison places the close above each conditional median,
-but does not establish market mispricing. It transfers only GLD/$\mathbb Q$
-distributional shape to paths restarted at Barrick's Q2 average realised-price
-anchor of USD~4,417/oz: it performs neither a one-for-one GLD level conversion
-nor a validated $\mathbb Q$-to-$\mathbb P$ mapping. Inputs remain asynchronous---
-anchor quarter ending 30 June, Treasury curve 24 July, and calibration surface
-and Barrick close on 27 August 2026.
+shock array. The frozen market reference is the USD~44.13 close on 2 September
+2026. Under Full Bates--Hawkes, conditional P10/P25/P50/P75/P90 values are
+USD~3.13/14.85/35.14/65.24/104.72. The close is USD~8.99, or 25.58\%, above
+the median, lies at the 59.24th percentile and is exceeded by 40.76\% of paths.
+The four medians range from USD~35.14 to USD~35.87. This comparison does not
+establish market mispricing. Only GLD/$\mathbb Q$ distributional shape is
+transferred to paths restarted at Barrick's Q2 average realised-price anchor
+of USD~4,417/oz; no one-for-one GLD conversion or validated
+$\mathbb Q$-to-$\mathbb P$ mapping is performed. The surface, Treasury curve
+and equity close share 2 September, while the anchor quarter ends 30 June.
+Persistent costs grant no additional technology-driven reductions, making
+the assumption prudential relative to otherwise identical efficiency scenarios,
+not a mathematical lower bound on value.
 Component margin and FCFF remain proxies; debt, cash, minorities,
 non-operating assets and other equity adjustments are zero placeholders, and
 the 1,675.51 million-share input is unreconciled. The 86-bar Barrick window and
-24-node current option-surface calibration are dated diagnostics. Timestamped
+August market-context diagnostics are historical, not current calibration evidence. Timestamped
 news and an NLP/ML
 filtration for geopolitical and macroeconomic shocks remain absent.
 Accordingly, the reported distributions are controlled research sensitivities,

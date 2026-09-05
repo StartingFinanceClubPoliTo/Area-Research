@@ -6,9 +6,9 @@ Engine: pdfLaTeX
 
 Release date: **TBD**
 
-The thesis project is self-contained and compiles to the Research template. Its current PDF is explicitly a working draft. The thesis prose and figures still document the earlier unified snapshot; they must not be read as the current Team 8 evidence.
+The self-contained Research working draft now integrates September calibration, dense OOS diagnostics and the conditional corporate valuation. Historical August examples remain explicitly dated; they are not current calibration evidence.
 
-The current executable Team 8/Barrick experiment is maintained in [`../code/`](../code/):
+The current executable Team 8/Barrick experiment is maintained in the [Research companion](https://github.com/StartingFinanceClubPoliTo/Research/tree/main/Barrick-Gold/Barrick%20Mining%20UNIFICATO/code):
 
 - snapshot date September 2, 2026;
 - authoritative run `20260904T130000Z-team8-refresh-v4`;
@@ -16,4 +16,6 @@ The current executable Team 8/Barrick experiment is maintained in [`../code/`](.
 - Full Bates–Hawkes best rolling OOS IV RMSE at 65.0507 bp;
 - Barrick market reference USD 44.13.
 
-The compact paper in [`../../Barrick Mining PAPER/`](../../Barrick%20Mining%20PAPER/) has already been refreshed to that evidence. A later, separately reviewed thesis merge will replace the earlier Team 8 chapters and figures. Until then, use the code manifests and the compact paper for current quantitative claims.
+Heston has the best current in-sample IV RMSE. Full Bates-Hawkes leads the four-model dense OOS ranking, but no model beats observed-IV persistence. Model targets contain 4,667 observations; persistence comparisons have 4,026. The Treasury curve is a par-yield proxy, not a bootstrapped zero curve.
+
+Compile `Articolo.tex` with pdfLaTeX. Upload `chapters/`, `img/` and the Research cover with the main file. Build by-products and continuity registers stay outside Overleaf. The measure transfer, accounting/equity bridge and corporate assumptions remain qualified research limitations, not a finished valuation product.

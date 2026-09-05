@@ -2,17 +2,31 @@ from __future__ import annotations
 
 import copy
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from barrick_unified.multimodel_valuation import MODEL_ORDER, run_multimodel_valuation
+from barrick_unified.multimodel_valuation import load_multimodel_inputs
+from barrick_unified.multimodel_reporting import write_multimodel_outputs, sha256
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = (
     PROJECT_ROOT / "config" / "multimodel_valuation_20260902_team8_refresh.json"
 )
+
+
+@pytest.fixture(autouse=True)
+def isolated_snapshot_imports(monkeypatch):
+    """Restore legacy imports after each test; keep production cache guards intact."""
+    for name in ("BatesHawkesExact", "Hawkes"):
+        monkeypatch.delitem(sys.modules, name, raising=False)
+    yield
+    for name in ("BatesHawkesExact", "Hawkes"):
+        sys.modules.pop(name, None)
 
 
 def _small_config() -> dict:
@@ -66,3 +80,33 @@ def test_hawkes_snapshot_is_stationary_and_selected_on_oos() -> None:
     assert payload["selection_basis"]["primary_structural_scenario"] == (
         "full_bates_hawkes"
     )
+
+
+def test_current_refresh_reporting_preserves_input_and_artifact_hashes(tmp_path) -> None:
+    payload = _small_config()
+    config_path = tmp_path / "small-current-config.json"
+    config_path.write_text(json.dumps(payload), encoding="utf-8")
+    run = run_multimodel_valuation(PROJECT_ROOT, payload)
+    _, base_config = load_multimodel_inputs(PROJECT_ROOT, payload)
+    run_id = "pytest-september-refresh"
+    manifest = write_multimodel_outputs(
+        run=run,
+        experiment_config=payload,
+        experiment_config_path=config_path,
+        base_config_path=base_config,
+        output_dir=tmp_path / "outputs" / "valuation" / run_id,
+        figure_dir=tmp_path / "figures" / "valuation" / run_id,
+        manifest_path=tmp_path / "data" / "manifests" / "valuation" / run_id / "run_manifest.json",
+        project_root=PROJECT_ROOT,
+        run_id=run_id,
+    )
+    assert manifest["schema_version"] == "4.0"
+    assert (tmp_path / "outputs" / "valuation" / run_id / "valuation_summary_by_model.json").is_file()
+    for entry in manifest["inputs"] + manifest["code"]:
+        candidate = (PROJECT_ROOT / entry["path"]).resolve()
+        assert sha256(candidate) == entry["sha256"]
+        assert candidate.stat().st_size == entry["bytes"]
+    for entry in manifest["artifacts"]:
+        candidate = tmp_path / entry["path"]
+        assert sha256(candidate) == entry["sha256"]
+        assert candidate.stat().st_size == entry["bytes"]

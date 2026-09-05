@@ -2,13 +2,12 @@
 
 \subsubsection{Current terminal distribution and latent-state diagnostics}
 
-The unified bands above use the current 27 August 2026 Team~8 calibration,
-8,192 paths and the independent Barrick realised-price anchor required by the
-corporate experiment. The evidence below answers a narrower question: how the
-same four parameter objects behave when simulated directly at the GLD level.
-Its 4,096 paths, 260 steps, GLD starting level of 422.57 and current NSS
-forward-rate curve must not be mixed numerically with the corporate valuation
-run.
+The current Team~8 diagnostic simulation uses the 2 September calibration,
+4,096 paths, 260 steps and the GLD level 402.78 USD/share. Its constant
+annual rate is 4.0770\%, as recorded in the diagnostic table. This standalone
+state-law illustration differs from the corporate adapter, which restarts at
+Barrick's realised-price anchor and uses integral-preserving NSS forward rates
+and 8,192 paths. Neither the levels nor the path percentiles are interchangeable.
 
 \begin{table}[H]
 \centering
@@ -18,10 +17,10 @@ run.
 \toprule
 Model & Mean & Std & P05 & P50 & P95 & Return skew & Ex. kurt. & Mean jumps \\
 \midrule
-GBM / BS & 525.152 & 337.615 & 160.343 & 445.001 & 1155.525 & 1.987 & 6.386 & 0.000 \\
-Heston & 525.968 & 245.409 & 236.774 & 470.864 & 986.776 & 1.760 & 6.523 & 0.000 \\
-Bates & 520.981 & 626.026 & 69.164 & 322.897 & 1644.251 & 4.160 & 30.699 & 8.971 \\
-Full Bates--Hawkes & 520.208 & 342.932 & 172.084 & 440.624 & 1125.802 & 3.051 & 19.888 & 8.866 \\
+GBM / BS & 490.549 & 289.852 & 160.071 & 423.839 & 1036.482 & 1.743 & 5.708 & 0.000 \\
+Heston & 495.256 & 308.314 & 164.068 & 421.222 & 1087.352 & 2.133 & 9.293 & 0.000 \\
+Bates & 496.912 & 310.039 & 161.053 & 421.499 & 1098.107 & 2.069 & 7.779 & 1.259 \\
+Full Bates--Hawkes & 494.830 & 300.874 & 164.799 & 425.021 & 1063.213 & 1.901 & 6.477 & 5.206 \\
 \bottomrule
 \end{tabular}
 \caption{Terminal GLD price and simple-return diagnostics regenerated from the

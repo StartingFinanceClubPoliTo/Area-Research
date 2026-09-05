@@ -9,7 +9,7 @@ from .base import GoldPriceModel, GoldSimulationContext
 
 class BlackScholesGoldModel(GoldPriceModel):
     model_id = "black_scholes"
-    label = "Black–Scholes / GBM"
+    label = "Black-Scholes / GBM"
 
     def _simulate_fine(self, context: GoldSimulationContext) -> np.ndarray:
         return context.team8_module.simulate_gbm_paths(

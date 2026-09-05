@@ -18,18 +18,18 @@ Several tasks described as future work in the standalone articles are now
 complete. The Team 8 project no longer stops at Black--Scholes, Heston or
 independent Bates jumps: it contains the full affine Bates--Hawkes
 specification, constrained calibration, residual and smile diagnostics,
-four-model path simulation and a 124-transition one-step-ahead comparison. Its
+four-model path simulation and a dense-only rolling comparison over 30 origins and 4,667 common forecasts. Its
 price scenarios have also been connected to Barrick 2026Q1--Q2 actuals, the
 Team~4 forecast from 2026Q3 and the unified DCF/WACC/equity contract. The
 Team~4 price demonstrator is excluded. The valuation is therefore an implemented
 four-branch experiment, not a proposed future integration.
 
 Under that common contract, the four conditional Barrick medians lie between
-USD~23.99 and USD~39.48 per share, below the completed USD~47.27 close. The
-close nevertheless remains inside every broad distribution, with 33.89--40.06\%
-of simulated values above it. Full Bates--Hawkes is the primary current-fit
-structural scenario and gives a median of USD~34.94, while Chapter~9 shows why
-this designation is not a claim of predictive dominance. The shared direction
+USD~35.14 and USD~35.87 per share, below the completed USD~44.13 close
+on 2 September 2026. The close remains inside every broad distribution,
+with 40.76--41.92\% of simulated values above it. Full Bates--Hawkes is the
+primary OOS-ranked structural scenario and gives a median of USD~35.14,
+whereas Heston is the current-snapshot fit winner. The shared direction
 is a property of the admitted assumptions, not evidence of market mispricing.
 
 The comparison further shows that changing the gold-price law affects the
@@ -46,7 +46,7 @@ long-horizon operating valuation would ideally use scenarios justified under
 \(\mathbb P\). Restarting the option-implied engines at a physical-gold level
 transfers distributional shape; it is not a validated GLD-to-gold conversion
 or change of measure. The gold start, Treasury curve, calibration surface,
-Barrick close and current surface audit are also asynchronous.
+Barrick close and current surface audit are explicitly dated: the market snapshot is 2 September, while the realised-price anchor is a Q2 average.
 
 Second, the unified run uses Barrick actuals only for 2026Q1--Q2 and fixes the
 Team~4 forecast thereafter. That design isolates price-engine risk but does not propagate reserve,
@@ -62,11 +62,16 @@ are assumptions. Finite-mine closure also remains less developed than the
 generic going-concern terminal block.
 
 Finally, a sophisticated stochastic law does not eliminate model risk. The
-current cross-section favours the Full Bates--Hawkes fit, but its branching
-ratio reaches the imposed 0.02 lower bound and the chronological test does not
-establish universal forecast superiority. Parameter pressure,
+current cross-section favours Heston, whereas Full Bates--Hawkes leads the rolling OOS ranking. Its branching ratio is 0.5569, not the former August floor. No model beats interpolated IV persistence. Parameter pressure,
 surface sampling, optimizer dependence, regime shifts and the choice of
 physical-measure transformation remain sources of uncertainty.
+
+Costs retain a persistent trend without additional technology-driven reductions.
+This is prudential relative to otherwise identical efficiency-improvement
+scenarios, not a mathematical lower bound. Stochastic operating costs would
+introduce favourable and adverse outcomes, and their conditional mean could
+remain smooth. Productivity improvements and their investment costs must be
+evaluated jointly with the growth already included in the DCF.
 
 \section*{Future research programme}
 

@@ -16,6 +16,8 @@
 \end{minipage}\par
 
 \subsection{Predictive interpretation}
+Model comparisons use 4,667 targets; persistence comparisons use the 4,026 inside the origin interpolation domain. Benchmark scores therefore have different supports; equal date weighting limits the influence of densely populated dates.
+
 The rolling exercise separates current-snapshot fit from forward performance. Date-equal IV RMSE is 140.6528 bp for Black--Scholes, 80.1964 bp for Heston, 69.3055 bp for Bates and 65.0507 bp for Full Bates--Hawkes. Relative to the origin mean-IV benchmark, the corresponding $R^2_{OOS}$ values are $-2.58\%$, $66.07\%$, $72.97\%$ and $75.81\%$. None beats interpolated IV-surface persistence, but Full Bates--Hawkes is closest at $-3.68\%$, followed by Bates at $-12.92\%$ and Heston at $-27.24\%$.
 
 \begin{findingbox}[Model-risk conclusion]
@@ -35,6 +37,8 @@ The economic reading remains conditional: calibration is under $\mathbb Q$ witho
 
 \subsection{Jump-layer interpretation}
 The self-exciting extension is motivated by clustered option-implied jump activity. Relative to the constant Poisson baseline, the Hawkes specification permits intensity bursts followed by endogenous decay. The current branching ratio is 0.5569: shocks propagate materially, while the stationarity restriction remains satisfied.
+
+Without a dated news filtration or parameter-stability evidence, these option-implied bursts cannot be identified as causal responses to geopolitical events.
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering

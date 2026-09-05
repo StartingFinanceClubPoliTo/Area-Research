@@ -10,21 +10,21 @@
 \textbf{Quantile} & \textbf{EV proxy} & \textbf{Equity proxy} & \textbf{Value/share} \\
 & \textbf{USD mn} & \textbf{USD mn} & \textbf{USD} \\
 \midrule
-P01 & -908 & -908 & -0.54 \\
-P05 & 2,504 & 2,504 & 1.49 \\
-P10 & 5,540 & 5,540 & 3.31 \\
-P25 & 25,392 & 25,392 & 15.15 \\
-P50 & 58,550 & 58,550 & 34.94 \\
-P75 & 109,095 & 109,095 & 65.11 \\
-P90 & 175,614 & 175,614 & 104.81 \\
-P95 & 228,710 & 228,710 & 136.50 \\
-P99 & 365,438 & 365,438 & 218.11 \\
+P01 & -1,767 & -1,767 & -1.05 \\
+P05 & 2,233 & 2,233 & 1.33 \\
+P10 & 5,244 & 5,244 & 3.13 \\
+P25 & 24,885 & 24,885 & 14.85 \\
+P50 & 58,879 & 58,879 & 35.14 \\
+P75 & 109,305 & 109,305 & 65.24 \\
+P90 & 175,461 & 175,461 & 104.72 \\
+P95 & 225,129 & 225,129 & 134.36 \\
+P99 & 362,345 & 362,345 & 216.26 \\
 \bottomrule
 \end{tabular}
 
 \par\smallskip
-\footnotesize The USD~47.27 close on 27 August 2026 is USD~12.33, or 35.27\%,
-above the conditional median and lies at the 62.27th percentile; 37.73\% of
+\footnotesize The USD~44.13 close on 2 September 2026 is USD~8.99, or 25.58\%,
+above the conditional median and lies at the 59.24th percentile; 40.76\% of
 paths exceed it. EV and equity coincide only because the corporate bridge
 still contains explicit zero placeholders. This is a provisional research
 sensitivity, not a fair value or target price.
@@ -40,7 +40,7 @@ sensitivity, not a fair value or target price.
 \toprule
 \textbf{Block} & \textbf{Run input} & \textbf{Interpretation limit} \\
 \midrule
-Gold-price layer & Team~8 Full Bates--Hawkes recalibrated to 27 August GLD
+Gold-price layer & Team~8 Full Bates--Hawkes recalibrated to 2 September GLD
 calls under $\mathbb Q$; paths share a USD~4,417/oz Barrick Q2 realised-price
 anchor. & Transfers distributional shape only; the anchor is a quarterly
 average, not spot or a physical forecast. \\
@@ -54,10 +54,10 @@ Equity bridge & Debt, cash, minorities, non-operating assets and other claims
 set to zero; 1,675.51 million-share proxy. & Neither bridge nor share count is
 filing-reconciled. \\
 Simulation & 8,192 paths, 260 fine steps and 20 quarters; aligned engine seed
-20260827 and one common WACC array. & Only the price engine changes across
+20260902 and one common WACC array. & Only the price engine changes across
 branches. \\
-Date alignment & Barrick anchor quarter ends 30 June; Treasury curve 24 July;
-GLD surface and \texttt{B} close 27 August; valuation run 27 August 2026.
+Date alignment & Barrick anchor quarter ends 30 June; Treasury curve 2 September;
+GLD surface and \texttt{B} close 2 September; valuation as of 2 September 2026.
 & Dates are serialized but not fully synchronous. \\
 \bottomrule
 \end{tabularx}

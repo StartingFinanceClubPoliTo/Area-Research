@@ -1,6 +1,6 @@
 # Barrick Mining PAPER 📄
 
-Compact research paper for the integrated stochastic valuation of Barrick Mining Corporation. The paper is a **eight-page working draft**; release date: **TBD**.
+Compact research paper for the integrated stochastic valuation of Barrick Mining Corporation. The paper is an **eight-page working draft**; release date: **TBD**.
 
 ## Current snapshot
 
@@ -13,6 +13,8 @@ Compact research paper for the integrated stochastic valuation of Barrick Mining
 - Conditional valuation: 8,192 paths; Barrick close USD 44.13; cross-model medians USD 35.14–35.87.
 
 The paper keeps the in-sample and out-of-sample rankings distinct and treats the GLD risk-neutral-to-gold transfer as a conditional modeling device, not a physical forecast or target price. The operating handoff deliberately retains a persistent cost trend and assumes no ex-ante benefit from future technology or efficiency gains; this is prudential relative to otherwise identical efficiency-improvement scenarios, not a mathematical lower bound.
+
+The persistence benchmark uses 4,026 interpolation-domain observations, a different support from the 4,667 model targets; no candidate beats persistence. The paper also distinguishes option-implied jump clustering from causal news attribution and flags unreconciled finite reserves, replacement investment and closure costs.
 
 ## Structure
 

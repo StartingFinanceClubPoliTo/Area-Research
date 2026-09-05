@@ -9,7 +9,7 @@ from .base import GoldPriceModel, GoldSimulationContext
 
 class BatesPoissonGoldModel(GoldPriceModel):
     model_id = "bates_poisson"
-    label = "Bates–Poisson"
+    label = "Bates-Poisson"
 
     def _simulate_fine(self, context: GoldSimulationContext) -> np.ndarray:
         parameters = tuple(

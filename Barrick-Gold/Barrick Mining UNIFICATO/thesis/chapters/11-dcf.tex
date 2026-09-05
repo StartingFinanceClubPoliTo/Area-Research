@@ -218,7 +218,7 @@ capacity and return on new capital.
 
 The equations above describe the reusable method; this section discloses the
 numbers actually passed to the current unified run. They are read from
-\path{config/provisional_valuation_20260827_team4_separated.json}, not inferred
+the common September valuation input contract, not inferred
 from the plotted valuation output. All four price branches use the same values.
 They are deliberately classified as methodological assumptions because no
 filing-level WACC, invested-capital reconstruction or mine-closure calibration
@@ -297,16 +297,16 @@ w_{y+1}&=\bar w+(w_y-\bar w)e^{-\kappa}
 with \(\bar w=8.3\%\), \(\kappa=0.45\), \(\sigma_w=0.9\%\) and independent
 standard-normal shocks. The zero-shock path is approximately 8.81\%, 8.63\%,
 8.51\%, 8.43\% and 8.38\% for years 1--5. The actual valuation uses 8,192
-stochastic WACC paths, created once with seed 20260827 and reused byte-for-byte
+stochastic WACC paths, created once with seed 20260902 and reused byte-for-byte
 under every gold model. Thus the shaded interval in
 Figure~\ref{fig:current-wacc-assumption-paths} is discount-rate uncertainty,
 whereas differences between model valuation distributions still isolate the
 price engine.
 
-\IfFileExists{img/valuation/wacc_assumption_paths.png}{%
+\IfFileExists{img/valuation/fig_wacc_assumptions.png}{%
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{img/valuation/wacc_assumption_paths.png}
+    \includegraphics[width=0.95\textwidth]{img/valuation/fig_wacc_assumptions.png}
     \caption{Initial WACC, zero-shock mean-reversion path, simulated
     P10--P90 envelope, 8.3\% long-run level and terminal-spread floor used in
     the common valuation layer.}
@@ -327,14 +327,16 @@ reports how much of positive enterprise value comes from the discounted
 terminal block under each price engine. This is the appropriate place to judge
 whether the five-year horizon leaves excessive weight in the terminal value.
 
-\IfFileExists{img/valuation/terminal_value_mechanics.png}{%
+\IfFileExists{img/valuation/fig_terminal_multiple.png}{%
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.99\textwidth]{img/valuation/terminal_value_mechanics.png}
+    \includegraphics[width=0.49\textwidth]{img/valuation/fig_terminal_multiple.png}\hfill
+    \includegraphics[width=0.49\textwidth]{img/valuation/fig_terminal_share.png}
     \caption{Terminal-value mechanics. Left: normalized sensitivity to stable
     growth and terminal WACC at the current stable ROIC. Right: actual-run
     P10, median and P90 terminal contribution to positive enterprise-value
-    paths.}
+    paths in the September refresh. Median shares are 78.26\%, 78.31\%,
+    78.43\% and 78.27\% for Black--Scholes, Heston, Bates and Full Bates--Hawkes.}
     \label{fig:current-terminal-value-mechanics}
   \end{figure}
 }{%

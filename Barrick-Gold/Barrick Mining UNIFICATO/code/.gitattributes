@@ -1,0 +1,3 @@
+# Frozen evidence is byte-hashed. Preserve original LF/CRLF/mixed bytes on checkout.
+/parity/sources/** -text
+/data/manifests/** -text

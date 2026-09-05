@@ -14,26 +14,24 @@
   right=3mm
 ]
 \small
-The latest completed LSE close available to the study is \textbf{USD 47.27 per
-\texttt{B} share on 27 August 2026}, verified in the 28 August extraction. In
-the primary Full Bates--Hawkes scenario, the conditional Barrick distribution
-has a \textbf{median of USD 34.94 per share}. The observed close is therefore
-\textbf{USD 12.33, or 35.27\%, above the model median}; it lies at the
-\textbf{62.27th percentile}, with \textbf{37.73\% of simulated values above
-it}.
+The frozen market reference is \textbf{USD 44.13 per \texttt{B} share on
+2 September 2026}. In the primary Full Bates--Hawkes scenario, the conditional
+Barrick distribution has a \textbf{median of USD 35.14 per share}. The close is
+\textbf{USD 8.99, or 25.58\%, above the median}; it lies at the
+\textbf{59.24th percentile}, with \textbf{40.76\% of simulated values above it}.
 
 \medskip
 \textbf{Directional reading.} If the median is used as the central benchmark,
 the observed close is \textbf{above this conditional model median}. This does
 not establish market mispricing:
-USD 47.27 remains inside a wide scenario distribution, while the commodity
+USD 44.13 remains inside a wide scenario distribution, while the commodity
 bridge, accounting reconciliation, equity bridge and diluted-share input are
 not yet sufficient for a fair-value claim. The comparison is not a target
 price and does not constitute investment advice.
 \end{tcolorbox}
 
-The two numbers answer different questions. USD 47.27 is the freshest verified
-completed close in the versioned Barrick dataset, not a live quotation. USD 34.94
+The two numbers answer different questions. USD 44.13 is the frozen
+completed close in the versioned Barrick dataset, not a live quotation. USD 35.14
 is the centre of a model-conditional distribution. The market observation lies
 between P50 and P75: the central scenario is below the close, but a material
 right tail remains above it. The sign of the gap answers the narrow
@@ -41,18 +39,13 @@ directional gap only relative to this specification;
 the width of the distribution describes how strongly the unresolved
 assumptions qualify that answer.
 
-\noindent\textbf{Why Full Bates--Hawkes is shown here.} The model is the primary
-structural scenario because it combines stochastic variance with
-self-exciting jumps and delivers the lowest in-sample IV RMSE on the current
-27 August GLD surface: 32.49 basis points, against 56.55 for Bates--Poisson,
-86.28 for Heston and 114.04 for Black--Scholes. Its branching ratio equals the
-0.02 lower bound, so the current surface weakly identifies self-excitation.
-``Primary'' does not mean
-predictively dominant. In Team 8's one-step-ahead study, Black--Scholes has a
-slightly lower pooled OOS RMSE, and none of the four candidates beats the
-previous-day implied-volatility surface. For that reason, Discoveries shows one
-Full Bates--Hawkes distribution, while Chapter 12 reports all four on equal
-terms.
+\noindent\textbf{Why Full Bates--Hawkes is shown here.} It combines stochastic
+variance with self-exciting jumps and has the lowest date-equal rolling OOS
+IV RMSE, 65.0507 basis points over 30 origins and 4,667 common forecasts.
+Heston, by contrast, is the current-snapshot fit winner at 49.4881 basis points.
+The current Hawkes branching ratio is 0.5569, below unity. No candidate beats
+interpolated IV-surface persistence, so this selection does not establish
+universal predictive dominance. Chapter 12 reports all four engines on equal terms.
 
 \noindent\textbf{What the four models do---and do not do.} Black--Scholes/GBM,
 Heston, Bates--Poisson and Full Bates--Hawkes govern only the \emph{gold-price
@@ -79,9 +72,9 @@ Treasury cross-section is used consistently by Team~8 and the valuation.
     \includegraphics[width=0.88\textwidth]{img/valuation/full_bates_hawkes_value_distribution.png}
     \caption{Conditional Barrick value-per-share distribution under the
     primary Full Bates--Hawkes gold-price scenario. The vertical market
-    reference is the completed \texttt{B} close of USD 47.27 on 27 August
-    2026. Across 8,192 paths, P10/P50/P90 are USD 3.31/34.94/104.81 and the
-    close lies at the 62.27th percentile. Operations combine Barrick actuals
+    reference is the completed \texttt{B} close of USD 44.13 on 27 August
+    2026. Across 8,192 paths, P10/P50/P90 are USD 3.13/35.14/104.72 and the
+    close lies at the 59.24th percentile. Operations combine Barrick actuals
     with explicitly labelled Team~4 forecasts; this is not a target-price
     distribution.}
     \label{fig:primary-bates-hawkes-value-distribution}
@@ -107,10 +100,9 @@ calls under the risk-neutral measure. The conditional run restarts every model
 at Barrick's Q2 2026 average realised price of USD~4,417/oz and transfers only
 the option-implied distributional shape. It performs neither a one-for-one GLD
 level conversion nor a validated $\mathbb Q$-to-$\mathbb P$ transformation.
-Moreover, its inputs are asynchronous: the anchor quarter ends 30 June, the
-  Treasury curve is dated 24 July, and the GLD calibration surface and Barrick
-  close are dated 27 August 2026. These choices make the experiment useful
-for controlled model comparison, not a synchronous physical-gold forecast.
+The anchor quarter ends 30 June, while the Treasury curve, GLD surface and
+Barrick close share 2 September 2026. The quarterly anchor is not contemporaneous
+spot; these choices support controlled model comparison, not a physical forecast.
 
 \begin{table}[H]
 \centering
@@ -120,7 +112,7 @@ for controlled model comparison, not a synchronous physical-gold forecast.
 \renewcommand{\arraystretch}{1.13}
 \begin{tabularx}{\textwidth}{@{}p{2.65cm}X X@{}}
 \toprule
-\textbf{Evidence block} & \textbf{Accepted current observation} &
+\textbf{Evidence block} & \textbf{Dated observation} &
 \textbf{Permitted interpretation} \\
 \midrule
 Barrick equity, \texttt{B} & 86 valid daily unadjusted-close bars from
@@ -131,17 +123,15 @@ GLD reference series & 1,425 daily bars from 4 January 2021 to 27 August 2026;
 total return 131.06\%, annualised volatility 18.21\%, maximum drawdown
 $-26.23\%$. & ETF price in USD/share; neither physical gold in USD/oz nor
 Barrick's realised selling price. \\
-Current GLD surface & 24 admitted call nodes across three maturities and 13
-strikes at the 27 August calibration; Treasury curve 24 July. & Current
-option-implied calibration input; IV-mapped prices do not identify physical
-drift. \\
-Model engineering & Team 8 source freeze unchanged, 56/56 source tests and a
+Current GLD surface & 605 eligible calls; CC64 selects 64 actual contracts
+across eight maturities and 20 strikes on 2 September 2026; same-date 14-tenor
+Treasury curve. & Option-implied calibration input; no physical drift is identified. \\
+Historical model engineering & August Team 8 source freeze, 56/56 source tests and a
 61-strike deterministic benchmark with maximum absolute error
 $1.1611\times10^{-8}$. & Unit parity for the frozen implementation; not
 historical market parity or predictive dominance. \\
 Integrated experiment & 8,192 paths; four gold engines; identical separated
-operating contract, unified DCF and WACC shocks; branch suite 54/54 PASS and
-figure-provenance audit 47/47 PASS. & A controlled attribution of Barrick distributional differences
+operating contract, unified DCF and WACC shocks; current input hashes and refresh regression tests. & A controlled attribution of Barrick distributional differences
 to the gold-price engine, subject to the declared bridge limitations. \\
 \bottomrule
 \end{tabularx}

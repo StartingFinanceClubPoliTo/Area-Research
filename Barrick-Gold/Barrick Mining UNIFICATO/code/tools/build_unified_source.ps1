@@ -3,6 +3,9 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+if (Test-Path -LiteralPath (Join-Path $WorkspaceRoot 'Utilities-Progetto\REFRESH-PLAN-2026-09-05.md')) {
+    throw 'Legacy August generator: blocked to preserve the September editorial refresh. Use the current Overleaf source; reconstruct historical material only in a separate archived workspace.'
+}
 $projectRoot = (Resolve-Path (Join-Path $WorkspaceRoot '..')).Path
 $chapterRoot = Join-Path $WorkspaceRoot 'Overleaf\chapters'
 New-Item -ItemType Directory -Force $chapterRoot | Out-Null

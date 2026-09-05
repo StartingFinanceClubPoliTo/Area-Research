@@ -33,6 +33,36 @@ def _array_hash(array: np.ndarray) -> str:
     return hashlib.sha256(values.tobytes()).hexdigest().upper()
 
 
+def _verify_declared_reference(path: Path, entry: dict[str, Any], declared: str) -> None:
+    """Keep the raw digest; permit only an exact UTF-8 Python CRLF-to-LF match.
+
+    Git's Windows checkout can change line endings of frozen source references.
+    No whitespace, encoding, lone-CR or numerical-content normalization is allowed.
+    The matching mode is explicit in newly generated manifests; old manifests
+    and reference files are never rewritten.
+    """
+    entry["declared_sha256"] = declared
+    if not declared:
+        return
+    if entry["sha256"] == declared:
+        entry["declared_hash_match"] = "raw_bytes"
+        return
+    if path.suffix == ".py":
+        raw = path.read_bytes()
+        try:
+            raw.decode("utf-8", errors="strict")
+        except UnicodeDecodeError:
+            pass
+        else:
+            canonical = raw.replace(b"\r\n", b"\n")
+            normalized_hash = hashlib.sha256(canonical).hexdigest().upper()
+            if b"\r\n" in raw and b"\r" not in canonical and normalized_hash == declared:
+                entry["declared_hash_match"] = "utf8_python_crlf_to_lf"
+                entry["lf_sha256"] = normalized_hash
+                return
+    raise ValueError(f"declared reference hash mismatch: {entry['path']}")
+
+
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
@@ -425,11 +455,7 @@ def write_multimodel_outputs(
         reference_path = (project_root / str(reference["path"])).resolve()
         entry = _input_entry(reference_path, project_root, "base_declared_reference")
         declared = str(reference.get("sha256", "")).upper()
-        if declared and entry["sha256"] != declared:
-            raise ValueError(
-                f"declared reference hash mismatch: {reference['path']}"
-            )
-        entry["declared_sha256"] = declared
+        _verify_declared_reference(reference_path, entry, declared)
         input_entries.append(entry)
 
     artifacts = [

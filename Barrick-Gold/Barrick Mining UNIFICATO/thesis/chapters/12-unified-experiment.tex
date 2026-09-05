@@ -94,7 +94,7 @@ when the Chapter~9 gold engine changes.
 The earlier Team~4 NSS, IV, GBM and stochastic EBITDA chain was a standalone
 demonstrator. It is not imported into this experiment. Team~4 contributes only
 the operating decomposition and forecast continuation; Team~8 alone generates
-the current price paths. The current LSE NSS term structure is a separate,
+the current price paths. The current U.S. Treasury NSS term structure is a separate,
 newly fitted Team~8/unified input and is therefore retained.
 
 \section{Measure, dates and simulation design}
@@ -109,14 +109,13 @@ converts GLD share levels into physical gold nor estimates a
 \(\mathbb Q\)-to-\(\mathbb P\) map.
 
 The date vector remains visible: the anchor quarter ends 30 June 2026, the
-Treasury curve is dated 24 July, while the Barrick close and current Team~8
-surface are dated 27 August. The current surface is used for recalibration. The
+Treasury curve, Barrick close and current Team~8 surface are dated 2 September. The current surface is used for recalibration. The
 remaining asynchrony restricts
 the output to a conditional model comparison.
 
 The numerical design uses 8,192 paths, 260 fine steps and 13 fine steps per
-quarter over 20 quarters. All price engines use base seed 20260827; WACC uses
-seed 20260827 and is generated once. The model-specific stream construction is
+quarter over 20 quarters. All price engines use base seed 20260902; WACC uses
+seed 20260902 and is generated once. The model-specific stream construction is
 documented in Chapter~9. At the corporate layer, the important control is that
 the same accepted operating arrays and WACC paths enter all branches.
 
@@ -153,8 +152,8 @@ The table and figure below derive from the same versioned result bundle.
     \includegraphics[width=0.98\textwidth]{img/valuation/multimodel_value_distribution_comparison.png}
     \caption{Kernel-density comparison of conditional Barrick value per share
     under the four Chapter~9 gold-price engines. Production, unit cost, DCF,
-    WACC and equity inputs are common; the vertical line is the USD 47.27
-    completed \texttt{B} close on 27 August 2026.}
+    WACC and equity inputs are common; the vertical line is the USD 44.13
+    completed \texttt{B} close on 2 September 2026.}
     \label{fig:multimodel-value-distribution-comparison}
   \end{figure}
 }{%
@@ -162,20 +161,18 @@ The table and figure below derive from the same versioned result bundle.
   is copied from the authoritative result manifest.}%
 }
 
-The medians are USD~34.50 for Black--Scholes/GBM, USD~39.48 for Heston,
-USD~23.99 for Bates--Poisson and USD~34.94 for Full Bates--Hawkes. Relative
-to the USD~47.27 close, the differences are USD~12.77, 7.79, 23.28 and
-12.33, respectively. The close lies between the 59.94th and 66.11th model
-percentiles, and the simulated frequencies \(P(V_{ps}>47.27)\) range from
-33.89\% to 40.06\%. Thus every branch places
-the observed close above its conditional median, but well inside a broad
-distribution. This is not proof that the market is mispriced.
+The medians are USD~35.87 for Black--Scholes/GBM, USD~35.67 for Heston,
+USD~35.84 for Bates--Poisson and USD~35.14 for Full Bates--Hawkes. The
+USD~44.13 close lies between the 58.08th and 59.24th model percentiles;
+40.76--41.92\% of simulated values exceed it. Every branch places the observed
+close above its conditional median but inside a broad distribution, not
+establishing market mispricing.
 
-Model choice is more visible in the tails. P10 spans USD~0.37--10.02 and P90
-USD~91.37--137.65. Full Bates--Hawkes has P01 USD~-0.54 and P99 USD~218.11;
-Heston has the highest P01, USD~1.01, and the lowest P99, USD~165.19. Holding
-operations and DCF fixed therefore compresses median differences while
-preserving economically meaningful tail differences.
+P10 spans USD~3.13--3.71 and P90 USD~101.43--104.72. At more extreme quantiles,
+P01 spans USD~-1.05 to USD~-0.34 and P99 USD~199.56--218.36. Negative proxy
+quantiles are not forecasts of a negative limited-liability share price:
+they expose the unreconciled corporate mapping. Fixed operations and DCF
+compress median differences while preserving tail sensitivity.
 
 \section{Layered validation}
 
@@ -235,13 +232,11 @@ and economic dispersion are distinct: the first concerns whether the numerical
 estimator has converged; the second is the spread induced by the assumed
 stochastic and corporate inputs.
 
-The accepted branch passed the complete 57-test suite, while the autonomous
-figure audit passed all 47 analytical images. Quantile sequences are ordered; every
-path satisfies enterprise-to-equity and equity-to-per-share identities; and
-directional tests confirm that higher gold raises the proxy value while higher
-costs or discount rates lower it. Historical Sobol array hashes that vary with
-the resolved runtime are retained as a reproducibility finding rather than
-mislabelled as an economic change.
+The current refresh regression tests verify the snapshot contract and path
+adapter; the versioned output preserves common operating and WACC input hashes.
+Historical full-suite and 47-image audit counts describe the August bundle,
+not a fresh validation of every September figure. Quantile ordering and the
+pathwise corporate identities are separate from economic model validity.
 
 These gates make the four distributions comparable computational outputs.
 They do not validate the economic adapters through which GLD option scenarios
@@ -287,7 +282,7 @@ unfinished step of the present valuation.
 The combined result is intentionally bounded. The project has completed the
 planned integration of the Team~8 price layer, separated Team~4/Barrick
 operating layer and unified stochastic DCF contract. Under one common set of operating and corporate
-assumptions, all four price engines place the USD 47.27 close above their
+assumptions, all four price engines place the USD 44.13 close above their
 conditional medians while retaining substantial probability mass above it.
 The close remains inside every broad distribution, so the common direction is
 a scenario result rather than evidence of mispricing.

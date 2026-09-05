@@ -6,7 +6,7 @@
 The scalar calibration errors reported above are interpretable only together
 with the empirical objects that generated them. Figure~\ref{fig:t8-market-inputs}
 shows the dated Treasury proxy and the structured option sample rebuilt by the
-unified branch from the 27 August 2026 LSE snapshot. The raw licensed rows
+unified branch from the 2 September 2026 Team 8 snapshot. The raw licensed rows
 remain local and Git-ignored; the figures and aggregate calibration outputs
 carry hashes in the code-run manifest.
 
@@ -16,11 +16,10 @@ carry hashes in the code-run manifest.
 
     \vspace{4mm}
     \includegraphics[width=0.88\textwidth]{img/team8_empirical/sampling_comparison.png}
-    \caption{Team 8 calibration inputs. Top: 11 same-date continuously
-    compounded US Treasury proxies and their current constrained NSS fit,
-    dated 24 July 2026; the requested 10Y node is unavailable. Bottom: the
-    24-node Chebyshev sample selected from 143 eligible GLD calls across three
-    expiries. The colours encode observed
+    \caption{Team 8 calibration inputs. Top: 14 same-date continuously compounded U.S. Treasury proxies and their NSS fit
+on 2 September 2026. Bottom: the CC64 sample selected from 605 eligible GLD calls
+across 12 expiries and 146 strikes; the retained contracts span eight expiries
+and 20 strikes. The colours encode observed
     implied volatility; the node layout, rather than an interpolated sheet,
     is the actual object passed to the optimizer.}
     \label{fig:t8-market-inputs}
@@ -65,7 +64,7 @@ dynamics but does not by itself select Heston, Bates or Bates--Hawkes.}
 
 Tables~\ref{tab:t8-model-parameters}--\ref{tab:t8-model-errors} consolidate
 the point-in-time fit that is otherwise distributed across the model-specific
-sections. All four rows use the same 24 nodes, price/IV conversion and
+sections. All four rows use the same 64 actual nodes, price/IV conversion and
 vega-weighted objective; richer models therefore change the state law rather
 than the empirical target.
 
@@ -77,21 +76,13 @@ than the empirical target.
 \toprule
 Model & Calibrated parameters & Admissibility \\
 \midrule
-Black--Scholes & \(\sigma=0.26562\). & Positive volatility. \\
-Heston & \(v_0=0.08706\), \(\kappa=2.57888\), \(\theta_v=0.03298\),
-\(\xi=0.27934\), \(\rho=0.12216\). & Feller gap \(0.09209\). \\
-Bates--Poisson & \(v_0=0.02162\), \(\kappa=0.35624\),
-\(\theta_v=0.25572\), \(\xi=0.08612\), \(\rho=0.09232\),
-\(\lambda=1.79396\), \(\mu_J=0.01377\), \(\sigma_J=0.14330\). &
-Feller gap \(0.17478\). \\
-Full Bates--Hawkes & \(v_0=0.03568\), \(\kappa=0.21276\),
-\(\theta_v=0.01874\), \(\xi=0.08929\), \(\rho=0.09879\),
-\(\lambda_0=1.81997\), \(\bar\lambda=1.73208\), \(n=0.02000\),
-\(\beta=11.46345\), \(\mu_J=0.01430\), \(\sigma_J=0.14124\). &
-Feller gap \(5.59\cdot10^{-7}\); \(n\) at lower bound. \\
+Black--Scholes & \(\sigma=0.25088\). & Positive volatility. \\
+Heston & \(v_0=0.06439,\; \kappa=4.05183,\; \theta_v=0.06548,\; \xi=0.72815,\; \rho=-0.01701\). & Feller gap 0.00043. \\
+Bates--Poisson & \(v_0=0.06626,\; \kappa=4.05261,\; \theta_v=0.06324,\; \xi=0.67235,\; \rho=-0.03326,\; \lambda=0.24501,\; \mu_J=-0.02767,\; \sigma_J=0.00483\). & Feller gap 0.06053. \\
+Full Bates--Hawkes & \(v_0=0.06514,\; \kappa=4.05259,\; \theta_v=0.06346,\; \xi=0.67263,\; \rho=-0.03322,\; \lambda_0=0.03496,\; \bar\lambda=0.56005,\; n=0.55690,\; \beta=2.74823,\; \mu_J=-0.02901,\; \sigma_J=0.02280\). & Feller gap 0.06196; stationary $n<1$. \\
 \bottomrule
 \end{tabularx}
-\caption{Feller-constrained parameters on the current 27 August 2026 Team 8 Chebyshev sample.}
+\caption{Feller-constrained parameters on the current 2 September 2026 Team 8 Chebyshev sample.}
 \label{tab:t8-model-parameters}
 \end{table}
 
@@ -103,21 +94,21 @@ Feller gap \(5.59\cdot10^{-7}\); \(n\) at lower bound. \\
 \toprule
 Model & Price MAE & Price RMSE & IV MAE bp & IV RMSE bp & Reading \\
 \midrule
-Black--Scholes & 0.565 & 0.668 & 98.27 & 114.04 & Constant-volatility baseline. \\
-Heston & 0.415 & 0.523 & 72.59 & 86.28 & Gain from stochastic variance. \\
-Bates--Poisson & 0.245 & 0.321 & 44.18 & 56.55 & Gain from independent jumps. \\
-Full Bates--Hawkes & 0.108 & 0.138 & 22.74 & 32.49 & Lowest current in-sample error. \\
+Black--Scholes & 0.699 & 0.832 & 73.06 & 97.21 & Common CC64 target. \\
+Heston & 0.398 & 0.501 & 38.48 & 49.49 & Lowest current in-sample error. \\
+Bates--Poisson & 0.447 & 0.562 & 42.60 & 54.63 & Common CC64 target. \\
+Full Bates--Hawkes & 0.410 & 0.514 & 40.76 & 52.97 & Common CC64 target. \\
 \bottomrule
 \end{tabularx}
-\caption{Calibration errors on a common option sample. The monotone in-sample
-improvement is not an out-of-sample ranking.}
+\caption{Calibration errors on a common option sample. Heston has the lowest
+in-sample IV RMSE; this cross-sectional fit is not an out-of-sample ranking.}
 \label{tab:t8-model-errors}
 \end{table}
 
-The 0.02 Full Bates--Hawkes branching ratio equals the optimizer's imposed
-minimum. Its best in-sample error therefore does not establish strong empirical
-self-excitation: part of the gain can arise from the joint variance-and-jump
-parameterization while the Hawkes feedback itself is weakly identified.
+The Full Bates--Hawkes branching ratio is 0.5569, below unity and away from
+the former lower bound. This snapshot permits material self-excitation, but
+does not establish stable identification across regimes. Heston remains the
+current-fit winner; Hawkes is selected separately on rolling OOS performance.
 
 The residual maps in Figures~\ref{fig:t8-residual-atlas-diffusion} and
 \ref{fig:t8-residual-atlas-jumps} restore the spatial information hidden by
@@ -151,7 +142,7 @@ where errors remain systematic across maturity and moneyness.
     \centering
     \includegraphics[width=0.97\textwidth]{img/team8_empirical/bates_hawkes_volatility_smile.png}
     \caption{Observed and Full Bates--Hawkes implied-volatility smiles across
-    the three sampled expiries. The panel view prevents a low aggregate RMSE
+    the eight sampled expiries. The panel view prevents a low aggregate RMSE
     from concealing expiry-specific misses, especially at boundary strikes.}
     \label{fig:t8-bh-smiles}
 \end{figure}
@@ -180,7 +171,7 @@ AIC 144.05, BIC 151.86. & Long-memory diagnostic; not the option-pricing
 model used in the comparison. \\
 \bottomrule
 \end{tabularx}
-\caption{Distinct Bates--Hawkes calibration routes in the Team 8 study.}
+\caption{Historical source-study Hawkes routes; these frozen estimates are not the current September parameter set.}
 \label{tab:t8-hawkes-routes}
 \end{table}
 
@@ -206,23 +197,21 @@ model used in the comparison. \\
 
 \subsubsection{Chronological loss accumulation}
 
-Figure~\ref{fig:t8-welch-goyal} complements the pooled out-of-sample table and
-the compact \(R^2_{OOS}\) chart by showing when relative forecast performance
-accumulates. It confirms two distinct facts: every structural model dominates
-the expanding-mean benchmark, yet all finish below the previous-day surface;
-Full Bates--Hawkes improves systematically on Heston and more unevenly on
-Bates. This completed historical validation is intentionally frozen: its
-licensed option-bar panel is not redistributed, and the displayed PNG is
-rendered afresh by the unified branch from the committed aggregate loss table.
+Figure~\ref{fig:t8-welch-goyal} displays the September dense-only rolling
+loss differences. The benchmark is the origin cross-sectional mean IV or the
+interpolated origin IV surface. Black--Scholes does not beat the mean benchmark;
+the three richer models do, but none beats persistence. Full Bates--Hawkes has
+the lowest date-equal IV RMSE among the four candidates. These benchmark
+comparisons do not establish physical gold forecasting accuracy.
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=0.98\textwidth]{img/team8_empirical/online_welch_goyal_cumulative.png}
-    \caption{Frozen rolling one-step-ahead Welch--Goyal cumulative squared-error
+    \caption{Dense-only rolling one-step-ahead Welch--Goyal cumulative squared-error
     differences over the Team 8 validation window, freshly rendered from
     aggregate outputs. Upward movement favours
     the named model relative to the comparator in each panel. The time path
-    explains why a positive comparison with the expanding mean coexists with
+    explains why a positive comparison with the origin mean coexists with
     failure against yesterday's observed IV surface.}
     \label{fig:t8-welch-goyal}
 \end{figure}

@@ -25,21 +25,6 @@ The calibrated inputs, residual maps and valuation paths share the same 2 Septem
 \subsection{What the residual maps add}
 The residual heatmaps show where each specification systematically over- or under-prices the observed implied-volatility surface. Black--Scholes leaves the strongest smile and term-structure pattern. Table~\ref{tab:iv_rmse} compares current-surface fit; Heston has the smallest error. The fitted Hawkes branching ratio is 0.5569, below the stationarity boundary. Common axes support comparison; each colourbar reports its own residual range.
 
-\begin{table}[H]
-\centering
-\caption{Current-surface IV calibration RMSE.}
-\label{tab:iv_rmse}
-\begin{tabular}{@{}lr@{}}
-\toprule
-Model & RMSE (bp) \\
-\midrule
-Black--Scholes & 97.2107 \\
-Heston & 49.4881 \\
-Bates--Poisson & 54.6273 \\
-Full Bates--Hawkes & 52.9714 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
@@ -64,3 +49,19 @@ Full Bates--Hawkes & 52.9714 \\
   \captionof*{figure}{\textbf{Figure~\ref{fig:residual_maps} (continued).} Bates--Poisson and Full Bates--Hawkes residual maps; colourbars report model-specific ranges.}
 \par}
 \end{minipage}\par
+
+\begin{table}[H]
+\centering
+\caption{Current-surface IV calibration RMSE.}
+\label{tab:iv_rmse}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Model & RMSE (bp) \\
+\midrule
+Black--Scholes & 97.2107 \\
+Heston & 49.4881 \\
+Bates--Poisson & 54.6273 \\
+Full Bates--Hawkes & 52.9714 \\
+\bottomrule
+\end{tabular}
+\end{table}

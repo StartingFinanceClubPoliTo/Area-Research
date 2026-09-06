@@ -1,6 +1,6 @@
 # Barrick Stochastic Valuation Paper - Team 8 refresh
 
-Scientific paper for the integrated Barrick Mining stochastic-valuation project. The publication date remains **TBD** while the corporate bridge and final editorial review are unfinished.
+Scientific paper for the integrated Barrick Mining stochastic-valuation project. The publication date remains **07/09/2026** while the corporate bridge and final editorial review are unfinished.
 
 ## Current evidence snapshot
 
@@ -41,6 +41,8 @@ The Overleaf upload ZIP contains 41 source/dependency files: two synchronized La
 
 ## Refresh revision - 6 September 2026
 
-The Team 8 data, sampling, Treasury, calibration, residual, rolling OOS, Hawkes-intensity and Barrick valuation evidence use one synchronized snapshot. The article has seven body pages plus the cover, with unchanged font and margins and continuous two-column flow. The project/collaboration context is separate from the scientific introduction. Clickable institutional contacts appear before JEL classification. Figures 5 and 12 use independent vertical panels; all four Figure 6 residual maps fit vertically on body page 4, followed by the calibration RMSE table on page 5. Figure 13 stacks both benchmark charts. The cost assumption is prudential relative to otherwise identical efficiency-improvement scenarios, not a mathematical valuation lower bound. The article remains a working draft with release date TBD.
+The Team 8 data, sampling, Treasury, calibration, residual, rolling OOS, Hawkes-intensity and Barrick valuation evidence use one synchronized snapshot. The article has seven body pages plus the cover, with unchanged font and margins and continuous two-column flow. The project/collaboration context is separate from the scientific introduction. Clickable institutional contacts appear before JEL classification. Figures 5 and 12 use independent vertical panels; all four Figure 6 residual maps fit vertically on body page 4, followed by the calibration RMSE table on page 5. Figure 13 stacks both benchmark charts. The cost assumption is prudential relative to otherwise identical efficiency-improvement scenarios, not a mathematical valuation lower bound. The article remains a working draft with release date 07/09/2026.
 
 The expanded discussion clarifies conditional next-date scoring, margin units and the accounting bridge, economic dispersion versus Monte Carlo precision, and the interpretation of negative proxy tails. The final page develops layered validation, filing reconciliation, dependent operating risks, finite-resource closure and a sequenced research agenda. These are explanations and validation priorities drawn from the unified study, not newly completed empirical tests or accounting reconciliations.
+
+The first-page sidebar combines club contacts with a Discoveries bar chart: the September 2 close exceeds the four conditional model medians by 23.0%, 23.7%, 23.1% and 25.6%, respectively. These are close-to-median gaps, not established mispricing or expected returns. The requested article date is September 7, 2026; scientific validation limits remain unchanged.

@@ -1,6 +1,6 @@
 # Barrick Mining PAPER 📄
 
-Compact research paper for the integrated stochastic valuation of Barrick Mining Corporation. The paper is an **eight-page working draft**; release date: **TBD**.
+Compact research paper for the integrated stochastic valuation of Barrick Mining Corporation. The paper is an **eight-page working draft**; release date: **07/09/2026**.
 
 ## Current snapshot
 
@@ -20,7 +20,7 @@ The persistence benchmark uses 4,026 interpolation-domain observations, a differ
 
 | Path | Role |
 | --- | --- |
-| `paper/Articolo.tex` | Main pdfLaTeX source; working-draft date is `TBD`. |
+| `paper/Articolo.tex` | Main pdfLaTeX source; working-draft date is `07/09/2026`. |
 | `paper/Articolo.pdf` | Verified eight-page PDF, including cover and references. |
 | `paper/sections/` | Ten modular paper sections. |
 | `paper/img/` | Club logo and five clickable contact icons, with the Font Awesome license. |
@@ -43,4 +43,6 @@ Stefano Falcione, Marco Fracca, Filippo Triassi, Giorgio Zoccatelli, Andrea Rost
 
 ## Citation
 
-Barrick Gold Research Teams (2026), *Stochastic Valuation of Barrick Mining*, Starting Finance Club PoliTo Research, working draft, release date TBD.
+Barrick Gold Research Teams (2026), *Stochastic Valuation of Barrick Mining*, Starting Finance Club PoliTo Research, working draft, release date 07/09/2026.
+
+The first-page sidebar combines club contacts with a Discoveries bar chart: the September 2 close exceeds the four conditional model medians by 23.0%, 23.7%, 23.1% and 25.6%, respectively. These are close-to-median gaps, not established mispricing or expected returns. The requested article date is September 7, 2026; scientific validation limits remain unchanged.

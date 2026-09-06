@@ -65,6 +65,9 @@ R^2_{OOS,m\mid b}=1-\frac{\sum e_{m,t,j}^2}{\sum e_{b,t,j}^2},
 \end{equation}
 against both the origin cross-sectional mean IV and an origin observed-IV surface interpolated in maturity and log-moneyness inside its convex hull. The target spot and rate curve enter only as scoring-date conditioning variables. This design prevents the lowest in-sample IV error from being interpreted automatically as predictive dominance.
 
+% Expansion p2 - 2026-09-06
+The origin fit is frozen before scoring the next admitted surface: the target option quotes do not select that parameter vector. Conditioning on target spot and rates makes this a test of the transferred option law, not a joint ex ante forecast of the underlying asset, interest rates and option prices. Persistence is defined only where the origin surface can be interpolated; a missing benchmark value is not a model error. Comparisons must therefore retain their own admissible support rather than treating unmatched observations as zero losses.
+
 \subsection{Team 4 cost and production models}
 For costs, Team 4 first builds a log-space global master chain from mine-level series and then selects an \textbf{ARIMA(3,1,0) with drift} by automated information-criterion search. The admitted specification is
 \begin{equation}

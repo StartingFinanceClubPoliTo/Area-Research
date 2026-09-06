@@ -37,8 +37,10 @@ pdflatex Articolo.tex
 
 The bibliography is frozen in `sections/07_references.tex`; no BibTeX step is required. For Overleaf, upload the project ZIP, choose `Articolo.tex` as the main document, and select pdfLaTeX.
 
-This clean upload package contains two synchronized LaTeX entry points, ten included sections, the cover and logo, the bibliography ledger, 21 scientific images and five contact icons with their Font Awesome license. Generated `.aux`, `.log`, `.out`, `.synctex`, nested ZIP and obsolete image files are excluded.
+The Overleaf upload ZIP contains 41 source/dependency files: two synchronized LaTeX entry points, ten included sections, the cover and logo, 21 scientific images and five contact icons with their Font Awesome license. The repository README and unused bibliography ledger are not part of that ZIP. Generated `.aux`, `.log`, `.out`, `.synctex`, nested ZIP and obsolete image files are excluded.
 
-## Refresh revision - 5 September 2026
+## Refresh revision - 6 September 2026
 
 The Team 8 data, sampling, Treasury, calibration, residual, rolling OOS, Hawkes-intensity and Barrick valuation evidence use one synchronized snapshot. The article has seven body pages plus the cover, with unchanged font and margins and continuous two-column flow. The project/collaboration context is separate from the scientific introduction. Clickable institutional contacts appear before JEL classification. Figures 5 and 12 use independent vertical panels; all four Figure 6 residual maps fit vertically on body page 4, followed by the calibration RMSE table on page 5. Figure 13 stacks both benchmark charts. The cost assumption is prudential relative to otherwise identical efficiency-improvement scenarios, not a mathematical valuation lower bound. The article remains a working draft with release date TBD.
+
+The expanded discussion clarifies conditional next-date scoring, margin units and the accounting bridge, economic dispersion versus Monte Carlo precision, and the interpretation of negative proxy tails. The final page develops layered validation, filing reconciliation, dependent operating risks, finite-resource closure and a sequenced research agenda. These are explanations and validation priorities drawn from the unified study, not newly completed empirical tests or accounting reconciliations.

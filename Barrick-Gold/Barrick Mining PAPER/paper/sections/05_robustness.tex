@@ -24,9 +24,6 @@ The rolling exercise separates current-snapshot fit from forward performance. Da
 Heston is the in-sample winner, whereas Full Bates--Hawkes is the rolling OOS winner. The valuation therefore reports all four engines and uses Full Bates--Hawkes only as the primary structural sensitivity, not as a universally dominant forecast.
 \end{findingbox}
 
-\subsection{Interpretive limitations}
-The economic reading remains conditional: calibration is under $\mathbb Q$ without a validated $\mathbb Q\rightarrow\mathbb P$ map; GLD distributional shape is transferred without a one-for-one conversion to physical gold; the realized-price anchor predates the option snapshot; and the FCFF/equity bridge is not fully filing-reconciled. Debt, cash, minorities, non-operating assets and related bridge adjustments remain explicit zero placeholders. The distributions are research sensitivities, not fair values, confidence intervals or price targets.
-
 \noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/online_welch_goyal_cumulative.png}
@@ -47,6 +44,19 @@ Without a dated news filtration or parameter-stability evidence, these option-im
   \label{fig:intensity_compare}
 \par}
 \end{minipage}\par
+
+% Expansion last - 2026-09-06
+\subsection{Interpretive limitations and validation}
+Source integrity, implementation accuracy, calibration fit, predictive performance and economic validity answer different questions. Frozen inputs and deterministic replay make a result traceable; they do not establish that its probability measure or corporate perimeter is appropriate. Likewise, a lower option-pricing error cannot validate the conversion from an exchange-traded fund to physical-gold revenue. The current comparison is strongest as a controlled attribution exercise: it changes the price law while keeping the downstream contract fixed. Its interpretation should stop at that boundary until the economic interfaces are independently reconciled.
+
+In the admitted run, enterprise and equity value coincide because the intervening bridge adjustments are zero placeholders. That equality is not evidence that Barrick has no debt, cash, minority interests or other claims. Reconciliation must start from one dated filing and the matching listed security, establish ownership and attributable production, and distinguish component margin from reported operating profit. Depreciation, cash taxes, working capital, sustaining capital expenditure and growth investment must then enter consistently, with no deduction counted twice. Net debt, non-operating assets, streams and other claims must be matched to a diluted share count on the same basis. Only then can a per-share output acquire a filing-reconciled interpretation.
+
+\subsection{Operating uncertainty and research priorities}
+The next operating extension should change more than the visual smoothness of the cost forecast. Production, grade, recovery, mine mix, energy and labour costs can move jointly with gold prices, inflation and exchange rates. Sampling each input independently could distort both diversification and adverse joint outcomes. Their dependence must therefore be estimated or specified transparently as a scenario assumption. Stochastic costs can generate favourable and adverse paths while retaining a smooth conditional mean; a straight expected path is not itself evidence that randomness has been omitted incorrectly. Technology scenarios also require their associated investment and implementation costs, not an automatic downward correction to unit costs.
+
+A mining-company terminal block needs an explicit resource interpretation. Continued production may require reserve conversion, replacement investment or new projects, while depletion and closure liabilities can reduce the duration and value of the cash-flow stream. A positive WACC-growth spread controls a mathematical denominator but does not establish that a perpetual operating horizon is economically justified. Finite-resource and going-concern closures should be compared under coherent investment assumptions before attributing differences entirely to the gold-price model. Such a comparison is a future validation exercise, not a result of the present run.
+
+The research agenda begins with the operating and equity perimeter, followed by the GLD-to-gold basis and an explicit risk-neutral-to-physical transformation. Operating uncertainty and finite-resource closure follow under the same corporate contract. Additional information should then be judged for incremental predictive value. Macroeconomic or geopolitical news, text classifications and machine-learning features require event-time alignment, leakage controls and chronological evaluation against pre-declared price, volatility and persistence benchmarks. A Hawkes burst alone does not identify its cause. This sequence gives the interdisciplinary team testable tasks; model complexity is not validation.
 
 \input{sections/06_conclusion}
 

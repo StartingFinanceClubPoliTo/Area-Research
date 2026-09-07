@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-02",
+  "strategy": "CC",
+  "source_surface": "outputs\\sampling\\2026-09-02\\sample_CC_64.csv",
+  "source_surface_sha256": "8656d86599b3eee699e5297e244480e83ac20b90bae0b39cc29e6e58bf41e0c0",
+  "frozen_calibration_surface": "outputs\\calibrations\\CC\\2026-09-02\\calibration_surface.csv",
+  "n_calibration": 64,
+  "official_min_dte": 75,
+  "spot": 402.78,
+  "curve_dates": [
+    "2026-09-02"
+  ],
+  "rate_curve_models": [
+    "NSS"
+  ],
+  "nss_fit": {
+    "nss_beta0": -0.001196933340446,
+    "nss_beta1": 0.0385726822440593,
+    "nss_beta2": 0.0396507874566124,
+    "nss_beta3": 0.1573136916636166,
+    "nss_tau1": 2.1532279899754223,
+    "nss_tau2": 16.810163806603725,
+    "nss_rmse_bps": 2.060781659511834
+  },
+  "profile": "full",
+  "seed": 8,
+  "objective": "mean squared price error divided by Vega^2",
+  "requested_models": [
+    "bs",
+    "heston",
+    "bates",
+    "hawkes"
+  ],
+  "created_or_updated_at_utc": "2026-09-03T22:43:58.411505+00:00"
+}

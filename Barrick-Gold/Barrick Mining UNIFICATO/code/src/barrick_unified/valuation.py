@@ -344,6 +344,7 @@ def simulate_valuation_from_gold_paths(
     inputs: ValuationInputs,
     gold_price_usd_per_oz: np.ndarray,
     wacc_shocks: np.ndarray,
+    terminal_policy: str = "legacy_positive",
 ) -> ValuationResult:
     """Value Barrick from external quarterly gold paths.
 
@@ -407,9 +408,14 @@ def simulate_valuation_from_gold_paths(
     discount_factors = 1.0 / np.cumprod(1.0 + annual_wacc, axis=1)
     pv_explicit = np.sum(fcff_proxy * discount_factors, axis=1)
 
-    terminal_after_tax = np.maximum(after_tax_margin[:, -1], 0.0) * (
-        1.0 + inputs.stable_growth
-    )
+    if terminal_policy not in {"legacy_positive", "signed", "none"}:
+        raise ValuationInputError("unknown terminal_policy")
+    final_margin = after_tax_margin[:, -1]
+    if terminal_policy == "legacy_positive":
+        final_margin = np.maximum(final_margin, 0.0)
+    elif terminal_policy == "none":
+        final_margin = np.zeros_like(final_margin)
+    terminal_after_tax = final_margin * (1.0 + inputs.stable_growth)
     terminal_reinvestment = inputs.stable_growth / inputs.roic_stable
     terminal_fcff = terminal_after_tax * (1.0 - terminal_reinvestment)
     terminal_value = terminal_fcff / (annual_wacc[:, -1] - inputs.stable_growth)

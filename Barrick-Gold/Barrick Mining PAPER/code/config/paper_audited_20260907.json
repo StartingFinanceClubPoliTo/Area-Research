@@ -1,0 +1,101 @@
+{
+  "schema_version": "4.0",
+  "experiment": "AUDITED_OPERATING_PROXY_SENSITIVITY",
+  "status": "PROVISIONAL_RESEARCH_SENSITIVITY_NOT_TARGET",
+  "base_valuation_config": "config/provisional_valuation_20260902_team8_refresh.json",
+  "simulation": {
+    "n_simulations": 8192,
+    "wacc_seed": 20260902,
+    "engine_seeds": {
+      "black_scholes": 20260902,
+      "heston": 20260902,
+      "bates_poisson": 20260902,
+      "full_bates_hawkes": 20260902
+    },
+    "common_random_numbers_note": "All four price engines use the same aligned base seed; WACC shocks are independent and reused exactly across models."
+  },
+  "gold_price_layer": {
+    "scope": "GOLD_PRICE_LAYER_ONLY",
+    "team8_source_dir": "parity/sources/team-8-current",
+    "calibration_manifest": "data/processed/team8/calibration_20260902/manifest.json",
+    "calibration_summary_file": "data/processed/team8/calibration_20260902/calibration_summary.csv",
+    "surface_diagnostics_file": "data/processed/team8/calibration_20260902/surface_diagnostics.json",
+    "oos_manifest": "data/processed/team8/oos_20260902/run_manifest.json",
+    "oos_model_summary": "data/processed/team8/oos_20260902/model_summary.csv",
+    "nss_curve_file": "data/manifests/rates/team8_us_treasury_nss_20260902.json",
+    "parameter_files": {
+      "black_scholes": "data/processed/team8/calibration_audited_20260907/black_scholes.json",
+      "heston": "data/processed/team8/calibration_audited_20260907/heston.json",
+      "bates_poisson": "data/processed/team8/calibration_audited_20260907/bates.json",
+      "full_bates_hawkes": "data/processed/team8/calibration_audited_20260907/full_bates_hawkes.json"
+    },
+    "path_grid": {
+      "horizon_years": 5.0,
+      "fine_steps": 260,
+      "resampling": "every 13th fine step to 20 operating quarters"
+    },
+    "common_scenario_start": {
+      "price": 4417.0,
+      "unit": "USD/troy oz",
+      "source_authority": "Barrick Mining Corporation",
+      "source_definition": "Q2 2026 average realized gold price used only as the shared level anchor",
+      "source_date": "2026-06-30",
+      "team4_price_artifact": false
+    },
+    "common_scenario_drift": {
+      "method": "Team 8 U.S. Treasury Nelson-Siegel-Svensson curve converted to integral-preserving forward rates",
+      "measure": "common conditional risk-neutral scenario drift; not estimated physical expected return",
+      "team4_nss_used": false,
+      "legacy_team4_nss_used": false,
+      "current_team8_nss_used": true
+    },
+    "conditional_bridge": {
+      "label": "conditional transfer of GLD/Q distributional shape to gold USD/oz",
+      "source_instrument": "GLD call options",
+      "destination_variable": "gold USD/troy oz scenario paths",
+      "validated_physical_forecast": false,
+      "q_to_p_mapping": "NOT_VALIDATED",
+      "gld_to_gold_level_conversion": "NOT_PERFORMED; engines share an independently sourced Barrick realized-price level anchor",
+      "interpretation": "Controlled research sensitivity of distributional shape only; not fair value, target price or investment recommendation."
+    },
+    "calibration_snapshot": {
+      "surface_as_of_utc": "2026-09-02",
+      "treasury_curve_date": "2026-09-02",
+      "instrument": "GLD calls",
+      "measure": "option-implied risk-neutral calibration",
+      "eligible_surface_points_pre_sampling": 605,
+      "eligible_expiries_pre_sampling": 12,
+      "eligible_unique_strikes_pre_sampling": 146,
+      "eligible_dte_range": [
+        79,
+        653
+      ],
+      "dense_cc64_points": 64,
+      "dense_cc64_expiries": 8,
+      "dense_cc64_unique_strikes": 20,
+      "in_sample_best_iv_rmse_model": "heston",
+      "oos_best_date_equal_iv_rmse_model": "full_bates_hawkes",
+      "current_surface_used_for_recalibration": true
+    }
+  },
+  "common_non_gold_layers": {
+    "production_and_cost": "CURRENT_Q1_Q2_PLUS_TEAM4_FORECAST_Q3_ONWARD",
+    "production_and_cost_note": "Barrick actuals cover 2026Q1-Q2; the frozen Team 4 forecast begins at 2026Q3 and remains explicitly labelled.",
+    "dcf_wacc_equity_bridge": "COMMON_UNIFIED_DCF_METHODOLOGY_IDENTICAL_ACROSS_MODELS",
+    "team4_demonstrator_excluded": "Team 4 NSS, IV, GBM, simulated gold prices and illustrative EBITDA valuation are not inputs to this experiment."
+  },
+  "asynchronous_dates": {
+    "gold_anchor": "2026-06-30",
+    "team8_surface": "2026-09-02",
+    "team8_treasury_curve": "2026-09-02",
+    "b_close": "2026-09-02T00:00:00Z",
+    "valuation_as_of": "2026-09-02T20:00:00Z"
+  },
+  "selection_basis": {
+    "primary_structural_scenario": "full_bates_hawkes",
+    "in_sample_result": "Heston has the lowest CC64 implied-volatility RMSE (49.4881 bp).",
+    "out_of_sample_result": "Full Bates-Hawkes has the lowest date-equal rolling OOS implied-volatility RMSE (65.0507 bp) over 30 origins and 4,667 common forecasts.",
+    "basis": "Primary structural sensitivity selected on rolling OOS ranking, with all simpler models reported and the distinct in-sample ranking disclosed.",
+    "caveat": "Model comparison is conditional and does not validate a physical gold forecast or a target price."
+  }
+}

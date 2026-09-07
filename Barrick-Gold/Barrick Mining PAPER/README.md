@@ -1,41 +1,32 @@
 # Barrick Mining PAPER 📄
 
-Compact research paper for the integrated stochastic valuation of Barrick Mining Corporation. The paper is an **eight-page working draft**; release date: **07/09/2026**.
+[Operating-Value Sensitivity for Barrick Mining](paper/Articolo.pdf) is an eight-page working draft dated September 7, 2026. It compares option-implied gold-price laws within an unreconciled operating-proxy experiment.
 
-## Current snapshot
+## Current evidence
 
-- Team 8 option/Treasury date: September 2, 2026.
-- Dense eligible surface: 605 GLD calls, 12 expiries, 146 distinct strikes, DTE 79–653.
-- Calibration geometry: fixed CC64 sample of 64 actual contracts, 8 expiries and 20 strikes.
-- Same-date NSS curve: 14 Treasury tenors, 2.0608 bp fit RMSE.
-- In-sample IV RMSE winner: Heston, 49.4881 bp.
-- Dense rolling OOS winner: Full Bates–Hawkes, 65.0507 bp date-equal IV RMSE over 30 origins and 4,667 common forecasts.
-- Conditional valuation: 8,192 paths; Barrick close USD 44.13; cross-model medians USD 35.14–35.87.
+- Snapshot: September 2, 2026; 64 actual GLD call contracts, with curated Team 8 option and Treasury inputs included.
+- Current-snapshot IV RMSE after local refinement: Heston 49.4881 bp, Bates 49.4077 bp, Bates–Hawkes 49.3258 bp. These are local improvements, not certified global optima.
+- Historical conditional next-date repricing: 30 origins, 4,667 common forecasts; Hawkes has the lowest mean daily RMSE point estimate, 65.0507 bp. Root-mean-MSE is a different metric (70.3008 bp). No model beats persistence on its common support.
+- Signed aggregate operating-proxy medians are approximately USD 59–60 billion. Numerical changes with path count, time resolution and seed exceed some inter-model differences. No equity values or market-relative verdicts are reported.
 
-The paper keeps the in-sample and out-of-sample rankings distinct and treats the GLD risk-neutral-to-gold transfer as a conditional modeling device, not a physical forecast or target price. The operating handoff deliberately retains a persistent cost trend and assumes no ex-ante benefit from future technology or efficiency gains; this is prudential relative to otherwise identical efficiency-improvement scenarios, not a mathematical lower bound.
+## Files and execution
 
-The persistence benchmark uses 4,026 interpolation-domain observations, a different support from the 4,667 model targets; no candidate beats persistence. The paper also distinguishes option-implied jump clustering from causal news attribution and flags unreconciled finite reserves, replacement investment and closure costs.
+- [paper/Articolo.pdf](paper/Articolo.pdf): eight-page Paper; LaTeX source and figures in the same directory.
+- [code/README.md](code/README.md): standalone offline experiment, data provenance, parameters, tests and output tables.
+- [Technical audit](code/technical_audit.pdf): all 27 review points, exact OOS denominators, parameter table and remaining limitations.
+- [Full thesis draft](../Barrick%20Mining%20UNIFICATO/thesis/Articolo.pdf): broader historical project; not scientifically updated by this Paper revision.
 
-## Structure
-
-| Path | Role |
-| --- | --- |
-| `paper/Articolo.tex` | Main pdfLaTeX source; working-draft date is `07/09/2026`. |
-| `paper/Articolo.pdf` | Verified eight-page PDF, including cover and references. |
-| `paper/sections/` | Ten modular paper sections. |
-| `paper/img/` | Club logo and five clickable contact icons, with the Font Awesome license. |
-| `paper/figures/` | The 21 Team 8, operating, DCF and valuation images actually referenced by the paper. |
-| [`../Barrick Mining UNIFICATO/code/`](../Barrick%20Mining%20UNIFICATO/code/) | Executable companion, manifests, aggregate inputs and authoritative run. |
-
-## Build
-
-```bash
-cd paper
-pdflatex Articolo.tex
-pdflatex Articolo.tex
+```sh
+python -m pip install -r code/requirements.txt
+python main.py
+python -m pytest code/tests -q
 ```
 
-No BibTeX step is required: the bibliography is embedded in `sections/07_references.tex`. Build by-products, nested archives and unused legacy figures are not committed.
+Use `python main.py --recalibrate` to repeat the Hawkes local refinement. Build the Paper by running `pdflatex Articolo.tex` twice from `paper/`.
+
+## Interpretation
+
+Q-law plus assumed WACC is a sensitivity operator. Sales versus production, corporate accounting, copper, ownership, finite reserves and risk-premium reconciliation remain unresolved. Signed terminal values and a five-year truncation comparison make the terminal convention explicit; neither is a calibrated mine-life model. Historical OOS is retained separately from the current refit.
 
 ## Authors
 
@@ -43,6 +34,4 @@ Stefano Falcione, Marco Fracca, Filippo Triassi, Giorgio Zoccatelli, Andrea Rost
 
 ## Citation
 
-Barrick Gold Research Teams (2026), *Stochastic Valuation of Barrick Mining*, Starting Finance Club PoliTo Research, working draft, release date 07/09/2026.
-
-The first-page sidebar combines club contacts with a Discoveries bar chart: the September 2 close exceeds the four conditional model medians by 23.0%, 23.7%, 23.1% and 25.6%, respectively. These are close-to-median gaps, not established mispricing or expected returns. The requested article date is September 7, 2026; scientific validation limits remain unchanged.
+Barrick Gold Research Teams (2026), *Operating-Value Sensitivity for Barrick Mining*, Starting Finance Club PoliTo Research, working draft, September 7, 2026.

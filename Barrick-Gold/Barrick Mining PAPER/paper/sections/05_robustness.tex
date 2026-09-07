@@ -3,7 +3,7 @@
 \noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/oos_rmse.png}
-  \captionof{figure}{Dense-only rolling evidence on 30 forecast origins and 4,667 common target observations. Full Bates--Hawkes has the lowest date-equal IV RMSE.}
+  \captionof{figure}{Dense-only rolling evidence on 30 forecast origins and 4,667 common target observations. The original fits give Bates--Hawkes the lowest mean daily IV RMSE.}
   \label{fig:oos_r2}
 \par}
 \end{minipage}\par
@@ -15,13 +15,13 @@
 \par}
 \end{minipage}\par
 
-\subsection{Predictive interpretation}
+\subsection{Conditional next-date repricing}
 Model comparisons use 4,667 targets; persistence comparisons use the 4,026 inside the origin interpolation domain. Benchmark scores therefore have different supports; equal date weighting limits the influence of densely populated dates.
 
-The rolling exercise separates current-snapshot fit from forward performance. Date-equal IV RMSE is 140.6528 bp for Black--Scholes, 80.1964 bp for Heston, 69.3055 bp for Bates and 65.0507 bp for Full Bates--Hawkes. Relative to the origin mean-IV benchmark, the corresponding $R^2_{OOS}$ values are $-2.58\%$, $66.07\%$, $72.97\%$ and $75.81\%$. None beats interpolated IV-surface persistence, but Full Bates--Hawkes is closest at $-3.68\%$, followed by Bates at $-12.92\%$ and Heston at $-27.24\%$.
+Reported RMSE is the mean of daily RMSEs, not the root of mean daily MSE used by $R^2$. Values are 140.6528 bp for Black--Scholes, 80.1964 bp for Heston, 69.3055 bp for Bates and 65.0507 bp for Full Bates--Hawkes. Relative to the origin mean-IV benchmark, the corresponding $R^2_{OOS}$ values are $-2.58\%$, $66.07\%$, $72.97\%$ and $75.81\%$. None beats interpolated IV-surface persistence, but Full Bates--Hawkes is closest at $-3.68\%$, followed by Bates at $-12.92\%$ and Heston at $-27.24\%$.
 
 \begin{findingbox}[Model-risk conclusion]
-Heston is the in-sample winner, whereas Full Bates--Hawkes is the rolling OOS winner. The valuation therefore reports all four engines and uses Full Bates--Hawkes only as the primary structural sensitivity, not as a universally dominant forecast.
+Historical OOS uses the original fits; audited current fits are a separate experiment. A paired five-date block bootstrap gives a Hawkes-minus-Bates MSE interval $[-8.95,-2.77]\times10^{-6}$, exploratory with only 30 dates.
 \end{findingbox}
 
 \noindent\begin{minipage}{\columnwidth}
@@ -33,30 +33,30 @@ Heston is the in-sample winner, whereas Full Bates--Hawkes is the rolling OOS wi
 \end{minipage}\par
 
 \subsection{Jump-layer interpretation}
-The self-exciting extension is motivated by clustered option-implied jump activity. Relative to the constant Poisson baseline, the Hawkes specification permits intensity bursts followed by endogenous decay. The current branching ratio is 0.5569: shocks propagate materially, while the stationarity restriction remains satisfied.
+The self-exciting extension is motivated by clustered option-implied jump activity. Relative to the constant Poisson baseline, the Hawkes specification permits intensity bursts followed by endogenous decay. The branching ratio and decay parameter have different meanings; fitted risk-neutral self-excitation is not evidence of physical news clustering.
 
 Without a dated news filtration or parameter-stability evidence, these option-implied bursts cannot be identified as causal responses to geopolitical events.
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/hawkes_intensity_comparison.png}
-  \captionof{figure}{Poisson and Hawkes intensity paths under the 2 September parameter set. The Hawkes layer captures clustered arrivals and decay with a stationary branching ratio of 0.5569.}
+  \captionof{figure}{Illustrative simulated Poisson and Hawkes paths under the original parameter set. A single realization cannot establish clustering in observed data.}
   \label{fig:intensity_compare}
 \par}
 \end{minipage}\par
 
 % Expansion last - 2026-09-06
 \subsection{Interpretive limitations and validation}
-Source integrity, implementation accuracy, calibration fit, predictive performance and economic validity answer different questions. Frozen inputs and deterministic replay make a result traceable; they do not establish that its probability measure or corporate perimeter is appropriate. Likewise, a lower option-pricing error cannot validate the conversion from an exchange-traded fund to physical-gold revenue. The current comparison is strongest as a controlled attribution exercise: it changes the price law while keeping the downstream contract fixed. Its interpretation should stop at that boundary until the economic interfaces are independently reconciled.
+Reproducibility, numerical accuracy and economic validity are distinct. A good option fit cannot validate the GLD-to-gold mapping or the Q-law/WACC combination. The experiment identifies sensitivity to a chosen numerical contract, not corporate fair value.
 
-In the admitted run, enterprise and equity value coincide because the intervening bridge adjustments are zero placeholders. That equality is not evidence that Barrick has no debt, cash, minority interests or other claims. Reconciliation must start from one dated filing and the matching listed security, establish ownership and attributable production, and distinguish component margin from reported operating profit. Depreciation, cash taxes, working capital, sustaining capital expenditure and growth investment must then enter consistently, with no deduction counted twice. Net debt, non-operating assets, streams and other claims must be matched to a diluted share count on the same basis. Only then can a per-share output acquire a filing-reconciled interpretation.
+The old run equated enterprise and equity proxies using zero bridge placeholders. This revision removes that share-price interpretation; debt, cash, minority claims and copper remain unreconciled. A genuine valuation must start from one dated filing and the matching listed security, establish ownership and attributable production, and distinguish component margin from reported operating profit. Depreciation, cash taxes, working capital, sustaining capital expenditure and growth investment must then enter consistently, with no deduction counted twice. Net debt, non-operating assets, streams and other claims must be matched to a diluted share count on the same basis. Only then can a per-share output acquire a filing-reconciled interpretation.
 
 \subsection{Operating uncertainty and research priorities}
-The next operating extension should change more than the visual smoothness of the cost forecast. Production, grade, recovery, mine mix, energy and labour costs can move jointly with gold prices, inflation and exchange rates. Sampling each input independently could distort both diversification and adverse joint outcomes. Their dependence must therefore be estimated or specified transparently as a scenario assumption. Stochastic costs can generate favourable and adverse paths while retaining a smooth conditional mean; a straight expected path is not itself evidence that randomness has been omitted incorrectly. Technology scenarios also require their associated investment and implementation costs, not an automatic downward correction to unit costs.
+Production, grade, recovery, mine mix and costs may depend on gold prices, inflation and exchange rates. Independence is not automatic: operating dependence and Goodman variance propagation require explicit assumptions. Technology scenarios must include implementation costs and investment; a smooth conditional cost mean does not imply absence of uncertainty.
 
 A mining-company terminal block needs an explicit resource interpretation. Continued production may require reserve conversion, replacement investment or new projects, while depletion and closure liabilities can reduce the duration and value of the cash-flow stream. A positive WACC-growth spread controls a mathematical denominator but does not establish that a perpetual operating horizon is economically justified. Finite-resource and going-concern closures should be compared under coherent investment assumptions before attributing differences entirely to the gold-price model. Such a comparison is a future validation exercise, not a result of the present run.
 
-The research agenda begins with the operating and equity perimeter, followed by the GLD-to-gold basis and an explicit risk-neutral-to-physical transformation. Operating uncertainty and finite-resource closure follow under the same corporate contract. Additional information should then be judged for incremental predictive value. Macroeconomic or geopolitical news, text classifications and machine-learning features require event-time alignment, leakage controls and chronological evaluation against pre-declared price, volatility and persistence benchmarks. A Hawkes burst alone does not identify its cause. This sequence gives the interdisciplinary team testable tasks; model complexity is not validation.
+Market maturities end at 653 days, well before five scenario years and perpetuity. Fixed parameters beyond that horizon are an extrapolation assumption, not market-identified information. The five-year-only comparison removes terminal continuation but does not calibrate depletion, replacement investment or closure costs. A bucketed term-structure and finite-reserve model remain necessary for an economic valuation.
 
 \input{sections/06_conclusion}
 

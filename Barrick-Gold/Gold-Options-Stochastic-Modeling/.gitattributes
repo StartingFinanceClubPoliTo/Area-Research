@@ -1,0 +1,5 @@
+
+# Curated audit input hashes must survive checkout.
+data/processed/** -text whitespace=cr-at-eol
+outputs/paper_audit_inputs_20260907/** -text whitespace=cr-at-eol
+outputs/paper_audit_20260907/** -text whitespace=cr-at-eol

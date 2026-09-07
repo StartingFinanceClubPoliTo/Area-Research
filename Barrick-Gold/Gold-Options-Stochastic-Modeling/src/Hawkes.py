@@ -5,7 +5,7 @@ rolling OOS pipeline is retained here.
 """
 
 import numpy as np
-from scipy.optimize import differential_evolution, minimize
+from scipy.optimize import differential_evolution, minimize, OptimizeResult
 
 from calibration_core import OptionSurface
 
@@ -108,7 +108,7 @@ class ExactHawkesCalibration:
             return 1e8
         if not -0.999 < p["rho"] < 0.999:
             return 1e8
-        if p["lambda0"] <= 0 or p["lambda_bar"] <= 0 or p["beta"] <= 0:
+        if p["lambda0"] < 0 or p["lambda_bar"] < 0 or p["beta"] <= 0:
             return 1e8
         if p["sigma_J"] <= 0:
             return 1e8
@@ -165,7 +165,7 @@ class ExactHawkesCalibration:
         seed=None,
         global_cos_N=128,
         local_cos_N=192,
-        min_branching=0.02,
+        min_branching=0.0,
         warm_local_maxiter=60,
     ):
         """Calibrate the exact Heston-Hawkes model.
@@ -195,12 +195,12 @@ class ExactHawkesCalibration:
         diffusion_seed = cls._feller_admissible_diffusion_seed(bates_seed[:5])
         jump_seed = bates_seed[5:]
         hawkes_bounds = [
-            (1e-3, 5.0),
-            (1e-3, 5.0),
+            (0.0, 5.0),
+            (0.0, 5.0),
             (min_branching, 0.95),
             (0.1, 12.0),
             (-0.5, 0.5),
-            (1e-3, 0.6),
+            (1e-4, 0.6),
         ]
         full_bounds = [
             (1e-4, 1.0),
@@ -229,6 +229,22 @@ class ExactHawkesCalibration:
                 )
                 x[3] = max(x[3], full_bounds[3][0] + 1e-8)
             return x
+
+        def retain_candidates(results, starts):
+            # Evaluate raw candidates at exactly the final pricing resolution.
+            for start in starts:
+                value = cls.objective_heston(start, surface, S0, q, n_steps, local_cos_N)
+                if np.isfinite(value) and value < 1e8:
+                    results.append(OptimizeResult(x=np.array(start), fun=value,
+                        success=True, message="Retained feasible starting candidate"))
+            if min_branching == 0.0:
+                nested = np.r_[bates_seed[:5], bates_seed[5], bates_seed[5],
+                               0.0, 1.0, bates_seed[6:]]
+                value = cls.objective_heston(nested, surface, S0, q, n_steps, local_cos_N)
+                if value < 1e8:
+                    results.append(OptimizeResult(x=nested, fun=value, success=True,
+                        message="Retained exact nested Bates candidate"))
+            return min(results, key=lambda r: float(r.fun) if np.isfinite(r.fun) else np.inf)
 
         def local_minimize(start, maxiter_local):
             return minimize(
@@ -264,7 +280,7 @@ class ExactHawkesCalibration:
                 local_minimize(warm, warm_local_maxiter),
                 local_minimize(bates_like, warm_local_maxiter),
             ]
-            best = min(candidates, key=lambda result: float(result.fun))
+            best = retain_candidates(candidates, [warm, bates_like])
             best["warm_start_used"] = True
             best["global_search_used"] = False
             return best
@@ -302,7 +318,7 @@ class ExactHawkesCalibration:
             local_minimize(x0, 80),
             local_minimize(bates_like, 80),
         ]
-        best = min(candidates, key=lambda result: float(result.fun))
+        best = retain_candidates(candidates, [x0, bates_like])
         best["warm_start_used"] = False
         best["global_search_used"] = True
         return best

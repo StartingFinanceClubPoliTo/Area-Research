@@ -29,8 +29,8 @@ class BatesHawkesExact(Bates):
             raise ValueError("alpha must be non-negative")
         if alpha >= beta:
             raise ValueError("stationarity requires alpha < beta")
-        if lambda0 <= 0 or lambda_bar <= 0:
-            raise ValueError("lambda0 and lambda_bar must be positive")
+        if lambda0 < 0 or lambda_bar < 0:
+            raise ValueError("lambda0 and lambda_bar must be non-negative")
         if sigma is not None and sigma <= 0:
             raise ValueError("sigma must be positive")
         if sigma_J is not None and sigma_J < 0:

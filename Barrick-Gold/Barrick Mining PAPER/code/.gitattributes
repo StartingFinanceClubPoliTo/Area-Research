@@ -1,0 +1,2 @@
+# Preserve exact input hashes across operating systems.
+* -text whitespace=cr-at-eol

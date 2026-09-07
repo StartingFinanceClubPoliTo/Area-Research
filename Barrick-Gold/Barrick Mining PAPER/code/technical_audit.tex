@@ -1,0 +1,91 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage[margin=20mm]{geometry}
+\usepackage{amsmath,booktabs,longtable,array,xcolor,hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue}\setlength{\tabcolsep}{3pt}\setlength{\emergencystretch}{3em}\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\title{Barrick Paper: audit tecnico e supplemento numerico}
+\author{Registro di revisione tecnica}\date{7 settembre 2026}
+\begin{document}\maketitle
+\textbf{Esito.} Correzioni numeriche ed editoriali applicate al Paper. Il risultato è un esperimento di sensibilita di un proxy operativo non riconciliato, non una valutazione aziendale validata. Nessuna stima di debito, rame, riserve o premio per il rischio è stata inventata. Il manoscritto rimane soggetto alla revisione scientifica del team.
+\section{Cinque passaggi di revisione}
+1. Pacchetto e fonti: individuati dati originali team8\_clean, run del 2 settembre,64 contratti e30 origini; preservati run storici e provenienza.\par
+2. Testo: corretti misura, proxy, unita, terminologia, formula equal-date, significato di Feller e limite Hawkes; rimosso confronto USD/share.\par
+3. Numeri e codice: test boundary, protezione dei candidati, refit corrente, aggregati OOS, bootstrap, politiche terminali, CRR e frequenze annuali.\par
+4. Fonti e claims: separati OOS storico e refit corrente; ARIMA inherited; illustrazione Hawkes non empirica; fonti primarie aggiunte.\par
+5. Layout e pacchetto: Paper di 8 pagine senza cambiare font/margini; figure 6a--d insieme; dati, codice e supplemento riproducibili. Il verbale di consegna finale registra hash e commit separatamente.
+\section{Parametri correnti rifiniti (campione del 2 settembre)}
+Sigma è volatilità costante BS; xi è vol-of-vol. Tempi in anni, intensita per anno. I parametri Q non sono stime di probabilita fisiche.
+\begin{center}\small\begin{tabular}{lrrrr}\toprule
+Parametro & BS & Heston & Bates & Hawkes\\\midrule
+sigma & 0.2508752 & -- & -- & -- \\
+v0 & -- & 0.06438994 & 0.06429079 & 0.0653574 \\
+kappa & -- & 4.051826 & 4.048162 & 4.049828 \\
+theta & -- & 0.06548106 & 0.0653971 & 0.0624064 \\
+xi & -- & 0.7281495 & 0.7276511 & 0.7109637 \\
+rho & -- & -0.01701034 & -0.02220016 & -0.01358115 \\
+lambd & -- & -- & 0.2438835 & -- \\
+lambda0 & -- & -- & -- & 0.03282059 \\
+lambda\_bar & -- & -- & -- & 0.5603878 \\
+alpha & -- & -- & -- & 1.537358 \\
+beta & -- & -- & -- & 2.748086 \\
+branching\_ratio & -- & -- & -- & 0.5594287 \\
+mu\_J & -- & -- & -0.0003866706 & -0.04536921 \\
+sigma\_J & -- & -- & 0.0001247636 & 0.03430856 \\
+\bottomrule\end{tabular}\end{center}
+\textbf{Ottimizzazione.} Dati e Heston originari congelati; rifinitura Bates da soluzione originale e candidato Heston, SLSQP ftol=$10^{-12}$, maxiter 150. Hawkes da originale e candidato Bates, ftol=$10^{-11}$, maxiter 100. COS 256 per confronto finale; candidati iniziali sempre ammissibili alla selezione. Nessuna prova di ottimo globale.
+\textbf{Bounds.} $v_0,\theta\in[10^{-4},1]$, $\kappa\in[0.1,10]$, $\xi\in[0.01,8]$, $\rho\in[-0.99,0.99]$, $\lambda\in[0,5]$, $\mu_J\in[-0.5,0.5]$. Bates $\sigma_J\in[10^{-4},0.5]$; rifinitura Hawkes $\lambda_0,\bar\lambda\in[10^{-6},5]$, $n\in[0,0.95]$, $\beta\in[0.1,12]$, $\sigma_J\in[10^{-4},0.6]$. API corretta consente anche intensita zero. Seed originale 8; rifiniture locali deterministiche.
+\section{OOS: definizioni e tabella unica}
+Per ogni benchmark si usano date e contratti comuni. Con $n_t$ osservazioni e residui in volatilita decimale:
+\[L_{m,t}=n_t^{-1}\sum_j e_{m,t,j}^2,\quad R^2=1-\frac{\sum_t L_{m,t}}{\sum_t L_{b,t}}.\]
+\[\overline{RMSE}=10^4D^{-1}\sum_t\sqrt{L_{m,t}},\quad RMSE_{root}=10^4\sqrt{D^{-1}\sum_tL_{m,t}}.\]
+Sono misure diverse. Il benchmark root-MSE comune è 142.931650 bp per mean-IV e 64.392605 bp per persistenza. Denominatori somme daily MSE:0.006128836991407637 e 0.0012439222691629146; D=30 in entrambi.
+\begin{center}\small\begin{tabular}{llrrrr}\toprule
+Modello & Benchmark & N & Mean RMSE & Root MSE & $R^2$(\%)\\\midrule
+bs & mean & 4667 & 140.6528 & 144.7657 & -2.5828 \\
+bs & persistence & 4026 & 118.7815 & 123.6141 & -268.5227 \\
+heston & mean & 4667 & 80.1964 & 83.2558 & 66.0709 \\
+heston & persistence & 4026 & 68.6053 & 72.6343 & -27.2366 \\
+bates & mean & 4667 & 69.3055 & 74.3175 & 72.9650 \\
+bates & persistence & 4026 & 62.9465 & 68.4252 & -12.9173 \\
+hawkes & mean & 4667 & 65.0507 & 70.3008 & 75.8084 \\
+hawkes & persistence & 4026 & 59.5549 & 65.5673 & -3.6817 \\
+\bottomrule\end{tabular}\end{center}
+I risultati sono quelli delle calibrazioni storiche originali. Il nuovo refit del 2 settembre non modifica retroattivamente30 origini. Bootstrap esplorativo circolare a blocchi di 5 date, 10000 repliche e seed 20260907: differenza Hawkes-Bates di daily MSE $-5.80893\times10^{-6}$, intervallo percentile 95\% $[-8.94922,-2.76826]\times10^{-6}$. Non è una validazione OOS del nuovo optimizer.
+\section{Test numerici e contratto operativo}
+Boundary characteristic-function errors: Bates-Heston 0; Hawkes-Bates massimo $6.21\times10^{-17}$. Stessa loss su 64 contratti, Heston e Bates ($\lambda=0$):$2.3628729744912103\times10^{-5}$. Dopo rifinitura: Bates $2.3544619411087685\times10^{-5}$; Hawkes $2.3439415439691725\times10^{-5}$.
+\par Il motore somma quattro margini trimestrali in ciascun anno prima dello sconto annuale. Policy signed mantiene il segno del margine terminale; none tronca al quinto anno; legacy\_positive riproduce la precedente asimmetria. Zero terminale non è una stima di vita residua delle riserve. Il rischio Q/WACC rimane un limite interpretativo, non viene risolto dal solo cambiamento della policy.
+\par Nei nuovi risultati la media sale di 1.14--1.49 miliardi USD passando da signed a legacy\_positive; nessun rate path base tocca il clipping. Per Hawkes la mediana signed è 59.82 miliardi;16,384 path danno 59.34, 520 step 61.59, seed alternativo 61.38. Variazioni numeriche maggiori di alcuni gap tra modelli: nessuna graduatoria economica affidabile.
+\section{Stato dei 27 rilievi}
+\begin{longtable}{p{.23\textwidth}p{.18\textwidth}p{.51\textwidth}}\toprule
+Rilievo & Esito & Evidenza e limite residuo\\\midrule\endhead
+Q e WACC & Perimetro corretto & Modello definito come operatore di sensibilita; eliminati fair value, equity e confronto con prezzo. Non deriva una trasformazione Q/P o un modello ibrido di pricing. \\ \addlinespace
+Produzione 0.91 & Corretto e qualificato & Eq.15 fisica senza fattore; 0.91 dichiarato come fattore empirico Team4, non conversione. Trasferibilita cross-mine non validata; forecast congelati non riscalati arbitrariamente. \\ \addlinespace
+Equity/share e rame & Interpretazione rimossa & Nessun USD/share, share count o market line nei nuovi risultati. Proxy operativo aggregato; copper, debito, minoranze e perimetro societario non riconciliati. \\ \addlinespace
+GLD American & Convenzione verificata & q=0 come payout yield; CRR 800 su 64 contratti a IV osservata, premio esercizio <1e-8 USD. Condizioni frictionless, tassi positivi, non distribuzione; non equivale a verifica frizioni di mercato. \\ \addlinespace
+OOS incoerente & Risolto & Aggregazioni diverse, non errore aritmetico. Ricostruiti pesi, denominatori, supporti e entrambe le RMSE. \\ \addlinespace
+Nesting/calibrazione & Codice corretto & Boundary CF e loss verificati; migliori candidati conservati. Refit corrente: Bates 49.4077 bp e Hawkes 49.3258 bp. Nessuna garanzia di ottimo globale. \\ \addlinespace
+Estrapolazione & Limite reso esplicito & 653 giorni contro 5 anni/perpetuita; confronto zero terminale e sensibilita numerica. Term-structure per bucket e riserve finite restano modelli non stimati. \\ \addlinespace
+Produzione/vendite & Proxy dichiarato & Documentata incoerenza contabile potenziale: Q2 produzione 796/sales 801 koz, Q1 sales 748 koz. Nessuna falsa stima inventario; rimane volume di scenario. \\ \addlinespace
+FCFF & Terminologia corretta & F proxy, non FCFF contabile. Non inventati G\&A,copper,D\&A,WC,capex,tasse,royalties e closure. \\ \addlinespace
+Terminale troncato & Codice corretto & Policy signed esplicita; confronto none e legacy\_positive. Floor legacy conservato solo per replay e misura della distorsione. \\ \addlinespace
+Equity negativa & Corretto & Valori negativi sono unconstrained operating proxy; nessuna inferenza su limited-liability equity. \\ \addlinespace
+OU sigma & Corretto & Innovazione annuale esplicita e testata; sigma annua 0.009, kappa 0.45, innovazione 0.007308. \\ \addlinespace
+Clipping WACC & Verificato & Floor 0.035/cap 0.25, criterio spread ridondante dichiarato; nessun clipping osservato nel run base. Non attribuire masse ai bordi non presenti. \\ \addlinespace
+Frequenze & Verificato & 260 step -> ogni 13 step -> 20 trimestri -> somma di 4 -> 5 anni scontati annualmente. Non c’era errore annuale applicato ogni trimestre. \\ \addlinespace
+OOS predittivo & Rinominato & Conditional next-date repricing; spot e rate target sono condizionanti. \\ \addlinespace
+30 origini & Incertezza aggiunta & Bootstrap paired circular block 5, 10000 repliche, seed 20260907. Esplorativo; vecchio OOS non rivalidato col nuovo optimizer. \\ \addlinespace
+Hawkes persistenza & Corretto & n=0.5594; beta 2.7481 e half-life kernel 0.2522 anni. Non interpretare come effetto causale geopolitico. \\ \addlinespace
+Singolo percorso & Corretto & Figura 14 etichettata simulazione illustrativa con parametri originali; non evidenza empirica. \\ \addlinespace
+Feller & Corretto & Vincolo di stretta positivita imposto per scelta, non condizione necessaria di pricing Heston. \\ \addlinespace
+ARIMA/SARIMA & Claims ridotti & Statistiche inherited Team4; rimosso sostegno indipendente non verificato. Ricostruire campione e diagnostica è necessario prima di validare forecast. \\ \addlinespace
+Goodman & Assunzioni esplicite & Dipendenze di ore,grade,recovery non implicite; distribuzioni Goodman non propagate nel run. \\ \addlinespace
+Vega loss & Definita & Vega per variazione unitaria di volatilita decimale; epsilon 1e-4. MSE di errori prezzo scalati distinta da IV RMSE esatta. \\ \addlinespace
+Parametri & Pubblicati & Tabella completa, bounds, stopping, seed, hash e script in supplemento/pacchetto. \\ \addlinespace
+Collisioni notazione & Corretto & AIC/BIC usano p e N; k compensatore e n branching. \\ \addlinespace
+Limite Hawkes & Testato & $\alpha=0$ e $\lambda_0=\bar\lambda$; altrimenti intensita deterministica non costante. \\ \addlinespace
+Scale residue & Figure rigenerate & Stesso range simmetrico per tutti e 4 modelli; punti contratti effettivi, nessuna interpolazione residui. \\ \addlinespace
+Bibliografia & Integrata & COS,NSS,Treasury,Cboe,SPDR e filing Barrick; sorgenti opzioni IB API, con dati/hash nella riproducibilita. \\ \addlinespace
+\bottomrule\end{longtable}
+\section{Fonti e riproducibilita}
+\href{https://www.cboe.com/exchange-traded-stock/etp-options-spec}{Cboe ETP options}; \href{https://files.spdrgoldshares.com/spdr-cms/2025-10/GLD-FAQs-January-2025.pdf}{SPDR GLD FAQ}; \href{https://www.barrick.com/English/investors/quarterly-reports/default.aspx}{Barrick Q1/Q2}; \href{https://ir.cwi.nl/pub/13283}{Fang--Oosterlee COS}; \href{https://www.nber.org/papers/w4871}{Svensson NSS}.
+\par Il pacchetto accompagna il Paper con input, hash, parametri originari e rifiniti, metriche, test e script. main.py rigenera gli output dai candidati rifiniti salvati; --recalibrate ripete le rifiniture senza sovrascrivere i parametri storici. I dati curati provengono da team8\_clean; nessuna chiave o configurazione account è necessaria per il replay offline.
+\end{document}

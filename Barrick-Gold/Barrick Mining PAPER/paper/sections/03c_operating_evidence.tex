@@ -1,9 +1,9 @@
 \section{Current Operating-Model Evidence}
 
-The cost and production layers inherited from Team 4 are purpose-built operating forecasts rather than generic statistical add-ons. They were first assembled in an earlier Barrick working paper that used a provisional Black--Scholes/GBM gold-price block. In the unified valuation only the operating method is retained and refreshed with Barrick's Q1--Q2 2026 mine statistics; the legacy gold-price simulation and illustrative EBITDA/valuation are excluded. This keeps the non-price inputs observable while ensuring that all valuation gold paths come from the current Team 8 engines.
+Team 4 supplies the inherited operating scenarios, refreshed with Q1--Q2 2026 statistics. Its earlier gold simulation is excluded: all price paths come from Team 8. These fixed inputs permit model attribution but are not independently validated operating forecasts.
 
 \subsection{Cost-of-sales block}
-The cost model in Section~3.4 extracts a common log-space trend, forecasts it with ARIMA(3,1,0) with drift, and reconstructs mine-level paths with volatility-scaled anchors. Its information-criterion selection and hold-out diagnostics support the forecast specification; they do not make CoS a jointly simulated valuation state.
+The cost model in Section~3.4 extracts a common log-space trend, forecasts it with ARIMA(3,1,0) with drift, and reconstructs mine-level paths with volatility-scaled anchors. Its reported selection and hold-out diagnostics are inherited evidence, not revalidated forecasts or a jointly simulated cost state.
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
@@ -13,7 +13,7 @@ The cost model in Section~3.4 extracts a common log-space trend, forecasts it wi
 \par}
 \end{minipage}\par
 
-The refreshed actuals provide a transparent starting boundary for the operating forecast. From Q3 2026 onward, the unified experiment accepts the resulting deterministic 20-quarter cost vector rather than the fully stochastic CoS distributions explored in the source study. This design is intentional: simultaneous changes in gold, cost and production uncertainty would prevent clean attribution across the four price engines.
+The scenario uses 20 fixed quarterly cost entries, including two 2026 actuals and 18 forecast entries. It does not propagate the source study's operating distributions.
 
 \subsection{Production block}
 Production is reconstructed from ore processed, grade and recovery using the specifications in Section~3.4. This preserves mine heterogeneity. The SARIMA orders are admitted from the source study, which does not report their selection by AIC/BIC.
@@ -48,5 +48,5 @@ The final handoff keeps observed and modelled quantities distinct. Barrick's Q1-
 \end{minipage}\par
 
 \begin{methodbox}[Prudential operating boundary]
-Option-implied gold distributions provide forward-looking market information to the revenue layer. Costs retain a persistent trend without additional technology-driven cost reductions. This is prudential relative to otherwise identical efficiency-improvement scenarios, but it does not establish a mathematical lower bound. Stochastic costs could yield favourable and adverse outcomes; the current fixed vectors preserve attribution across gold engines. Growth is already included in the common DCF schedule.
+Option-implied laws supply conditional scenario shapes to the proxy layer. Costs retain a persistent trend without additional technology-driven cost reductions. This is prudential relative to otherwise identical efficiency-improvement scenarios, but it does not establish a mathematical lower bound. Stochastic costs could yield favourable and adverse outcomes; the current fixed vectors preserve attribution across gold engines. Growth is already included in the common DCF schedule.
 \end{methodbox}

@@ -1,65 +1,65 @@
-\section{Conditional Valuation Findings}
+\section{Operating-Proxy Sensitivities}
 
 \begin{table}[H]
 \centering
-\caption{Primary Full Bates--Hawkes signal.}
+\caption{Audited Bates--Hawkes operating proxy.}
 \label{tab:primary_signal}
 \begin{tabularx}{\columnwidth}{@{}Xr@{}}
 \toprule
-Metric & USD/share or \% \\
+Metric & USD billion or \% \\
 \midrule
-P10 & 3.13 \\
-Median (P50) & 35.14 \\
-P90 & 104.72 \\
-Completed market close & 44.13 \\
-Market vs. median & +25.58\% \\
-Market percentile & 59.24th \\
-Paths above market & 40.76\% \\
+P10 & 1.03 \\
+Median (P50) & 59.82 \\
+P90 & 172.60 \\
+Mean & 77.95 \\
+Negative proxy paths & 9.30\% \\
+Five-year-only median & 12.89 \\
+Legacy floor mean uplift & 1.49 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \begin{findingbox}[Interpretation]
-The completed 2 September market close is above the Full Bates--Hawkes conditional median but remains inside a wide right-skewed distribution. The result leans toward overvaluation relative to this model median; it does not establish market mispricing.
+These are unconstrained aggregate operating proxies, not enterprise or equity values. The Q-law/WACC combination has no demonstrated corporate pricing interpretation. Negative outcomes are not negative limited-liability share prices; no market comparison is made.
 \end{findingbox}
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/fig_val_primary.png}
-  \captionof{figure}{Conditional Barrick value-per-share distribution under the Full Bates--Hawkes gold layer. The reference line is the 2 September 2026 close. The common operating and corporate layers are reused across 8,192 paths; the interval is neither a target-price range nor a confidence interval.}
+  \captionof{figure}{Signed-terminal operating proxy under audited Bates--Hawkes parameters. The common contract is reused across 8,192 paths. Display limits are the 0.5th--99.5th percentiles; the full tails remain in the data. This is not a confidence interval or physical probability law.}
   \label{fig:value_distribution}
 \par}
 \end{minipage}\par
 
 \subsection{Cross-model central tendency}
-The refreshed 2 September run places all four conditional medians in a narrow USD~35.14--35.87 range. Their upper tails nevertheless remain broad: P90 values range from USD~101.43 to USD~104.72. With operations, WACC shocks and the DCF mapping fixed, these differences isolate the distributional effect of the option-implied gold engine.
+Audited parameter refinements dated 7 September use the unchanged 2 September market sample. Cross-model medians range from USD 59.12 to 60.10 billion and P90 from USD 172.60 to 174.02 billion. Their proximity should not be interpreted as a robust ranking of companies or models.
 
 \begin{table}[H]
 \centering
-\caption{Central comparison across gold engines.}
+\caption{Aggregate proxy medians, USD billion.}
 \label{tab:model_comparison}
 \begin{tabular}{@{}lrr@{}}
 \toprule
-Gold engine & Median & $\Pr(V>44.13)$ \\
+Gold engine & Median & Five-year only \\
 \midrule
-Black--Scholes & 35.87 & 41.92\% \\
-Heston & 35.67 & 41.25\% \\
-Bates--Poisson & 35.84 & 41.08\% \\
-Full Bates--Hawkes & 35.14 & 40.76\% \\
+Black--Scholes & 60.10 & 13.17 \\
+Heston & 59.77 & 13.08 \\
+Bates--Poisson & 59.12 & 12.83 \\
+Full Bates--Hawkes & 59.82 & 12.89 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 % Expansion p6 - 2026-09-06
-Similar medians do not make the four stochastic laws interchangeable: the common corporate mapping can compress central differences while preserving asymmetric tails. The spread across simulated values is conditional economic dispersion, whereas Monte Carlo error concerns the numerical precision of an estimated mean or quantile. A fixed seed makes the calculation repeatable; it does not establish convergence as path count or time resolution changes. The plotted percentile ranges should therefore not be read as confidence intervals for a uniquely identified company value. At the extreme lower tail, negative proxy values expose the unreconciled corporate mapping rather than predict negative limited-liability share prices. Truncating them would conceal that limitation without repairing the accounting bridge.
+The simulation spread describes conditional scenario dispersion; Monte Carlo error concerns numerical estimates. Doubling paths to 16,384, doubling fine steps to 520 and changing the seed gives Bates--Hawkes medians of 59.34, 61.59 and 61.38 billion versus 59.82 at baseline. Such numerical variation exceeds some cross-model median gaps. Negative values expose the unconstrained mapping, not negative limited-liability shares. The data retain these outcomes rather than silently flooring them.
 
-\subsection{Why Full Bates--Hawkes is primary}
-Full Bates--Hawkes is displayed as the primary structural sensitivity because it combines stochastic variance with self-exciting jumps and records the lowest date-equal rolling OOS IV RMSE. This choice is not an in-sample claim: Heston has the lowest current-snapshot IV RMSE. The fitted Hawkes branching ratio of 0.5569 satisfies $n<1$ and indicates a materially persistent, but stationary, self-excitation channel.
+\subsection{Structural illustration, not model selection}
+Bates--Hawkes illustrates the richest law, not a preferred corporate valuation. Its audited branching ratio is 0.5594 and kernel half-life $\log(2)/\beta=0.2522$ years. These are risk-neutral fitted parameters, not measured geopolitical persistence. The earlier OOS exercise below uses the original, unrefined origin fits.
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.95\columnwidth]{figures/fig_val_multi.png}
-  \captionof{figure}{Conditional Barrick value distributions under the four refreshed gold-price engines. The USD~44.13 close is above every median. Operations, WACC and the DCF mapping are common across models.}
+  \captionof{figure}{Audited operating-proxy distributions under four gold-price laws. Operations, WACC and signed terminal closure are common. No share count, equity bridge or market reference is used.}
   \label{fig:multimodel_value_overlay}
 \par}
 \end{minipage}\par

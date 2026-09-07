@@ -1,0 +1,13 @@
+{
+  "contrast": "Hawkes minus Bates daily MSE",
+  "dates": 30,
+  "block_length": 5,
+  "replications": 10000,
+  "seed": 20260907,
+  "mean_difference": -5.8089288184889046e-06,
+  "percentile_95_interval": [
+    -8.949220553385195e-06,
+    -2.7682630668636563e-06
+  ],
+  "interpretation": "exploratory paired circular block bootstrap; not proof of superiority"
+}

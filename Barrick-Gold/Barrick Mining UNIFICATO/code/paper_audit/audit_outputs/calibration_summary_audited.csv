@@ -1,0 +1,5 @@
+model,label,vega_scaled_mse,iv_rmse_bp
+black_scholes,Black-Scholes,8.23441993866489e-05,97.2107434958572
+heston,Heston,2.3628729744912106e-05,49.48809979133248
+bates,Bates-Poisson,2.3544619411087685e-05,49.40772844798149
+full_bates_hawkes,Bates-Hawkes,2.3439415439691725e-05,49.32578103676154

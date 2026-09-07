@@ -81,3 +81,7 @@ Run the refresh-specific regression tests with:
 ## Citation
 
 Starting Finance Club PoliTo Research, *UNIFICATO - Stochastic Valuation of Barrick Mining*, code and reproducibility companion, working draft, release date TBD.
+
+## Audited Paper experiment — September 7, 2026
+
+Run `python main.py --paper-audit` to reproduce the revised Paper using the bundled curated Team 8 inputs. See [paper_audit/README.md](paper_audit/README.md) and its technical supplement. This isolated mode reports signed aggregate operating proxies, not equity values. The thesis and historical default workflow retain their existing draft scope; historical OOS fits are preserved.

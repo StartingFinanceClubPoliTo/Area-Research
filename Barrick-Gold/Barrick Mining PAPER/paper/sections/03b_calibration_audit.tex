@@ -23,7 +23,7 @@ The calibrated inputs, residual maps and valuation paths share the same 2 Septem
 \end{methodbox}
 
 \subsection{What the residual maps add}
-The residual heatmaps show where each specification systematically over- or under-prices the observed implied-volatility surface. Black--Scholes leaves the strongest smile and term-structure pattern. Table~\ref{tab:iv_rmse} compares current-surface fit; Heston has the smallest error. The fitted Hawkes branching ratio is 0.5569, below the stationarity boundary. Common axes support comparison; each colourbar reports its own residual range.
+The residual heatmaps show where each specification systematically over- or under-prices the observed implied-volatility surface. Black--Scholes leaves the strongest smile and term-structure pattern. Table~\ref{tab:iv_rmse} compares current-surface fit; Audited Bates and Hawkes fits improve on the nested starts. Hawkes branching is 0.5594. All maps use one colour scale; calibration fit does not establish economic superiority.
 
 
 \noindent\begin{minipage}{\columnwidth}
@@ -33,7 +33,7 @@ The residual heatmaps show where each specification systematically over- or unde
   \vspace{3pt}
   \includegraphics[width=0.95\linewidth]{figures/heston_residual_heatmap.png}
   \par\vspace{1pt}{\footnotesize\textbf{(b)} Heston\par}
-  \captionof{figure}{Implied-volatility residual maps for the common 2 September CC64 sample. Blue denotes model IV above market IV and red denotes model IV below market; Heston records the lowest in-sample IV RMSE.}
+  \captionof{figure}{Implied-volatility residual maps for the common 2 September CC64 sample. Blue denotes model IV above market IV and red denotes model IV below market; the audited fits retain feasible nested candidates.}
   \label{fig:residual_maps}
 \par}
 \end{minipage}\par
@@ -46,7 +46,7 @@ The residual heatmaps show where each specification systematically over- or unde
   \vspace{3pt}
   \includegraphics[width=0.95\linewidth]{figures/bates_hawkes_residual_heatmap.png}
   \par\vspace{1pt}{\footnotesize\textbf{(d)} Full Bates--Hawkes\par}
-  \captionof*{figure}{\textbf{Figure~\ref{fig:residual_maps} (continued).} Bates--Poisson and Full Bates--Hawkes residual maps; colourbars report model-specific ranges.}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:residual_maps} (continued).} Bates--Poisson and Full Bates--Hawkes residual maps; all colourbars share the same residual range.}
 \par}
 \end{minipage}\par
 
@@ -60,8 +60,8 @@ Model & RMSE (bp) \\
 \midrule
 Black--Scholes & 97.2107 \\
 Heston & 49.4881 \\
-Bates--Poisson & 54.6273 \\
-Full Bates--Hawkes & 52.9714 \\
+Bates--Poisson & 49.4077 \\
+Full Bates--Hawkes & 49.3258 \\
 \bottomrule
 \end{tabular}
 \end{table}

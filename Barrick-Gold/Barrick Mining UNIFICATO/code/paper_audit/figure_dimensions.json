@@ -1,0 +1,86 @@
+{
+  "bates_hawkes_residual_heatmap.png": [
+    1680,
+    1134
+  ],
+  "bates_residual_heatmap.png": [
+    1680,
+    1134
+  ],
+  "black_scholes_residual_heatmap.png": [
+    1680,
+    1134
+  ],
+  "fig_dcf_growth_roic.png": [
+    1315,
+    1022
+  ],
+  "fig_dcf_reinvestment.png": [
+    1409,
+    1022
+  ],
+  "fig_terminal_multiple.png": [
+    1382,
+    1068
+  ],
+  "fig_terminal_share.png": [
+    1680,
+    868
+  ],
+  "fig_val_multi.png": [
+    1680,
+    943
+  ],
+  "fig_val_primary.png": [
+    1680,
+    836
+  ],
+  "fig_wacc_assumptions.png": [
+    2797,
+    1253
+  ],
+  "hawkes_intensity_comparison.png": [
+    1958,
+    1473
+  ],
+  "heston_residual_heatmap.png": [
+    1680,
+    1134
+  ],
+  "online_welch_goyal_cumulative.png": [
+    1703,
+    1938
+  ],
+  "oos_r2.png": [
+    1680,
+    918
+  ],
+  "oos_rmse.png": [
+    1680,
+    918
+  ],
+  "sampling_nodes.png": [
+    1458,
+    934
+  ],
+  "sampling_surface.png": [
+    1162,
+    970
+  ],
+  "team4_mine_cost_qoq.png": [
+    2768,
+    1490
+  ],
+  "team4_mine_production_qoq.png": [
+    2768,
+    1490
+  ],
+  "team4_operating_contract.png": [
+    2744,
+    1846
+  ],
+  "team4_process_components_qoq.png": [
+    2815,
+    2428
+  ]
+}

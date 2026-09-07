@@ -146,6 +146,9 @@ class CalibrationReport:
 
     @classmethod
     def from_optimizer(cls, model, parameter_names, local_result, global_result, started_at):
+        # A successful local termination must not replace a better global fit.
+        if np.isfinite(global_result.fun) and (not np.isfinite(local_result.fun) or global_result.fun < local_result.fun):
+            local_result = global_result
         return cls(
             model=str(model),
             parameter_names=tuple(parameter_names),

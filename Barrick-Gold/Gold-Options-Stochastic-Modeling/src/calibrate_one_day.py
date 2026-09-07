@@ -258,7 +258,7 @@ def main():
             spot,
             bates_seed=bates_seed,
             seed=args.seed,
-            min_branching=0.02,
+            min_branching=0.0,
             **cfg["hawkes"],
         )
         result = hawkes_payload(

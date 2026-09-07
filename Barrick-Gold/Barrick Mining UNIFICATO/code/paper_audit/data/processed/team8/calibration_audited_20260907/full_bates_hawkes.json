@@ -1,0 +1,43 @@
+{
+  "model": "Full Bates-Hawkes",
+  "parameter_names": [
+    "v0",
+    "kappa",
+    "theta",
+    "xi",
+    "rho",
+    "lambda0",
+    "lambda_bar",
+    "branching_ratio",
+    "beta",
+    "mu_J",
+    "sigma_J"
+  ],
+  "parameters": {
+    "v0": 0.06535739638043916,
+    "kappa": 4.049828276913831,
+    "theta": 0.062406404454426925,
+    "xi": 0.7109636959879555,
+    "rho": -0.013581152832535246,
+    "lambda0": 0.03282058562861627,
+    "lambda_bar": 0.5603877835892198,
+    "stationary_mean_intensity": 1.271956947326171,
+    "branching_ratio": 0.5594286545883237,
+    "alpha": 1.5373579828603383,
+    "beta": 2.748085873419659,
+    "mu_J": -0.045369205577792365,
+    "sigma_J": 0.03430856390462141
+  },
+  "objective": 2.3439415439691725e-05,
+  "success": true,
+  "message": "Optimization terminated successfully",
+  "elapsed_seconds": 58.05740649998188,
+  "date": "2026-09-02",
+  "strategy": "CC",
+  "source_surface": "outputs\\sampling\\2026-09-02\\sample_CC_64.csv",
+  "profile": "full",
+  "seed": 8,
+  "n_points": 64,
+  "saved_at_utc": "2026-09-03T22:45:01.602009+00:00",
+  "audit_date": "2026-09-07"
+}

@@ -1,0 +1,38 @@
+{
+  "model": "Bates",
+  "parameter_names": [
+    "v0",
+    "kappa",
+    "theta",
+    "sigma",
+    "rho",
+    "lambd",
+    "mu_J",
+    "sigma_J"
+  ],
+  "parameters": {
+    "v0": 0.06429079463832513,
+    "kappa": 4.048162389956614,
+    "theta": 0.06539709599905669,
+    "sigma": 0.7276510890193096,
+    "rho": -0.02220015944091226,
+    "lambd": 0.24388348938326662,
+    "mu_J": -0.00038667063774483484,
+    "sigma_J": 0.0001247636409599174
+  },
+  "objective": 2.3544619411087685e-05,
+  "global_objective": 2.9678332527599473e-05,
+  "success": true,
+  "message": "Optimization terminated successfully",
+  "evaluations": 10,
+  "iterations": 1,
+  "elapsed_seconds": 3.3909108999941964,
+  "date": "2026-09-02",
+  "strategy": "CC",
+  "source_surface": "outputs\\sampling\\2026-09-02\\sample_CC_64.csv",
+  "profile": "full",
+  "seed": 8,
+  "n_points": 64,
+  "saved_at_utc": "2026-09-03T22:44:03.530548+00:00",
+  "audit_date": "2026-09-07"
+}

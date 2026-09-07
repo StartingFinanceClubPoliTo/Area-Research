@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from time import perf_counter
 
 import numpy as np
-from scipy.optimize import differential_evolution, minimize
+from scipy.optimize import differential_evolution, minimize, OptimizeResult
 
 from Heston import Heston
 from calibration_core import CalibrationReport, OptionSurface, feller_feasible_population
@@ -148,6 +148,7 @@ class Bates(Heston):
         cos_N=256,
         disp=False,
         return_report=False,
+        heston_seed=None,
     ):
         started_at = perf_counter()
         surface = OptionSurface.from_frame(df_market)
@@ -175,6 +176,18 @@ class Bates(Heston):
             constraints=constraints,
             options={"ftol": 1e-6, "maxiter": 100, "disp": disp},
         )
+        # Never discard a better feasible global or nested Heston candidate.
+        candidates = [local_result, global_result]
+        if heston_seed is None:
+            heston_seed = Heston.calibrate_heston(df_market, S0, q=q,
+                seed=seed, pricing=pricing, cos_N=cos_N)
+        if heston_seed is not None:
+            nested = np.r_[np.asarray(heston_seed, dtype=float), 0.0, 0.0, 0.1]
+            nested_loss = Bates.bates_objective(nested, *args)
+            if nested_loss < Bates.INVALID_OBJECTIVE:
+                candidates.append(OptimizeResult(x=nested, fun=nested_loss,
+                    success=True, message="Retained nested Heston candidate"))
+        local_result = min(candidates, key=lambda r: float(r.fun) if np.isfinite(r.fun) else np.inf)
         report = CalibrationReport.from_optimizer(
             "Bates", Bates.PARAMETER_NAMES, local_result, global_result, started_at
         )

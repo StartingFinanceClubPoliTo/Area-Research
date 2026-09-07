@@ -21,7 +21,7 @@ Growth and ROIC converge linearly to their stable levels over five years. Reinve
 \end{minipage}\par
 
 \subsection{Common stochastic WACC}
-WACC follows the bounded mean-reverting process in Equation~(17), with inputs in Table~\ref{tab:dcf_inputs}. Its annual conditional standard deviation is 0.7308 percentage points. All branches reuse the same 8,192-path shock array; Figure~\ref{fig:wacc_assumptions} shows its distribution and zero-shock path.
+WACC follows the bounded mean-reverting process in Equation~(17), with inputs in Table~\ref{tab:dcf_inputs}. Its annual innovation scale is $\sigma_w^*=\sigma_w\sqrt{(1-e^{-2\kappa_w})/(2\kappa_w)}=0.7308$ percentage points before clipping. All engines reuse 8,192 annual shock paths (Figure~\ref{fig:wacc_assumptions}).
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
@@ -32,7 +32,7 @@ WACC follows the bounded mean-reverting process in Equation~(17), with inputs in
 \end{minipage}\par
 
 \subsection{Terminal closure and sensitivity}
-The terminal block uses $g_\infty=2.50\%$, $ROIC_\infty=10.50\%$ and terminal reinvestment of 23.81\%. At the current median terminal WACC of 8.384\%, the normalized terminal multiple is 13.27$\times$ final after-tax margin. The denominator is admitted only when $WACC_T>g_\infty$; the spread floor prevents a mechanically explosive closure in the simulated paths.
+The terminal block uses $g_\infty=2.50\%$, $ROIC_\infty=10.50\%$ and terminal reinvestment of 23.81\%. At the current median terminal WACC of 8.384\%, the normalized terminal multiple is 13.27$\times$ final after-tax margin. The spread floor enforces $WACC_T>g_\infty$. No simulated rate reaches either clipping bound in the base run.
 
 \noindent\begin{minipage}{\columnwidth}
 {\centering
@@ -45,7 +45,7 @@ The terminal block uses $g_\infty=2.50\%$, $ROIC_\infty=10.50\%$ and terminal re
 \noindent\begin{minipage}{\columnwidth}
 {\centering
   \includegraphics[width=0.90\linewidth]{figures/fig_terminal_share.png}
-  \captionof*{figure}{\textbf{Figure~\ref{fig:terminal_value_mechanics} (continued).} Present-value terminal share on positive-EV paths. Refreshed medians are 78.26\% for Black--Scholes, 78.31\% for Heston, 78.43\% for Bates and 78.27\% for Full Bates--Hawkes; bars show the P10--P90 range.}
+  \captionof*{figure}{\textbf{Figure~\ref{fig:terminal_value_mechanics} (continued).} Median proxy under three terminal conventions. Five-year-only values are about USD 13 billion versus about USD 60 billion with perpetuity. Zero terminal is a truncation scenario, not an estimated reserve life.}
 \par}
 \end{minipage}\par
 
@@ -70,8 +70,8 @@ Terminal reinvestment & 23.81\% \\
 \end{table}
 
 \begin{methodbox}[Interpretation]
-These are methodological assumptions, not filing-calibrated Barrick estimates. The terminal block supplies roughly three quarters of positive enterprise value. These inputs require central adjustment and sensitivity tests, not a single headline valuation.
+These are methodological assumptions, not filing-calibrated Barrick estimates. Terminal closure dominates the reported operating proxy. The legacy positive terminal increases the mean by USD 1.14--1.49 billion relative to signed closure.
 \end{methodbox}
 
 % Expansion p5 - 2026-09-06
-The quarterly bridge multiplies simulated gold price less unit Cost of Sales, both in USD per ounce, by production in thousand ounces, then divides by 1,000 to obtain component margin in USD millions. This intermediate object is not automatically reported EBIT or free cash flow. Taxes and reinvestment are applied downstream; a filing-based reconciliation must establish which depreciation and capital-expenditure items are already embedded before adding deductions. Otherwise, a seemingly conservative adjustment could count the same cost twice. Fixed operating vectors isolate price-engine effects but leave mine-level shocks and price-cost dependence outside the simulated per-share distribution.
+The quarterly bridge multiplies simulated gold price less unit Cost of Sales, both in USD per ounce, by production in thousand ounces, then divides by 1,000 to obtain component margin in USD millions. Four quarterly margins are summed before annual taxes, reinvestment and discounting. This proxy is not reported EBIT or FCFF: production must be reconciled with sales and inventory, and depreciation, capital expenditure and working capital must enter without double counting. Fixed operating vectors exclude mine-level shocks and price-cost dependence.

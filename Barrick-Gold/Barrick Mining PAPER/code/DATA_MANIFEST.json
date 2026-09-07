@@ -1,0 +1,1280 @@
+{
+  "as_of": "2026-09-07",
+  "option_provider": "IB API as documented by Team 8",
+  "rates_provider": "U.S. Treasury",
+  "policy": "Curated inputs requested for SF reproducibility; excludes caches, credentials, legacy backups and trial collections.",
+  "files": [
+    {
+      "path": "team8_data/data/processed/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-15_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-15_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-16_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-16_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-17_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-17_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-18_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-18_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-22_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-22_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-23_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-23_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-24_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-24_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-25_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-25_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-26_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-26_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-29_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-29_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-30_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-06-30_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-01_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-01_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-02_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-02_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-06_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-06_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-07_eligible_adaptive_surface.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-07_midpoint_raw.csv",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-08_attempts.csv",
+      "sha256": "69d52ff76375883cf0f6321dd98be0f37f5af444e65237be1605f8d3803f4b63",
+      "bytes": 26289,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-08_bin_coverage.csv",
+      "sha256": "9fd01c6b5dd0588407ea1a82978411bd0bd2b5ff788a87bae290d33f6555451a",
+      "bytes": 3939,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-08_eligible_adaptive_surface.csv",
+      "sha256": "f1551de2ab38dae872a0cc14955685029b1ce09c83414884e506dfcc88527fc6",
+      "bytes": 2879,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-08_eligible_all_real_surface.csv",
+      "sha256": "bed1ab168a45e82a0b2e1416eb6ff422fe73e3c9b6e865de2bbe55925b577096",
+      "bytes": 3800,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-08_eligible_bin_balanced_surface.csv",
+      "sha256": "f1551de2ab38dae872a0cc14955685029b1ce09c83414884e506dfcc88527fc6",
+      "bytes": 2879,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-08_midpoint_raw.csv",
+      "sha256": "bed1ab168a45e82a0b2e1416eb6ff422fe73e3c9b6e865de2bbe55925b577096",
+      "bytes": 3800,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-09_eligible_adaptive_surface.csv",
+      "sha256": "95f474d00313dbccdc2845c316af7910aaa8d0e692970bc2a49aea70626b926a",
+      "bytes": 16728,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-09_midpoint_raw.csv",
+      "sha256": "95f474d00313dbccdc2845c316af7910aaa8d0e692970bc2a49aea70626b926a",
+      "bytes": 16728,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-10_eligible_adaptive_surface.csv",
+      "sha256": "a18231d72700df72577f1f1df6f39b1dfccbf9035d684e3fb7e2729f43fba3f0",
+      "bytes": 18810,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-10_midpoint_raw.csv",
+      "sha256": "a18231d72700df72577f1f1df6f39b1dfccbf9035d684e3fb7e2729f43fba3f0",
+      "bytes": 18810,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-13_eligible_adaptive_surface.csv",
+      "sha256": "e602ef317ea5e1a144b6718a7d7766219d8e8c803e216b5c4e2d2b50d486beaa",
+      "bytes": 20522,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-13_midpoint_raw.csv",
+      "sha256": "e602ef317ea5e1a144b6718a7d7766219d8e8c803e216b5c4e2d2b50d486beaa",
+      "bytes": 20522,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-14_eligible_adaptive_surface.csv",
+      "sha256": "11cf1ac8b81ab8ae23c1de6fc4f37d798243aa2d8ced0ea8a825515bb662f9da",
+      "bytes": 14413,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-14_midpoint_raw.csv",
+      "sha256": "11cf1ac8b81ab8ae23c1de6fc4f37d798243aa2d8ced0ea8a825515bb662f9da",
+      "bytes": 14413,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-15_eligible_adaptive_surface.csv",
+      "sha256": "c5f58c1d534cac26c62bfbc8ee50eb6bc14d1fb6eb4fbfc2e15714495e3fc48b",
+      "bytes": 16317,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-15_midpoint_raw.csv",
+      "sha256": "c5f58c1d534cac26c62bfbc8ee50eb6bc14d1fb6eb4fbfc2e15714495e3fc48b",
+      "bytes": 16317,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-16_eligible_adaptive_surface.csv",
+      "sha256": "dd5d600b489d61294df31a79825bec16c5f2be91612721d9c1414165b75945bf",
+      "bytes": 17117,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-16_midpoint_raw.csv",
+      "sha256": "dd5d600b489d61294df31a79825bec16c5f2be91612721d9c1414165b75945bf",
+      "bytes": 17117,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-17_eligible_adaptive_surface.csv",
+      "sha256": "472dc0d5aa60701ae39d4829dbf4f157489a5c9bf84d7c75b0e49b2cdceaecfe",
+      "bytes": 15693,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-17_midpoint_raw.csv",
+      "sha256": "472dc0d5aa60701ae39d4829dbf4f157489a5c9bf84d7c75b0e49b2cdceaecfe",
+      "bytes": 15693,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-20_eligible_adaptive_surface.csv",
+      "sha256": "48d72c776115967682bf0e7be9e898287cfd1ee5bf591a2e44d1f1d79c31a770",
+      "bytes": 14121,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-20_midpoint_raw.csv",
+      "sha256": "48d72c776115967682bf0e7be9e898287cfd1ee5bf591a2e44d1f1d79c31a770",
+      "bytes": 14121,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-21_eligible_adaptive_surface.csv",
+      "sha256": "74831af0d27760a671d0f2969372b43ba80e85b1dff0b19422042c1af659d628",
+      "bytes": 16536,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-21_midpoint_raw.csv",
+      "sha256": "74831af0d27760a671d0f2969372b43ba80e85b1dff0b19422042c1af659d628",
+      "bytes": 16536,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-22_eligible_adaptive_surface.csv",
+      "sha256": "444cbe6ed67077b2a072f0dbaa5404426a82c1439d7b0b8ceb6668152293a62a",
+      "bytes": 14260,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-22_midpoint_raw.csv",
+      "sha256": "444cbe6ed67077b2a072f0dbaa5404426a82c1439d7b0b8ceb6668152293a62a",
+      "bytes": 14260,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-23_eligible_adaptive_surface.csv",
+      "sha256": "b10ea7fc9d3811e4489db9ea81d6f2887beeddd7ba6d4199058dc208b196c4d3",
+      "bytes": 14871,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-23_midpoint_raw.csv",
+      "sha256": "b10ea7fc9d3811e4489db9ea81d6f2887beeddd7ba6d4199058dc208b196c4d3",
+      "bytes": 14871,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-24_eligible_adaptive_surface.csv",
+      "sha256": "6e7fc4a2dbaf1e49c17ec2ee0720e91c0b51b51fb9042fe2026c3bf59ab6d3f2",
+      "bytes": 16190,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-24_midpoint_raw.csv",
+      "sha256": "6e7fc4a2dbaf1e49c17ec2ee0720e91c0b51b51fb9042fe2026c3bf59ab6d3f2",
+      "bytes": 16190,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-27_eligible_adaptive_surface.csv",
+      "sha256": "3d95fea375eec21917fdd9a06f393cbfb6cf38a593239764969db93197feab12",
+      "bytes": 16546,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-27_midpoint_raw.csv",
+      "sha256": "3d95fea375eec21917fdd9a06f393cbfb6cf38a593239764969db93197feab12",
+      "bytes": 16546,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-28_eligible_adaptive_surface.csv",
+      "sha256": "11b7aae981a308c11231216ec4056e9f7250ff489c4f21ed5ec0f866c2db4501",
+      "bytes": 14663,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-28_midpoint_raw.csv",
+      "sha256": "11b7aae981a308c11231216ec4056e9f7250ff489c4f21ed5ec0f866c2db4501",
+      "bytes": 14663,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-29_eligible_adaptive_surface.csv",
+      "sha256": "bbfcba585e16d33073e41bd571e9e19fc06e50b17131bb726b8231854165b8cc",
+      "bytes": 18828,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-29_midpoint_raw.csv",
+      "sha256": "bbfcba585e16d33073e41bd571e9e19fc06e50b17131bb726b8231854165b8cc",
+      "bytes": 18828,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-30_eligible_adaptive_surface.csv",
+      "sha256": "6067b4d0e8f37ce44ec143d67a1cd73ee112947c71a38cf797741ff29d36df5e",
+      "bytes": 14204,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-30_midpoint_raw.csv",
+      "sha256": "6067b4d0e8f37ce44ec143d67a1cd73ee112947c71a38cf797741ff29d36df5e",
+      "bytes": 14204,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-31_eligible_adaptive_surface.csv",
+      "sha256": "09059df139c93317d2b0477f3f135bac55c3ba206938217082498387d0e7bc67",
+      "bytes": 14809,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-07-31_midpoint_raw.csv",
+      "sha256": "09059df139c93317d2b0477f3f135bac55c3ba206938217082498387d0e7bc67",
+      "bytes": 14809,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-03_eligible_adaptive_surface.csv",
+      "sha256": "0fe6cdcd7ecfbf92425b1b85a6ca6e898d427583ccc0cf165e0673231299319b",
+      "bytes": 14233,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-03_midpoint_raw.csv",
+      "sha256": "0fe6cdcd7ecfbf92425b1b85a6ca6e898d427583ccc0cf165e0673231299319b",
+      "bytes": 14233,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-04_eligible_adaptive_surface.csv",
+      "sha256": "c3622239ed87d1f1a43e0e036701ad8c818f435b8b81c6406990d876a478ceac",
+      "bytes": 16545,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-04_midpoint_raw.csv",
+      "sha256": "c3622239ed87d1f1a43e0e036701ad8c818f435b8b81c6406990d876a478ceac",
+      "bytes": 16545,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-05_eligible_adaptive_surface.csv",
+      "sha256": "53272e0d7700059afeea1a99ec77e4eb6388b11097d84e154b4b7d3b50578cc1",
+      "bytes": 15877,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-05_midpoint_raw.csv",
+      "sha256": "53272e0d7700059afeea1a99ec77e4eb6388b11097d84e154b4b7d3b50578cc1",
+      "bytes": 15877,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-06_eligible_adaptive_surface.csv",
+      "sha256": "3e9e953459f32f0f232f9a6d139246a34d011fa7c3d555ce49b5a46d50819e9f",
+      "bytes": 15936,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-06_midpoint_raw.csv",
+      "sha256": "3e9e953459f32f0f232f9a6d139246a34d011fa7c3d555ce49b5a46d50819e9f",
+      "bytes": 15936,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-07_eligible_adaptive_surface.csv",
+      "sha256": "2fb5b13daed73b1546835bf804374b6f2b5a2c71cb68e0e7fe1bcb09ddbdc0cd",
+      "bytes": 10651,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-07_midpoint_raw.csv",
+      "sha256": "2fb5b13daed73b1546835bf804374b6f2b5a2c71cb68e0e7fe1bcb09ddbdc0cd",
+      "bytes": 10651,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-10_eligible_adaptive_surface.csv",
+      "sha256": "06e0b38b58aff841fd8cb3f1c6968c7dadb9b11fb4f66fbe6a740405a3d8e5d9",
+      "bytes": 10013,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-10_midpoint_raw.csv",
+      "sha256": "06e0b38b58aff841fd8cb3f1c6968c7dadb9b11fb4f66fbe6a740405a3d8e5d9",
+      "bytes": 10013,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-11_eligible_adaptive_surface.csv",
+      "sha256": "f49eb1123895b87e3c4b9807b8999ffe8777a81ce50a2a1a7ff8734061616f67",
+      "bytes": 10649,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-11_midpoint_raw.csv",
+      "sha256": "f49eb1123895b87e3c4b9807b8999ffe8777a81ce50a2a1a7ff8734061616f67",
+      "bytes": 10649,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-12_eligible_adaptive_surface.csv",
+      "sha256": "7a575cec1897f4aef09b51dc54210b295aace53dd3437eb7cb12c20731c78c96",
+      "bytes": 27752,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-12_midpoint_raw.csv",
+      "sha256": "7a575cec1897f4aef09b51dc54210b295aace53dd3437eb7cb12c20731c78c96",
+      "bytes": 27752,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-13_eligible_adaptive_surface.csv",
+      "sha256": "8ce00b6b34fd200854a560637c6ad2b6b61c727e04da86a5f4b574c0239d05b5",
+      "bytes": 13173,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-13_midpoint_raw.csv",
+      "sha256": "8ce00b6b34fd200854a560637c6ad2b6b61c727e04da86a5f4b574c0239d05b5",
+      "bytes": 13173,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-14_eligible_adaptive_surface.csv",
+      "sha256": "32d989e40775cbdedafd1be06f502579d29d43c2e67b5ee606b13127d42453b2",
+      "bytes": 11041,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-14_midpoint_raw.csv",
+      "sha256": "32d989e40775cbdedafd1be06f502579d29d43c2e67b5ee606b13127d42453b2",
+      "bytes": 11041,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-17_eligible_adaptive_surface.csv",
+      "sha256": "ce33b9a39b8aefb55e57fb5730c1ed791cb3dacaf982fd6ceff0265ebbc16211",
+      "bytes": 32105,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-17_midpoint_raw.csv",
+      "sha256": "ce33b9a39b8aefb55e57fb5730c1ed791cb3dacaf982fd6ceff0265ebbc16211",
+      "bytes": 32105,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-18_eligible_adaptive_surface.csv",
+      "sha256": "ac4bf85706e11e3e1a561bd77c3e9fa92ed628e41e1f586432cf612b8b03c9c3",
+      "bytes": 11030,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-18_midpoint_raw.csv",
+      "sha256": "ac4bf85706e11e3e1a561bd77c3e9fa92ed628e41e1f586432cf612b8b03c9c3",
+      "bytes": 11030,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-19_eligible_adaptive_surface.csv",
+      "sha256": "1081bb34e6cd2380ab8329c75375a1ae3a7065891c40b6bd4dcf1e1892e385fa",
+      "bytes": 22437,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-19_midpoint_raw.csv",
+      "sha256": "1081bb34e6cd2380ab8329c75375a1ae3a7065891c40b6bd4dcf1e1892e385fa",
+      "bytes": 22437,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-20_eligible_adaptive_surface.csv",
+      "sha256": "86692376b9564855c702053a4d575b5a0876b9cf241eaf08d23b4746b2371bb6",
+      "bytes": 19923,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-20_midpoint_raw.csv",
+      "sha256": "86692376b9564855c702053a4d575b5a0876b9cf241eaf08d23b4746b2371bb6",
+      "bytes": 19923,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-21_eligible_adaptive_surface.csv",
+      "sha256": "d8639cc3031f8a53a72f0590fc3d432174f467ec81a319264a35b6a76f0b2c6b",
+      "bytes": 26890,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-21_midpoint_raw.csv",
+      "sha256": "d8639cc3031f8a53a72f0590fc3d432174f467ec81a319264a35b6a76f0b2c6b",
+      "bytes": 26890,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-24_eligible_adaptive_surface.csv",
+      "sha256": "3831cf4824b7d8fee9ed20f5f53ab309ee5efb2c4168e733ab3352c516438976",
+      "bytes": 21769,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-24_midpoint_raw.csv",
+      "sha256": "3831cf4824b7d8fee9ed20f5f53ab309ee5efb2c4168e733ab3352c516438976",
+      "bytes": 21769,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-28_eligible_full_surface.csv",
+      "sha256": "7ae5c571827de564dafbc7ce531ad9f3f4c913efcf6b2248c7dd888f062540d5",
+      "bytes": 261524,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-28_midpoint_raw.csv",
+      "sha256": "0150c705f83842b1f5f46d8c7848bc30d64692ba8cd77ad7e48f43ce9ba21d8d",
+      "bytes": 262397,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-31_eligible_full_surface.csv",
+      "sha256": "aadebdb3b2da9fa8c6430a5d6af433d4dfba02bb3745e781f88e1cd28dce5469",
+      "bytes": 235200,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-08-31_midpoint_raw.csv",
+      "sha256": "7a54c1f968360ee26526147c49568828b89df3e7bcbea0be7a13087a4d2e931a",
+      "bytes": 237280,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-09-01_eligible_full_surface.csv",
+      "sha256": "29120e4557269137c55f40322e83df372f1185a0eb71c98d740ea06c02d2c76b",
+      "bytes": 237306,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-09-01_midpoint_raw.csv",
+      "sha256": "29120e4557269137c55f40322e83df372f1185a0eb71c98d740ea06c02d2c76b",
+      "bytes": 237306,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-09-02_eligible_full_surface.csv",
+      "sha256": "025d870bba60292ff17a62cfef56937f5fbbc577bcaa387fdc7af2702553a635",
+      "bytes": 223945,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-09-02_midpoint_raw.csv",
+      "sha256": "714b92327700083b00267c7704493fb72d0db1713af2f972a12ca62a553dff55",
+      "bytes": 234743,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-09-02_midpoint_raw_nss.csv",
+      "sha256": "025d870bba60292ff17a62cfef56937f5fbbc577bcaa387fdc7af2702553a635",
+      "bytes": 223945,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/full_surfaces/GLD_2026-09-02_nss_curve.json",
+      "sha256": "83f819936ca33c3dfb3568f9e05f115392e3c22a39d4bd004a51f512ddee158e",
+      "bytes": 870,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/gld_daily_history.csv",
+      "sha256": "b0277a27121c5471b66f79a9925ef08a771abb5178baadf83565f58b87401fc5",
+      "bytes": 16220,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-15_eligible_historical_surface.csv",
+      "sha256": "46907d573b8d7b18488f9d4399beb940fc2707e980f78f612d771ad5d611539c",
+      "bytes": 3585,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-16_eligible_historical_surface.csv",
+      "sha256": "c3c84d190a7522b9286d3fecaf83bf62d3b173e0d1ec389cc44fdba3f47f5594",
+      "bytes": 2822,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-17_eligible_historical_surface.csv",
+      "sha256": "b96281d330f2e6262db4b33a2dc579064ae5bf35820350512905dd945ffbd7f5",
+      "bytes": 3371,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-18_eligible_historical_surface.csv",
+      "sha256": "0531b4bd8b564b061c9d1943734b3cef1d4832ca0e66290ebf05edd2f488d8db",
+      "bytes": 3776,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-22_eligible_historical_surface.csv",
+      "sha256": "3f738050ce68492eb53e24ad8722799e0a4e8e54a8fdd2bd9d55a28427a0d307",
+      "bytes": 3205,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-23_eligible_historical_surface.csv",
+      "sha256": "0f7ea97cb53cc693ba6764526b2e0c14324f870d08a8f8fc9dbc5281dd90c228",
+      "bytes": 3582,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-24_eligible_historical_surface.csv",
+      "sha256": "9690985af4b26d7139f8679fb7c4d3031589515b1ea49372aca5c2b6847408c5",
+      "bytes": 4562,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-25_eligible_historical_surface.csv",
+      "sha256": "7fe36dca62d7a0dfa776a846c8d55bc72fa6aae8827806803239d60cfba23519",
+      "bytes": 3580,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-26_eligible_historical_surface.csv",
+      "sha256": "25c0d49432cbc923c752c816b40cad60069c3613334173c5575fe5104e692adc",
+      "bytes": 4150,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-29_eligible_historical_surface.csv",
+      "sha256": "39eec30a9753a8e1e4a5bba968feb46ad9f680aaa7d9d9a45db18cfb5db69b4c",
+      "bytes": 3216,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-06-30_eligible_historical_surface.csv",
+      "sha256": "a9b244cd23c6c2c7e94ede9c1794c890472df45608f9679f93204197a13f6315",
+      "bytes": 3782,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-01_eligible_historical_surface.csv",
+      "sha256": "64ebda6c030ed58f8153460a4bee1e5a68db1b03bc6e58bb09e26beca9427003",
+      "bytes": 4315,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-02_eligible_historical_surface.csv",
+      "sha256": "9e0a797c5e29c3e5fd6ba06d8d8e884cea024ebde5911a6eccc617e0548ca003",
+      "bytes": 4162,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-06_eligible_historical_surface.csv",
+      "sha256": "1e2a7394c665b7c234f8472b9f177cd73821c0f4187cd5cedd5fdc66e7b6e898",
+      "bytes": 5109,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-07_eligible_historical_surface.csv",
+      "sha256": "7bfa6a6cea4fd308056bed0d32d62717b9dbe90e37d5e55384bb483a98070891",
+      "bytes": 4162,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-08_eligible_historical_surface.csv",
+      "sha256": "d703d627591259199c9abde28c6e952091dbc1cafb6e41914866d1fe92b1e189",
+      "bytes": 3963,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-09_eligible_historical_surface.csv",
+      "sha256": "0077fb078a95209a30eeedb81ca99baf47e4a095fe4339e213429167babd41f0",
+      "bytes": 3189,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-10_eligible_historical_surface.csv",
+      "sha256": "368b9f3510e0d4de710450582630fb2f56df4c14eb7954c4ab71d897f3565ba5",
+      "bytes": 3001,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-13_eligible_historical_surface.csv",
+      "sha256": "184afe089b4ca307cf96b427540190ad82b74789de92823a7dd457ded2932523",
+      "bytes": 4343,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-14_eligible_historical_surface.csv",
+      "sha256": "77d55334fcddeec3e1b9fef3236481822ff2978b9674ae4f94e12f5eff5200ae",
+      "bytes": 3563,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-15_eligible_historical_surface.csv",
+      "sha256": "bd52b4f95833cb780826345f20b6ba230c746c2801d5416bf87ce87d199af2da",
+      "bytes": 3367,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-16_eligible_historical_surface.csv",
+      "sha256": "e537d8691253483b7dada176f47e3fd92cd509e3e21a784632ac95a41e26c60e",
+      "bytes": 2998,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-17_eligible_historical_surface.csv",
+      "sha256": "a95fb34d439cba10743c19b52c480825c5dc3e8933e6fce87493593124298d12",
+      "bytes": 4531,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-20_eligible_historical_surface.csv",
+      "sha256": "21bc8e7548330e33902199dba0c1acda65d219fcaa78efbaa2a3ac10de6edde3",
+      "bytes": 2984,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-21_eligible_historical_surface.csv",
+      "sha256": "60d49ec03d29a6b2f4989ad47fc4c10a6a43adaac35be370953eff5220d1e5de",
+      "bytes": 4338,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-22_eligible_historical_surface.csv",
+      "sha256": "4f0311c21284ce361e5a4ab1e9ec7d8c4384b3b68d2cf21000e714f6a66ab551",
+      "bytes": 4926,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-23_eligible_historical_surface.csv",
+      "sha256": "05fe13f586e1ebeb962571f6feb4967e06c40fea519515df2863d8ef8e81860c",
+      "bytes": 4344,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-24_eligible_historical_surface.csv",
+      "sha256": "5e0735ffd0ce0f0a9b1855f512ad27fadd2544ad3cdc7506341d2330ba2e46d2",
+      "bytes": 3930,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-27_eligible_historical_surface.csv",
+      "sha256": "2b7ee5c6bdde7268c1ff7b24ae1d8df78aa268658c7164a40a365c8138cf7199",
+      "bytes": 4536,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-28_eligible_historical_surface.csv",
+      "sha256": "e69800f5078cb06eca510ded2ed64e6797861be1a4dd6cf81a6170a97a8c9491",
+      "bytes": 3753,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-29_eligible_historical_surface.csv",
+      "sha256": "69a630baf82b79524c879b436184b53e0c61562224b37c4be7799da47df459bf",
+      "bytes": 5093,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-30_eligible_historical_surface.csv",
+      "sha256": "56a7a6a12ff1d26d3ba3d916dff16983914a27607b0a52dc215b5f7667f28149",
+      "bytes": 4918,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-07-31_eligible_historical_surface.csv",
+      "sha256": "dd9480f49c555cd4a73cf6abfa5f089eba41441af5478508d49b9221f43679d7",
+      "bytes": 4703,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-03_eligible_historical_surface.csv",
+      "sha256": "f9f371b4947c3bc5a46b6a06059656409a12411d2b010c220b1acb954e098bed",
+      "bytes": 4917,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-04_eligible_historical_surface.csv",
+      "sha256": "390245fa28671def0c7e09bab31c99faecd4ed7e7b14545ed115798b81b60be6",
+      "bytes": 6286,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-05_eligible_historical_surface.csv",
+      "sha256": "7dbe040345c39e5a7ba3e28bd3d93bb9eb2acc18edc0d96f17285881217b40af",
+      "bytes": 6652,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-06_eligible_historical_surface.csv",
+      "sha256": "3baef62b3d7b12525622308dc60d5059fa20206eea518aa1a1a1e2713d211b08",
+      "bytes": 5691,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-07_eligible_historical_surface.csv",
+      "sha256": "6a01247a2f7feda4173cd1c33e22f909fa91f471c9e2fe9e23a485d8afae329a",
+      "bytes": 6301,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-10_eligible_historical_surface.csv",
+      "sha256": "586dd0edd069c4f1908ebcdc22ea3ee847e06ee46be1f934704400bc6e9a409f",
+      "bytes": 5486,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-11_eligible_historical_surface.csv",
+      "sha256": "b4c94af25016680162dc799ec0f049dfe033b49626626bd1fdc708ffb3321585",
+      "bytes": 6090,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-12_eligible_historical_surface.csv",
+      "sha256": "692f5ce2118628b43252ba527937344dd69f1ca77362d72ced9220f12ed101ff",
+      "bytes": 5123,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-13_eligible_historical_surface.csv",
+      "sha256": "8c815f61e107e0991d266ff2657f481bcabfca0d44f13248273efaa70993a50c",
+      "bytes": 6304,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-14_eligible_historical_surface.csv",
+      "sha256": "e66552de3c05d33d0e2f8d1a3a4958114989ea286ff265d598ae4fec14153a0c",
+      "bytes": 3979,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-17_eligible_historical_surface.csv",
+      "sha256": "3932c1dc5cb40207698c256d6d313d144da297861b413a4b7e432de156df7362",
+      "bytes": 4757,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-18_eligible_historical_surface.csv",
+      "sha256": "b12fac86d636c6d771d4217f23929bb89863da8040db0b344e3f3add0b0e4b2a",
+      "bytes": 5120,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-19_eligible_historical_surface.csv",
+      "sha256": "4dab07e05776d9cd5521ecc7ad249bc7d0a05f4bf7f3779d6af12d2b07b7ee46",
+      "bytes": 5913,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-20_eligible_historical_surface.csv",
+      "sha256": "1ad436b85ce1935edad62c7d5ddc93b1009dbdf8d1a28bdb1c116b4e352f98ec",
+      "bytes": 5501,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-21_eligible_historical_surface.csv",
+      "sha256": "6f18426188127b7eb79015783cbbc64c81cecdfb7c1542746d2b2775a735e338",
+      "bytes": 6281,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-24_eligible_historical_surface.csv",
+      "sha256": "22183d4ec8a2811b546b55d5a5df9b591de43bf0d45c389c64ef71c0e01ca586",
+      "bytes": 6514,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-25_eligible_historical_surface.csv",
+      "sha256": "65e5bbe03f4d9e35a591e7f98daabd7b261965e1375b64dd497dc4b1cb66163e",
+      "bytes": 4557,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-26_eligible_historical_surface.csv",
+      "sha256": "d76c1b672d4941bc818c7f7c4f6ddab502ad5c9c7547ce444d01cbcfbc13d457",
+      "bytes": 6079,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-27_eligible_historical_surface.csv",
+      "sha256": "88b072f8d6a94bb71517150e5344ba79405c4387c73c4ff22832e1e8aa68781f",
+      "bytes": 5469,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-28_eligible_historical_surface.csv",
+      "sha256": "73dad0f8165eb9ba4967533b8b07c449d7cad9a195614162db900928dc792e1b",
+      "bytes": 6487,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-08-31_eligible_historical_surface.csv",
+      "sha256": "cf541348be368c6428dfa7fd0d33766ad522c95377ccdc58b127900cc639c687",
+      "bytes": 5123,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-09-01_eligible_historical_surface.csv",
+      "sha256": "4ce0c01f005c2ca38715b501e74f87aeb9e61c7377aedb2b95d5863846dcc31e",
+      "bytes": 7249,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/GLD_2026-09-02_eligible_historical_surface.csv",
+      "sha256": "717ecafeb948dcd5684a83fd2c318bcda5d1d9a07db1275ff96ee2e78624a287",
+      "bytes": 6094,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/sparse_historical_surfaces/historical_surface_summary.csv",
+      "sha256": "b67a0eb67537e9499d80ec1206c7c196e5a8abfde08c9dce1c9da7ace48bf79a",
+      "bytes": 12199,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "team8_data/data/processed/usd_treasury_history.csv",
+      "sha256": "94268deba502a8ddaba81b120c8adfd49b59d87d459056dd4aa407d9f0879f0e",
+      "bytes": 223102,
+      "source": "team8_clean curated processed dataset"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/bates.json",
+      "sha256": "bb235ee66ca822b4f18971327122e4144c9efbb45f6bbacba91e7b3b46f7064d",
+      "bytes": 933,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/black_scholes.json",
+      "sha256": "253d9ad64bb0c67c5c78af2af71841879ec93b30da205071998861576808b0c1",
+      "bytes": 498,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/calibration_summary.csv",
+      "sha256": "59fc60a09bbe211db197a8dfbaf5f6a845f161ca7da25999d57da7627a431e45",
+      "bytes": 985,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/calibration_surface.csv",
+      "sha256": "5ad52c4279d9bfa201531272e696dfdc39755ecf9029b56523a39a1a179b1442",
+      "bytes": 21129,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/full_bates_hawkes.json",
+      "sha256": "48bfb1432cc0fd95a5df3748c14aff76005ea7cd5d71e91c4672ee5ef5185203",
+      "bytes": 1061,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/heston.json",
+      "sha256": "3ffddc65eef75cb046661f7b4e8b0b96637b4fbe6593efec076a0d2f0706e700",
+      "bytes": 782,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/manifest.json",
+      "sha256": "abd19f9b86f17f1108ebc7b7c1e81c9a0ea2ffbb8c179ed41cbcfcb0c0203858",
+      "bytes": 1011,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/calibrations/CC/2026-09-02/surface_diagnostics.json",
+      "sha256": "79abe0b9ea2101c6bbae95ec85824e19e66128f87b4f33ecbdd8240e8415bf8d",
+      "bytes": 688,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/oos/rolling/date_metrics.csv",
+      "sha256": "e187d75187b03346398548777e01275221f4b9d5c1eb8709d471776d72ce55dd",
+      "bytes": 21806,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/oos/rolling/model_summary.csv",
+      "sha256": "bfda528ed4625b0f9b02679095a0d5458e8a093725ff2843409c85bb505a9f38",
+      "bytes": 1000,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/oos/rolling/option_forecasts.csv",
+      "sha256": "48c7a76d87061721d80054e3e3e299c981bc14204deb2f5db6de3553c7a2dc40",
+      "bytes": 2640782,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/oos/rolling/run_manifest.json",
+      "sha256": "3a5b6bf95feb24f9ab92e06bbe47249a612a5b5a0a20ff731795f79887464fd7",
+      "bytes": 1361,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/full_eligible_surface.csv",
+      "sha256": "efe3d62f0e83fb3270a09f8ae6bab4ff46ea81dac5df3d1680898099610684ac",
+      "bytes": 220597,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_CC_64.csv",
+      "sha256": "8656d86599b3eee699e5297e244480e83ac20b90bae0b39cc29e6e58bf41e0c0",
+      "bytes": 23512,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_CU_64.csv",
+      "sha256": "09c0d4bd6a3aa1e7db94d0ecd2094357acfa8776849d708db1ad9ffab47a53c5",
+      "bytes": 23529,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_EC_64.csv",
+      "sha256": "1234000b5769ec0af2159d2fc5d3583f4fb37ed11813a946f5f8a49a5a52d3d9",
+      "bytes": 23520,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_EU_64.csv",
+      "sha256": "e9e52ed4c8f24a2f14d7c4b353a55eb5b591c4b914eb7b73850149c7baf528fb",
+      "bytes": 23533,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_GC_64.csv",
+      "sha256": "4de38c2782d38ca0f2ba3569a300ef1a93da2815a6cf961022e780f43a8dc6f0",
+      "bytes": 23536,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_GU_64.csv",
+      "sha256": "08b31d4914c8ca52034fb64b919a8a4453f935f5bf45e20447881a532d480965",
+      "bytes": 23548,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_UC_64.csv",
+      "sha256": "8cd5743c4be9a8831d2ef1f6a5bfd8ed19ad0b1618b2efcea9e5373bcb2395a0",
+      "bytes": 23514,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sample_UU_64.csv",
+      "sha256": "dc1698629bedf5888108b4a349861ac2036a8bf7d70a1211dfc413ea61adfd0a",
+      "bytes": 23535,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sampling_comparison.csv",
+      "sha256": "0340f904a8baf8dd9b36f79d7078c478d0c00a7a7b79c59070ced60851ca900b",
+      "bytes": 1399,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sampling_diagnostics.json",
+      "sha256": "793b8e4a91952aa7808142d7e2039e13a0bee7b1d77e741a291d7c4778017844",
+      "bytes": 13439,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/sampling_winner.json",
+      "sha256": "793b8e4a91952aa7808142d7e2039e13a0bee7b1d77e741a291d7c4778017844",
+      "bytes": 13439,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_CC.csv",
+      "sha256": "0ba0c7c6438fdd943366d01b3f271017e936ffb08bc10b8eb02ba0c20d7cc93f",
+      "bytes": 165,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_CU.csv",
+      "sha256": "a18a1f6f27dba4d4b476e73896f13a48da9f7f6ccf1c1b3223e7f1bca2494324",
+      "bytes": 141,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_EC.csv",
+      "sha256": "0ba0c7c6438fdd943366d01b3f271017e936ffb08bc10b8eb02ba0c20d7cc93f",
+      "bytes": 165,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_EU.csv",
+      "sha256": "a18a1f6f27dba4d4b476e73896f13a48da9f7f6ccf1c1b3223e7f1bca2494324",
+      "bytes": 141,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_GC.csv",
+      "sha256": "0ba0c7c6438fdd943366d01b3f271017e936ffb08bc10b8eb02ba0c20d7cc93f",
+      "bytes": 165,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_GU.csv",
+      "sha256": "a18a1f6f27dba4d4b476e73896f13a48da9f7f6ccf1c1b3223e7f1bca2494324",
+      "bytes": 141,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_UC.csv",
+      "sha256": "0ba0c7c6438fdd943366d01b3f271017e936ffb08bc10b8eb02ba0c20d7cc93f",
+      "bytes": 165,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_K_UU.csv",
+      "sha256": "a18a1f6f27dba4d4b476e73896f13a48da9f7f6ccf1c1b3223e7f1bca2494324",
+      "bytes": 141,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_CC.csv",
+      "sha256": "4e96c67f885a243850786ccca0f2538a5acf43d7662ef812ad0cb549fcb109e5",
+      "bytes": 170,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_CU.csv",
+      "sha256": "4e96c67f885a243850786ccca0f2538a5acf43d7662ef812ad0cb549fcb109e5",
+      "bytes": 170,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_EC.csv",
+      "sha256": "0f9b661aee7f8b39172c41113c2a12e9a33ea11a99788df88248c1dd4d1b6242",
+      "bytes": 167,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_EU.csv",
+      "sha256": "0f9b661aee7f8b39172c41113c2a12e9a33ea11a99788df88248c1dd4d1b6242",
+      "bytes": 167,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_GC.csv",
+      "sha256": "b23bf021e997a27a52a7b4a055b21d589213e2644c6f1ade0ce34b8ce5582777",
+      "bytes": 167,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_GU.csv",
+      "sha256": "b23bf021e997a27a52a7b4a055b21d589213e2644c6f1ade0ce34b8ce5582777",
+      "bytes": 167,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_UC.csv",
+      "sha256": "f9faac90e75af919f5646c8452bd5ee83967c8461f605152a4e9a01838e092fe",
+      "bytes": 169,
+      "source": "team8_clean dated generated run"
+    },
+    {
+      "path": "audit_inputs/outputs/sampling/2026-09-02/target_T_UU.csv",
+      "sha256": "f9faac90e75af919f5646c8452bd5ee83967c8461f605152a4e9a01838e092fe",
+      "bytes": 169,
+      "source": "team8_clean dated generated run"
+    }
+  ]
+}

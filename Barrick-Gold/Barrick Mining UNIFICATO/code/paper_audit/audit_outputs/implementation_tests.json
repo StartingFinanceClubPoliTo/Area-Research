@@ -1,0 +1,12 @@
+{
+  "quarterly_to_annual": "pass",
+  "terminal_policy_tests": "pass",
+  "american_check": {
+    "contracts": 64,
+    "tree_steps": 800,
+    "q": 0,
+    "max_american_minus_european": 0.0,
+    "scope": "CRR at observed IV, non-distributing calls and positive rates; not a calibrated stochastic-volatility American tree"
+  },
+  "rate_min": 0.0383681078448086
+}

@@ -1,0 +1,13 @@
+model,policy,median_bn
+black_scholes,Signed perpetuity,60.096539836574784
+black_scholes,Five years only,13.174918657843467
+black_scholes,Legacy positive,60.096539836574784
+heston,Signed perpetuity,59.77338085299532
+heston,Five years only,13.078601814956434
+heston,Legacy positive,59.77338085299532
+bates_poisson,Signed perpetuity,59.11818158745837
+bates_poisson,Five years only,12.833195863353689
+bates_poisson,Legacy positive,59.11818158745837
+full_bates_hawkes,Signed perpetuity,59.8247395396775
+full_bates_hawkes,Five years only,12.891655420709347
+full_bates_hawkes,Legacy positive,59.8247395396775

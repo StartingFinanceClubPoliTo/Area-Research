@@ -868,7 +868,7 @@ def main() -> None:
                     bates_seed=bates_seed,
                     hawkes_seed=warm_seed,
                     seed=args.seed,
-                    min_branching=0.02,
+                    min_branching=0.0,
                     **cfg["hawkes"],
                 )
 
@@ -898,7 +898,7 @@ def main() -> None:
                             bates_seed=bates_seed,
                             hawkes_seed=None,
                             seed=args.seed,
-                            min_branching=0.02,
+                            min_branching=0.0,
                             **cfg["hawkes"],
                         )
                     else:
